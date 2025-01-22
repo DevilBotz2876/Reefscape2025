@@ -48,6 +48,7 @@ public class DriveSwerveYAGSL extends DriveBase {
       swerveDrive =
           new SwerveParser(swerveJsonDirectory)
               .createSwerveDrive(Drive.Constants.maxVelocityMetersPerSec);
+      swerveDrive.setHeadingCorrection(!SwerveDriveTelemetry.isSimulation);
       swerveDrive.setCosineCompensator(!SwerveDriveTelemetry.isSimulation);
 
       swerveDrive

@@ -26,7 +26,8 @@ public class RobotContainer {
       default:
         /* If running simulation, put the robot config you want here */
         // robotConfig = new RobotConfigInferno();
-        robotConfig = new RobotConfigPhoenix();
+        // robotConfig = new RobotConfigPhoenix();
+        robotConfig = new RobotConfigStub();
         // robotConfig = new RobotConfigSherman();
         // robotConfig = new RobotConfigStub();
     }
