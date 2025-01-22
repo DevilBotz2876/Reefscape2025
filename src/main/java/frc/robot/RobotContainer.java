@@ -9,6 +9,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.config.RobotConfig;
 import frc.robot.config.RobotConfigInferno;
 import frc.robot.config.RobotConfigPhoenix;
+import frc.robot.config.RobotConfigRoadkill;
 import frc.robot.config.RobotConfigSherman;
 import frc.robot.controls.DebugControls;
 import frc.robot.controls.DriverControls;
@@ -35,6 +36,9 @@ public class RobotContainer {
         break;
       case "INFERNO":
         robotConfig = new RobotConfigInferno();
+        break;
+      case "ROADKILL":
+        robotConfig = new RobotConfigRoadkill();
         break;
       case "UNKNOWN":
       default:
