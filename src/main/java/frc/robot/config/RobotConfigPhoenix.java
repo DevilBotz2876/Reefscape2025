@@ -1,10 +1,18 @@
 package frc.robot.config;
 
+import java.util.ArrayList;
+
 import com.pathplanner.lib.auto.AutoBuilder;
+
+import edu.wpi.first.apriltag.AprilTagFields;
+import edu.wpi.first.math.geometry.Transform3d;
+import edu.wpi.first.math.geometry.Translation3d;
+import edu.wpi.first.math.geometry.Rotation3d;
 import edu.wpi.first.math.util.Units;
 import frc.robot.commands.auto.AutoNamedCommands;
 import frc.robot.subsystems.drive.DriveSwerveYAGSL;
-
+import frc.robot.subsystems.vision.VisionCamera;
+import frc.robot.subsystems.vision.VisionSubsystem;
 /* Override Phoenix specific constants here */
 public class RobotConfigPhoenix extends RobotConfig {
   public RobotConfigPhoenix() {
@@ -23,18 +31,18 @@ public class RobotConfigPhoenix extends RobotConfig {
     DriveConstants.rotatePidErrorInDegrees = 1;
     drive = new DriveSwerveYAGSL("yagsl/phoenix");
 
-    // cameras = new ArrayList<VisionCamera>();
-    // cameras.add(
-    //     new VisionCamera(
-    //         "shooter",
-    //         "1182",
-    //         new Transform3d(
-    //             new Translation3d(-Units.inchesToMeters(10.75), 0, Units.inchesToMeters(8)),
-    //             new Rotation3d(0, Units.degreesToRadians(-33), Units.degreesToRadians(180)))));
+    cameras = new ArrayList<VisionCamera>();
+    cameras.add(
+        new VisionCamera(
+            "my-first-photonvision",
+            "1182",
+            new Transform3d(
+                new Translation3d(Units.inchesToMeters(13.25), 0, Units.inchesToMeters(6.25)),
+                new Rotation3d(0, Units.degreesToRadians(30), 0))));
 
-    // VisionConstants.visionDistanceOffsetInMeters = -0.2;
-    // vision = new VisionSubsystem(cameras,
-    // AprilTagFields.k2024Crescendo.loadAprilTagLayoutField());
+    VisionConstants.visionDistanceOffsetInMeters = -0.2;
+    vision = new VisionSubsystem(cameras,
+    AprilTagFields.k2025Reefscape);
 
     // if (Robot.isSimulation()) {
     //   vision.enableSimulation(() -> RobotConfig.drive.getPose(), false);

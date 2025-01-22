@@ -171,7 +171,7 @@ public class RobotConfigInferno extends RobotConfig {
                 new Rotation3d(0, Units.degreesToRadians(-32), Units.degreesToRadians(90)))));
 
     VisionConstants.visionDistanceOffsetInMeters = -0.2;
-    vision = new VisionSubsystem(cameras, AprilTagFields.k2024Crescendo.loadAprilTagLayoutField());
+    vision = new VisionSubsystem(cameras, AprilTagFields.k2024Crescendo);
 
     if (Robot.isSimulation()) {
       vision.enableSimulation(() -> RobotConfig.drive.getPose(), false);

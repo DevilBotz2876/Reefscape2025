@@ -1,6 +1,7 @@
 package frc.robot.subsystems.vision;
 
 import edu.wpi.first.apriltag.AprilTagFieldLayout;
+import edu.wpi.first.apriltag.AprilTagFields;
 import edu.wpi.first.math.VecBuilder;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Pose3d;
@@ -92,10 +93,12 @@ public class VisionSubsystem extends SubsystemBase implements Vision {
 
   /* Debug Info */
   @AutoLogOutput private int debugTargetsVisible;
-  @AutoLogOutput private int debugCurrentTargetId = DevilBotState.getActiveTargetId();
+  // @AutoLogOutput private int debugCurrentTargetId = DevilBotState.getActiveTargetId();
+  @AutoLogOutput private int debugCurrentTargetId = 1;
 
   @AutoLogOutput
-  private String debugCurrentTargetName = DevilBotState.getTargetName(debugCurrentTargetId);
+  // private String debugCurrentTargetName = DevilBotState.getTargetName(debugCurrentTargetId);
+  private String debugCurrentTargetName = "yummy";
 
   @AutoLogOutput private double debugTargetDistance = 0;
   @AutoLogOutput private double debugTargetYaw = 0;
@@ -107,11 +110,11 @@ public class VisionSubsystem extends SubsystemBase implements Vision {
   private VisionSystemSim simVision;
   private Supplier<Pose2d> simPoseSupplier;
 
-  public VisionSubsystem(List<VisionCamera> cameras, AprilTagFieldLayout fieldLayout) {
+  public VisionSubsystem(List<VisionCamera> cameras, AprilTagFields field) {
+    this.fieldLayout = AprilTagFieldLayout.loadField(field);
     for (VisionCamera camera : cameras) {
       this.cameras.add(new VisionCameraImpl(camera, fieldLayout));
     }
-    this.fieldLayout = fieldLayout;
     if (0 != cameras.size()) {
       primaryCamera = this.cameras.get(0);
     }
@@ -184,17 +187,18 @@ public class VisionSubsystem extends SubsystemBase implements Vision {
 
     Optional<Double> distance;
     Optional<Double> yaw;
-    if (debugCurrentTargetId != DevilBotState.getActiveTargetId()) {
-      debugCurrentTargetId = DevilBotState.getActiveTargetId();
-      debugTargetDistance = 0;
-      debugTargetYaw = 0;
-      debugCurrentTargetName = DevilBotState.getTargetName(debugCurrentTargetId);
-    }
+    // if (debugCurrentTargetId != DevilBotState.getActiveTargetId()) {
+    //   debugCurrentTargetId = DevilBotState.getActiveTargetId();
+    //   debugCurrentTargetId = 1;
+    //   debugTargetDistance = 0;
+    //   debugTargetYaw = 0;
+    //   debugCurrentTargetName = DevilBotState.getTargetName(debugCurrentTargetId);
+    // }
     distance = getDistanceToAprilTag(debugCurrentTargetId);
-    yaw = getYawToAprilTag(debugCurrentTargetId);
     if (distance.isPresent()) {
       debugTargetDistance = distance.get();
     }
+    yaw = getYawToAprilTag(debugCurrentTargetId);
     if (yaw.isPresent()) {
       debugTargetYaw = yaw.get();
     }

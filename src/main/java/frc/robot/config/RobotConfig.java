@@ -296,7 +296,7 @@ public class RobotConfig {
       }
 
       vision =
-          new VisionSubsystem(cameras, AprilTagFields.k2024Crescendo.loadAprilTagLayoutField());
+          new VisionSubsystem(cameras, AprilTagFields.k2024Crescendo);
 
       if (Robot.isSimulation()) {
         vision.enableSimulation(() -> RobotConfig.drive.getPose(), false);
