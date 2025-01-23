@@ -73,6 +73,9 @@ public interface Drive {
     return new Pose2d();
   }
 
+  public default void setPose(Pose2d pose) {}
+  ;
+
   public default double getAngle() {
     return 0;
   }

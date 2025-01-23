@@ -176,6 +176,11 @@ public class DriveSwerveYAGSL extends DriveBase {
   }
 
   @Override
+  public void setPose(Pose2d pose) {
+    swerveDrive.resetOdometry(pose);
+  }
+
+  @Override
   public double getAngle() {
     return swerveDrive.getOdometryHeading().getDegrees();
   }
