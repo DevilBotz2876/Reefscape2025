@@ -93,18 +93,27 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-first">Modifier and Type</div>
 <div class="table-header col-second">Field</div>
 <div class="table-header col-last">Description</div>
+<div class="col-first even-row-color"><code>static <a href="../../../subsystems/implementations/arm/ArmSubsystem.html" title="class in frc.robot.subsystems.implementations.arm">ArmSubsystem</a></code></div>
+<div class="col-second even-row-color"><code><a href="#arm" class="member-name-link">arm</a></code></div>
+<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-first odd-row-color"><code>edu.wpi.first.wpilibj2.command.button.CommandXboxController</code></div>
+<div class="col-second odd-row-color"><code><a href="#assistController" class="member-name-link">assistController</a></code></div>
+<div class="col-last odd-row-color">&nbsp;</div>
 <div class="col-first even-row-color"><code>static edu.wpi.first.wpilibj.smartdashboard.SendableChooser&lt;edu.wpi.first.wpilibj2.command.Command&gt;</code></div>
 <div class="col-second even-row-color"><code><a href="#autoChooser" class="member-name-link">autoChooser</a></code></div>
 <div class="col-last even-row-color">&nbsp;</div>
 <div class="col-first odd-row-color"><code>static <a href="../../../subsystems/implementations/drive/DriveBase.html" title="class in frc.robot.subsystems.implementations.drive">DriveBase</a></code></div>
 <div class="col-second odd-row-color"><code><a href="#drive" class="member-name-link">drive</a></code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
-<div class="col-first even-row-color"><code>edu.wpi.first.wpilibj2.command.button.CommandXboxController</code></div>
-<div class="col-second even-row-color"><code><a href="#mainController" class="member-name-link">mainController</a></code></div>
+<div class="col-first even-row-color"><code>static <a href="../../../subsystems/implementations/elevator/ElevatorSubsytem.html" title="class in frc.robot.subsystems.implementations.elevator">ElevatorSubsytem</a></code></div>
+<div class="col-second even-row-color"><code><a href="#elevator" class="member-name-link">elevator</a></code></div>
 <div class="col-last even-row-color">&nbsp;</div>
-<div class="col-first odd-row-color"><code>static <a href="../../../subsystems/implementations/vision/VisionSubsystem.html" title="class in frc.robot.subsystems.implementations.vision">VisionSubsystem</a></code></div>
-<div class="col-second odd-row-color"><code><a href="#vision" class="member-name-link">vision</a></code></div>
+<div class="col-first odd-row-color"><code>edu.wpi.first.wpilibj2.command.button.CommandXboxController</code></div>
+<div class="col-second odd-row-color"><code><a href="#mainController" class="member-name-link">mainController</a></code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-first even-row-color"><code>static <a href="../../../subsystems/implementations/vision/VisionSubsystem.html" title="class in frc.robot.subsystems.implementations.vision">VisionSubsystem</a></code></div>
+<div class="col-second even-row-color"><code><a href="#vision" class="member-name-link">vision</a></code></div>
+<div class="col-last even-row-color">&nbsp;</div>
 </div>
 </section>
 </li>
@@ -118,9 +127,11 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-last">Description</div>
 <div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E()" class="member-name-link">RobotConfig</a>()</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
-<div class="col-constructor-name odd-row-color"><code><a href="#%3Cinit%3E(boolean,boolean,boolean)" class="member-name-link">RobotConfig</a><wbr>(boolean&nbsp;stubDrive,
+<div class="col-constructor-name odd-row-color"><code><a href="#%3Cinit%3E(boolean,boolean,boolean,boolean,boolean)" class="member-name-link">RobotConfig</a><wbr>(boolean&nbsp;stubDrive,
  boolean&nbsp;stubAuto,
- boolean&nbsp;stubVision)</code></div>
+ boolean&nbsp;stubVision,
+ boolean&nbsp;stubElevator,
+ boolean&nbsp;stubArm)</code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
 </div>
 </section>
@@ -139,6 +150,9 @@ loadScripts(document, 'script');</script>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#configureBindings()" class="member-name-link">configureBindings</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setupSimGUI()" class="member-name-link">setupSimGUI</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 </div>
 </div>
 </div>
@@ -175,9 +189,27 @@ loadScripts(document, 'script');</script>
 </section>
 </li>
 <li>
+<section class="detail" id="elevator">
+<h3>elevator</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="../../../subsystems/implementations/elevator/ElevatorSubsytem.html" title="class in frc.robot.subsystems.implementations.elevator">ElevatorSubsytem</a></span>&nbsp;<span class="element-name">elevator</span></div>
+</section>
+</li>
+<li>
+<section class="detail" id="arm">
+<h3>arm</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="../../../subsystems/implementations/arm/ArmSubsystem.html" title="class in frc.robot.subsystems.implementations.arm">ArmSubsystem</a></span>&nbsp;<span class="element-name">arm</span></div>
+</section>
+</li>
+<li>
 <section class="detail" id="mainController">
 <h3>mainController</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">edu.wpi.first.wpilibj2.command.button.CommandXboxController</span>&nbsp;<span class="element-name">mainController</span></div>
+</section>
+</li>
+<li>
+<section class="detail" id="assistController">
+<h3>assistController</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">edu.wpi.first.wpilibj2.command.button.CommandXboxController</span>&nbsp;<span class="element-name">assistController</span></div>
 </section>
 </li>
 </ul>
@@ -195,11 +227,13 @@ loadScripts(document, 'script');</script>
 </section>
 </li>
 <li>
-<section class="detail" id="&lt;init&gt;(boolean,boolean,boolean)">
+<section class="detail" id="&lt;init&gt;(boolean,boolean,boolean,boolean,boolean)">
 <h3>RobotConfig</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name">RobotConfig</span><wbr><span class="parameters">(boolean&nbsp;stubDrive,
  boolean&nbsp;stubAuto,
- boolean&nbsp;stubVision)</span></div>
+ boolean&nbsp;stubVision,
+ boolean&nbsp;stubElevator,
+ boolean&nbsp;stubArm)</span></div>
 </section>
 </li>
 </ul>
@@ -214,6 +248,12 @@ loadScripts(document, 'script');</script>
 <section class="detail" id="configureBindings()">
 <h3>configureBindings</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">configureBindings</span>()</div>
+</section>
+</li>
+<li>
+<section class="detail" id="setupSimGUI()">
+<h3>setupSimGUI</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">setupSimGUI</span>()</div>
 </section>
 </li>
 </ul>
