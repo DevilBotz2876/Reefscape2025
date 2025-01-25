@@ -2,6 +2,8 @@ package frc.robot.subsystems.implementations.elevator;
 
 import org.littletonrobotics.junction.Logger;
 
+import edu.wpi.first.math.MathUtil;
+//import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj.smartdashboard.Mechanism2d;
 import edu.wpi.first.wpilibj.smartdashboard.MechanismLigament2d;
 import edu.wpi.first.wpilibj.smartdashboard.MechanismRoot2d;
@@ -12,6 +14,9 @@ import frc.robot.subsystems.interfaces.Elevator;
 import frc.robot.io.interfaces.ElevatorIO;
 import frc.robot.io.interfaces.ElevatorIOInputsAutoLogged;
 
+
+
+
 public class ElevatorSubsytem extends SubsystemBase implements Elevator{
 
     private final ElevatorIO io;
@@ -20,7 +25,7 @@ public class ElevatorSubsytem extends SubsystemBase implements Elevator{
     private MechanismLigament2d elevator2d = null;
     private final double elevatorLigament2dScale = 40;
     private final double elevatorLigament2doffset = 0.05;
-
+    
     public ElevatorSubsytem(ElevatorIO io) {
         this.io = io;
         
@@ -42,9 +47,18 @@ public class ElevatorSubsytem extends SubsystemBase implements Elevator{
     }
  
     @Override
-    public double getTargetPosition() {
+    public double getTargetPosition () {
         // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getTargetPosition'");
+
+        // create vairvale target position 
+        // return targetPostiiton
+       return inputs.positionMeters; 
+
+        
+
+
+
+        // throw new UnsupportedOperationException("Unimplemented method 'getTargetPosition'");
     }
 
     @Override
@@ -65,7 +79,14 @@ public class ElevatorSubsytem extends SubsystemBase implements Elevator{
     @Override
     public void setPosition(double meters) {
         // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'setPosition'");
+        // set the meters you set to the target meters
+        // pass that target meters into the iolayer to the setposition
+
+        meters =  
+            MathUtil.clamp(meters, Elevator.Constants.minPositionInMeters, Elevator.Constants.maxPositionInMeters); 
+        
+
+       // throw new UnsupportedOperationException("Unimplemented method 'setPosition'");
     }
 
     @Override
@@ -76,7 +97,13 @@ public class ElevatorSubsytem extends SubsystemBase implements Elevator{
     @Override
     public boolean isAtSetpoint() {
         // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'isAtSetpoint'");
+        if (inputs.positionMeters == 0){
+            return true;
+        }
+        else{
+            return false; 
+        }
+       // throw new UnsupportedOperationException("Unimplemented method 'isAtSetpoint'");
     }
 
     @Override
