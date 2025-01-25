@@ -18,6 +18,8 @@ public class ElevatorSubsytem extends SubsystemBase implements Elevator{
     private final ElevatorIOInputsAutoLogged inputs = new ElevatorIOInputsAutoLogged();
 
     private MechanismLigament2d elevator2d = null;
+    private final double elevatorLigament2dScale = 5;
+    private final double elevatorLigament2doffset = 0.05;
 
     public ElevatorSubsytem(ElevatorIO io) {
         this.io = io;
@@ -30,7 +32,7 @@ public class ElevatorSubsytem extends SubsystemBase implements Elevator{
         Logger.processInputs("Elevator", inputs);
 
         if (null != elevator2d) {
-            elevator2d.setLength(inputs.positionMeters + 0.05 );
+            elevator2d.setLength((inputs.positionMeters + elevatorLigament2doffset) * elevatorLigament2dScale );
         }
     }
 
@@ -80,7 +82,7 @@ public class ElevatorSubsytem extends SubsystemBase implements Elevator{
     @Override
     public void add2dSim(Mechanism2d mech2d) {
         MechanismRoot2d elevatorRoot2d = mech2d.getRoot("Elevator",10, 5);
-        elevator2d = elevatorRoot2d.append(new MechanismLigament2d("elevator", 5, 0, 6, new Color8Bit(Color.kDarkSlateGray)));
+        elevator2d = elevatorRoot2d.append(new MechanismLigament2d("elevator", 5, 90, 10, new Color8Bit(Color.kLightSlateGray)));
     }
     
 }
