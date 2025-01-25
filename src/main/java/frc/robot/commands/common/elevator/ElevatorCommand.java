@@ -21,7 +21,7 @@ public class ElevatorCommand extends Command {
 
   @Override
   public void execute() {
-    double volts = speed.getAsDouble() * 15;
+    double volts = speed.getAsDouble() * 5;
     elevator.runVoltage(volts);
   }
 }

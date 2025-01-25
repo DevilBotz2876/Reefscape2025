@@ -74,15 +74,6 @@ public class ElevatorSubsytem extends SubsystemBase implements Elevator {
     throw new UnsupportedOperationException("Unimplemented method 'isAtSetpoint'");
   }
 
-  // @Override
-  // public MechanismLigament2d add2dSim(Mechanism2d mech2d) {
-  //     MechanismRoot2d elevatorRoot2d = mech2d.getRoot("Elevator",10, 5);
-  //     elevator2d = elevatorRoot2d.append(new MechanismLigament2d("elevator", 5, 90, 10, new
-  // Color8Bit(Color.kLightSlateGray)));
-
-  //     return elevator2d;
-  // }
-
   @Override
   public void setLigament(MechanismLigament2d ligament2d) {
     elevator2d = ligament2d;

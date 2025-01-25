@@ -10,9 +10,6 @@ public class ArmControls {
   public static void setupController(Arm arm, CommandXboxController controller) {
     SubsystemBase armSubsystem = (SubsystemBase) arm;
     armSubsystem.setDefaultCommand(
-        new ArmCommand(
-            arm,
-            () -> MathUtil.applyDeadband(-controller.getRightY(), 0.05)
-            ));
+        new ArmCommand(arm, () -> MathUtil.applyDeadband(-controller.getRightY(), 0.05)));
   }
 }

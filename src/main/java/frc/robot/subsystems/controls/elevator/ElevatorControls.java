@@ -10,9 +10,6 @@ public class ElevatorControls {
   public static void setupController(Elevator elevator, CommandXboxController controller) {
     SubsystemBase elevatorSubsystem = (SubsystemBase) elevator;
     elevatorSubsystem.setDefaultCommand(
-        new ElevatorCommand(
-            elevator,
-            () -> MathUtil.applyDeadband(-controller.getLeftY(), 0.05)
-            ));
+        new ElevatorCommand(elevator, () -> MathUtil.applyDeadband(-controller.getLeftY(), 0.05)));
   }
 }
