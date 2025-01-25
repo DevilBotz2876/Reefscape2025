@@ -1,7 +1,6 @@
 package frc.robot.config.game.reefscape2025;
 
 import com.pathplanner.lib.auto.AutoBuilder;
-
 import edu.wpi.first.math.geometry.Rotation3d;
 import edu.wpi.first.math.geometry.Transform3d;
 import edu.wpi.first.math.geometry.Translation3d;
@@ -30,7 +29,6 @@ public class RobotConfigPhoenix extends RobotConfig {
                 new Translation3d(0.221, 0, .164),
                 new Rotation3d(0, Units.degreesToRadians(-20), Units.degreesToRadians(0)))));
 
-
-    autoChooser = AutoBuilder.buildAutoChooser("Sit Still");      
+    autoChooser = AutoBuilder.buildAutoChooser("Sit Still");
   }
 }
