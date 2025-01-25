@@ -15,9 +15,12 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.Robot;
+import frc.robot.io.implementations.elevator.ElevatorIOStub;
 import frc.robot.subsystems.controls.drive.DriveControls;
+import frc.robot.subsystems.controls.elevator.ElevatorControls;
 import frc.robot.subsystems.controls.vision.VisionControls;
 import frc.robot.subsystems.implementations.drive.DriveBase;
+import frc.robot.subsystems.implementations.elevator.ElevatorSubsytem;
 import frc.robot.subsystems.implementations.vision.VisionSubsystem;
 import frc.robot.subsystems.interfaces.Vision.Camera;
 
@@ -26,9 +29,11 @@ public class RobotConfig {
   public static DriveBase drive;
   public static SendableChooser<Command> autoChooser;
   public static VisionSubsystem vision;
+  public static ElevatorSubsytem elevator;
 
   // Controls
   public CommandXboxController mainController = new CommandXboxController(0);
+  public CommandXboxController assistController = new CommandXboxController(1);
   private final ShuffleboardTab driverTab = Shuffleboard.getTab("Driver");
 
   // private final ShuffleboardTab pitTab = Shuffleboard.getTab("Pit");
@@ -36,10 +41,10 @@ public class RobotConfig {
   // private final ShuffleboardTab sysIdTestTab = Shuffleboard.getTab("SysId");
 
   public RobotConfig() {
-    this(true, true, true);
+    this(true, true, true, true);
   }
 
-  public RobotConfig(boolean stubDrive, boolean stubAuto, boolean stubVision) {
+  public RobotConfig(boolean stubDrive, boolean stubAuto, boolean stubVision, boolean stubElevator) {
     if (stubDrive) {
       drive = new DriveBase();
     }
@@ -73,6 +78,10 @@ public class RobotConfig {
                     new Rotation3d(0, Units.degreesToRadians(-20), Units.degreesToRadians(-90)))));
       }
     }
+
+    if (stubElevator) {
+      elevator = new ElevatorSubsytem(new ElevatorIOStub());
+    }
   }
 
   public void configureBindings() {
@@ -88,8 +97,11 @@ public class RobotConfig {
 
     VisionControls.addGUI(vision, driverTab);
 
+    ElevatorControls.setupController(elevator, assistController);
+
     Mechanism2d mech2d = new Mechanism2d(60, 60);
     // arm.add2dSim(mech2d);
+    elevator.add2dSim(mech2d);
 
     SmartDashboard.putData("2D Simulation", mech2d);
   }
