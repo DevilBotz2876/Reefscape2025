@@ -12,7 +12,7 @@ public class ArmControls {
     armSubsystem.setDefaultCommand(
         new ArmCommand(
             arm,
-            () -> MathUtil.applyDeadband(-controller.getRightY(), 0.05) // Robot Strafe Front/Back
+            () -> MathUtil.applyDeadband(-controller.getRightY(), 0.05)
             ));
   }
 }

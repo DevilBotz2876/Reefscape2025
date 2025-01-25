@@ -127,7 +127,7 @@ public class RobotConfig {
 
     MechanismLigament2d elevatorLigament2d =
         root.append(
-            new MechanismLigament2d("elevator", 5, 90, 10, new Color8Bit(Color.kLightSlateGray)));
+            new MechanismLigament2d("Elevator", 5, 90, 10, new Color8Bit(Color.kLightSlateGray)));
     elevator.setLigament(elevatorLigament2d);
 
     MechanismLigament2d armLigament2d =

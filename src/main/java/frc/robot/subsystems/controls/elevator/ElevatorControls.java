@@ -12,7 +12,7 @@ public class ElevatorControls {
     elevatorSubsystem.setDefaultCommand(
         new ElevatorCommand(
             elevator,
-            () -> MathUtil.applyDeadband(-controller.getLeftY(), 0.05) // Robot Strafe Front/Back
+            () -> MathUtil.applyDeadband(-controller.getLeftY(), 0.05)
             ));
   }
 }
