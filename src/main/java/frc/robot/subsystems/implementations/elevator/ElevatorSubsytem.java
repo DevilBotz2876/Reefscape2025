@@ -18,7 +18,7 @@ public class ElevatorSubsytem extends SubsystemBase implements Elevator{
     private final ElevatorIOInputsAutoLogged inputs = new ElevatorIOInputsAutoLogged();
 
     private MechanismLigament2d elevator2d = null;
-    private final double elevatorLigament2dScale = 5;
+    private final double elevatorLigament2dScale = 40;
     private final double elevatorLigament2doffset = 0.05;
 
     public ElevatorSubsytem(ElevatorIO io) {
