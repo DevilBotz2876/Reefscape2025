@@ -7,6 +7,7 @@ import edu.wpi.first.math.geometry.Pose3d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Transform3d;
 import edu.wpi.first.math.util.Units;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.subsystems.interfaces.Vision;
 import swervelib.SwerveDrive;
@@ -55,8 +56,13 @@ public class VisionSubsystem extends SubsystemBase implements Vision {
     }
 
     private void update() {
-      result = camera.getLatestResult();
-      estimatedRobotPose = poseEstimator.update(result);
+      var results = camera.getAllUnreadResults();
+      SmartDashboard.putBoolean("getAllUnreadResults", results.isEmpty());
+      if(!results.isEmpty()) {
+        result = results.get(results.size() - 1);
+        estimatedRobotPose = poseEstimator.update(result);
+      }
+      // estimatedRobotPose = poseEstimator.update(result);
     }
 
     private double getLatestTimestamp() {
