@@ -1,6 +1,6 @@
 package frc.robot.subsystems.interfaces;
 
-import edu.wpi.first.wpilibj.smartdashboard.Mechanism2d;
+import edu.wpi.first.wpilibj.smartdashboard.MechanismLigament2d;
 import edu.wpi.first.wpilibj2.command.Subsystem;
 
 public interface Elevator extends Subsystem {
@@ -46,5 +46,6 @@ public interface Elevator extends Subsystem {
   /** Returns true if the elevator is at the setpoint. */
   public boolean isAtSetpoint();
 
-  public default void add2dSim(Mechanism2d mech2d) {}
+  public default void setLigament(MechanismLigament2d ligament2d) {}
+  ;
 }

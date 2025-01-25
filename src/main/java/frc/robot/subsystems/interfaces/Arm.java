@@ -44,4 +44,6 @@ public interface Arm extends Subsystem {
   public Command getStowCommand();
 
   public default void add2dSim(Mechanism2d mech2d) {}
+
+  public default void runVoltage(double volts) {}
 }
