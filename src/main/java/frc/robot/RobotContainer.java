@@ -26,15 +26,16 @@ public class RobotContainer {
       default:
         /* If running simulation, put the robot config you want here */
         // robotConfig = new RobotConfigInferno();
-        robotConfig = new RobotConfigPhoenix();
+         robotConfig = new RobotConfigPhoenix();
+         //robotConfig = new RobotConfigStub();
         // robotConfig = new RobotConfigSherman();
-        // robotConfig = new RobotConfigStub();
+         //  robotConfig = new RobotConfigStub();  
     }
 
     robotConfig.configureBindings();
   }
 
   public Command getAutonomousCommand() {
-    return RobotConfig.autoChooser.getSelected();
+    return RobotConfig.autoChooser.getSelected();  
   }
 }
