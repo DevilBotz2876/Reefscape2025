@@ -61,6 +61,9 @@ public class DriveSwerveYAGSL extends DriveBase {
     } catch (Exception e) {
       throw new RuntimeException(e);
     }
+
+    swerveDrive.stopOdometryThread();
+
     RobotConfig config;
     try {
       config = RobotConfig.fromGUISettings();
@@ -188,6 +191,10 @@ public class DriveSwerveYAGSL extends DriveBase {
   public void periodic() {
     io.updateInputs(inputs, swerveDrive);
     Logger.processInputs("Drive", inputs);
+
+    swerveDrive.updateOdometry();
+    frc.robot.config.game.reefscape2025.RobotConfig.vision.updatePoseEstimation(swerveDrive);
+
   }
 
   @Override

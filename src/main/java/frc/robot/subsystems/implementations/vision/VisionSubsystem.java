@@ -9,6 +9,9 @@ import edu.wpi.first.math.geometry.Transform3d;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.subsystems.interfaces.Vision;
+import swervelib.SwerveDrive;
+import swervelib.telemetry.SwerveDriveTelemetry;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -293,4 +296,25 @@ public class VisionSubsystem extends SubsystemBase implements Vision {
   public void setVisionMeasurementConsumer(VisionMeasurementConsumer func) {
     visionMeasurementConsumer = func;
   }
+
+  public void updatePoseEstimation(SwerveDrive swerveDrive)
+  {
+    if (SwerveDriveTelemetry.isSimulation && swerveDrive.getSimulationDriveTrainPose().isPresent())
+    {
+      simVision.update(swerveDrive.getSimulationDriveTrainPose().get());
+    }
+    for (VisionCameraImpl camera : cameras)
+    {
+      Optional<EstimatedRobotPose> poseEst = camera.estimatedRobotPose;
+      if(poseEst !=  null) {
+        if (poseEst.isPresent())
+        {
+          var pose = poseEst.get();
+          swerveDrive.addVisionMeasurement(pose.estimatedPose.toPose2d(),
+                                          pose.timestampSeconds);
+        }
+      }
+    }
+  }
+  
 }
