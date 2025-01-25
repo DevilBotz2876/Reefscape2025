@@ -5,9 +5,7 @@ import org.littletonrobotics.junction.AutoLog;
 public interface MotorControllerIO {
       @AutoLog
   public class MotorControllerIOInputs {
-    public double velocityRadPerSec = 0.0;
     public double appliedVolts = 0.0;
-    public double positionRad = 0.0;
     public double current = 0.0;
   }
 

@@ -14,6 +14,7 @@ import edu.wpi.first.wpilibj.util.Color;
 import edu.wpi.first.wpilibj.util.Color8Bit;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.ProfiledPIDSubsystem;
+import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
 import frc.robot.io.interfaces.MotorControllerIO;
 import frc.robot.io.interfaces.MotorControllerIOInputsAutoLogged;
@@ -28,32 +29,21 @@ import org.littletonrobotics.junction.Logger;
  * The SingleMotorSubsystem class represents a subsystem with a single motor.
  * It extends the ProfiledPIDSubsystem and implements the SingleMotor interface.
  */
-public class ClimberSubsystem extends ProfiledPIDSubsystem implements ClimberPrototype {
+public class ClimberSubsystem extends SubsystemBase implements ClimberPrototype {
   
   /**
    * Constants used in the SingleMotorSubsystem.
    */
   public static class Constants {
-    public static double pidVelocityErrorInRPM = 300;
-    public static double pidSettlingTimeInSeconds = 0.1;
 
-    public static double velocityInRPM = 3000;
-    public static double ampScoreVelocityInRPM = 1000;
   }
 
   MotorControllerIO io;
-  private final SimpleMotorFeedforward feedforward;
+  // private final SimpleMotorFeedforward feedforward;
   private final MotorControllerIOInputsAutoLogged inputs = new MotorControllerIOInputsAutoLogged();
-  boolean useSoftwarePidVelocityControl = true;
 
   private final SysIdRoutine sysId;
-  @AutoLogOutput private double targetVoltage;
-  @AutoLogOutput private double targetVelocityRPM;
-  @AutoLogOutput private double targetVelocityRadPerSec;
-  @AutoLogOutput private double currentVelocitySetpointRPM;
-
-  private List<MechanismLigament2d> shooter2d = new ArrayList<MechanismLigament2d>();
-  private int currentSimAngle = 0;
+  @AutoLogOutput private double speed;
 
     /**
    * Constructs a SingleMotorSubsystem with the given MotorControllerIO.
@@ -61,33 +51,23 @@ public class ClimberSubsystem extends ProfiledPIDSubsystem implements ClimberPro
    * @param io the MotorControllerIO instance
    */
   public ClimberSubsystem(MotorControllerIO io) {
-    super(
-        new ProfiledPIDController(
-            ClimberPrototype.Constants.pidKp,
-            ClimberPrototype.Constants.pidKi,
-            ClimberPrototype.Constants.pidKd,
-            new TrapezoidProfile.Constraints(
-                Units.rotationsPerMinuteToRadiansPerSecond(ClimberPrototype.Constants.maxVelocityInRPM),
-                Units.rotationsPerMinuteToRadiansPerSecond(
-                  ClimberPrototype.Constants.maxAccelerationInRPMSquared))));
+    // super(
+    //     new ProfiledPIDController(
+    //         ClimberPrototype.Constants.pidKp,
+    //         ClimberPrototype.Constants.pidKi,
+    //         ClimberPrototype.Constants.pidKd,
+    //         new TrapezoidProfile.Constraints(
+    //             Units.rotationsPerMinuteToRadiansPerSecond(ClimberPrototype.Constants.maxVelocityInRPM),
+    //             Units.rotationsPerMinuteToRadiansPerSecond(
+    //               ClimberPrototype.Constants.maxAccelerationInRPMSquared))));
 
     this.io = io;
-    useSoftwarePidVelocityControl = !io.supportsHardwarePid();
 
-    //    if (false == useSoftwareVelocityControl)
-    //    {
-    //      io.setPID(
-    //        ShooterConstants.pidKp,
-    //        ShooterConstants.pidKi,
-    //        ShooterConstants.pidKd);
-    //    }
+    // feedforward =
+    //     new SimpleMotorFeedforward(
+    //         ClimberPrototype.Constants.ffKs, ClimberPrototype.Constants.ffKv, ClimberPrototype.Constants.ffKa);
 
-    feedforward =
-        new SimpleMotorFeedforward(
-            ClimberPrototype.Constants.ffKs, ClimberPrototype.Constants.ffKv, ClimberPrototype.Constants.ffKa);
 
-    targetVoltage = 0;
-    targetVelocityRPM = 0.0;
 
     sysId =
         new SysIdRoutine(
@@ -95,60 +75,48 @@ public class ClimberSubsystem extends ProfiledPIDSubsystem implements ClimberPro
                 null,
                 null,
                 null,
-                (state) -> Logger.recordOutput("Shooter/SysIdState", state.toString())),
-            new SysIdRoutine.Mechanism((voltage) -> runVoltage(voltage.in(Volts)), null, this));
+                (state) -> Logger.recordOutput("ClimberPrototype/SysIdState", state.toString())),
+            new SysIdRoutine.Mechanism((voltage) -> setVolts(voltage.in(Volts)), null, this));
   }
 
-  @Override
-  public void useOutput(double output, TrapezoidProfile.State setpoint) {
-    double ff = feedforward.calculate(setpoint.position);
+  // @Override
+  // public void useOutput(double output, TrapezoidProfile.State setpoint) {
+  //   // double ff = feedforward.calculate(setpoint.position);
 
-    if (useSoftwarePidVelocityControl) {
-      // Use feedforward +  SW velocity PID
-      io.setVoltage(output + ff);
-    } else {
-      // Use feedforward +  HW velocity PID (ignore SW PID)
-      io.setVelocity(setpoint.position, ff);
-    }
+  //   // if (useSoftwarePidVelocityControl) {
+  //   //   // Use feedforward +  SW velocity PID
+  //   //   io.setVoltage(output + ff);
+  //   // } else {
+  //   //   // Use feedforward +  HW velocity PID (ignore SW PID)
+  //   //   io.setVelocity(setpoint.position, ff);
+  //   // }
 
-    currentVelocitySetpointRPM = Units.radiansPerSecondToRotationsPerMinute(setpoint.position);
-    //    System.out.println(setpoint.position);
-  }
+  //   // currentVelocitySetpointRPM = Units.radiansPerSecondToRotationsPerMinute(setpoint.position);
+  //   //    System.out.println(setpoint.position);
+  // }
 
-  @Override
-  public double getMeasurement() {
-    return inputs.velocityRadPerSec;
-  }
+  // @Override
+  // public double getMeasurement() {
+  //   return inputs.velocityRadPerSec;
+  // }
 
   @Override
   // Sets the voltage to volts. the volts value is -12 to 12
-  public void runVoltage(double volts) {
-    targetVoltage = volts;
-    targetVelocityRadPerSec = 0;
-    this.targetVelocityRPM = ClimberPrototype.Constants.maxVelocityInRPM * (volts / 12.0);
-    disable(); // disable PID control
-    io.setVoltage(targetVoltage);
+  public void setVolts(double volts) {
+    // targetVoltage = volts;
+    // targetVelocityRadPerSec = 0;
+    // //this.targetVelocityRPM = ClimberPrototype.Constants.maxVelocityInRPM * (volts / 12.0);
+    //disable(); // disable PID control
+    io.setVoltage(0);
   }
 
-  @Override
-  public void runVelocity(double velocityRPM) {
-    velocityRPM = MathUtil.clamp(velocityRPM, 0, ClimberPrototype.Constants.maxVelocityInRPM);
-    targetVoltage = -1;
-    this.targetVelocityRPM = velocityRPM;
-    targetVelocityRadPerSec = Units.rotationsPerMinuteToRadiansPerSecond(velocityRPM);
-    setGoal(targetVelocityRadPerSec);
-    enable();
-  }
+
 
   @Override
-  public double getVoltage() {
+  public double getSpeed() {
     return inputs.appliedVolts;
   }
 
-  @Override
-  public double getCurrentSpeed() {
-    return inputs.velocityRadPerSec;
-  }
 
   @Override
   public void periodic() {
@@ -156,26 +124,16 @@ public class ClimberSubsystem extends ProfiledPIDSubsystem implements ClimberPro
     // Updates the inputs
     io.updateInputs(inputs);
     Logger.processInputs("Single Motor", inputs);
-
-    currentSimAngle -=
-        (inputs.velocityRadPerSec
-                / Units.rotationsPerMinuteToRadiansPerSecond(ClimberPrototype.Constants.maxVelocityInRPM))
-            * 45;
-
-    int angleOffset = 0;
-    for (MechanismLigament2d shooter : shooter2d) {
-      shooter.setAngle(angleOffset + currentSimAngle);
-      angleOffset += 90;
-    }
   }
 
-  public Command sysIdQuasistatic(SysIdRoutine.Direction direction) {
-    return sysId.quasistatic(direction);
-  }
 
-  public Command sysIdDynamic(SysIdRoutine.Direction direction) {
-    return sysId.dynamic(direction);
-  }
+  // public Command sysIdQuasistatic(SysIdRoutine.Direction direction) {
+  //   return sysId.quasistatic(direction);
+  // }
+
+  // public Command sysIdDynamic(SysIdRoutine.Direction direction) {
+  //   return sysId.dynamic(direction);
+  // }
 
   public Command getTurnOffCommand() {
     return runOnce(() -> turnOff());
@@ -186,15 +144,10 @@ public class ClimberSubsystem extends ProfiledPIDSubsystem implements ClimberPro
     // Create 2D simulated display of a Shooter
     MechanismRoot2d intakePivot2d = mech2d.getRoot("Simple Motor", 15, 50);
 
-    shooter2d.add(
-        intakePivot2d.append(
-            new MechanismLigament2d("Wheel Spoke A", 
-                                  5, 0, 12, new Color8Bit(Color.kGray))));
+    // shooter2d.add(
+    //     intakePivot2d.append(
+    //         new MechanismLigament2d("Wheel Spoke A", 
+    //                               5, 0, 12, new Color8Bit(Color.kGray))));
   }
 
-  @Override
-  public boolean isAtSetpoint() {
-    return (Math.abs(currentVelocitySetpointRPM - targetVelocityRPM)
-        < Constants.pidVelocityErrorInRPM);
-  }
 }
