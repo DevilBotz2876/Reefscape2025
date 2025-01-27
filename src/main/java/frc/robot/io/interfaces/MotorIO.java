@@ -21,10 +21,10 @@ public interface MotorIO {
    * Updates the set of loggable inputs. Called by periodically (e.g. in the subsystem's periodic()
    * function)
    */
-  public default void updateInputs(MotorIOInputs inputs) {}
+  public void updateInputs(MotorIOInputs inputs);
 
   /** Run open loop at the specified voltage. */
-  public default void setVoltage(double volts) {}
+  public void setVoltage(double volts);
 
   /**
    * Optional: Run closed loop (using a PID) at a specific velocity
