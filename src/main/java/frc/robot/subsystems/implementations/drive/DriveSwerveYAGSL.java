@@ -7,6 +7,7 @@ import com.pathplanner.lib.controllers.PPHolonomicDriveController;
 import edu.wpi.first.math.Matrix;
 import edu.wpi.first.math.filter.SlewRateLimiter;
 import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.numbers.N1;
 import edu.wpi.first.math.numbers.N3;
@@ -193,14 +194,16 @@ public class DriveSwerveYAGSL extends DriveBase {
     Logger.processInputs("Drive", inputs);
 
     swerveDrive.updateOdometry();
-    frc.robot.config.game.reefscape2025.RobotConfig.vision.updatePoseEstimation(swerveDrive);
-
+    frc.robot.config.game.reefscape2025.RobotConfig.vision.updatePoseEstimation();
   }
 
   @Override
   public void addVisionMeasurement(
       Pose2d robotPose, double timestamp, Matrix<N3, N1> visionMeasurementStdDevs) {
-
-    swerveDrive.addVisionMeasurement(robotPose, timestamp, visionMeasurementStdDevs);
+    if (visionMeasurementStdDevs != null) {
+      swerveDrive.addVisionMeasurement(robotPose, timestamp, visionMeasurementStdDevs);
+    } else {
+      swerveDrive.addVisionMeasurement(robotPose, timestamp);
+    }
   }
 }
