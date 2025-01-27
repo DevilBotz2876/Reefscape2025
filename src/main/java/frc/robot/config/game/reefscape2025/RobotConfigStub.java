@@ -21,11 +21,17 @@ public class RobotConfigStub extends RobotConfig {
       drive.setPose(new Pose2d(new Translation2d(1, 1), new Rotation2d()));
     }
 
-    // We create a GizmoSubsystem using the MotorIOStub implementation of a MotorIO.  We set
-    // inverted=true because we want positive voltage to result in spinning clockwise. The inversion
-    // depends on how the motor is physically connected to the gizmo, so specific to this robot
-    // configuration.
-    gizmo = new GizmoSubsystem(new MotorIOStub(true));
+    // We create a GizmoSubsystem using the MotorIOStub implementation of a MotorIO.
+    //
+    // We set inverted=true because we want positive voltage to result in spinning clockwise. The
+    // inversion depends on how the motor is physically connected to the gizmo, so specific to this
+    // robot configuration.
+    //
+    // We set moi=0.025 as a random default, but should be set based on CAD/mech teams calculations
+    // of the actual mechanism
+    //
+    // We set the gear ratio to 50:1 so that the simulation is as accurate as possible.
+    gizmo = new GizmoSubsystem(new MotorIOStub(true, 0.025, 50));
   }
 
   @Override

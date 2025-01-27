@@ -52,22 +52,34 @@ public interface Gizmo {
    * @return 2D graphical simulation of the pinwheel
    */
   public default Optional<Mechanism2d> create2dSim() {
-    // We create a pivot point where the gizmo fins are attached
-    MechanismRoot2d pinWheelPivot2d =
-        mech2d.getRoot("Gizmo Pivot", Constants.sim2dSize / 2, Constants.sim2dSize / 2);
-
     /* We create a simulated version of each gizmo fin equally around the point so that it looks line fins of a fan/pinwheel */
-    for (int i = 0; i < Constants.numFins; i++) {
-      pinwheelFins.add(
-          pinWheelPivot2d.append(
-              new MechanismLigament2d(
-                  "Gizmo Fin " + i,
-                  Constants.sim2dSize / 2,
-                  i * (360 / Constants.numFins),
-                  15,
-                  finColors[i % finColors.length])));
+    if (0 == pinwheelFins.size()) {
+      // We create a pivot point where the gizmo fins are attached
+      MechanismRoot2d pinWheelPivot2d =
+          mech2d.getRoot("Gizmo Pivot", Constants.sim2dSize / 2, Constants.sim2dSize / 2);
+
+      for (int i = 0; i < Constants.numFins; i++) {
+        pinwheelFins.add(
+            pinWheelPivot2d.append(
+                new MechanismLigament2d(
+                    "Gizmo Fin " + i,
+                    Constants.sim2dSize / 2,
+                    i * (360 / Constants.numFins),
+                    15,
+                    finColors[i % finColors.length])));
+      }
     }
 
     return Optional.of(mech2d);
+  }
+
+  public default void update2dSim(double positionDegrees) {
+    int angleOffset = 0;
+
+    // We loop through each fin and update the angle to match the reported motor rotation
+    for (MechanismLigament2d fin : pinwheelFins) {
+      fin.setAngle(angleOffset + positionDegrees);
+      angleOffset += 360 / Constants.numFins;
+    }
   }
 }

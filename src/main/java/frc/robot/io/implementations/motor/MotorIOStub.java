@@ -12,23 +12,25 @@ import frc.robot.io.interfaces.MotorIO;
  */
 public class MotorIOStub implements MotorIO {
   private boolean inverted = false;
-  // Simulate a Kraken X60 motor with the shaft connected to a mechanism with a moment of inertia
-  // (0.025) and gearbox ratio (50:1)
-  private final DCMotorSim motorSim =
-      new DCMotorSim(
-          LinearSystemId.createDCMotorSystem(DCMotor.getKrakenX60(1), 0.025, 50),
-          DCMotor.getKrakenX60(1));
+  private final DCMotorSim motorSim;
 
   private double appliedVolts = 0.0;
 
   /** Default constructor that doesn't take any arguments. */
   public MotorIOStub() {
-    this(false);
+    this(false, 0.025, 1.0);
   }
 
   /** Constructor that allows setting whether the motor is inverted */
-  public MotorIOStub(boolean inverted) {
+  public MotorIOStub(boolean inverted, double moi, double gearing) {
     this.inverted = inverted;
+
+    // Simulate a Kraken X60 motor with the shaft connected to a mechanism with the specified moment
+    // of inertia and gear ratio
+    motorSim =
+        new DCMotorSim(
+            LinearSystemId.createDCMotorSystem(DCMotor.getKrakenX60(1), moi, gearing),
+            DCMotor.getKrakenX60(1));
   }
 
   @Override

@@ -2,7 +2,6 @@ package frc.robot.subsystems.implementations.gizmo;
 
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.util.Units;
-import edu.wpi.first.wpilibj.smartdashboard.MechanismLigament2d;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.io.interfaces.MotorIO;
 import frc.robot.io.interfaces.MotorIOInputsAutoLogged;
@@ -13,6 +12,10 @@ import org.littletonrobotics.junction.Logger;
  * This GizmoSubsystem extends the WPILib SubsystemBase class and implements the Gizmo interface/API
  */
 public class GizmoSubsystem extends SubsystemBase implements Gizmo {
+  public static class Constants {
+    public static double gearing = 1.0; /* 1:1 gear ratio */
+  }
+
   /* Hardware IO */
   /* This subsystem implements the gizmo using a single instance of a MotorIO object */
   MotorIO io;
@@ -48,16 +51,8 @@ public class GizmoSubsystem extends SubsystemBase implements Gizmo {
     io.updateInputs(inputs);
     Logger.processInputs("Gizmo", inputs);
 
-    /* Update 2D Sim */
-    // We get the current rotation of the motor
-    double currentPositionDegrees = Units.radiansToDegrees(inputs.positionRad);
-    int angleOffset = 0;
-
-    // We loop through each fin and update the angle to match the reported motor rotation
-    for (MechanismLigament2d fin : pinwheelFins) {
-      fin.setAngle(angleOffset + currentPositionDegrees);
-      angleOffset += 360 / Constants.numFins;
-    }
+    // We get the current rotation of the motor and update the 2D sim accordingly
+    update2dSim(Units.radiansToDegrees(inputs.positionRad / Constants.gearing));
   }
 
   @Override
