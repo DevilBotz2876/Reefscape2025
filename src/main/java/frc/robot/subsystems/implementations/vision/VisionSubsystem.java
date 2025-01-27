@@ -1,7 +1,6 @@
 package frc.robot.subsystems.implementations.vision;
 
 import edu.wpi.first.apriltag.AprilTagFieldLayout;
-import edu.wpi.first.math.VecBuilder;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Pose3d;
 import edu.wpi.first.math.geometry.Rotation2d;
@@ -10,9 +9,6 @@ import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.subsystems.interfaces.Vision;
-import swervelib.SwerveDrive;
-import swervelib.telemetry.SwerveDriveTelemetry;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -58,7 +54,7 @@ public class VisionSubsystem extends SubsystemBase implements Vision {
     private void update() {
       var results = camera.getAllUnreadResults();
       SmartDashboard.putBoolean("getAllUnreadResults", results.isEmpty());
-      if(!results.isEmpty()) {
+      if (!results.isEmpty()) {
         result = results.get(results.size() - 1);
         estimatedRobotPose = poseEstimator.update(result);
       }
@@ -157,8 +153,7 @@ public class VisionSubsystem extends SubsystemBase implements Vision {
     simEnabled = true;
   }
 
-  @Override
-  public void periodic() {
+  public void updatePoseEstimation() {
     if (simEnabled) {
       simVision.update(simPoseSupplier.get());
     }
@@ -192,7 +187,7 @@ public class VisionSubsystem extends SubsystemBase implements Vision {
             visionMeasurementConsumer.add(
                 currentEstimatedRobotPose.get().estimatedPose.toPose2d(),
                 currentEstimatedRobotPose.get().timestampSeconds,
-                VecBuilder.fill(distance / 2, distance / 2, distance / 2));
+                null);
           }
         }
 
@@ -201,25 +196,13 @@ public class VisionSubsystem extends SubsystemBase implements Vision {
         }
       }
     }
+  }
 
-    /*
-      Optional<Double> distance;
-      Optional<Double> yaw;
-      if (debugCurrentTargetId != DevilBotState.getActiveTargetId()) {
-        debugCurrentTargetId = DevilBotState.getActiveTargetId();
-        debugTargetDistance = 0;
-        debugTargetYaw = 0;
-        debugCurrentTargetName = DevilBotState.getTargetName(debugCurrentTargetId);
-      }
-      distance = getDistanceToAprilTag(debugCurrentTargetId);
-      yaw = getYawToAprilTag(debugCurrentTargetId);
-      if (distance.isPresent()) {
-        debugTargetDistance = distance.get();
-      }
-      if (yaw.isPresent()) {
-        debugTargetYaw = yaw.get();
-      }
-    */
+  @Override
+  public void periodic() {
+    if (visionMeasurementConsumer != null) {
+      updatePoseEstimation();
+    }
   }
 
   private PhotonTrackedTarget findAprilTag(int id) {
@@ -302,25 +285,4 @@ public class VisionSubsystem extends SubsystemBase implements Vision {
   public void setVisionMeasurementConsumer(VisionMeasurementConsumer func) {
     visionMeasurementConsumer = func;
   }
-
-  public void updatePoseEstimation(SwerveDrive swerveDrive)
-  {
-    if (SwerveDriveTelemetry.isSimulation && swerveDrive.getSimulationDriveTrainPose().isPresent())
-    {
-      simVision.update(swerveDrive.getSimulationDriveTrainPose().get());
-    }
-    for (VisionCameraImpl camera : cameras)
-    {
-      Optional<EstimatedRobotPose> poseEst = camera.estimatedRobotPose;
-      if(poseEst !=  null) {
-        if (poseEst.isPresent())
-        {
-          var pose = poseEst.get();
-          swerveDrive.addVisionMeasurement(pose.estimatedPose.toPose2d(),
-                                          pose.timestampSeconds);
-        }
-      }
-    }
-  }
-  
 }

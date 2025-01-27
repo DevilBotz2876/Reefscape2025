@@ -193,14 +193,16 @@ public class DriveSwerveYAGSL extends DriveBase {
     Logger.processInputs("Drive", inputs);
 
     swerveDrive.updateOdometry();
-    frc.robot.config.game.reefscape2025.RobotConfig.vision.updatePoseEstimation(swerveDrive);
-
+    frc.robot.config.game.reefscape2025.RobotConfig.vision.updatePoseEstimation();
   }
 
   @Override
   public void addVisionMeasurement(
       Pose2d robotPose, double timestamp, Matrix<N3, N1> visionMeasurementStdDevs) {
-
-    swerveDrive.addVisionMeasurement(robotPose, timestamp, visionMeasurementStdDevs);
+    if (visionMeasurementStdDevs != null) {
+      swerveDrive.addVisionMeasurement(robotPose, timestamp, visionMeasurementStdDevs);
+    } else {
+      swerveDrive.addVisionMeasurement(robotPose, timestamp);
+    }
   }
 }
