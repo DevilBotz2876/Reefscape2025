@@ -39,9 +39,11 @@ public class ClimbCommand extends Command {
   @Override
   public void execute() {
     if (cwSpeedSupplier.get() > 0) {
-      climber.setVolts(cwSpeedSupplier.get());
+      climber.setVolts(cwSpeedSupplier.get()*24);
+      System.out.println("Seting motor volts to: " + cwSpeedSupplier.get()*24);
     } else if (ccwSpeedSupplier.get() > 0) {
-      climber.setVolts(-ccwSpeedSupplier.get());
+      climber.setVolts(-ccwSpeedSupplier.get()*24);
+      System.out.println("Seting motor volts to: " + -ccwSpeedSupplier.get()*24);
     } else {
       climber.setVolts(0);
     }

@@ -9,9 +9,6 @@ import com.revrobotics.spark.config.SparkMaxConfig;
 import frc.robot.io.interfaces.MotorControllerIO;
 
 public class MotorControllerIOSparkMax implements MotorControllerIO {
-
-  private static final double GEAR_RATIO = 1.0;
-  private static final double max_voltage = 24.0;
   
   // define SparkMax Controllers
   private final SparkMax SparkMaxController;

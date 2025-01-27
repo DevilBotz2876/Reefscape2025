@@ -38,9 +38,9 @@ public class RobotConfig {
   }
 
   public RobotConfig(boolean stubDrive, boolean stubAuto, boolean stubVision) {
-    if (stubDrive) {
-      drive = new DriveBase();
-    }
+
+    drive = new DriveBase();
+
 
     if (stubAuto) {
       autoChooser = new SendableChooser<>();

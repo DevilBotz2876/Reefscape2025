@@ -126,15 +126,6 @@ public class ClimberSubsystem extends SubsystemBase implements ClimberPrototype 
     Logger.processInputs("Single Motor", inputs);
   }
 
-
-  // public Command sysIdQuasistatic(SysIdRoutine.Direction direction) {
-  //   return sysId.quasistatic(direction);
-  // }
-
-  // public Command sysIdDynamic(SysIdRoutine.Direction direction) {
-  //   return sysId.dynamic(direction);
-  // }
-
   public Command getTurnOffCommand() {
     return runOnce(() -> turnOff());
   }
@@ -144,10 +135,6 @@ public class ClimberSubsystem extends SubsystemBase implements ClimberPrototype 
     // Create 2D simulated display of a Shooter
     MechanismRoot2d intakePivot2d = mech2d.getRoot("Simple Motor", 15, 50);
 
-    // shooter2d.add(
-    //     intakePivot2d.append(
-    //         new MechanismLigament2d("Wheel Spoke A", 
-    //                               5, 0, 12, new Color8Bit(Color.kGray))));
   }
 
 }
