@@ -48,6 +48,10 @@ public class RobotConfig {
   // private final ShuffleboardTab debugTab = Shuffleboard.getTab("Debug");
   // private final ShuffleboardTab sysIdTestTab = Shuffleboard.getTab("SysId");
 
+  public RobotConfig(boolean stubDrive, boolean stubAuto, boolean stubVision) {
+    this(stubDrive, stubAuto, stubVision, true, true);
+  }
+
   public RobotConfig() {
     this(true, true, true, true, true);
   }
