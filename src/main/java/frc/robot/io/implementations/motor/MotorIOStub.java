@@ -12,7 +12,8 @@ import frc.robot.io.interfaces.MotorIO;
  */
 public class MotorIOStub implements MotorIO {
   private boolean inverted = false;
-  /* Here, we are simulating a Kraken X60 motor with the shaft connected to a mechanism with an arbitrary moment of inertia (0.025) and a arbitrary gearbox ratio (50:1) */
+  // Simulate a Kraken X60 motor with the shaft connected to a mechanism with a moment of inertia
+  // (0.025) and gearbox ratio (50:1)
   private final DCMotorSim motorSim =
       new DCMotorSim(
           LinearSystemId.createDCMotorSystem(DCMotor.getKrakenX60(1), 0.025, 50),

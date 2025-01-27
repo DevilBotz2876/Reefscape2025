@@ -21,9 +21,7 @@ public class MotorIOSparkMax implements MotorIO {
 
   public MotorIOSparkMax(int id) {
     motor = new SparkMax(id, MotorType.kBrushless);
-    // // Set motor to brake mode so shooter stops spinning immediately
-
-    // // Last thing we do is save all settings to flash on sparkmax
+    // Set motor to brake mode so shooter stops spinning immediately
 
     motorConfig
         .inverted(false)
@@ -31,6 +29,7 @@ public class MotorIOSparkMax implements MotorIO {
         .secondaryCurrentLimit(20000)
         .idleMode(SparkBaseConfig.IdleMode.kBrake);
 
+    // Last thing we do is save all settings to flash on sparkmax
     motor.configure(
         motorConfig,
         SparkBase.ResetMode.kResetSafeParameters,

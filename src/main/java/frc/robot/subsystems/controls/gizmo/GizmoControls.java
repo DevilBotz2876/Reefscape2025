@@ -17,10 +17,15 @@ public class GizmoControls {
    * @param controller controller object
    */
   public static void setupController(Gizmo gizmo, CommandXboxController controller) {
-    /* Since Gizmo is explicitly passed in, but we know it is a GizmoSubsystem, we cast it as a Subsystem object so that we can set a default command for controlling it */
+    // Since Gizmo is explicitly passed in, but we know it is a GizmoSubsystem, we cast it as a
+    // Subsystem object so that we can set a default command for controlling it
     SubsystemBase gizmoSubsystem = (SubsystemBase) gizmo;
 
-    /* We use the left/right analog trigger to control the gizmo.  Since the trigger returns a value from [0.0 .. 1.0], we treat the left trigger to set a CCW rotation and the right trigger to set a CW rotation.  We subtract the right trigger value from the left to get the single value in the range of [-1.0 .. 1.0] which is what the GizmoCommand needs.  We also set a deadband of 0.05 so that we can ignore any minor drift when the controls are not being pressed */
+    // We use the left/right analog trigger to control the gizmo.  Since the trigger returns a value
+    // from [0.0 .. 1.0], we treat the left trigger to set a CCW rotation and the right trigger to
+    // set a CW rotation.  We subtract the right trigger value from the left to get the single value
+    // in the range of [-1.0 .. 1.0] which is what the GizmoCommand needs.  We also set a deadband
+    // of 0.05 so that we can ignore any minor drift when the controls are not being pressed
     gizmoSubsystem.setDefaultCommand(
         new GizmoCommand(
             gizmo,
@@ -29,7 +34,8 @@ public class GizmoControls {
                     controller.getRightTriggerAxis() - controller.getLeftTriggerAxis(), 0.05)));
   }
 
-  /* Here, we get a 2D simulation from the Gizmo.  If one has been implemented, we add it to the Smartdashboard so that we can see if using Shuffleboard/AdvantageScope/Etc */
+  // Get a 2D simulation from the Gizmo.  If one has been implemented, we add it to the
+  // Smartdashboard so that we can see if using Shuffleboard/AdvantageScope/Etc */
   public static void setup2dSimulation(Gizmo gizmo) {
     if (gizmo.create2dSim().isPresent()) {
       SmartDashboard.putData("Gizmo 2D", gizmo.create2dSim().get());
