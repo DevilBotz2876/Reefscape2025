@@ -55,7 +55,7 @@ public class RobotContainer {
         robotConfig = new RobotConfigPhoenix();
     }
 
-    configureBindings();
+    robotConfig.configureBindings();
   }
 
   void configureBindings() {
