@@ -22,6 +22,9 @@ public class RobotContainer {
       case "PHOENIX":
         robotConfig = new RobotConfigPhoenix();
         break;
+      case "NEMO":
+        robotConfig = new RobotConfigNemo();
+        break;
       case "UNKNOWN":
       default:
         /* If running simulation, put the robot config you want here */
