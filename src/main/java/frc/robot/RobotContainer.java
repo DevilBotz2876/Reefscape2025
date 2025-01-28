@@ -58,15 +58,6 @@ public class RobotContainer {
     robotConfig.configureBindings();
   }
 
-  void configureBindings() {
-    DriverControls.setupControls();
-    PitControls.setupControls();
-    DebugControls.setupControls();
-    SysIdControls.setupGUI();
-
-
-  }
-
   public Command getAutonomousCommand() {
     return RobotConfig.autoChooser.getSelected();
   }
