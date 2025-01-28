@@ -11,16 +11,7 @@ import java.util.Properties;
 import edu.wpi.first.wpilibj.Preferences;
 import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj2.command.Command;
-
-
-import frc.robot.config.RobotConfig;
-import frc.robot.config.RobotConfigInferno;
-import frc.robot.config.RobotConfigPhoenix;
-import frc.robot.config.RobotConfigSherman;
-import frc.robot.controls.DebugControls;
-import frc.robot.controls.DriverControls;
-import frc.robot.controls.PitControls;
-import frc.robot.controls.SysIdControls;
+import frc.robot.config.game.reefscape2025.*;
 
 
 public class RobotContainer {
@@ -31,9 +22,11 @@ public class RobotContainer {
     String robotName = "UNKNOWN";
 
     // Load robot name from configuration file
+    // Check if the robot is running in simulation
     if (RobotBase.isSimulation()) {
-      // Load robot name from simulation configuration file
+
       Properties simulationProperties = new Properties();
+      
       try (FileInputStream input = new FileInputStream("simulation.properties")) {
         simulationProperties.load(input);
         robotName = simulationProperties.getProperty("robot.name", robotName);
