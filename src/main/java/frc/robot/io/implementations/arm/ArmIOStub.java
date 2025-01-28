@@ -2,7 +2,9 @@ package frc.robot.io.implementations.arm;
 
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.system.plant.DCMotor;
+import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.RobotController;
+import edu.wpi.first.wpilibj.simulation.SingleJointedArmSim;
 import frc.robot.io.interfaces.ArmIO;
 import frc.robot.subsystems.interfaces.Arm;
 
@@ -28,25 +30,24 @@ public class ArmIOStub implements ArmIO {
   // Simulation classes help us simulate what's going on, including gravity.
   // This arm sim represents an arm that can travel from -75 degrees (rotated down front)
   // to 255 degrees (rotated down in the back).
-  // private final SingleJointedArmSim arm =
-  //     new SingleJointedArmSim(
-  //         motorPlant,
-  //         armGearingReduction,
-  //         SingleJointedArmSim.estimateMOI(armLengthInMeters, armMassInKg),
-  //         armLengthInMeters,
-  //         Units.degreesToRadians(minAngleInDegrees),
-  //         Units.degreesToRadians(maxAngleInDegrees),
-  //         true,
-  //         Units.degreesToRadians(minAngleInDegrees),
-  //         VecBuilder.fill(0));
+  private final SingleJointedArmSim arm =
+      new SingleJointedArmSim(
+          motorPlant,
+          armGearingReduction,
+          SingleJointedArmSim.estimateMOI(armLengthInMeters, armMassInKg),
+          armLengthInMeters,
+          Units.degreesToRadians(minAngleInDegrees),
+          Units.degreesToRadians(maxAngleInDegrees),
+          true,
+          Units.degreesToRadians(minAngleInDegrees));
 
   /** Updates the set of loggable inputs. */
   @Override
   public void updateInputs(ArmIOInputs inputs) {
     inputs.appliedVolts = currentVoltage;
-    // inputs.currentAmps = Math.abs(arm.getCurrentDrawAmps());
-    // inputs.positionDegrees = Units.radiansToDegrees(arm.getAngleRads());
-    // inputs.velocityDegrees = Units.radiansToDegrees(arm.getVelocityRadPerSec());
+    inputs.currentAmps = Math.abs(arm.getCurrentDrawAmps());
+    inputs.positionDegrees = Units.radiansToDegrees(arm.getAngleRads());
+    inputs.velocityDegrees = Units.radiansToDegrees(arm.getVelocityRadPerSec());
     inputs.relativePositionDegrees =
         inputs
             .positionDegrees; // In sim, the relative/absolute encoder are identical, so just it to
@@ -59,8 +60,8 @@ public class ArmIOStub implements ArmIO {
                   * RobotController.getBatteryVoltage();
     }
 
-    // arm.setInput(currentVoltage);
-    // arm.update(0.020);
+    arm.setInput(currentVoltage);
+    arm.update(0.020);
   }
 
   /** Run the arm motor at the specified voltage. */

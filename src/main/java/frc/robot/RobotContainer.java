@@ -29,9 +29,7 @@ public class RobotContainer {
       case "UNKNOWN":
       default:
         /* If running simulation, put the robot config you want here */
-        // robotConfig = new RobotConfigInferno();
         robotConfig = new RobotConfigPhoenix();
-        // robotConfig = new RobotConfigSherman();
         // robotConfig = new RobotConfigStub();
     }
 

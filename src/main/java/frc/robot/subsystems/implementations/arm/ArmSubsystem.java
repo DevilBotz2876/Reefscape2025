@@ -5,11 +5,7 @@ import static edu.wpi.first.units.Units.Volts;
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.controller.ArmFeedforward;
 import edu.wpi.first.math.trajectory.TrapezoidProfile;
-import edu.wpi.first.wpilibj.smartdashboard.Mechanism2d;
 import edu.wpi.first.wpilibj.smartdashboard.MechanismLigament2d;
-import edu.wpi.first.wpilibj.smartdashboard.MechanismRoot2d;
-import edu.wpi.first.wpilibj.util.Color;
-import edu.wpi.first.wpilibj.util.Color8Bit;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
 import frc.robot.io.interfaces.ArmIO;
@@ -189,6 +185,7 @@ public class ArmSubsystem extends TrapezoidProfileSubsystem2876 implements Arm {
   }
 
   // Sets the voltage to volts. the volts value is -12 to 12
+  @Override
   public void runVoltage(double volts) {
     targetVoltage = voltageSafety(volts);
     disable();
@@ -231,6 +228,7 @@ public class ArmSubsystem extends TrapezoidProfileSubsystem2876 implements Arm {
     }
 
     if (null != arm2d) {
+
       arm2d.setAngle(inputs.positionDegrees + armAngle2dOffset);
     }
   }
@@ -292,22 +290,13 @@ public class ArmSubsystem extends TrapezoidProfileSubsystem2876 implements Arm {
   }
 
   @Override
-  public void add2dSim(Mechanism2d mech2d) {
-    MechanismRoot2d armPivot2d = mech2d.getRoot("Arm Pivot", 15, 10);
-    armPivot2d.append(new MechanismLigament2d("Arm Tower", 10, -90));
-    arm2d =
-        armPivot2d.append(
-            new MechanismLigament2d(
-                "Arm",
-                30,
-                inputs.positionDegrees + armAngle2dOffset,
-                6,
-                new Color8Bit(Color.kYellow)));
-  }
-
-  @Override
   public boolean isAtSetpoint() {
     return (Math.abs(currentSetpointDegrees - goalSetpointDegrees)
         < ArmSubsystem.Constants.pidAngleErrorInDegrees);
+  }
+
+  @Override
+  public void setLigament(MechanismLigament2d armLigament2d) {
+    this.arm2d = armLigament2d;
   }
 }
