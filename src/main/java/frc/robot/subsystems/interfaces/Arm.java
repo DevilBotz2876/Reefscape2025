@@ -8,7 +8,7 @@ public interface Arm extends Subsystem {
   public static class Constants {
     public static double defaultSpeedInVolts = 1.0;
 
-    public static double maxAngleInDegrees = 90.0;
+    public static double maxAngleInDegrees = 135.0;
     public static double minAngleInDegrees = 0.0;
 
     public static double maxVelocityInDegreesPerSecond = 45;

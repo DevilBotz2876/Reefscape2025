@@ -136,7 +136,7 @@ public class RobotConfig {
 
     MechanismLigament2d armLigament2d =
         elevatorLigament2d.append(
-            new MechanismLigament2d("Arm", 10, 90, 6, new Color8Bit(Color.kYellow)));
+            new MechanismLigament2d("Arm", 10, 0, 6, new Color8Bit(Color.kYellow)));
     arm.setLigament(armLigament2d);
 
     SmartDashboard.putData("2D Simulation", mech2d);
