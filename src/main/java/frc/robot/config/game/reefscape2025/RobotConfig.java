@@ -118,9 +118,9 @@ public class RobotConfig {
 
     VisionControls.addGUI(vision, driverTab);
 
-    ElevatorControls.setupController(elevator, assistController);
+    ElevatorControls.setupController(elevator, mainController);
 
-    ArmControls.setupController(arm, assistController);
+    ArmControls.setupController(arm, mainController);
 
     setupSimGUI();
   }
