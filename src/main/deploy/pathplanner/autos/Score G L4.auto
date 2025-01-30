@@ -17,9 +17,22 @@
           }
         },
         {
-          "type": "named",
+          "type": "parallel",
           "data": {
-            "name": "Score L4"
+            "commands": [
+              {
+                "type": "named",
+                "data": {
+                  "name": "Move Arm"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "Move Elevator"
+                }
+              }
+            ]
           }
         }
       ]

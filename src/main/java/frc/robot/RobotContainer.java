@@ -7,10 +7,16 @@ package frc.robot;
 import edu.wpi.first.wpilibj.Preferences;
 import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj2.command.Command;
+import frc.robot.commands.common.arm.ArmToPosition;
+import frc.robot.commands.common.elevator.ElevatorCommand;
 import frc.robot.config.game.reefscape2025.*;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.Properties;
+
+import frc.robot.subsystems.implementations.arm.ArmSubsystem;
+import frc.robot.subsystems.interfaces.Arm;
+import com.pathplanner.lib.auto.NamedCommands;
 
 public class RobotContainer {
   public final RobotConfig robotConfig;
