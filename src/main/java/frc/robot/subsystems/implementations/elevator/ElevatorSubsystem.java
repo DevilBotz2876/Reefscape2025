@@ -1,5 +1,6 @@
 package frc.robot.subsystems.implementations.elevator;
 
+import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.wpilibj.smartdashboard.MechanismLigament2d;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.io.interfaces.ElevatorIO;
@@ -15,6 +16,8 @@ public class ElevatorSubsystem extends SubsystemBase implements Elevator {
   private MechanismLigament2d elevator2d = null;
   private final double elevatorLigament2dScale = 40;
   private final double elevatorLigament2doffset = 0.05;
+
+  private double targetMeters = 0.0;
 
   public ElevatorSubsystem(ElevatorIO io) {
     this.io = io;
@@ -38,8 +41,7 @@ public class ElevatorSubsystem extends SubsystemBase implements Elevator {
 
   @Override
   public double getTargetPosition() {
-    // TODO Auto-generated method stub
-    throw new UnsupportedOperationException("Unimplemented method 'getTargetPosition'");
+    return this.targetMeters;
   }
 
   @Override
@@ -59,8 +61,12 @@ public class ElevatorSubsystem extends SubsystemBase implements Elevator {
 
   @Override
   public void setPosition(double meters) {
-    // TODO Auto-generated method stub
-    throw new UnsupportedOperationException("Unimplemented method 'setPosition'");
+    meters =
+        MathUtil.clamp(
+            meters, Elevator.Constants.minPositionInMeters, Elevator.Constants.maxPositionInMeters);
+    this.targetMeters = meters;
+
+    io.setPosition(meters);
   }
 
   @Override

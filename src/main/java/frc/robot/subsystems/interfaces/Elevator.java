@@ -11,15 +11,19 @@ public interface Elevator extends Subsystem {
     public static double maxVelocityInDegreesPerSecond = 45;
     public static double maxAccelerationInDegreesPerSecondSquared = 120;
 
-    public static double pidKp = 0.1;
+    public static double maxVelocity = 2.45;
+    public static double maxAcceleration = 2.45;
+    public static double pidDt = 0.02;
+
+    public static double pidKp = 5.0;
     public static double pidKi = 0.0;
     public static double pidKd = 0.0;
     public static double pidTimeoutInSeconds = 3.0;
 
     public static double ffKs = 0.0;
-    public static double ffKv = 0.0;
+    public static double ffKv = 0.762;
     public static double ffKa = 0.0;
-    public static double ffKg = 0.1;
+    public static double ffKg = 0.762;
   }
 
   /** runs the elevator at a voltage. */
