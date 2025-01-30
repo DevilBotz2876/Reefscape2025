@@ -27,7 +27,7 @@ import frc.robot.subsystems.controls.elevator.ElevatorControls;
 import frc.robot.subsystems.controls.vision.VisionControls;
 import frc.robot.subsystems.implementations.arm.ArmSubsystem;
 import frc.robot.subsystems.implementations.drive.DriveBase;
-import frc.robot.subsystems.implementations.elevator.ElevatorSubsytem;
+import frc.robot.subsystems.implementations.elevator.ElevatorSubsystem;
 import frc.robot.subsystems.implementations.vision.VisionSubsystem;
 import frc.robot.subsystems.interfaces.Vision.Camera;
 
@@ -36,7 +36,7 @@ public class RobotConfig {
   public static DriveBase drive;
   public static SendableChooser<Command> autoChooser;
   public static VisionSubsystem vision;
-  public static ElevatorSubsytem elevator;
+  public static ElevatorSubsystem elevator;
   public static ArmSubsystem arm;
 
   // Controls
@@ -97,7 +97,7 @@ public class RobotConfig {
     }
 
     if (stubElevator) {
-      elevator = new ElevatorSubsytem(new ElevatorIOStub());
+      elevator = new ElevatorSubsystem(new ElevatorIOStub());
     }
 
     if (stubArm) {

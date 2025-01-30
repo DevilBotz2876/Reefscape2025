@@ -7,7 +7,7 @@ import frc.robot.io.interfaces.ElevatorIOInputsAutoLogged;
 import frc.robot.subsystems.interfaces.Elevator;
 import org.littletonrobotics.junction.Logger;
 
-public class ElevatorSubsytem extends SubsystemBase implements Elevator {
+public class ElevatorSubsystem extends SubsystemBase implements Elevator {
 
   private final ElevatorIO io;
   private final ElevatorIOInputsAutoLogged inputs = new ElevatorIOInputsAutoLogged();
@@ -16,7 +16,7 @@ public class ElevatorSubsytem extends SubsystemBase implements Elevator {
   private final double elevatorLigament2dScale = 40;
   private final double elevatorLigament2doffset = 0.05;
 
-  public ElevatorSubsytem(ElevatorIO io) {
+  public ElevatorSubsystem(ElevatorIO io) {
     this.io = io;
   }
 
