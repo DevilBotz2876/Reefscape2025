@@ -76,8 +76,7 @@ public class ElevatorSubsystem extends SubsystemBase implements Elevator {
 
   @Override
   public boolean isAtSetpoint() {
-    // TODO Auto-generated method stub
-    throw new UnsupportedOperationException("Unimplemented method 'isAtSetpoint'");
+    return Math.abs(targetMeters - inputs.positionMeters) <= Elevator.Constants.pidErrorInMeters;
   }
 
   @Override

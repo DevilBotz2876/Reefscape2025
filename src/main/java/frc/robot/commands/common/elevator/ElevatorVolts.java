@@ -7,11 +7,11 @@ import java.util.function.DoubleSupplier;
 
 public class ElevatorVolts extends Command {
   private final Elevator elevator;
-  private DoubleSupplier speed;
+  private DoubleSupplier volts;
 
-  public ElevatorVolts(Elevator elevator, DoubleSupplier speed) {
+  public ElevatorVolts(Elevator elevator, DoubleSupplier volts) {
     this.elevator = elevator;
-    this.speed = speed;
+    this.volts = volts;
 
     addRequirements((Subsystem) elevator);
   }
@@ -21,7 +21,9 @@ public class ElevatorVolts extends Command {
 
   @Override
   public void execute() {
-    double volts = speed.getAsDouble() * 5;
-    elevator.runVoltage(volts);
+    double volts = this.volts.getAsDouble();
+    // if(volts != 0.0) {
+      elevator.runVoltage(volts);
+    // }
   }
 }

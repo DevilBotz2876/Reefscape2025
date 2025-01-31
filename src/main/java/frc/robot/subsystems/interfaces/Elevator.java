@@ -19,6 +19,7 @@ public interface Elevator extends Subsystem {
     public static double pidKi = 0.0;
     public static double pidKd = 0.0;
     public static double pidTimeoutInSeconds = 3.0;
+    public static double pidErrorInMeters = 2.0;
 
     public static double ffKs = 0.0;
     public static double ffKv = 0.762;
