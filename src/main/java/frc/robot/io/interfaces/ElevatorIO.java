@@ -21,5 +21,5 @@ public interface ElevatorIO {
   public default void setVoltage(double volts) {}
 
   /** sets of the position of the elevator in meters */
-  public default void setPosition(double meters, double ffVolts) {}
+  public default void setPosition(double meters) {}
 }
