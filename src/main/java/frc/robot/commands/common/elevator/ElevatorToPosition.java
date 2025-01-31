@@ -3,7 +3,6 @@ package frc.robot.commands.common.elevator;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.subsystems.interfaces.Elevator;
-
 import java.util.function.DoubleSupplier;
 
 public class ElevatorToPosition extends Command {

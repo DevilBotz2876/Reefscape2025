@@ -23,7 +23,7 @@ public class ElevatorVolts extends Command {
   public void execute() {
     double volts = this.volts.getAsDouble();
     // if(volts != 0.0) {
-      elevator.runVoltage(volts);
+    elevator.runVoltage(volts);
     // }
   }
 }
