@@ -11,6 +11,7 @@ public interface Elevator extends Subsystem {
     public static double maxVelocityInDegreesPerSecond = 45;
     public static double maxAccelerationInDegreesPerSecondSquared = 120;
 
+    // PID and FF values from the wpi elevatorsim example
     public static double maxVelocity = 2.45;
     public static double maxAcceleration = 2.45;
     public static double pidDt = 0.02;

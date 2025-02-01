@@ -6,6 +6,8 @@ import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.subsystems.interfaces.Elevator;
 
 public class ElevatorControls {
+  // UP POV = Up elevator
+  // DOWN POV = Down elevator
   public static void setupController(Elevator elevator, CommandXboxController controller) {
     SubsystemBase elevatorSubsystem = (SubsystemBase) elevator;
     controller
