@@ -14,11 +14,13 @@ frc.robot.io.implementations.led
 frc.robot.io.implementations.motor
 frc.robot.io.implementations.shooter
 frc.robot.io.interfaces
+frc.robot.subsystems.controls.algae
 frc.robot.subsystems.controls.arm
 frc.robot.subsystems.controls.drive
 frc.robot.subsystems.controls.elevator
 frc.robot.subsystems.controls.gizmo
 frc.robot.subsystems.controls.vision
+frc.robot.subsystems.implementations.algae
 frc.robot.subsystems.implementations.arm
 frc.robot.subsystems.implementations.climber
 frc.robot.subsystems.implementations.drive
