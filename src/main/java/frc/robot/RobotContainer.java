@@ -42,6 +42,12 @@ public class RobotContainer {
       case "PHOENIX":
         robotConfig = new RobotConfigPhoenix();
         break;
+      case "NEMO":
+        robotConfig = new RobotConfigNemo();
+        break;
+      case "STUB":
+        robotConfig = new RobotConfigStub();
+        break;
       default:
         System.err.println("Failed to determine robot name.");
         System.exit(1);
