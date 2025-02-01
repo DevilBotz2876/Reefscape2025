@@ -33,7 +33,7 @@ import frc.robot.subsystems.controls.vision.VisionControls;
 import frc.robot.subsystems.implementations.algae.AlgaeSubsystem;
 import frc.robot.subsystems.implementations.arm.ArmSubsystem;
 import frc.robot.subsystems.implementations.drive.DriveBase;
-import frc.robot.subsystems.implementations.elevator.ElevatorSubsytem;
+import frc.robot.subsystems.implementations.elevator.ElevatorSubsystem;
 import frc.robot.subsystems.implementations.vision.VisionSubsystem;
 import frc.robot.subsystems.implementations.intake.IntakeSubsystem;
 import frc.robot.subsystems.interfaces.Vision.Camera;
@@ -43,7 +43,7 @@ public class RobotConfig {
   public static DriveBase drive;
   public static SendableChooser<Command> autoChooser;
   public static VisionSubsystem vision;
-  public static ElevatorSubsytem elevator;
+  public static ElevatorSubsystem elevator;
   public static ArmSubsystem arm;
   public static AlgaeSubsystem algaeSubsystem;
 
@@ -110,7 +110,7 @@ public class RobotConfig {
     }
 
     if (stubElevator) {
-      elevator = new ElevatorSubsytem(new ElevatorIOStub());
+      elevator = new ElevatorSubsystem(new ElevatorIOStub());
     }
 
     if (stubArm) {
@@ -135,9 +135,9 @@ public class RobotConfig {
 
     VisionControls.addGUI(vision, driverTab);
 
-    ElevatorControls.setupController(elevator, assistController);
+    ElevatorControls.setupController(elevator, mainController);
 
-    ArmControls.setupController(arm, assistController);
+    ArmControls.setupController(arm, mainController);
 
     AlgaeControls.setupController(algaeSubsystem, mainController);
 
@@ -157,7 +157,7 @@ public class RobotConfig {
 
     MechanismLigament2d armLigament2d =
         elevatorLigament2d.append(
-            new MechanismLigament2d("Arm", 10, 90, 6, new Color8Bit(Color.kYellow)));
+            new MechanismLigament2d("Arm", 10, 0, 6, new Color8Bit(Color.kYellow)));
     arm.setLigament(armLigament2d);
 
     MechanismLigament2d algaeArmLigament2d =
