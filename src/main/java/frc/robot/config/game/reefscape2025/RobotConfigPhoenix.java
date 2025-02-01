@@ -7,7 +7,7 @@ import edu.wpi.first.math.geometry.Transform3d;
 import edu.wpi.first.math.geometry.Translation3d;
 import edu.wpi.first.math.util.Units;
 import frc.robot.commands.common.arm.ArmToPosition;
-import frc.robot.commands.common.elevator.ElevatorCommand;
+import frc.robot.commands.common.elevator.ElevatorToPosition;
 import frc.robot.subsystems.implementations.drive.DriveBase;
 import frc.robot.subsystems.implementations.drive.DriveSwerveYAGSL;
 import frc.robot.subsystems.interfaces.Drive;
@@ -33,8 +33,8 @@ public class RobotConfigPhoenix extends RobotConfig {
                 new Rotation3d(0, Units.degreesToRadians(-20), Units.degreesToRadians(0)))));
 
     NamedCommands.registerCommand(
-        "Move Elevator", new ElevatorCommand(RobotConfig.elevator, () -> 1.0).withTimeout(0.05));
-    NamedCommands.registerCommand("Move Arm", new ArmToPosition(RobotConfig.arm, () -> 45.0));
+        "Move Elevator", new ElevatorToPosition(RobotConfig.elevator, () -> 1.8288));
+    NamedCommands.registerCommand("Move Arm", new ArmToPosition(RobotConfig.arm, () -> 135.0));
     autoChooser = AutoBuilder.buildAutoChooser("Sit Still");
   }
 }
