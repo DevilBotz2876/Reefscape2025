@@ -30,8 +30,13 @@ public class ArmIOStub implements ArmIO {
   // Simulation classes help us simulate what's going on, including gravity.
   // This arm sim represents an arm that can travel from -75 degrees (rotated down front)
   // to 255 degrees (rotated down in the back).
-  private final SingleJointedArmSim arm =
-      new SingleJointedArmSim(
+  private final SingleJointedArmSim arm;
+
+    public ArmIOStub(double maxDegrees, double minDegrees){
+      minAngleInDegrees = minDegrees;
+      maxAngleInDegrees = maxDegrees;
+
+      arm = new SingleJointedArmSim(
           motorPlant,
           armGearingReduction,
           SingleJointedArmSim.estimateMOI(armLengthInMeters, armMassInKg),
@@ -40,6 +45,7 @@ public class ArmIOStub implements ArmIO {
           Units.degreesToRadians(maxAngleInDegrees),
           true,
           Units.degreesToRadians(minAngleInDegrees));
+    }
 
   /** Updates the set of loggable inputs. */
   @Override

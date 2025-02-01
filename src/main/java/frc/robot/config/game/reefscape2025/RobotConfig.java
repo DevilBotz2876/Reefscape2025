@@ -36,6 +36,8 @@ import frc.robot.subsystems.implementations.drive.DriveBase;
 import frc.robot.subsystems.implementations.elevator.ElevatorSubsystem;
 import frc.robot.subsystems.implementations.vision.VisionSubsystem;
 import frc.robot.subsystems.implementations.intake.IntakeSubsystem;
+import frc.robot.subsystems.interfaces.Algae;
+import frc.robot.subsystems.interfaces.Arm;
 import frc.robot.subsystems.interfaces.Vision.Camera;
 
 /* Put all constants here with reasonable defaults */
@@ -114,11 +116,11 @@ public class RobotConfig {
     }
 
     if (stubArm) {
-      arm = new ArmSubsystem(new ArmIOStub());
+      arm = new ArmSubsystem(new ArmIOStub(Arm.Constants.maxAngleInDegrees, Arm.Constants.minAngleInDegrees));
     }
 
     if(stubAlgaeSubsystem) {
-        algaeSubsystem = new AlgaeSubsystem(new IntakeIOStub(), new ArmIOStub());
+        algaeSubsystem = new AlgaeSubsystem(new IntakeIOStub(), new ArmIOStub(Algae.Constants.maxArmAngleDegrees, Algae.Constants.minArmAngleDegrees));
     }
   }
 
@@ -162,21 +164,21 @@ public class RobotConfig {
 
     MechanismLigament2d algaeArmLigament2d =
         algaeRoot.append(
-                new MechanismLigament2d("Algae Arm", 20, 90, 6, new Color8Bit(Color.kRed)));
+                new MechanismLigament2d("Algae Arm", 10, 90, 6, new Color8Bit(Color.kOrange)));
 
     ArrayList<MechanismLigament2d> intakeLigaments2d = new ArrayList<MechanismLigament2d>();
     intakeLigaments2d.add(
       algaeArmLigament2d.append(
-            new MechanismLigament2d("Wheel Spoke A", 5, 0, 6, new Color8Bit(Color.kGray))));
+            new MechanismLigament2d("Wheel Spoke A", 2.5, 0, 6, new Color8Bit(Color.kGray))));
     intakeLigaments2d.add(
       algaeArmLigament2d.append(
-            new MechanismLigament2d("Wheel Spoke B", 5, 90, 6, new Color8Bit(Color.kRed))));
+            new MechanismLigament2d("Wheel Spoke B", 2.5, 90, 6, new Color8Bit(Color.kRed))));
     intakeLigaments2d.add(
       algaeArmLigament2d.append(
-            new MechanismLigament2d("Wheel Spoke C", 5, 180, 6, new Color8Bit(Color.kGray))));
+            new MechanismLigament2d("Wheel Spoke C", 2.5, 180, 6, new Color8Bit(Color.kGray))));
     intakeLigaments2d.add(
       algaeArmLigament2d.append(
-            new MechanismLigament2d("Wheel Spoke D", 5, 270, 6, new Color8Bit(Color.kRed))));
+            new MechanismLigament2d("Wheel Spoke D", 2.5, 270, 6, new Color8Bit(Color.kRed))));
 
 
     algaeSubsystem.setLigament(algaeArmLigament2d, intakeLigaments2d);
