@@ -13,7 +13,7 @@
         {
           "type": "path",
           "data": {
-            "pathName": "Start to G"
+            "pathName": "Start to Near G"
           }
         },
         {
@@ -33,6 +33,12 @@
                 }
               }
             ]
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Go Straight 0.3 Meter"
           }
         }
       ]

@@ -7,6 +7,7 @@ import edu.wpi.first.math.geometry.Transform3d;
 import edu.wpi.first.math.geometry.Translation3d;
 import edu.wpi.first.math.util.Units;
 import frc.robot.commands.common.arm.ArmToPosition;
+import frc.robot.commands.common.drive.DriveStraightPID;
 import frc.robot.commands.common.elevator.ElevatorToPosition;
 import frc.robot.subsystems.implementations.drive.DriveBase;
 import frc.robot.subsystems.implementations.drive.DriveSwerveYAGSL;
@@ -35,6 +36,8 @@ public class RobotConfigPhoenix extends RobotConfig {
     NamedCommands.registerCommand(
         "Move Elevator", new ElevatorToPosition(RobotConfig.elevator, () -> 1.8288));
     NamedCommands.registerCommand("Move Arm", new ArmToPosition(RobotConfig.arm, () -> 135.0));
+    NamedCommands.registerCommand("Go Straight 1 Meter", new DriveStraightPID(RobotConfig.drive, 1,1));
+    NamedCommands.registerCommand("Go Straight 0.3 Meter", new DriveStraightPID(RobotConfig.drive, 0.3,1));
     autoChooser = AutoBuilder.buildAutoChooser("Sit Still");
   }
 }
