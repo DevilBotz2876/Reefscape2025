@@ -24,6 +24,7 @@ import frc.robot.io.implementations.elevator.ElevatorIOStub;
 import frc.robot.io.implementations.intake.IntakeIOStub;
 import frc.robot.subsystems.controls.algae.AlgaeControls;
 import frc.robot.subsystems.controls.arm.ArmControls;
+import frc.robot.subsystems.controls.arm.ClimberControls;
 import frc.robot.subsystems.controls.drive.DriveControls;
 import frc.robot.subsystems.controls.elevator.ElevatorControls;
 import frc.robot.subsystems.controls.vision.VisionControls;
@@ -45,6 +46,7 @@ public class RobotConfig {
   public static ElevatorSubsystem elevator;
   public static ArmSubsystem arm;
   public static AlgaeSubsystem algaeSubsystem;
+  public static ArmSubsystem climber;
 
   // Controls
   public CommandXboxController mainController = new CommandXboxController(0);
@@ -56,7 +58,7 @@ public class RobotConfig {
   // private final ShuffleboardTab sysIdTestTab = Shuffleboard.getTab("SysId");
 
   public RobotConfig(boolean stubDrive, boolean stubAuto, boolean stubVision) {
-    this(stubDrive, stubAuto, stubVision, true, true, true);
+    this(stubDrive, stubAuto, stubVision, true, true, true, true);
   }
 
   public RobotConfig(
@@ -65,11 +67,11 @@ public class RobotConfig {
       boolean stubVision,
       boolean stubElevator,
       boolean stubArm) {
-    this(stubDrive, stubAuto, stubVision, stubElevator, stubArm, true);
+    this(stubDrive, stubAuto, stubVision, stubElevator, stubArm, true, true);
   }
 
   public RobotConfig() {
-    this(true, true, true, true, true, true);
+    this(true, true, true, true, true, true, true);
   }
 
   public RobotConfig(
@@ -78,7 +80,8 @@ public class RobotConfig {
       boolean stubVision,
       boolean stubElevator,
       boolean stubArm,
-      boolean stubAlgaeSubsystem) {
+      boolean stubAlgaeSubsystem,
+      boolean stubClimber) {
     if (stubDrive) {
       drive = new DriveBase();
     }
@@ -130,6 +133,12 @@ public class RobotConfig {
               new ArmIOStub(
                   Algae.Constants.maxArmAngleDegrees, Algae.Constants.minArmAngleDegrees));
     }
+
+    if (stubClimber) {
+      climber = 
+        new ArmSubsystem(
+            new ArmIOStub(Arm.Constants.maxAngleInDegrees, Arm.Constants.minAngleInDegrees));
+    }
   }
 
   public void configureBindings() {
@@ -151,6 +160,8 @@ public class RobotConfig {
 
     AlgaeControls.setupController(algaeSubsystem, mainController);
 
+    ClimberControls.setupController(climber, mainController);
+    
     setupSimGUI();
   }
 
@@ -160,6 +171,8 @@ public class RobotConfig {
 
     MechanismRoot2d algaeRoot = mech2d.getRoot("algae", 20, 0);
 
+    MechanismRoot2d climberRoot = mech2d.getRoot("climber", 35, 5);
+
     MechanismLigament2d elevatorLigament2d =
         coralRoot.append(
             new MechanismLigament2d("Elevator", 5, 90, 10, new Color8Bit(Color.kLightSlateGray)));
@@ -168,7 +181,7 @@ public class RobotConfig {
     MechanismLigament2d armLigament2d =
         elevatorLigament2d.append(
             new MechanismLigament2d("Arm", 10, 0, 6, new Color8Bit(Color.kYellow)));
-    arm.setLigament(armLigament2d);
+    arm.setLigament(armLigament2d, 180);
 
     MechanismLigament2d algaeArmLigament2d =
         algaeRoot.append(
@@ -189,6 +202,12 @@ public class RobotConfig {
             new MechanismLigament2d("Wheel Spoke D", 2.5, 270, 6, new Color8Bit(Color.kRed))));
 
     algaeSubsystem.setLigament(algaeArmLigament2d, intakeLigaments2d);
+
+    MechanismLigament2d climberLigament2d =
+        climberRoot.append(
+            new MechanismLigament2d("Climber", 10, 0, 6, new Color8Bit(Color.kAqua)));
+    climber.setLigament(climberLigament2d, 0);
+
 
     SmartDashboard.putData("2D Simulation", mech2d);
   }

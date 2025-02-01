@@ -43,7 +43,7 @@ public interface Arm extends Subsystem {
 
   public Command getStowCommand();
 
-  public default void setLigament(MechanismLigament2d ligament2d) {}
+  public default void setLigament(MechanismLigament2d ligament2d, double offset) {}
 
   public default void runVoltage(double volts) {}
 }
