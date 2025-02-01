@@ -43,11 +43,12 @@ public class DriveSwerveYAGSL extends DriveBase {
   public DriveSwerveYAGSL(String configPath) {
     swerveJsonDirectory = new File(Filesystem.getDeployDirectory(), configPath);
 
-    // SwerveDriveTelemetry.verbosity = TelemetryVerbosity.HIGH;
+    // \SwerveDriveTelemetry.verbosity = TelemetryVerbosity.HIGH;
     try {
       swerveDrive =
           new SwerveParser(swerveJsonDirectory)
               .createSwerveDrive(Drive.Constants.maxVelocityMetersPerSec);
+      swerveDrive.setHeadingCorrection(!SwerveDriveTelemetry.isSimulation);
       swerveDrive.setCosineCompensator(!SwerveDriveTelemetry.isSimulation);
 
       swerveDrive
@@ -175,6 +176,11 @@ public class DriveSwerveYAGSL extends DriveBase {
   @Override
   public Pose2d getPose() {
     return swerveDrive.getPose();
+  }
+
+  @Override
+  public void setPose(Pose2d pose) {
+    swerveDrive.resetOdometry(pose);
   }
 
   @Override
