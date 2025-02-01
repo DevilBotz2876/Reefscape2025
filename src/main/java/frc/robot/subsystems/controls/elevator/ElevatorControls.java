@@ -13,16 +13,19 @@ public class ElevatorControls {
     Trigger elevatorUp = new Trigger(() -> controller.pov(0).getAsBoolean());
     elevatorUp.onTrue(new InstantCommand(() -> {
       elevator.runVoltage(6.0);
-    }));
+    })).onFalse(new InstantCommand(() -> {
+      if(controller.povCenter().getAsBoolean()) {
+        elevator.runVoltage(0.0);
+      }
+    }));;
 
     Trigger elevatorDown = new Trigger(() -> controller.pov(180).getAsBoolean());
     elevatorDown.onTrue(new InstantCommand(() -> {
       elevator.runVoltage(-1.0);
-    }));
-
-    Trigger elevatorNothing = new Trigger(() -> controller.povCenter().getAsBoolean());
-    elevatorNothing.onTrue(new InstantCommand(() -> {
-      elevator.runVoltage(0.0);
+    })).onFalse(new InstantCommand(() -> {
+      if(controller.povCenter().getAsBoolean()) {
+        elevator.runVoltage(0.0);
+      }
     }));
   }
 }
