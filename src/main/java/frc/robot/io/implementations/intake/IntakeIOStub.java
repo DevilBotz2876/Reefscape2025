@@ -35,7 +35,7 @@ public class IntakeIOStub implements IntakeIO {
     inputs.velocityRadPerSec = sim.getAngularVelocityRadPerSec();
     inputs.appliedVolts = appliedVolts;
     inputs.limitSwitchIntake = limitSwitchState;
-    inputs.current =  sim.getCurrentDrawAmps();
+    inputs.current = sim.getCurrentDrawAmps();
 
     // Simulate intake/shooter limit switches
     if (appliedVolts != 0.0) {

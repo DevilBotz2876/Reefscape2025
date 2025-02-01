@@ -32,20 +32,21 @@ public class ArmIOStub implements ArmIO {
   // to 255 degrees (rotated down in the back).
   private final SingleJointedArmSim arm;
 
-    public ArmIOStub(double maxDegrees, double minDegrees){
-      minAngleInDegrees = minDegrees;
-      maxAngleInDegrees = maxDegrees;
+  public ArmIOStub(double maxDegrees, double minDegrees) {
+    minAngleInDegrees = minDegrees;
+    maxAngleInDegrees = maxDegrees;
 
-      arm = new SingleJointedArmSim(
-          motorPlant,
-          armGearingReduction,
-          SingleJointedArmSim.estimateMOI(armLengthInMeters, armMassInKg),
-          armLengthInMeters,
-          Units.degreesToRadians(minAngleInDegrees),
-          Units.degreesToRadians(maxAngleInDegrees),
-          true,
-          Units.degreesToRadians(minAngleInDegrees));
-    }
+    arm =
+        new SingleJointedArmSim(
+            motorPlant,
+            armGearingReduction,
+            SingleJointedArmSim.estimateMOI(armLengthInMeters, armMassInKg),
+            armLengthInMeters,
+            Units.degreesToRadians(minAngleInDegrees),
+            Units.degreesToRadians(maxAngleInDegrees),
+            true,
+            Units.degreesToRadians(minAngleInDegrees));
+  }
 
   /** Updates the set of loggable inputs. */
   @Override
