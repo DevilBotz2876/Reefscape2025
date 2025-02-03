@@ -1,11 +1,6 @@
 package frc.robot.config.game.reefscape2025;
 
-import edu.wpi.first.apriltag.AprilTagFieldLayout;
-import edu.wpi.first.apriltag.AprilTagFields;
-import edu.wpi.first.math.geometry.Rotation3d;
-import edu.wpi.first.math.geometry.Transform3d;
-import edu.wpi.first.math.geometry.Translation3d;
-import edu.wpi.first.math.util.Units;
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj.smartdashboard.Mechanism2d;
@@ -34,8 +29,8 @@ import frc.robot.subsystems.implementations.elevator.ElevatorSubsystem;
 import frc.robot.subsystems.implementations.vision.VisionSubsystem;
 import frc.robot.subsystems.interfaces.Algae;
 import frc.robot.subsystems.interfaces.Arm;
-import frc.robot.subsystems.interfaces.Vision.Camera;
 import java.util.ArrayList;
+import java.util.function.Supplier;
 
 /* Put all constants here with reasonable defaults */
 public class RobotConfig {
@@ -72,6 +67,37 @@ public class RobotConfig {
     this(true, true, true, true, true, true);
   }
 
+  private void initializeSubsystem(
+      Object subsystem, String name, boolean stub, Supplier<Object> initializer) {
+    if (stub) {
+      if (subsystem != null) {
+        DriverStation.reportError(
+            "Subsystem '"
+                + name
+                + "' is already initialized but is being overwritten by stubbed logic! The robot may not operate as expected.",
+            false);
+      }
+      subsystem = initializer.get();
+    } else if (subsystem == null) {
+      DriverStation.reportError(
+          "Subsystem '" + name + "' is not initialized. Expect Failures", false);
+    }
+  }
+
+  private void initializeAutoChooser(boolean stubAuto) {
+    if (stubAuto) {
+      if (autoChooser != null) {
+        DriverStation.reportError(
+            "Command 'Auto Chooser' is already initialized but is being overwritten by stubbed logic! The robot may not operate as expected.",
+            false);
+      }
+      autoChooser = new SendableChooser<>();
+      autoChooser.setDefaultOption("No Auto Routines Specified", Commands.none());
+    } else if (autoChooser == null) {
+      DriverStation.reportError("Command 'Auto Chooser' is not initialized", false);
+    }
+  }
+
   public RobotConfig(
       boolean stubDrive,
       boolean stubAuto,
@@ -79,57 +105,39 @@ public class RobotConfig {
       boolean stubElevator,
       boolean stubArm,
       boolean stubAlgaeSubsystem) {
-    if (stubDrive) {
-      drive = new DriveBase();
-    }
+    // Initialize drive subsystem
+    initializeSubsystem(drive, "drive", stubDrive, DriveBase::new);
 
-    if (stubAuto) {
-      autoChooser = new SendableChooser<>();
-      autoChooser.setDefaultOption("No Auto Routines Specified", Commands.none());
-    }
+    // Initialize auto chooser
+    initializeAutoChooser(stubAuto);
 
-    vision = new VisionSubsystem(AprilTagFieldLayout.loadField(AprilTagFields.k2025Reefscape));
+    // Initialize elevator subsystem
+    initializeSubsystem(
+        elevator, "elevator", stubElevator, () -> new ElevatorSubsystem(new ElevatorIOStub()));
 
-    if (stubVision) {
-      if (Robot.isSimulation()) {
-        vision.addCamera(
-            new Camera(
-                "photonvision",
-                new Transform3d(
-                    new Translation3d(-0.221, 0, .164),
-                    new Rotation3d(0, Units.degreesToRadians(-20), Units.degreesToRadians(180)))));
-        vision.addCamera(
-            new Camera(
-                "left",
-                new Transform3d(
-                    new Translation3d(0, 0.221, .164),
-                    new Rotation3d(0, Units.degreesToRadians(-20), Units.degreesToRadians(90)))));
-        vision.addCamera(
-            new Camera(
-                "right",
-                new Transform3d(
-                    new Translation3d(0, -0.221, .164),
-                    new Rotation3d(0, Units.degreesToRadians(-20), Units.degreesToRadians(-90)))));
-      }
-    }
+    // Initialize elevator subsystem
+    initializeSubsystem(
+        elevator, "elevator", stubElevator, () -> new ElevatorSubsystem(new ElevatorIOStub()));
 
-    if (stubElevator) {
-      elevator = new ElevatorSubsystem(new ElevatorIOStub());
-    }
+    // Initialize arm subsystem
+    initializeSubsystem(
+        arm,
+        "arm",
+        stubArm,
+        () ->
+            new ArmSubsystem(
+                new ArmIOStub(Arm.Constants.maxAngleInDegrees, Arm.Constants.minAngleInDegrees)));
 
-    if (stubArm) {
-      arm =
-          new ArmSubsystem(
-              new ArmIOStub(Arm.Constants.maxAngleInDegrees, Arm.Constants.minAngleInDegrees));
-    }
-
-    if (stubAlgaeSubsystem) {
-      algaeSubsystem =
-          new AlgaeSubsystem(
-              new IntakeIOStub(),
-              new ArmIOStub(
-                  Algae.Constants.maxArmAngleDegrees, Algae.Constants.minArmAngleDegrees));
-    }
+    // Initialize algae subsystem
+    initializeSubsystem(
+        algaeSubsystem,
+        "algaeSubsystem",
+        stubAlgaeSubsystem,
+        () ->
+            new AlgaeSubsystem(
+                new IntakeIOStub(),
+                new ArmIOStub(
+                    Algae.Constants.maxArmAngleDegrees, Algae.Constants.minArmAngleDegrees)));
   }
 
   public void configureBindings() {
