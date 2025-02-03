@@ -10,10 +10,12 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.subsystems.interfaces.Vision;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
 import java.util.function.Supplier;
 import org.littletonrobotics.junction.AutoLogOutput;
+import org.littletonrobotics.junction.Logger;
 import org.photonvision.EstimatedRobotPose;
 import org.photonvision.PhotonCamera;
 import org.photonvision.PhotonPoseEstimator;
@@ -52,13 +54,10 @@ public class VisionSubsystem extends SubsystemBase implements Vision {
     }
 
     private void update() {
-      var results = camera.getAllUnreadResults();
-      SmartDashboard.putBoolean("getAllUnreadResults", results.isEmpty());
-      if (!results.isEmpty()) {
-        result = results.get(results.size() - 1);
-        estimatedRobotPose = poseEstimator.update(result);
+      for (PhotonPipelineResult photonPipelineResult : camera.getAllUnreadResults()) {
+        estimatedRobotPose = poseEstimator.update(photonPipelineResult);
+        result = photonPipelineResult;
       }
-      // estimatedRobotPose = poseEstimator.update(result);
     }
 
     private double getLatestTimestamp() {
@@ -105,8 +104,6 @@ public class VisionSubsystem extends SubsystemBase implements Vision {
 
   @AutoLogOutput private double debugTargetDistance = 0;
   @AutoLogOutput private double debugTargetYaw = 0;
-  @AutoLogOutput private Pose2d debugEstimatedPose;
-  @AutoLogOutput private Pose2d debugEstimatedPose2d;
 
   /* Simulation Support*/
   private boolean simEnabled = false;
@@ -154,31 +151,21 @@ public class VisionSubsystem extends SubsystemBase implements Vision {
   }
 
   public void updatePoseEstimation() {
+    // Initialize new list of robot poses (for debugging) 
+    List<Pose2d> debugRobotPoses = new LinkedList<>();
+
     if (simEnabled) {
       simVision.update(simPoseSupplier.get());
     }
 
     for (VisionCameraImpl camera : cameras) {
       camera.update();
-      if (camera == primaryCamera) {
-        debugTargetsVisible = camera.result.getTargets().size();
-
-        if (debugTargetsVisible > 0) {
-          PhotonTrackedTarget target = camera.result.getBestTarget();
-          Optional<Pose3d> fieldToTarget = fieldLayout.getTagPose(target.getFiducialId());
-          if (fieldToTarget.isPresent()) {
-            debugEstimatedPose2d =
-                PhotonUtils.estimateFieldToRobotAprilTag(
-                        target.getBestCameraToTarget(), fieldToTarget.get(), camera.robotToCamera)
-                    .toPose2d();
-          }
-        }
-      }
 
       Optional<EstimatedRobotPose> currentEstimatedRobotPose = camera.getEstimatedRobotPose();
       if (currentEstimatedRobotPose.isPresent()) {
         Optional<Double> distanceToBestTarget =
             getDistanceToAprilTag(camera.getBestTarget().getFiducialId());
+        // TODO remove unnecessary condition: distanceToBestTarget always available if currentEstimateRobotPose
         if (distanceToBestTarget.isPresent()) {
           double distance = distanceToBestTarget.get();
 
@@ -190,19 +177,25 @@ public class VisionSubsystem extends SubsystemBase implements Vision {
                 null);
           }
         }
-
-        if (camera == primaryCamera) {
-          debugEstimatedPose = currentEstimatedRobotPose.get().estimatedPose.toPose2d();
-        }
+        
+        // Log estimated robot pose for debugging
+        debugRobotPoses.add(currentEstimatedRobotPose.get().estimatedPose.toPose2d());
+      } else {
+        // TODO add NULL when no pose available.
+        // debugRobotPoses.add(new Pose2d());
+        debugRobotPoses.add(null);
       }
     }
+
+    // Record estimated robot pose to AdvantageKit networktables
+    Logger.recordOutput(
+          "VisionSubsystem/DEBUGestimatedCameraPoses",
+          debugRobotPoses.toArray(new Pose2d[debugRobotPoses.size()]));
   }
 
   @Override
   public void periodic() {
-    if (visionMeasurementConsumer != null) {
-      updatePoseEstimation();
-    }
+    updatePoseEstimation();
   }
 
   private PhotonTrackedTarget findAprilTag(int id) {
