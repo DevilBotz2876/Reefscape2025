@@ -1,5 +1,11 @@
 package frc.robot.config.game.reefscape2025;
 
+import edu.wpi.first.apriltag.AprilTagFieldLayout;
+import edu.wpi.first.apriltag.AprilTagFields;
+import edu.wpi.first.math.geometry.Rotation3d;
+import edu.wpi.first.math.geometry.Transform3d;
+import edu.wpi.first.math.geometry.Translation3d;
+import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
@@ -29,6 +35,7 @@ import frc.robot.subsystems.implementations.elevator.ElevatorSubsystem;
 import frc.robot.subsystems.implementations.vision.VisionSubsystem;
 import frc.robot.subsystems.interfaces.Algae;
 import frc.robot.subsystems.interfaces.Arm;
+import frc.robot.subsystems.interfaces.Vision.Camera;
 import java.util.ArrayList;
 import java.util.function.Supplier;
 
@@ -138,6 +145,31 @@ public class RobotConfig {
                 new IntakeIOStub(),
                 new ArmIOStub(
                     Algae.Constants.maxArmAngleDegrees, Algae.Constants.minArmAngleDegrees)));
+
+    vision = new VisionSubsystem(AprilTagFieldLayout.loadField(AprilTagFields.k2025Reefscape));
+
+    if (stubVision) {
+      if (Robot.isSimulation()) {
+        vision.addCamera(
+            new Camera(
+                "photonvision",
+                new Transform3d(
+                    new Translation3d(-0.221, 0, .164),
+                    new Rotation3d(0, Units.degreesToRadians(-20), Units.degreesToRadians(180)))));
+        vision.addCamera(
+            new Camera(
+                "left",
+                new Transform3d(
+                    new Translation3d(0, 0.221, .164),
+                    new Rotation3d(0, Units.degreesToRadians(-20), Units.degreesToRadians(90)))));
+        vision.addCamera(
+            new Camera(
+                "right",
+                new Transform3d(
+                    new Translation3d(0, -0.221, .164),
+                    new Rotation3d(0, Units.degreesToRadians(-20), Units.degreesToRadians(-90)))));
+      }
+    }
   }
 
   public void configureBindings() {
