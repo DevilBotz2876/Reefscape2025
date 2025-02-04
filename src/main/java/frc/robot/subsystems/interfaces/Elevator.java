@@ -64,7 +64,10 @@ public interface Elevator extends Subsystem {
   public default SysIdRoutine createSystemIdRoutine(String subsystemName) {
     return new SysIdRoutine(
         new SysIdRoutine.Config(
-            null, null, null, (state) -> Logger.recordOutput(subsystemName + "/SysIdState", state.toString())),
+            null,
+            null,
+            null,
+            (state) -> Logger.recordOutput(subsystemName + "/SysIdState", state.toString())),
         new SysIdRoutine.Mechanism((voltage) -> runVoltage(voltage.in(Volts)), null, this));
   }
 

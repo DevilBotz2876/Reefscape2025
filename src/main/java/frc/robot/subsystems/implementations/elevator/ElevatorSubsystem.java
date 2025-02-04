@@ -26,15 +26,11 @@ public class ElevatorSubsystem extends SubsystemBase implements Elevator {
     this(io, null);
   }
 
-  public ElevatorSubsystem(ElevatorIO io, String name)
-  {
+  public ElevatorSubsystem(ElevatorIO io, String name) {
     this.io = io;
-    if (name != null)
-    {
+    if (name != null) {
       setName("Elevator(" + name + ")");
-    }
-    else
-    {
+    } else {
       setName("Elevator");
     }
 
