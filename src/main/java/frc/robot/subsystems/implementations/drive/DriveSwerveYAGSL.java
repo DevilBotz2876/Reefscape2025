@@ -203,7 +203,7 @@ public class DriveSwerveYAGSL extends DriveBase {
     Logger.processInputs("Drive", inputs);
 
     // Because the asynchronous odometry updates have been disabled,
-    // we invoke updates manually 
+    // we invoke updates manually
     swerveDrive.updateOdometry();
   }
 

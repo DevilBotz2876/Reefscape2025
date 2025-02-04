@@ -2,11 +2,9 @@ package frc.robot.subsystems.implementations.vision;
 
 import edu.wpi.first.apriltag.AprilTagFieldLayout;
 import edu.wpi.first.math.geometry.Pose2d;
-import edu.wpi.first.math.geometry.Pose3d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Transform3d;
 import edu.wpi.first.math.util.Units;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.subsystems.interfaces.Vision;
 import java.util.ArrayList;
@@ -151,7 +149,7 @@ public class VisionSubsystem extends SubsystemBase implements Vision {
   }
 
   public void updatePoseEstimation() {
-    // Initialize new list of robot poses (for debugging) 
+    // Initialize new list of robot poses (for debugging)
     List<Pose2d> debugRobotPoses = new LinkedList<>();
 
     if (simEnabled) {
@@ -165,7 +163,8 @@ public class VisionSubsystem extends SubsystemBase implements Vision {
       if (currentEstimatedRobotPose.isPresent()) {
         Optional<Double> distanceToBestTarget =
             getDistanceToAprilTag(camera.getBestTarget().getFiducialId());
-        // TODO remove unnecessary condition: distanceToBestTarget always available if currentEstimateRobotPose
+        // TODO remove unnecessary condition: distanceToBestTarget always available if
+        // currentEstimateRobotPose
         if (distanceToBestTarget.isPresent()) {
           double distance = distanceToBestTarget.get();
 
@@ -177,7 +176,7 @@ public class VisionSubsystem extends SubsystemBase implements Vision {
                 null);
           }
         }
-        
+
         // Log estimated robot pose for debugging
         debugRobotPoses.add(currentEstimatedRobotPose.get().estimatedPose.toPose2d());
       } else {
@@ -189,8 +188,8 @@ public class VisionSubsystem extends SubsystemBase implements Vision {
 
     // Record estimated robot pose to AdvantageKit networktables
     Logger.recordOutput(
-          "VisionSubsystem/DEBUGestimatedCameraPoses",
-          debugRobotPoses.toArray(new Pose2d[debugRobotPoses.size()]));
+        "VisionSubsystem/DEBUGestimatedCameraPoses",
+        debugRobotPoses.toArray(new Pose2d[debugRobotPoses.size()]));
   }
 
   @Override
