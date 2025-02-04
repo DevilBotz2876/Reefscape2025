@@ -1,8 +1,12 @@
 package frc.robot.subsystems.implementations.elevator;
 
+import static edu.wpi.first.units.Units.Volts;
+
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.wpilibj.smartdashboard.MechanismLigament2d;
+import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
 import frc.robot.io.interfaces.ElevatorIO;
 import frc.robot.io.interfaces.ElevatorIOInputsAutoLogged;
 import frc.robot.subsystems.interfaces.Elevator;
@@ -18,9 +22,20 @@ public class ElevatorSubsystem extends SubsystemBase implements Elevator {
   private final double elevatorLigament2doffset = 0.05;
 
   private double targetMeters = 0.0;
+  public static SysIdRoutine sysId;
 
   public ElevatorSubsystem(ElevatorIO io) {
     this.io = io;
+
+    // Configure SysId based on the AdvantageKit example
+    sysId =
+        new SysIdRoutine(
+            new SysIdRoutine.Config(
+                null,
+                null,
+                null,
+                (state) -> Logger.recordOutput("Elevator/SysIdState", state.toString())),
+            new SysIdRoutine.Mechanism((voltage) -> runVoltage(voltage.in(Volts)), null, this));
   }
 
   @Override
@@ -82,5 +97,15 @@ public class ElevatorSubsystem extends SubsystemBase implements Elevator {
   @Override
   public void setLigament(MechanismLigament2d ligament2d) {
     elevator2d = ligament2d;
+  }
+
+  @Override
+  public Command sysIdQuasistatic(SysIdRoutine.Direction direction) {
+    return sysId.quasistatic(direction);
+  }
+
+  @Override
+  public Command sysIdDynamic(SysIdRoutine.Direction direction) {
+    return sysId.dynamic(direction);
   }
 }

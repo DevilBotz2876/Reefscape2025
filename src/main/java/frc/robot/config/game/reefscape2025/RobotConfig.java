@@ -146,6 +146,7 @@ public class RobotConfig {
     VisionControls.addGUI(vision, driverTab);
 
     ElevatorControls.setupController(elevator, mainController);
+    ElevatorControls.addSysId(elevator);
 
     ArmControls.setupController(arm, mainController);
 

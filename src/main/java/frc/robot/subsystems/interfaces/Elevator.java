@@ -1,7 +1,10 @@
 package frc.robot.subsystems.interfaces;
 
 import edu.wpi.first.wpilibj.smartdashboard.MechanismLigament2d;
+import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.Subsystem;
+import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
 
 public interface Elevator extends Subsystem {
   public static class Constants {
@@ -54,4 +57,14 @@ public interface Elevator extends Subsystem {
 
   public default void setLigament(MechanismLigament2d ligament2d) {}
   ;
+
+  /** Returns a command to run a quasistatic test in the specified direction. */
+  public default Command sysIdQuasistatic(SysIdRoutine.Direction direction) {
+    return new InstantCommand();
+  }
+
+  /** Returns a command to run a dynamic test in the specified direction. */
+  public default Command sysIdDynamic(SysIdRoutine.Direction direction) {
+    return new InstantCommand();
+  }
 }
