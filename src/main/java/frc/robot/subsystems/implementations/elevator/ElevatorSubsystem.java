@@ -20,18 +20,31 @@ public class ElevatorSubsystem extends SubsystemBase implements Elevator {
   private final double elevatorLigament2doffset = 0.05;
 
   private double targetMeters = 0.0;
-  private SysIdRoutine sysId;
+  private final SysIdRoutine sysId;
 
   public ElevatorSubsystem(ElevatorIO io) {
-    this.io = io;
+    this(io, null);
+  }
 
-    sysId = createSystemIdRoutine("Elevator/SysIdState");
+  public ElevatorSubsystem(ElevatorIO io, String name)
+  {
+    this.io = io;
+    if (name != null)
+    {
+      setName("Elevator(" + name + ")");
+    }
+    else
+    {
+      setName("Elevator");
+    }
+
+    sysId = createSystemIdRoutine(getName());
   }
 
   @Override
   public void periodic() {
     io.updateInputs(inputs);
-    Logger.processInputs("Elevator", inputs);
+    Logger.processInputs(getName(), inputs);
 
     if (null != elevator2d) {
       elevator2d.setLength(
