@@ -65,6 +65,8 @@ public class DriveSwerveYAGSL extends DriveBase {
       throw new RuntimeException(e);
     }
 
+    // NOTE: Instead of odometry updates occuring in its own thread,
+    // they will be called directly from this subsystem
     swerveDrive.stopOdometryThread();
 
     RobotConfig config;
@@ -200,8 +202,9 @@ public class DriveSwerveYAGSL extends DriveBase {
     io.updateInputs(inputs, swerveDrive);
     Logger.processInputs("Drive", inputs);
 
+    // Because the asynchronous odometry updates have been disabled,
+    // we invoke updates manually 
     swerveDrive.updateOdometry();
-    frc.robot.config.game.reefscape2025.RobotConfig.vision.updatePoseEstimation();
   }
 
   @Override
