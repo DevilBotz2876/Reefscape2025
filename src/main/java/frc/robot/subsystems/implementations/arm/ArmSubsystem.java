@@ -62,7 +62,7 @@ public class ArmSubsystem extends TrapezoidProfileSubsystem2876 implements Arm {
   private double backlashCompensationDirection = 0;
 
   // Create a Mechanism2d display of an Arm with a fixed ArmTower and moving Arm.
-  private final double armAngle2dOffset = 0;
+  private final double armAngle2dOffset = 180;
   private MechanismLigament2d arm2d = null;
 
   private double kG, kV, kA, kS;
