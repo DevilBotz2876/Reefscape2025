@@ -48,8 +48,10 @@ public class DriveSwerveYAGSL extends DriveBase {
       swerveDrive =
           new SwerveParser(swerveJsonDirectory)
               .createSwerveDrive(Drive.Constants.maxVelocityMetersPerSec);
-      swerveDrive.setHeadingCorrection(!SwerveDriveTelemetry.isSimulation);
       swerveDrive.setCosineCompensator(!SwerveDriveTelemetry.isSimulation);
+      // NOTE: until further notice, YAGSL's heading correction should stay OFF
+      //        it accumulates odometry error instead of mitigating it
+      swerveDrive.setHeadingCorrection(false);
 
       swerveDrive
           .getSwerveController()
@@ -62,6 +64,11 @@ public class DriveSwerveYAGSL extends DriveBase {
     } catch (Exception e) {
       throw new RuntimeException(e);
     }
+
+    // NOTE: Instead of odometry updates occuring in its own thread,
+    // they will be called directly from this subsystem
+    swerveDrive.stopOdometryThread();
+
     RobotConfig config;
     try {
       config = RobotConfig.fromGUISettings();
@@ -194,12 +201,19 @@ public class DriveSwerveYAGSL extends DriveBase {
   public void periodic() {
     io.updateInputs(inputs, swerveDrive);
     Logger.processInputs("Drive", inputs);
+
+    // Because the asynchronous odometry updates have been disabled,
+    // we invoke updates manually
+    swerveDrive.updateOdometry();
   }
 
   @Override
   public void addVisionMeasurement(
       Pose2d robotPose, double timestamp, Matrix<N3, N1> visionMeasurementStdDevs) {
-
-    swerveDrive.addVisionMeasurement(robotPose, timestamp, visionMeasurementStdDevs);
+    if (visionMeasurementStdDevs != null) {
+      swerveDrive.addVisionMeasurement(robotPose, timestamp, visionMeasurementStdDevs);
+    } else {
+      swerveDrive.addVisionMeasurement(robotPose, timestamp);
+    }
   }
 }
