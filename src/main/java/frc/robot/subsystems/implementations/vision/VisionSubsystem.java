@@ -195,7 +195,10 @@ public class VisionSubsystem extends SubsystemBase implements Vision {
 
   @Override
   public void periodic() {
-    updatePoseEstimation();
+    // TODO: determine when vision should provide updates for VIO
+    //        1. synchronously invoked by drive train
+    //        2. asynchronously run as its own subsystem
+    // updatePoseEstimation();
   }
 
   private PhotonTrackedTarget findAprilTag(int id) {
