@@ -35,9 +35,12 @@ public class RobotConfigPhoenix extends RobotConfig {
 
     NamedCommands.registerCommand(
         "Move Elevator", new ElevatorToPosition(RobotConfig.elevator, () -> 1.8288));
-    NamedCommands.registerCommand("Move Arm", new ArmToPosition(RobotConfig.arm, () -> 135.0));
-    NamedCommands.registerCommand("Go Straight 1 Meter", new DriveStraightPID(RobotConfig.drive, 1,1));
-    NamedCommands.registerCommand("Go Straight 0.3 Meter", new DriveStraightPID(RobotConfig.drive, 0.3,1));
+    NamedCommands.registerCommand("Move Arm High", new ArmToPosition(RobotConfig.arm, () -> 135.0));
+    NamedCommands.registerCommand("Move Arm Low", new ArmToPosition(RobotConfig.arm, () -> 90.0));
+    NamedCommands.registerCommand(
+        "Go Straight 1 Meter", new DriveStraightPID(RobotConfig.drive, 1, 1));
+    NamedCommands.registerCommand(
+        "Go Straight 0.3 Meter", new DriveStraightPID(RobotConfig.drive, 0.3, 1));
     autoChooser = AutoBuilder.buildAutoChooser("Sit Still");
   }
 }

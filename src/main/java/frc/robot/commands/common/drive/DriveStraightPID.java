@@ -7,8 +7,8 @@ package frc.robot.commands.common.drive;
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.filter.SlewRateLimiter;
+import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
-import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Subsystem;
 import frc.robot.subsystems.implementations.drive.DriveBase;
@@ -18,12 +18,13 @@ import frc.robot.subsystems.interfaces.Drive;
 public class DriveStraightPID extends Command {
   Drive drive;
   PIDController distancePid = new PIDController(1.5, 0, 0);
-  PIDController straightPid = new PIDController(1, 0, 0);
+  PIDController straightPid = new PIDController(1, 0, 1);
   double distance;
   double startAngle;
-  double startDistance;
-   final SlewRateLimiter speedSlewRateLimiter = new SlewRateLimiter(2.75);
-   double maxSpeed = 0; // in meters/sec
+  Translation2d startTranslation;
+  final SlewRateLimiter speedSlewRateLimiter = new SlewRateLimiter(2.75);
+  double maxSpeed = 0; // in meters/sec
+  double currentDistance;
 
   /**
    * The constructor for the Drive Straight PID command.
@@ -57,30 +58,49 @@ public class DriveStraightPID extends Command {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    startAngle = drive.getAngle();
-    startDistance = drive.getPose().getX();
+    straightPid.reset();
+    distancePid.reset();
+    startAngle = drive.getPose().getRotation().getDegrees();
+    startTranslation = drive.getPose().getTranslation();
+    currentDistance = 0;
+    System.out.println(
+        "\nStart Angle: "
+            + startAngle
+            + "\nStart Point: ("
+            + startTranslation.getX()
+            + ","
+            + startTranslation.getY()
+            + ")");
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    double output = distancePid.calculate(drive.getPose().getX() - startDistance, distance);
-    double turnError = straightPid.calculate(drive.getAngle(), startAngle);
+    double currentAngle = drive.getPose().getRotation().getDegrees();
+    currentDistance = Math.abs(startTranslation.getDistance(drive.getPose().getTranslation()));
+    System.out.println(
+        "\nCurrent Distance From Location: "
+            + currentDistance
+            + "\nCurrent Angle: "
+            + currentAngle);
+
+    double output = distancePid.calculate(currentDistance, distance);
+    double turnError = straightPid.calculate(currentAngle, startAngle);
     double speed = speedSlewRateLimiter.calculate(output);
     if (0 != maxSpeed) {
       speed = MathUtil.clamp(speed, -maxSpeed, maxSpeed);
     }
-    ChassisSpeeds speeds =
-        new ChassisSpeeds(speed,0, -turnError);
-     drive.runVelocity(speeds);
+    System.out.println("X speed: " + speed + "\nTurn: " + -turnError);
+    ChassisSpeeds speeds = new ChassisSpeeds(speed, 0, -turnError);
+    drive.runVelocity(speeds);
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-      if(interrupted != true){
-        System.out.println("  END: " + this.getClass().getSimpleName());
-      }
+    if (interrupted != true) {
+      System.out.println("  END: " + this.getClass().getSimpleName());
+    }
   }
 
   // Returns true when the command should end.

@@ -5,15 +5,9 @@
     "data": {
       "commands": [
         {
-          "type": "wait",
-          "data": {
-            "waitTime": 0
-          }
-        },
-        {
           "type": "path",
           "data": {
-            "pathName": "Start to Near G"
+            "pathName": "Straight"
           }
         },
         {
@@ -23,13 +17,13 @@
               {
                 "type": "named",
                 "data": {
-                  "name": "Move Arm High"
+                  "name": "Move Elevator"
                 }
               },
               {
                 "type": "named",
                 "data": {
-                  "name": "Move Elevator"
+                  "name": "Move Arm High"
                 }
               }
             ]
@@ -38,7 +32,7 @@
         {
           "type": "named",
           "data": {
-            "name": "Go Straight 0.3 Meter"
+            "name": "Go Straight 1 Meter"
           }
         },
         {
