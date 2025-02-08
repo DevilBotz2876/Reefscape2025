@@ -1,12 +1,26 @@
 package frc.robot.subsystems.interfaces;
 
+import static edu.wpi.first.units.Units.Volts;
+
 import edu.wpi.first.wpilibj.smartdashboard.MechanismLigament2d;
+import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.Subsystem;
+import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
+import org.littletonrobotics.junction.Logger;
 
 public interface Elevator extends Subsystem {
   public static class Constants {
     public static double maxPositionInMeters = 1.25;
     public static double minPositionInMeters = 0.0;
+
+    public static double reefL4InMeters = 1.00;
+    public static double reefL3InMeters = 0.75;
+    public static double reefL2InMeters = 0.50;
+    public static double reefL1InMeters = 0.25;
+
+    public static double upOpenLoopVoltsMax = 9.0;
+    public static double downOpenLoopVoltsMax = -6.0;
 
     public static double maxVelocityInDegreesPerSecond = 45;
     public static double maxAccelerationInDegreesPerSecondSquared = 120;
@@ -52,6 +66,29 @@ public interface Elevator extends Subsystem {
   /** Returns true if the elevator is at the setpoint. */
   public boolean isAtSetpoint();
 
+  /** Disable any closed loop controls, i.e PID */
+  public void disableClosedLoop();
+
   public default void setLigament(MechanismLigament2d ligament2d) {}
   ;
+
+  public default SysIdRoutine createSystemIdRoutine(String subsystemName) {
+    return new SysIdRoutine(
+        new SysIdRoutine.Config(
+            null,
+            null,
+            null,
+            (state) -> Logger.recordOutput(subsystemName + "/SysIdState", state.toString())),
+        new SysIdRoutine.Mechanism((voltage) -> runVoltage(voltage.in(Volts)), null, this));
+  }
+
+  /** Returns a command to run a quasistatic test in the specified direction. */
+  public default Command sysIdQuasistatic(SysIdRoutine.Direction direction) {
+    return new InstantCommand();
+  }
+
+  /** Returns a command to run a dynamic test in the specified direction. */
+  public default Command sysIdDynamic(SysIdRoutine.Direction direction) {
+    return new InstantCommand();
+  }
 }
