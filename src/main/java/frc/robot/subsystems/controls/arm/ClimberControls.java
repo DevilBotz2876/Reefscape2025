@@ -1,7 +1,11 @@
 package frc.robot.subsystems.controls.arm;
 
+import javax.print.DocFlavor.READER;
+
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
+import frc.robot.commands.common.arm.ArmCommand;
+import frc.robot.commands.common.arm.ArmCommandWithButton;
 import frc.robot.commands.common.arm.ArmCommand;
 import frc.robot.subsystems.interfaces.Arm;
 public class ClimberControls {
@@ -18,5 +22,6 @@ public class ClimberControls {
               }
               return 0.0;
             }));
+    controller.x().toggleOnTrue(new ArmCommandWithButton(climber, 90.0));
   }
 }

@@ -10,36 +10,30 @@ import java.util.function.DoubleSupplier;
 
 import javax.lang.model.util.ElementScanner14;
 
-public class ArmCommand extends Command {
+public class ArmCommandWithButton extends Command {
   Arm arm;
   DoubleSupplier speed;
   double targetPosition;
   double targetFinalPosition;
   double maxArmVelocityInDegreesPerSec = Arm.Constants.maxVelocityInDegreesPerSecond;
 
-  public ArmCommand(Arm arm, DoubleSupplier speed) {
+  public ArmCommandWithButton(Arm arm, Double targetFinalPosition) {
     this.arm = arm;
-    this.speed = speed;
+    this.targetPosition = targetFinalPosition;
 
     addRequirements((Subsystem) arm);
   }
 
   @Override
-  public void initialize() {
-    targetPosition = arm.getAngle();
-    targetFinalPosition = 90;
-    arm.setAngle(targetFinalPosition);
-  }
+  public void initialize() {}
 
   @Override
   public void execute() {
-    double currentSpeed = speed.getAsDouble();
-
-    targetPosition += currentSpeed * maxArmVelocityInDegreesPerSec / 50;
-    targetPosition =
-        MathUtil.clamp(
-            targetPosition, Arm.Constants.minAngleInDegrees, Arm.Constants.maxAngleInDegrees);
-
-    arm.setAngle(targetPosition);
+  arm.setAngle(targetPosition);
   }
+  
+  // @Override
+  // public boolean isFinished(){
+  //   return arm.isAtTargetPosition();
+  // }
 }

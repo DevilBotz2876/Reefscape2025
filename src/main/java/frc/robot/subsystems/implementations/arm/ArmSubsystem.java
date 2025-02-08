@@ -296,6 +296,12 @@ public class ArmSubsystem extends TrapezoidProfileSubsystem2876 implements Arm {
   }
 
   @Override
+  public boolean isAtTargetPosition(){
+    return (Math.abs(currentSetpointDegrees - goalSetpointDegrees)
+    < ArmSubsystem.Constants.pidAngleErrorInDegrees);
+  }
+
+  @Override
   public void setLigament(MechanismLigament2d armLigament2d, double offset) {
     this.arm2d = armLigament2d;
     this.armAngle2dOffset = offset;
