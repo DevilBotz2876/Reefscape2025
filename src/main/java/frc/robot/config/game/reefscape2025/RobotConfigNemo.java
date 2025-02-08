@@ -7,7 +7,7 @@ import frc.robot.subsystems.interfaces.Drive;
 /* Override Nemo specific constants here */
 public class RobotConfigNemo extends RobotConfig {
   public RobotConfigNemo() {
-    super(false, true, true);
+    super();
 
     // Nemo has a Swerve drive train
     Drive.Constants.rotatePidKp = 0.025;

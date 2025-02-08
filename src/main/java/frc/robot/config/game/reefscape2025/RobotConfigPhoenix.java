@@ -12,8 +12,7 @@ import frc.robot.subsystems.interfaces.Vision.Camera;
 /* Override Phoenix specific constants here */
 public class RobotConfigPhoenix extends RobotConfig {
   public RobotConfigPhoenix() {
-    super(false, true, false, true, true, true);
-
+    super();
     // Phoenix has a Swerve drive train
     Drive.Constants.rotatePidKp = 0.025;
     Drive.Constants.rotatePidKi = 0.0;

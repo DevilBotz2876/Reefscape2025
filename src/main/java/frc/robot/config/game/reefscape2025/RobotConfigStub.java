@@ -14,8 +14,7 @@ public class RobotConfigStub extends RobotConfig {
   GizmoSubsystem gizmo;
 
   public RobotConfigStub() {
-    super(false, true, true);
-
+    super();
     drive = new DriveSwerveYAGSL("yagsl/stub");
     if (Robot.isSimulation()) {
       drive.setPose(new Pose2d(new Translation2d(1, 1), new Rotation2d()));
