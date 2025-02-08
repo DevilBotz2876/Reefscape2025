@@ -62,28 +62,28 @@ public class RobotConfig {
 
   private void checkSubsystemsInitialized() {
     if (drive == null) {
-      DriverStation.reportError("Drive subsystem is not initialized.", false);
+      DriverStation.reportWarning("Drive subsystem is not initialized.", true);
       // Initialize subsystem that does not do aything.
       // Initialize subsystem in derived robot config classes
       drive = new DriveBase();
     }
 
     if (elevator == null) {
-      DriverStation.reportError("Elevator subsystem is not initialized.", false);
+      DriverStation.reportWarning("Elevator subsystem is not initialized.", true);
       // Initialize subsystem that does not do aything.
       // Initialize subsystem in derived robot config classes
       elevator = new ElevatorSubsystem(new ElevatorIOStub());
     }
 
     if (arm == null) {
-      DriverStation.reportError("Arm subsystem is not initialized.", false);
+      DriverStation.reportWarning("Arm subsystem is not initialized.", true);
       arm =
           new ArmSubsystem(
               new ArmIOStub(Arm.Constants.maxAngleInDegrees, Arm.Constants.minAngleInDegrees));
     }
 
     if (algaeSubsystem == null) {
-      DriverStation.reportError("Algae subsystem is not initialized.", false);
+      DriverStation.reportWarning("Algae subsystem is not initialized.", true);
       algaeSubsystem =
           new AlgaeSubsystem(
               new IntakeIOStub(),
@@ -92,7 +92,7 @@ public class RobotConfig {
     }
 
     if (autoChooser == null) {
-      DriverStation.reportError("Auto chooser is not initialized.", false);
+      DriverStation.reportWarning("Auto chooser is not initialized.", true);
       // Initialize subsystem that does not do aything.
       // Initialize subsystem in derived robot config classes
       autoChooser = new SendableChooser<>();
@@ -100,7 +100,7 @@ public class RobotConfig {
     }
 
     if (vision == null) {
-      DriverStation.reportError("Vision subsystem is not initialized.", false);
+      DriverStation.reportWarning("Vision subsystem is not initialized.", true);
       // Initialize subsystem that does not do aything.
       // Initialize subsystem in derived robot config classes
       vision = new VisionSubsystem(AprilTagFieldLayout.loadField(AprilTagFields.k2025Reefscape));
