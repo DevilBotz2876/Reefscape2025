@@ -56,9 +56,7 @@ public class RobotConfig {
   // private final ShuffleboardTab debugTab = Shuffleboard.getTab("Debug");
   // private final ShuffleboardTab sysIdTestTab = Shuffleboard.getTab("SysId");
 
-  public RobotConfig() {
-
-  }
+  public RobotConfig() {}
 
   private void checkSubsystemsInitialized() {
     if (drive == null) {
