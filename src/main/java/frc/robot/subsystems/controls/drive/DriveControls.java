@@ -48,7 +48,7 @@ public class DriveControls {
     //         new Pose2d(7.0, 4.0, Rotation2d.fromDegrees(0))
     // );
     Pose2d targetPose = new Pose2d(6, 6, Rotation2d.fromDegrees(0));
-    PathConstraints constraints = new PathConstraints(3.0, 3.0, 2 * Math.PI, 4 * Math.PI);
+    PathConstraints constraints = new PathConstraints(4.2672, 9.4664784, 2 * Math.PI, 4 * Math.PI);
 
     Command pathfindingCommand =
         AutoBuilder.pathfindToPose(
