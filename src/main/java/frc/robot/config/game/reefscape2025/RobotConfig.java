@@ -135,9 +135,9 @@ public class RobotConfig {
     }
 
     if (stubClimber) {
-      climber = 
-        new ArmSubsystem(
-            new ArmIOStub(Arm.Constants.maxAngleInDegrees, Arm.Constants.minAngleInDegrees));
+      climber =
+          new ArmSubsystem(
+              new ArmIOStub(Arm.Constants.maxAngleInDegrees, Arm.Constants.minAngleInDegrees));
     }
   }
 
@@ -162,7 +162,7 @@ public class RobotConfig {
     AlgaeControls.setupController(algaeSubsystem, mainController);
 
     ClimberControls.setupController(climber, mainController);
-    
+
     setupSimGUI();
   }
 
@@ -208,7 +208,6 @@ public class RobotConfig {
         climberRoot.append(
             new MechanismLigament2d("Climber", 10, 0, 6, new Color8Bit(Color.kAqua)));
     climber.setLigament(climberLigament2d, 0);
-
 
     SmartDashboard.putData("2D Simulation", mech2d);
   }

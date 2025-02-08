@@ -1,15 +1,13 @@
 package frc.robot.subsystems.controls.arm;
 
-import javax.print.DocFlavor.READER;
-
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.commands.common.arm.ArmCommand;
 import frc.robot.commands.common.arm.ArmCommandWithButton;
-import frc.robot.commands.common.arm.ArmCommand;
 import frc.robot.subsystems.interfaces.Arm;
+
 public class ClimberControls {
-    public static void setupController(Arm climber, CommandXboxController controller) {
+  public static void setupController(Arm climber, CommandXboxController controller) {
     SubsystemBase armSubsystem = (SubsystemBase) climber;
     armSubsystem.setDefaultCommand(
         new ArmCommand(
