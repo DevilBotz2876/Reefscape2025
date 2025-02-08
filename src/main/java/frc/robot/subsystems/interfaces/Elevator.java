@@ -1,7 +1,13 @@
 package frc.robot.subsystems.interfaces;
 
+import static edu.wpi.first.units.Units.Volts;
+
 import edu.wpi.first.wpilibj.smartdashboard.MechanismLigament2d;
+import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.Subsystem;
+import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
+import org.littletonrobotics.junction.Logger;
 
 public interface Elevator extends Subsystem {
   public static class Constants {
@@ -11,6 +17,7 @@ public interface Elevator extends Subsystem {
     public static double maxVelocityInDegreesPerSecond = 45;
     public static double maxAccelerationInDegreesPerSecondSquared = 120;
 
+    // PID and FF values from the wpi elevatorsim example
     public static double maxVelocity = 2.45;
     public static double maxAcceleration = 2.45;
     public static double pidDt = 0.02;
@@ -53,4 +60,24 @@ public interface Elevator extends Subsystem {
 
   public default void setLigament(MechanismLigament2d ligament2d) {}
   ;
+
+  public default SysIdRoutine createSystemIdRoutine(String subsystemName) {
+    return new SysIdRoutine(
+        new SysIdRoutine.Config(
+            null,
+            null,
+            null,
+            (state) -> Logger.recordOutput(subsystemName + "/SysIdState", state.toString())),
+        new SysIdRoutine.Mechanism((voltage) -> runVoltage(voltage.in(Volts)), null, this));
+  }
+
+  /** Returns a command to run a quasistatic test in the specified direction. */
+  public default Command sysIdQuasistatic(SysIdRoutine.Direction direction) {
+    return new InstantCommand();
+  }
+
+  /** Returns a command to run a dynamic test in the specified direction. */
+  public default Command sysIdDynamic(SysIdRoutine.Direction direction) {
+    return new InstantCommand();
+  }
 }

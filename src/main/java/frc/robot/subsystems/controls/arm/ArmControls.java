@@ -6,6 +6,8 @@ import frc.robot.commands.common.arm.ArmCommand;
 import frc.robot.subsystems.interfaces.Arm;
 
 public class ArmControls {
+  // RIGHT POV = up arm
+  // LEFT POV = down arm
   public static void setupController(Arm arm, CommandXboxController controller) {
     SubsystemBase armSubsystem = (SubsystemBase) arm;
     armSubsystem.setDefaultCommand(

@@ -19,7 +19,7 @@ import frc.robot.subsystems.interfaces.Vision.Camera;
 /* Override Phoenix specific constants here */
 public class RobotConfigPhoenix extends RobotConfig {
   public RobotConfigPhoenix() {
-    super(false, false, false);
+    super(false, true, false, true, true, true);
 
     // Phoenix has a Swerve drive train
     Drive.Constants.rotatePidKp = 0.025;
@@ -31,19 +31,9 @@ public class RobotConfigPhoenix extends RobotConfig {
     drive.setPose(drive.getPose().transformBy(new Transform2d(2, 5, Rotation2d.kZero)));
     vision.addCamera(
         new Camera(
-            "photonvision",
+            "my-first-photonvision",
             new Transform3d(
                 new Translation3d(0.221, 0, .164),
                 new Rotation3d(0, Units.degreesToRadians(-20), Units.degreesToRadians(0)))));
-
-    NamedCommands.registerCommand(
-        "Move Elevator", new ElevatorToPosition(RobotConfig.elevator, () -> 1.8288));
-    NamedCommands.registerCommand("Move Arm High", new ArmToPosition(RobotConfig.arm, () -> 135.0));
-    NamedCommands.registerCommand("Move Arm Low", new ArmToPosition(RobotConfig.arm, () -> 90.0));
-    NamedCommands.registerCommand(
-        "Go Straight 1 Meter", new DriveStraightPID(RobotConfig.drive, 1, 1));
-    NamedCommands.registerCommand(
-        "Go Straight 0.3 Meter", new DriveStraightPID(RobotConfig.drive, 0.3, 1));
-    autoChooser = AutoBuilder.buildAutoChooser("Sit Still");
   }
 }
