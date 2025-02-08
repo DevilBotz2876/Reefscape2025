@@ -58,74 +58,73 @@ public class RobotConfig {
 
   public RobotConfig() {
 
-    // Initialize subsystem that does not do aything.
-    // Initialize subsystem in derived robot config classes
-    drive = new DriveBase();
-
-    // Initialize subsystem that does not do aything.
-    // Initialize subsystem in derived robot config classes
-    autoChooser = new SendableChooser<>();
-    autoChooser.setDefaultOption("No Auto Routines Specified", Commands.none());
-
-    // Initialize subsystem that does not do aything.
-    // Initialize subsystem in derived robot config classes
-    elevator = new ElevatorSubsystem(new ElevatorIOStub());
-
-    // Initialize subsystem that does not do aything.
-    // Initialize subsystem in derived robot config classes
-    arm =
-        new ArmSubsystem(
-            new ArmIOStub(Arm.Constants.maxAngleInDegrees, Arm.Constants.minAngleInDegrees));
-
-    algaeSubsystem =
-        new AlgaeSubsystem(
-            new IntakeIOStub(),
-            new ArmIOStub(Algae.Constants.maxArmAngleDegrees, Algae.Constants.minArmAngleDegrees));
-
-    // Initialize subsystem that does not do aything.
-    // Initialize subsystem in derived robot config classes
-    vision = new VisionSubsystem(AprilTagFieldLayout.loadField(AprilTagFields.k2025Reefscape));
-
-    if (Robot.isSimulation()) {
-      vision.addCamera(
-          new Camera(
-              "photonvision",
-              new Transform3d(
-                  new Translation3d(-0.221, 0, .164),
-                  new Rotation3d(0, Units.degreesToRadians(-20), Units.degreesToRadians(180)))));
-      vision.addCamera(
-          new Camera(
-              "left",
-              new Transform3d(
-                  new Translation3d(0, 0.221, .164),
-                  new Rotation3d(0, Units.degreesToRadians(-20), Units.degreesToRadians(90)))));
-      vision.addCamera(
-          new Camera(
-              "right",
-              new Transform3d(
-                  new Translation3d(0, -0.221, .164),
-                  new Rotation3d(0, Units.degreesToRadians(-20), Units.degreesToRadians(-90)))));
-    }
   }
 
   private void checkSubsystemsInitialized() {
     if (drive == null) {
       DriverStation.reportError("Drive subsystem is not initialized.", false);
+      // Initialize subsystem that does not do aything.
+      // Initialize subsystem in derived robot config classes
+      drive = new DriveBase();
     }
-    if (vision == null) {
-      DriverStation.reportError("Vision subsystem is not initialized.", false);
-    }
+
     if (elevator == null) {
       DriverStation.reportError("Elevator subsystem is not initialized.", false);
+      // Initialize subsystem that does not do aything.
+      // Initialize subsystem in derived robot config classes
+      elevator = new ElevatorSubsystem(new ElevatorIOStub());
     }
+
     if (arm == null) {
       DriverStation.reportError("Arm subsystem is not initialized.", false);
+      arm =
+          new ArmSubsystem(
+              new ArmIOStub(Arm.Constants.maxAngleInDegrees, Arm.Constants.minAngleInDegrees));
     }
+
     if (algaeSubsystem == null) {
       DriverStation.reportError("Algae subsystem is not initialized.", false);
+      algaeSubsystem =
+          new AlgaeSubsystem(
+              new IntakeIOStub(),
+              new ArmIOStub(
+                  Algae.Constants.maxArmAngleDegrees, Algae.Constants.minArmAngleDegrees));
     }
+
     if (autoChooser == null) {
       DriverStation.reportError("Auto chooser is not initialized.", false);
+      // Initialize subsystem that does not do aything.
+      // Initialize subsystem in derived robot config classes
+      autoChooser = new SendableChooser<>();
+      autoChooser.setDefaultOption("No Auto Routines Specified", Commands.none());
+    }
+
+    if (vision == null) {
+      DriverStation.reportError("Vision subsystem is not initialized.", false);
+      // Initialize subsystem that does not do aything.
+      // Initialize subsystem in derived robot config classes
+      vision = new VisionSubsystem(AprilTagFieldLayout.loadField(AprilTagFields.k2025Reefscape));
+
+      if (Robot.isSimulation()) {
+        vision.addCamera(
+            new Camera(
+                "photonvision",
+                new Transform3d(
+                    new Translation3d(-0.221, 0, .164),
+                    new Rotation3d(0, Units.degreesToRadians(-20), Units.degreesToRadians(180)))));
+        vision.addCamera(
+            new Camera(
+                "left",
+                new Transform3d(
+                    new Translation3d(0, 0.221, .164),
+                    new Rotation3d(0, Units.degreesToRadians(-20), Units.degreesToRadians(90)))));
+        vision.addCamera(
+            new Camera(
+                "right",
+                new Transform3d(
+                    new Translation3d(0, -0.221, .164),
+                    new Rotation3d(0, Units.degreesToRadians(-20), Units.degreesToRadians(-90)))));
+      }
     }
   }
 
