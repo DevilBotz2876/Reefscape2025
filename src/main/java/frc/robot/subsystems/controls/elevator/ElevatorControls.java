@@ -3,9 +3,6 @@ package frc.robot.subsystems.controls.elevator;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
-import frc.robot.commands.common.elevator.ElevatorL1;
-import frc.robot.commands.common.elevator.ElevatorL3;
-import frc.robot.commands.common.elevator.ElevatorL4;
 import frc.robot.commands.common.elevator.ElevatorOpenLoop;
 import frc.robot.subsystems.interfaces.Elevator;
 
@@ -31,7 +28,7 @@ public class ElevatorControls {
     // maps to a on 8bitdo
     // controller.a().whileTrue(new ElevatorL3(elevator, Elevator.Constants.reefL3InMeters));
 
-    //maps to a on 8bitdo
+    // maps to a on 8bitdo
     // controller.b().whileTrue(new ElevatorL1(elevator, Elevator.Constants.reefL1InMeters));
   }
 

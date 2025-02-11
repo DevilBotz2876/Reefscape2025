@@ -22,7 +22,7 @@ public class ArmCommandWithButton extends Command {
   public void initialize() {
     targetPosition = targetClimberDegrees;
   }
-  
+
   @Override
   public void execute() {
     arm.setAngle(targetPosition);
