@@ -11,24 +11,24 @@ public class ArmControls {
   // LEFT POV = down arm
   public static void setupController(Arm arm, CommandXboxController controller) {
     SubsystemBase armSubsystem = (SubsystemBase) arm;
-    armSubsystem.setDefaultCommand(
-        new ArmCommand(
-            arm,
-            () -> {
-              if (controller.pov(90).getAsBoolean()) {
-                return 1.0;
-              } else if (controller.pov(270).getAsBoolean()) {
-                return -1.0;
-              }
-              return 0.0;
-            }));
+    // armSubsystem.setDefaultCommand(
+        // new ArmCommand(
+        //     arm,
+        //     () -> {
+        //       if (controller.pov(90).getAsBoolean()) {
+        //         return 1.0;
+        //       } else if (controller.pov(270).getAsBoolean()) {
+        //         return -1.0;
+        //       }
+        //       return 0.0;
+        //     }));
 
     controller
         .povUp()
         .whileTrue(
             new InstantCommand(
                 () -> {
-                  arm.runVoltage(3.0);
+                  arm.runVoltage(1.0);
                 },
                 arm));
 
@@ -37,7 +37,7 @@ public class ArmControls {
         .whileTrue(
             new InstantCommand(
                 () -> {
-                  arm.runVoltage(-3.0);
+                  arm.runVoltage(-1.0);
                 },
                 arm));
 

@@ -3,6 +3,7 @@ package frc.robot.io.implementations.arm;
 import com.ctre.phoenix6.configs.CurrentLimitsConfigs;
 import com.ctre.phoenix6.configs.TalonFXConfiguration;
 import com.ctre.phoenix6.hardware.TalonFX;
+import com.ctre.phoenix6.signals.InvertedValue;
 import com.ctre.phoenix6.signals.NeutralModeValue;
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.units.Units;
@@ -26,7 +27,7 @@ public class ArmIOTalonFx implements ArmIO {
   public ArmIOTalonFx(int id, boolean inverted) {
     motorFx = new TalonFX(id);
     motorFx.setNeutralMode(NeutralModeValue.Brake);
-    motorFx.setInverted(inverted); // Deprecated
+    // motorFx.setInverted(inverted); // Deprecated
 
     TalonFXConfiguration toConfigure = new TalonFXConfiguration();
     CurrentLimitsConfigs currentLimitsConfigs = new CurrentLimitsConfigs();
@@ -62,7 +63,11 @@ public class ArmIOTalonFx implements ArmIO {
         .withPeakReverseVoltage(Units.Volts.of(-8));
 
     toConfigure.CurrentLimits = currentLimitsConfigs;
-      
+    
+    toConfigure.MotorOutput.Inverted = InvertedValue.Clockwise_Positive;
+    if(inverted) {
+      toConfigure.MotorOutput.Inverted = InvertedValue.CounterClockwise_Positive;
+    }
 
     motorFx.getConfigurator().apply(toConfigure);
     motorFx.setPosition(0);
