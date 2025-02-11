@@ -1,5 +1,6 @@
 package frc.robot.subsystems.controls.arm;
 
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.commands.common.arm.ArmCommand;
@@ -21,5 +22,41 @@ public class ArmControls {
               }
               return 0.0;
             }));
+
+    controller
+        .povUp()
+        .whileTrue(
+            new InstantCommand(
+                () -> {
+                  arm.runVoltage(3.0);
+                },
+                arm));
+
+    controller
+        .povDown()
+        .whileTrue(
+            new InstantCommand(
+                () -> {
+                  arm.runVoltage(-3.0);
+                },
+                arm));
+
+    controller
+        .povUp()
+        .onFalse(
+            new InstantCommand(
+                () -> {
+                  arm.runVoltage(0.0);
+                },
+                arm));
+
+    controller
+        .povDown()
+        .onFalse(
+            new InstantCommand(
+                () -> {
+                  arm.runVoltage(0.0);
+                },
+                arm));
   }
 }

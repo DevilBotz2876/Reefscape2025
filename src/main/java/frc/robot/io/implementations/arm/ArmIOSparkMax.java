@@ -11,8 +11,6 @@ import com.revrobotics.spark.SparkMax;
 import com.revrobotics.spark.config.ClosedLoopConfig.FeedbackSensor;
 import com.revrobotics.spark.config.SparkBaseConfig;
 import com.revrobotics.spark.config.SparkMaxConfig;
-import edu.wpi.first.math.util.Units;
-import edu.wpi.first.wpilibj.DutyCycleEncoder;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Constants;
 import frc.robot.io.interfaces.ArmIO;
@@ -23,9 +21,11 @@ public class ArmIOSparkMax implements ArmIO {
 
   private final SparkMax motor;
   private final RelativeEncoder relEncoder;
-  private final DutyCycleEncoder absoluteEncoder;
+  // private final DutyCycleEncoder absoluteEncoder;
   private final SparkClosedLoopController armPid;
   public double lkP, lkI, lkD, lkIz, lkFF, lkMaxOutput, lkMinOutput, lmaxRPS;
+
+  private final double gearboxAlgaeNemo = 3.0;
 
   SparkMaxConfig config = new SparkMaxConfig();
 
@@ -33,12 +33,12 @@ public class ArmIOSparkMax implements ArmIO {
     this(id, false);
   }
 
-  double getOffsetCorrectedAbsolutePositionInRadians() {
-    return ((absoluteEncoder.get() - ArmSubsystem.Constants.absolutePositionOffset)
-            * ArmSubsystem.Constants.absoluteEncoderInversion)
-        * 2.0
-        * Math.PI;
-  }
+  // double getOffsetCorrectedAbsolutePositionInRadians() {
+  //   return ((absoluteEncoder.get() - ArmSubsystem.Constants.absolutePositionOffset)
+  //           * ArmSubsystem.Constants.absoluteEncoderInversion)
+  //       * 2.0
+  //       * Math.PI;
+  // }
 
   public ArmIOSparkMax(int id, boolean inverted) {
     /* Instantiate 1x SparkMax motors and absolute encoder */
@@ -47,17 +47,19 @@ public class ArmIOSparkMax implements ArmIO {
     // first thing we do to spark device is reset it to known defaults.
 
     relEncoder = motor.getEncoder();
-    relEncoder.setPosition(Units.radiansToDegrees(getOffsetCorrectedAbsolutePositionInRadians()));
+
+    // right now assume at 0
+    // relEncoder.setPosition(Units.radiansToDegrees(getOffsetCorrectedAbsolutePositionInRadians()));
     armPid = motor.getClosedLoopController();
-    absoluteEncoder = new DutyCycleEncoder(0);
+    // absoluteEncoder = new DutyCycleEncoder(0);
 
     // This will need to be set from a constant once we have the arm assembled and can measure the
     // offset.  Once the arm is done this value won't change.  It can change if arm chain slips so
     // check it after any mechanican work is done.  Also the decimal places matter.  Don't round or
     // leave off numbers.
     //
-    System.out.println("ArmIOSparkMax(): Absolute Position Offset: " + absoluteEncoder.get());
-    absoluteEncoder.setDutyCycleRange(1.0 / 1024.0, 1023.0 / 1024.0);
+    // System.out.println("ArmIOSparkMax(): Absolute Position Offset: " + absoluteEncoder.get());
+    // absoluteEncoder.setDutyCycleRange(1.0 / 1024.0, 1023.0 / 1024.0);
 
     config.inverted(inverted).smartCurrentLimit(40);
 
@@ -68,12 +70,13 @@ public class ArmIOSparkMax implements ArmIO {
     //
     // relEncoder.setPosition(0);
 
-    // 60:1 gear box, 72 teeth on the arm cog and 14 teeth on the motor cog
-    double gearRatio = (60.0 * (72.0 / 14.0));
+        // 60:1 gear box, 30 teeth on the arm cog and 15 teeth on the motor cog
+    // Change this to the robot gearbox
+    double gearRatio = (gearboxAlgaeNemo * (30.0 / 15.0));
     double rotationsToDegreesConversionFactor = 360.0 / gearRatio;
 
     config.encoder.positionConversionFactor(rotationsToDegreesConversionFactor);
-    config.encoder.positionConversionFactor(rotationsToDegreesConversionFactor / 60.0);
+    config.encoder.velocityConversionFactor(rotationsToDegreesConversionFactor / 60.0);
 
     lkP = Arm.Constants.pidKp;
     lkI = Arm.Constants.pidKi;
@@ -112,13 +115,11 @@ public class ArmIOSparkMax implements ArmIO {
   public void updateInputs(ArmIOInputs inputs) {
     inputs.appliedVolts = motor.getAppliedOutput() * motor.getBusVoltage();
     inputs.currentAmps = motor.getOutputCurrent();
-    inputs.positionDegrees = Units.radiansToDegrees(getOffsetCorrectedAbsolutePositionInRadians());
+    inputs.positionDegrees = relEncoder.getPosition();
     inputs.velocityDegrees = relEncoder.getVelocity();
 
-    inputs.absoluteEncoderConnected = isAbsoluteEncoderConnected();
-    inputs.absolutePositionRaw = absoluteEncoder.get();
     inputs.relativePositionDegrees = relEncoder.getPosition();
-    inputs.positionError = inputs.positionDegrees - inputs.relativePositionDegrees;
+    // inputs.positionError = inputs.positionDegrees - inputs.relativePositionDegrees;
 
     // Code below allows PID to be tuned using SmartDashboard.  And outputs extra data to
     // SmartDashboard.
@@ -157,12 +158,12 @@ public class ArmIOSparkMax implements ArmIO {
       //     lkMaxOutput = lmax;
       //   }
 
-      SmartDashboard.putBoolean("Arm/absEncoder/connected", absoluteEncoder.isConnected());
+      // SmartDashboard.putBoolean("Arm/absEncoder/connected", absoluteEncoder.isConnected());
 
       // Try rebooting the robot with the arm/encoder in different positions.  Do these value
       // change?
       // How? Record observations so you can share with rest of us
-      SmartDashboard.putNumber("Arm/absEncoder/absolutePos", absoluteEncoder.get());
+      // SmartDashboard.putNumber("Arm/absEncoder/absolutePos", absoluteEncoder.get());
 
       // This should show what the relative encoder is reading.  When you use the sparkmax position
       // PID it expects a setpoint in rotations.  Not clear if that means degrees or what unit is
@@ -196,11 +197,6 @@ public class ArmIOSparkMax implements ArmIO {
     config.closedLoop.pid(kP, kI, kD).outputRange(minOutput, maxOutput);
     motor.configure(
         config, SparkBase.ResetMode.kResetSafeParameters, SparkBase.PersistMode.kPersistParameters);
-  }
-
-  @Override
-  public boolean isAbsoluteEncoderConnected() {
-    return absoluteEncoder.isConnected();
   }
 
   @Override
