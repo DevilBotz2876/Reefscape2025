@@ -41,8 +41,6 @@ public interface Arm extends Subsystem {
 
   public boolean isAtSetpoint();
 
-  public boolean isAtTargetPosition();
-
   public Command getStowCommand();
 
   public default void setLigament(MechanismLigament2d ligament2d, double offset) {}

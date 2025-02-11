@@ -26,13 +26,13 @@ public class ElevatorControls {
         .onFalse(new ElevatorOpenLoop(elevator, 0.0));
 
     // maps to x on 8bitdo
-    controller.y().whileTrue(new ElevatorL4(elevator, Elevator.Constants.reefL4InMeters));
+    // controller.y().whileTrue(new ElevatorL4(elevator, Elevator.Constants.reefL4InMeters));
 
     // maps to a on 8bitdo
-    controller.a().whileTrue(new ElevatorL3(elevator, Elevator.Constants.reefL3InMeters));
+    // controller.a().whileTrue(new ElevatorL3(elevator, Elevator.Constants.reefL3InMeters));
 
-    // maps to a on 8bitdo
-    controller.b().whileTrue(new ElevatorL1(elevator, Elevator.Constants.reefL1InMeters));
+    //maps to a on 8bitdo
+    // controller.b().whileTrue(new ElevatorL1(elevator, Elevator.Constants.reefL1InMeters));
   }
 
   public static void addSysId(Elevator elevator) {

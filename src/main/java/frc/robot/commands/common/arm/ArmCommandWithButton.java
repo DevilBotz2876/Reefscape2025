@@ -9,19 +9,20 @@ public class ArmCommandWithButton extends Command {
   Arm arm;
   DoubleSupplier speed;
   double targetPosition;
-  double targetFinalPosition;
+  Double targetClimberDegrees;
   double maxArmVelocityInDegreesPerSec = Arm.Constants.maxVelocityInDegreesPerSecond;
 
-  public ArmCommandWithButton(Arm arm, Double targetFinalPosition) {
+  public ArmCommandWithButton(Arm arm, Double targetClimberDegrees) {
     this.arm = arm;
-    this.targetPosition = targetFinalPosition;
-
+    this.targetClimberDegrees = targetClimberDegrees;
     addRequirements((Subsystem) arm);
   }
 
   @Override
-  public void initialize() {}
-
+  public void initialize() {
+    targetPosition = targetClimberDegrees;
+  }
+  
   @Override
   public void execute() {
     arm.setAngle(targetPosition);

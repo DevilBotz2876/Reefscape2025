@@ -23,7 +23,6 @@ public class ArmCommand extends Command {
   @Override
   public void initialize() {
     targetPosition = arm.getAngle();
-    targetFinalPosition = 90;
     arm.setAngle(targetFinalPosition);
   }
 
