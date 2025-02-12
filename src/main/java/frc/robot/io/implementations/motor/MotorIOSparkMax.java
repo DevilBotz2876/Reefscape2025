@@ -1,33 +1,46 @@
 package frc.robot.io.implementations.motor;
 
+import com.revrobotics.REVLibError;
 import com.revrobotics.RelativeEncoder;
+import com.revrobotics.spark.ClosedLoopSlot;
 import com.revrobotics.spark.SparkBase;
+import com.revrobotics.spark.SparkBase.ControlType;
+import com.revrobotics.spark.SparkClosedLoopController;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
 import com.revrobotics.spark.SparkMax;
 import com.revrobotics.spark.config.SparkBaseConfig;
 import com.revrobotics.spark.config.SparkMaxConfig;
 import edu.wpi.first.math.util.Units;
-import frc.robot.io.interfaces.MotorIO;
 
 /** A "SparkMax" controller implementation of a MotorIO */
-public class MotorIOSparkMax implements MotorIO {
-  // define the 1 SparkMax Controllers
+public class MotorIOSparkMax extends MotorIOBase {
+  public static class SparkMaxSettings {
+    int canId = 0;
+  }
+
+  MotorIOBaseSettings motorSettings;
+
+  // SparkMax Controller
   private final SparkMax motor;
-
-  // Gets the NEO encoder
   private final RelativeEncoder encoder;
-
+  private final SparkClosedLoopController pid;
   SparkMaxConfig motorConfig = new SparkMaxConfig();
 
-  public MotorIOSparkMax(int id) {
-    motor = new SparkMax(id, MotorType.kBrushless);
+  public MotorIOSparkMax(MotorIOBaseSettings motorSettings, SparkMaxSettings sparkMaxSettings) {
+    super(motorSettings);
+    this.motorSettings = motorSettings;
+
+    motor = new SparkMax(sparkMaxSettings.canId, MotorType.kBrushless);
     // Set motor to brake mode so shooter stops spinning immediately
 
     motorConfig
-        .inverted(false)
+        .inverted(motorSettings.motor.inverted)
         .smartCurrentLimit(60, 40)
         .secondaryCurrentLimit(20000)
         .idleMode(SparkBaseConfig.IdleMode.kBrake);
+
+    motorConfig.closedLoop.pid(
+        motorSettings.pid.getP(), motorSettings.pid.getI(), motorSettings.pid.getD());
 
     // Last thing we do is save all settings to flash on sparkmax
     motor.configure(
@@ -35,30 +48,53 @@ public class MotorIOSparkMax implements MotorIO {
         SparkBase.ResetMode.kResetSafeParameters,
         SparkBase.PersistMode.kPersistParameters);
     encoder = motor.getEncoder();
+    pid = motor.getClosedLoopController();
   }
 
   @Override
   public void updateInputs(MotorIOInputs inputs) {
-    // Get applied voltage from the motor
     inputs.appliedVolts = motor.getAppliedOutput() * motor.getBusVoltage();
-
-    // Get applied voltage from the top motor
     inputs.currentAmps = motor.getOutputCurrent();
+    inputs.velocityRadPerSec =
+        Units.rotationsPerMinuteToRadiansPerSecond(
+            encoder.getVelocity() / motorSettings.motor.gearing);
+    inputs.positionRad =
+        Units.rotationsToRadians(encoder.getPosition() / motorSettings.motor.gearing);
 
-    // Set velocityRadPerSec to the encoder velocity(rotationsPerMinute) divided by the gear ratio
-    // and converted into Radians Per Second
-    inputs.velocityRadPerSec = Units.rotationsPerMinuteToRadiansPerSecond(encoder.getVelocity());
+    inputs.velocityMetersPerSec = inputs.velocityRadPerSec * motorSettings.motor.drumRadiusMeters;
+    inputs.positionMeters = inputs.positionRad * motorSettings.motor.drumRadiusMeters;
 
-    // Set position to the encoder position(rotations) converted into Radians Per Second
-    inputs.positionRad = Units.rotationsToRadians(encoder.getPosition());
+    super.updateInputs(inputs);
   }
 
   @Override
   public void setVoltage(double volts) {
     // Set the voltage output for the top motor
-    motor.setVoltage(volts);
+    motor.setVoltage(calculateSafeVoltage(volts));
   }
 
-  /* TODO: Add setVelocity using SparkMax's Hardware PID */
-  /* TODO: Add setPosition using SparkMax's Hardware PID */
+  @Override
+  public boolean setVelocity(double velocityRadPerSec, double ffVolts) {
+    REVLibError result;
+
+    result =
+        pid.setReference(
+            Units.radiansPerSecondToRotationsPerMinute(velocityRadPerSec),
+            ControlType.kMAXMotionVelocityControl,
+            ClosedLoopSlot.kSlot0,
+            ffVolts);
+    return result == REVLibError.kOk;
+  }
+
+  @Override
+  public boolean setPosition(double positionRad, double ffVolts) {
+    REVLibError result;
+    result =
+        pid.setReference(
+            Units.radiansToRotations(positionRad),
+            ControlType.kMAXMotionPositionControl,
+            ClosedLoopSlot.kSlot0,
+            ffVolts);
+    return result == REVLibError.kOk;
+  }
 }
