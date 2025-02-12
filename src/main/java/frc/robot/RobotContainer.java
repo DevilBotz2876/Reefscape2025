@@ -4,6 +4,7 @@
 
 package frc.robot;
 
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Preferences;
 import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -49,11 +50,8 @@ public class RobotContainer {
         robotConfig = new RobotConfigStub();
         break;
       default:
-        System.err.println("Failed to determine robot name.");
-        System.exit(1);
-
-        // Suppress Warnings.  This is unreachable, but the compiler doesn't know that
-        robotConfig = new RobotConfigPhoenix();
+        DriverStation.reportError("failed to determine robot name.  Default to NEMO", true);
+        robotConfig = new RobotConfigNemo();
     }
 
     robotConfig.configureBindings();
