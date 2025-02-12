@@ -188,9 +188,11 @@ public class VisionSubsystem extends SubsystemBase implements Vision {
     }
 
     // Record estimated robot pose to AdvantageKit networktables
-    Logger.recordOutput(
-        "VisionSubsystem/DEBUGestimatedCameraPoses",
-        debugRobotPoses.toArray(new Pose2d[debugRobotPoses.size()]));
+    if (debugRobotPoses.size() > 0) {
+      Logger.recordOutput(
+          "VisionSubsystem/DEBUGestimatedCameraPoses",
+          debugRobotPoses.toArray(new Pose2d[debugRobotPoses.size()]));
+    }
   }
 
   @Override
