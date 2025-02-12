@@ -14,6 +14,14 @@ public interface Elevator extends Subsystem {
     public static double maxPositionInMeters = 1.25;
     public static double minPositionInMeters = 0.0;
 
+    public static double reefL4InMeters = 1.00;
+    public static double reefL3InMeters = 0.75;
+    public static double reefL2InMeters = 0.50;
+    public static double reefL1InMeters = 0.25;
+
+    public static double upOpenLoopVoltsMax = 9.0;
+    public static double downOpenLoopVoltsMax = -6.0;
+
     public static double maxVelocityInDegreesPerSecond = 45;
     public static double maxAccelerationInDegreesPerSecondSquared = 120;
 
@@ -57,6 +65,9 @@ public interface Elevator extends Subsystem {
 
   /** Returns true if the elevator is at the setpoint. */
   public boolean isAtSetpoint();
+
+  /** Disable any closed loop controls, i.e PID */
+  public void disableClosedLoop();
 
   public default void setLigament(MechanismLigament2d ligament2d) {}
   ;
