@@ -15,7 +15,7 @@ import edu.wpi.first.math.util.Units;
 /** A "SparkMax" controller implementation of a MotorIO */
 public class MotorIOSparkMax extends MotorIOBase {
   public static class SparkMaxSettings {
-    int canId = 0;
+    public int canId = 0;
   }
 
   MotorIOBaseSettings motorSettings;
@@ -36,7 +36,7 @@ public class MotorIOSparkMax extends MotorIOBase {
     motorConfig
         .inverted(motorSettings.motor.inverted)
         .smartCurrentLimit(60, 40)
-        .secondaryCurrentLimit(20000)
+        .secondaryCurrentLimit(0)
         .idleMode(SparkBaseConfig.IdleMode.kBrake);
 
     motorConfig.closedLoop.pid(
