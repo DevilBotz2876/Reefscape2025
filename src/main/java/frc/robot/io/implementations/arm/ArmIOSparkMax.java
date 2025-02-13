@@ -70,7 +70,7 @@ public class ArmIOSparkMax implements ArmIO {
     //
     // relEncoder.setPosition(0);
 
-        // 60:1 gear box, 30 teeth on the arm cog and 15 teeth on the motor cog
+    // 20:1 gear box, 30 teeth on the arm cog and 15 teeth on the motor cog
     // Change this to the robot gearbox
     double gearRatio = (gearboxAlgaeNemo * (30.0 / 15.0));
     double rotationsToDegreesConversionFactor = 360.0 / gearRatio;

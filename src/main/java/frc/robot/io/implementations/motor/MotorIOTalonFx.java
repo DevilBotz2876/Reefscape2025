@@ -1,4 +1,4 @@
-package frc.robot.io.implementations.arm;
+package frc.robot.io.implementations.motor;
 
 import com.ctre.phoenix6.configs.CurrentLimitsConfigs;
 import com.ctre.phoenix6.configs.TalonFXConfiguration;
@@ -9,23 +9,20 @@ import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.units.Units;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Constants;
-import frc.robot.io.interfaces.ArmIO;
-import frc.robot.io.interfaces.ArmIO.ArmIOInputs;
-import frc.robot.subsystems.implementations.arm.ArmSubsystem;
-import frc.robot.subsystems.interfaces.Arm;
 
-public class ArmIOTalonFx implements ArmIO {
-  private final TalonFX motorFx;
-
-  public double kP, kI, kD, kMaxOutput, kMinOutput;
-  double rotationsToDegreesConversionFactor;
-
-  public ArmIOTalonFx(int id) {
-    this(id, false);
+public class MotorIOTalonFx extends MotorIOBase {
+  public static class TalonFxSettings {
+    public int canId = 0;
   }
 
-  public ArmIOTalonFx(int id, boolean inverted) {
-    motorFx = new TalonFX(id);
+  MotorIOBaseSettings motorSettings;
+
+  private final TalonFX motorFx;
+
+  public MotorIOTalonFx(MotorIOBaseSettings motorSettings, TalonFxSettings talonFxSettings) {
+    super(motorSettings);
+    this.motorSettings = motorSettings;
+    motorFx = new TalonFX(talonFxSettings.canId);
     motorFx.setNeutralMode(NeutralModeValue.Brake);
     // motorFx.setInverted(inverted); // Deprecated
 
@@ -46,16 +43,6 @@ public class ArmIOTalonFx implements ArmIO {
         .withStatorCurrentLimit(Units.Amps.of(120)) // Limit stator current to 120 A
         .withStatorCurrentLimitEnable(true); // And enable it
 
-    kP = Arm.Constants.pidKp;
-    kI = Arm.Constants.pidKi;
-    kD = Arm.Constants.pidKd;
-    kMaxOutput = ArmSubsystem.Constants.pidMaxOutput;
-    kMinOutput = ArmSubsystem.Constants.pidMinOutput;
-
-    toConfigure.Slot0.kP = kP; // An error of 1 rotation results in 2.4 V output
-    toConfigure.Slot0.kI = kI; // No output for integrated error
-    toConfigure.Slot0.kD = kD; // A velocity of 1 rps results in 0.1 V output
-
     // // Peak output of 8 V
     toConfigure
         .Voltage
@@ -63,18 +50,14 @@ public class ArmIOTalonFx implements ArmIO {
         .withPeakReverseVoltage(Units.Volts.of(-8));
 
     toConfigure.CurrentLimits = currentLimitsConfigs;
-    
-    toConfigure.MotorOutput.Inverted = InvertedValue.Clockwise_Positive;
-    if(inverted) {
-      toConfigure.MotorOutput.Inverted = InvertedValue.CounterClockwise_Positive;
+
+    toConfigure.MotorOutput.Inverted = InvertedValue.CounterClockwise_Positive;
+    if (motorSettings.motor.inverted) {
+      toConfigure.MotorOutput.Inverted = InvertedValue.Clockwise_Positive;
     }
 
     motorFx.getConfigurator().apply(toConfigure);
     motorFx.setPosition(0);
-
-    double gearRatio = 20 * (30.0 / 15.0);
-    rotationsToDegreesConversionFactor = 360.0 / gearRatio;
-
   }
 
   @Override
@@ -84,19 +67,26 @@ public class ArmIOTalonFx implements ArmIO {
   }
 
   @Override
-  public void updateInputs(ArmIOInputs inputs) {
+  public void updateInputs(MotorIOInputs inputs) {
     inputs.appliedVolts = motorFx.getMotorVoltage().getValueAsDouble();
     inputs.currentAmps = motorFx.getSupplyCurrent().getValueAsDouble();
     // inputs.currentStatorAmps = motorFx.getStatorCurrent().getValueAsDouble();
-    inputs.positionDegrees = motorFx.getPosition().getValueAsDouble() * rotationsToDegreesConversionFactor;
-    inputs.velocityDegrees = motorFx.getVelocity().getValue().in(Units.DegreesPerSecond);
+    inputs.positionDegrees =
+        motorFx.getPosition().getValueAsDouble() * (360.0 / motorSettings.motor.gearing);
 
-    SmartDashboard.putNumber("Arm/motorFx.getPosition().getValue().in(Units.Degrees);", motorFx.getPosition().getValue().in(Units.Degrees));
-    SmartDashboard.putNumber("Arm/motorFx.getPosition().getValue().in(Units.Degree);", motorFx.getPosition().getValue().in(Units.Degree));
+    SmartDashboard.putNumber(
+        "Arm/motorFx.getPosition().getValue().in(Units.Degrees);",
+        motorFx.getPosition().getValue().in(Units.Degrees));
+    SmartDashboard.putNumber(
+        "Arm/motorFx.getPosition().getValue().in(Units.Degree);",
+        motorFx.getPosition().getValue().in(Units.Degree));
 
-    SmartDashboard.putNumber("Arm/motorFx.getPosition().getValue().in(Units.Revolution);", motorFx.getPosition().getValue().in(Units.Revolution));
+    SmartDashboard.putNumber(
+        "Arm/motorFx.getPosition().getValue().in(Units.Revolution);",
+        motorFx.getPosition().getValue().in(Units.Revolution));
 
-    SmartDashboard.putNumber("Arm/motorFx.getPosition().getValueAsDouble();", motorFx.getPosition().getValueAsDouble());
+    SmartDashboard.putNumber(
+        "Arm/motorFx.getPosition().getValueAsDouble();", motorFx.getPosition().getValueAsDouble());
 
     // Code below allows PID to be tuned using SmartDashboard.  And outputs extra data to
     // SmartDashboard.
@@ -135,16 +125,5 @@ public class ArmIOTalonFx implements ArmIO {
       //     lkMaxOutput = lmax;
       //   }
     }
-  }
-
-  public void setPosition(double meters, double ffVolts) {}
-
-  @Override
-  public void setFeedback(double kP, double kI, double kD, double minOutput, double maxOutput) {
-    this.kP = kP;
-    this.kI = kI;
-    this.kD = kD;
-    this.kMinOutput = minOutput;
-    this.kMaxOutput = maxOutput;
   }
 }
