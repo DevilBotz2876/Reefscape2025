@@ -2,8 +2,10 @@ frc.robot
 frc.robot.commands.common.arm
 frc.robot.commands.common.drive
 frc.robot.commands.common.elevator
+frc.robot.commands.common.flywheel
 frc.robot.commands.common.gizmo
 frc.robot.commands.common.intake
+frc.robot.commands.common.motor
 frc.robot.commands.common.shooter
 frc.robot.config.game.reefscape2025
 frc.robot.io.implementations.arm
@@ -18,6 +20,7 @@ frc.robot.subsystems.controls.algae
 frc.robot.subsystems.controls.arm
 frc.robot.subsystems.controls.drive
 frc.robot.subsystems.controls.elevator
+frc.robot.subsystems.controls.flywheel
 frc.robot.subsystems.controls.gizmo
 frc.robot.subsystems.controls.vision
 frc.robot.subsystems.implementations.algae
@@ -28,6 +31,7 @@ frc.robot.subsystems.implementations.elevator
 frc.robot.subsystems.implementations.gizmo
 frc.robot.subsystems.implementations.intake
 frc.robot.subsystems.implementations.led
+frc.robot.subsystems.implementations.motor
 frc.robot.subsystems.implementations.shooter
 frc.robot.subsystems.implementations.vision
 frc.robot.subsystems.interfaces

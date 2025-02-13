@@ -71,7 +71,9 @@ loadScripts(document, 'script');</script>
 <h1 title="Class MotorIOStub" class="title">Class MotorIOStub</h1>
 </div>
 <div class="inheritance" title="Inheritance Tree"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">java.lang.Object</a>
+<div class="inheritance"><a href="MotorIOBase.html" title="class in frc.robot.io.implementations.motor">frc.robot.io.implementations.motor.MotorIOBase</a>
 <div class="inheritance">frc.robot.io.implementations.motor.MotorIOStub</div>
+</div>
 </div>
 <section class="class-description" id="class-description">
 <dl class="notes">
@@ -80,10 +82,9 @@ loadScripts(document, 'script');</script>
 </dl>
 <hr>
 <div class="type-signature"><span class="modifiers">public class </span><span class="element-name type-name-label">MotorIOStub</span>
-<span class="extends-implements">extends <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>
-implements <a href="../../interfaces/MotorIO.html" title="interface in frc.robot.io.interfaces">MotorIO</a></span></div>
+<span class="extends-implements">extends <a href="MotorIOBase.html" title="class in frc.robot.io.implementations.motor">MotorIOBase</a></span></div>
 <div class="block">A "Stub" implementation of a MotorIO that can be used for initial software bring-up/testing in
- simulation</div>
+ simulation.</div>
 </section>
 <section class="summary">
 <ul class="summary-list">
@@ -91,9 +92,21 @@ implements <a href="../../interfaces/MotorIO.html" title="interface in frc.robot
 <li>
 <section class="nested-class-summary" id="nested-class-summary">
 <h2>Nested Class Summary</h2>
+<div class="caption"><span>Nested Classes</span></div>
+<div class="summary-table three-column-summary">
+<div class="table-header col-first">Modifier and Type</div>
+<div class="table-header col-second">Class</div>
+<div class="table-header col-last">Description</div>
+<div class="col-first even-row-color"><code>static class&nbsp;</code></div>
+<div class="col-second even-row-color"><code><a href="MotorIOStub.MotorSimulationSettings.html" class="type-name-link" title="class in frc.robot.io.implementations.motor">MotorIOStub.MotorSimulationSettings</a></code></div>
+<div class="col-last even-row-color">&nbsp;</div>
+</div>
+<div class="inherited-list">
+<h2 id="nested-classes-inherited-from-class-frc.robot.io.implementations.motor.MotorIOBase">Nested classes/interfaces inherited from class&nbsp;frc.robot.io.implementations.motor.<a href="MotorIOBase.html" title="class in frc.robot.io.implementations.motor">MotorIOBase</a></h2>
+<code><a href="MotorIOBase.MotorIOBaseSettings.html" title="class in frc.robot.io.implementations.motor">MotorIOBase.MotorIOBaseSettings</a></code></div>
 <div class="inherited-list">
 <h2 id="nested-classes-inherited-from-class-frc.robot.io.interfaces.MotorIO">Nested classes/interfaces inherited from interface&nbsp;frc.robot.io.interfaces.<a href="../../interfaces/MotorIO.html" title="interface in frc.robot.io.interfaces">MotorIO</a></h2>
-<code><a href="../../interfaces/MotorIO.MotorIOInputs.html" title="class in frc.robot.io.interfaces">MotorIO.MotorIOInputs</a></code></div>
+<code><a href="../../interfaces/MotorIO.MotorIOInputs.html" title="class in frc.robot.io.interfaces">MotorIO.MotorIOInputs</a>, <a href="../../interfaces/MotorIO.MotorIOSettings.html" title="class in frc.robot.io.interfaces">MotorIO.MotorIOSettings</a></code></div>
 </section>
 </li>
 <!-- ======== CONSTRUCTOR SUMMARY ======== -->
@@ -104,16 +117,9 @@ implements <a href="../../interfaces/MotorIO.html" title="interface in frc.robot
 <div class="summary-table two-column-summary">
 <div class="table-header col-first">Constructor</div>
 <div class="table-header col-last">Description</div>
-<div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E()" class="member-name-link">MotorIOStub</a>()</code></div>
-<div class="col-last even-row-color">
-<div class="block">Default constructor that doesn't take any arguments.</div>
-</div>
-<div class="col-constructor-name odd-row-color"><code><a href="#%3Cinit%3E(boolean,double,double)" class="member-name-link">MotorIOStub</a><wbr>(boolean&nbsp;inverted,
- double&nbsp;moi,
- double&nbsp;gearing)</code></div>
-<div class="col-last odd-row-color">
-<div class="block">Constructor that allows setting whether the motor is inverted</div>
-</div>
+<div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E(frc.robot.io.implementations.motor.MotorIOBase.MotorIOBaseSettings,frc.robot.io.implementations.motor.MotorIOStub.MotorSimulationSettings)" class="member-name-link">MotorIOStub</a><wbr>(<a href="MotorIOBase.MotorIOBaseSettings.html" title="class in frc.robot.io.implementations.motor">MotorIOBase.MotorIOBaseSettings</a>&nbsp;motorSettings,
+ <a href="MotorIOStub.MotorSimulationSettings.html" title="class in frc.robot.io.implementations.motor">MotorIOStub.MotorSimulationSettings</a>&nbsp;simulationSettings)</code></div>
+<div class="col-last even-row-color">&nbsp;</div>
 </div>
 </section>
 </li>
@@ -142,11 +148,11 @@ implements <a href="../../interfaces/MotorIO.html" title="interface in frc.robot
 </div>
 </div>
 <div class="inherited-list">
+<h3 id="methods-inherited-from-class-frc.robot.io.implementations.motor.MotorIOBase">Methods inherited from class&nbsp;frc.robot.io.implementations.motor.<a href="MotorIOBase.html" title="class in frc.robot.io.implementations.motor">MotorIOBase</a></h3>
+<code><a href="MotorIOBase.html#calculateSafeVoltage(double)">calculateSafeVoltage</a>, <a href="MotorIOBase.html#getPid()">getPid</a>, <a href="MotorIOBase.html#setPosition(double,double)">setPosition</a>, <a href="MotorIOBase.html#setVelocity(double,double)">setVelocity</a></code></div>
+<div class="inherited-list">
 <h3 id="methods-inherited-from-class-java.lang.Object">Methods inherited from class&nbsp;java.lang.<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a></h3>
 <code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#clone()" title="class or interface in java.lang" class="external-link">clone</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#equals(java.lang.Object)" title="class or interface in java.lang" class="external-link">equals</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#finalize()" title="class or interface in java.lang" class="external-link">finalize</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#getClass()" title="class or interface in java.lang" class="external-link">getClass</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#hashCode()" title="class or interface in java.lang" class="external-link">hashCode</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#notify()" title="class or interface in java.lang" class="external-link">notify</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#notifyAll()" title="class or interface in java.lang" class="external-link">notifyAll</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#toString()" title="class or interface in java.lang" class="external-link">toString</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#wait()" title="class or interface in java.lang" class="external-link">wait</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#wait(long)" title="class or interface in java.lang" class="external-link">wait</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#wait(long,int)" title="class or interface in java.lang" class="external-link">wait</a></code></div>
-<div class="inherited-list">
-<h3 id="methods-inherited-from-class-frc.robot.io.interfaces.MotorIO">Methods inherited from interface&nbsp;frc.robot.io.interfaces.<a href="../../interfaces/MotorIO.html" title="interface in frc.robot.io.interfaces">MotorIO</a></h3>
-<code><a href="../../interfaces/MotorIO.html#setPosition(double)">setPosition</a>, <a href="../../interfaces/MotorIO.html#setVelocity(double,double)">setVelocity</a></code></div>
 </section>
 </li>
 </ul>
@@ -159,19 +165,10 @@ implements <a href="../../interfaces/MotorIO.html" title="interface in frc.robot
 <h2>Constructor Details</h2>
 <ul class="member-list">
 <li>
-<section class="detail" id="&lt;init&gt;()">
+<section class="detail" id="&lt;init&gt;(frc.robot.io.implementations.motor.MotorIOBase.MotorIOBaseSettings,frc.robot.io.implementations.motor.MotorIOStub.MotorSimulationSettings)">
 <h3>MotorIOStub</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name">MotorIOStub</span>()</div>
-<div class="block">Default constructor that doesn't take any arguments.</div>
-</section>
-</li>
-<li>
-<section class="detail" id="&lt;init&gt;(boolean,double,double)">
-<h3>MotorIOStub</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name">MotorIOStub</span><wbr><span class="parameters">(boolean&nbsp;inverted,
- double&nbsp;moi,
- double&nbsp;gearing)</span></div>
-<div class="block">Constructor that allows setting whether the motor is inverted</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name">MotorIOStub</span><wbr><span class="parameters">(<a href="MotorIOBase.MotorIOBaseSettings.html" title="class in frc.robot.io.implementations.motor">MotorIOBase.MotorIOBaseSettings</a>&nbsp;motorSettings,
+ <a href="MotorIOStub.MotorSimulationSettings.html" title="class in frc.robot.io.implementations.motor">MotorIOStub.MotorSimulationSettings</a>&nbsp;simulationSettings)</span></div>
 </section>
 </li>
 </ul>
@@ -183,6 +180,18 @@ implements <a href="../../interfaces/MotorIO.html" title="interface in frc.robot
 <h2>Method Details</h2>
 <ul class="member-list">
 <li>
+<section class="detail" id="setVoltage(double)">
+<h3>setVoltage</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">setVoltage</span><wbr><span class="parameters">(double&nbsp;volts)</span></div>
+<div class="block"><span class="descfrm-type-label">Description copied from interface:&nbsp;<code><a href="../../interfaces/MotorIO.html#setVoltage(double)">MotorIO</a></code></span></div>
+<div class="block">Run open loop at the specified voltage.</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>volts</code> - desired voltage</dd>
+</dl>
+</section>
+</li>
+<li>
 <section class="detail" id="updateInputs(frc.robot.io.interfaces.MotorIO.MotorIOInputs)">
 <h3>updateInputs</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">updateInputs</span><wbr><span class="parameters">(<a href="../../interfaces/MotorIO.MotorIOInputs.html" title="class in frc.robot.io.interfaces">MotorIO.MotorIOInputs</a>&nbsp;inputs)</span></div>
@@ -192,18 +201,8 @@ implements <a href="../../interfaces/MotorIO.html" title="interface in frc.robot
 <dl class="notes">
 <dt>Specified by:</dt>
 <dd><code><a href="../../interfaces/MotorIO.html#updateInputs(frc.robot.io.interfaces.MotorIO.MotorIOInputs)">updateInputs</a></code>&nbsp;in interface&nbsp;<code><a href="../../interfaces/MotorIO.html" title="interface in frc.robot.io.interfaces">MotorIO</a></code></dd>
-</dl>
-</section>
-</li>
-<li>
-<section class="detail" id="setVoltage(double)">
-<h3>setVoltage</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">setVoltage</span><wbr><span class="parameters">(double&nbsp;volts)</span></div>
-<div class="block"><span class="descfrm-type-label">Description copied from interface:&nbsp;<code><a href="../../interfaces/MotorIO.html#setVoltage(double)">MotorIO</a></code></span></div>
-<div class="block">Run open loop at the specified voltage.</div>
-<dl class="notes">
-<dt>Specified by:</dt>
-<dd><code><a href="../../interfaces/MotorIO.html#setVoltage(double)">setVoltage</a></code>&nbsp;in interface&nbsp;<code><a href="../../interfaces/MotorIO.html" title="interface in frc.robot.io.interfaces">MotorIO</a></code></dd>
+<dt>Overrides:</dt>
+<dd><code><a href="MotorIOBase.html#updateInputs(frc.robot.io.interfaces.MotorIO.MotorIOInputs)">updateInputs</a></code>&nbsp;in class&nbsp;<code><a href="MotorIOBase.html" title="class in frc.robot.io.implementations.motor">MotorIOBase</a></code></dd>
 </dl>
 </section>
 </li>
