@@ -91,4 +91,11 @@ public interface MotorIO {
    * @return
    */
   public PIDController getPid();
+
+  /**
+   * Resets the relative encoder to the specified position
+   *
+   * @positionRad the current position in radians
+   */
+  public void resetEncoder(double positionRad);
 }

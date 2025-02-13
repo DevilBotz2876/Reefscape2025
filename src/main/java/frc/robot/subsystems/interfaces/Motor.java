@@ -7,4 +7,18 @@ public interface Motor {
    * @param volts
    */
   public void runVoltage(double volts);
+
+  /**
+   * Returns the current used by the motor
+   *
+   * @return returns the instantaneous current usage in amps
+   */
+  public double getCurrent();
+
+  /**
+   * Resets the relative encoder to the specified value (in radians)
+   *
+   * @param positonRad the current position in radians
+   */
+  public void resetEncoder(double positionRad);
 }

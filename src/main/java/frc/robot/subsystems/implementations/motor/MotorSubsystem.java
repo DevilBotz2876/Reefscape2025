@@ -52,8 +52,19 @@ public class MotorSubsystem extends SubsystemBase implements Motor {
     Logger.processInputs(getName(), inputs);
   }
 
+  @Override
   public void runVoltage(double volts) {
     io.setVoltage(volts);
+  }
+
+  @Override
+  public double getCurrent() {
+    return inputs.currentAmps;
+  }
+
+  @Override
+  public void resetEncoder(double positionRad) {
+    io.resetEncoder(positionRad);
   }
 
   private Command sysIdQuasistatic(SysIdRoutine.Direction direction) {
