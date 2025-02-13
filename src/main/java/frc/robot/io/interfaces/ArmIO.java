@@ -10,9 +10,11 @@ public interface ArmIO {
     public double positionDegrees = 0.0;
     public double velocityDegrees = 0.0;
 
+    public double absolutePositionRaw;
     public double relativePositionDegrees = 0.0;
     public double positionError = 0.0;
 
+    public boolean absoluteEncoderConnected = false;
     public boolean limitHigh = false;
     public boolean limitLow = false;
   }

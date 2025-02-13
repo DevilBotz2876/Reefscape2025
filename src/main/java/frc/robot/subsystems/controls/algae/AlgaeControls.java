@@ -21,7 +21,7 @@ public class AlgaeControls {
         .onTrue(
             new InstantCommand(
                 () -> {
-                  algae.runVoltageArm(1.0);
+                  algae.runVoltageArm(6.0);
                 },
                 algae));
 
@@ -30,7 +30,7 @@ public class AlgaeControls {
         .onTrue(
             new InstantCommand(
                 () -> {
-                  algae.runVoltageArm(-1.0);
+                  algae.runVoltageArm(-3.0);
                 },
                 algae));
 
