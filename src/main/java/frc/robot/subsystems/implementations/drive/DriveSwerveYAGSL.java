@@ -27,11 +27,11 @@ import swervelib.telemetry.SwerveDriveTelemetry;
 
 public class DriveSwerveYAGSL extends DriveBase {
   public RobotConfig config;
+
   public static class Constants {
     public static double slewRateLimiterX = 3;
     public static double slewRateLimiterY = 3;
     public static double slewRateLimiterAngle = 3;
-   
   }
 
   private final File swerveJsonDirectory;
@@ -71,7 +71,6 @@ public class DriveSwerveYAGSL extends DriveBase {
     // they will be called directly from this subsystem
     swerveDrive.stopOdometryThread();
 
-  
     try {
       config = RobotConfig.fromGUISettings();
 
