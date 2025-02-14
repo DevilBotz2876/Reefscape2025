@@ -5,12 +5,9 @@ import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.system.plant.DCMotor;
 import edu.wpi.first.wpilibj.util.Color;
 import edu.wpi.first.wpilibj.util.Color8Bit;
-import frc.robot.io.implementations.arm.ArmIOSparkMax;
-import frc.robot.io.implementations.intake.IntakeIOStub;
 import frc.robot.io.implementations.motor.MotorIOBase.MotorIOBaseSettings;
 import frc.robot.io.implementations.motor.MotorIOTalonFx;
 import frc.robot.io.implementations.motor.MotorIOTalonFx.TalonFxSettings;
-import frc.robot.subsystems.implementations.algae.AlgaeSubsystem;
 import frc.robot.subsystems.implementations.drive.DriveBase;
 import frc.robot.subsystems.implementations.drive.DriveSwerveYAGSL;
 import frc.robot.subsystems.implementations.motor.ArmMotorSubsystem;
@@ -29,31 +26,31 @@ public class RobotConfigNemo extends RobotConfig {
     DriveBase.Constants.rotatePidErrorInDegrees = 1;
     drive = new DriveSwerveYAGSL("yagsl/nemo");
 
-    algaeSubsystem = new AlgaeSubsystem(new IntakeIOStub(), new ArmIOSparkMax(31));
-
     // Coral Arm
     {
       MotorIOBaseSettings motorSettings = new MotorIOBaseSettings();
       // 20:1 gear box, 30 teeth on the arm cog and 15 teeth on the motor cog
       motorSettings.motor.gearing = 20 * (30.0 / 15.0);
-      motorSettings.motor.inverted = true;
-      motorSettings.pid = new PIDController(1.0, 0, 0);
+      motorSettings.motor.inverted = true; // false for Sim
+      motorSettings.pid = new PIDController(0.0, 0, 0);
 
       ArmSettings armSettings = new ArmSettings();
       armSettings.minAngleInDegrees = 0;
       armSettings.maxAngleInDegrees = 150;
       armSettings.startingAngleInDegrees = armSettings.minAngleInDegrees;
-      armSettings.feedforward = new ArmFeedforward(0, 0.222, 0.001, 0);
+      armSettings.feedforward = new ArmFeedforward(0.0, 0.0, 0.0, 0.0);
       armSettings.color = new Color8Bit(Color.kRed);
       armSettings.armLengthInMeters = 0.5;
       armSettings.armMassInKg = 1.0;
-      armSettings.motor = DCMotor.getNEO(1);
+      armSettings.motor = DCMotor.getKrakenX60(1);
       armSettings.simulateGravity = true;
 
       TalonFxSettings talonFxSettings = new TalonFxSettings();
       talonFxSettings.canId = 21;
+
       coralArm =
           new ArmMotorSubsystem(
+              // new MotorIOArmStub(motorSettings, armSettings), "Coral", armSettings);
               new MotorIOTalonFx(motorSettings, talonFxSettings), "Coral", armSettings);
     }
   }

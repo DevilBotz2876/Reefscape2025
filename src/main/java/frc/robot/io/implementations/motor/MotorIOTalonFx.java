@@ -7,8 +7,6 @@ import com.ctre.phoenix6.signals.InvertedValue;
 import com.ctre.phoenix6.signals.NeutralModeValue;
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.units.Units;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import frc.robot.Constants;
 
 public class MotorIOTalonFx extends MotorIOBase {
   public static class TalonFxSettings {
@@ -24,7 +22,6 @@ public class MotorIOTalonFx extends MotorIOBase {
     this.motorSettings = motorSettings;
     motorFx = new TalonFX(talonFxSettings.canId);
     motorFx.setNeutralMode(NeutralModeValue.Brake);
-    // motorFx.setInverted(inverted); // Deprecated
 
     TalonFXConfiguration toConfigure = new TalonFXConfiguration();
     CurrentLimitsConfigs currentLimitsConfigs = new CurrentLimitsConfigs();
@@ -57,7 +54,8 @@ public class MotorIOTalonFx extends MotorIOBase {
     }
 
     motorFx.getConfigurator().apply(toConfigure);
-    motorFx.setPosition(0);
+    // motorFx.setpo(0);
+    // motorFx.setPosition(null)
   }
 
   @Override
@@ -71,59 +69,10 @@ public class MotorIOTalonFx extends MotorIOBase {
     inputs.appliedVolts = motorFx.getMotorVoltage().getValueAsDouble();
     inputs.currentAmps = motorFx.getSupplyCurrent().getValueAsDouble();
     // inputs.currentStatorAmps = motorFx.getStatorCurrent().getValueAsDouble();
-    inputs.positionDegrees =
-        motorFx.getPosition().getValueAsDouble() * (360.0 / motorSettings.motor.gearing);
+    inputs.positionRad =
+        edu.wpi.first.math.util.Units.rotationsToRadians(
+            motorFx.getPosition().getValueAsDouble() / motorSettings.motor.gearing);
 
-    SmartDashboard.putNumber(
-        "Arm/motorFx.getPosition().getValue().in(Units.Degrees);",
-        motorFx.getPosition().getValue().in(Units.Degrees));
-    SmartDashboard.putNumber(
-        "Arm/motorFx.getPosition().getValue().in(Units.Degree);",
-        motorFx.getPosition().getValue().in(Units.Degree));
-
-    SmartDashboard.putNumber(
-        "Arm/motorFx.getPosition().getValue().in(Units.Revolution);",
-        motorFx.getPosition().getValue().in(Units.Revolution));
-
-    SmartDashboard.putNumber(
-        "Arm/motorFx.getPosition().getValueAsDouble();", motorFx.getPosition().getValueAsDouble());
-
-    // Code below allows PID to be tuned using SmartDashboard.  And outputs extra data to
-    // SmartDashboard.
-    if (Constants.debugMode) {
-      //   double lp = SmartDashboard.getNumber("Arm/pid/P Gain", 0);
-      //   double li = SmartDashboard.getNumber("Arm/pid/I Gain", 0);
-      //   double ld = SmartDashboard.getNumber("Arm/pid/D Gain", 0);
-      //   double liz = SmartDashboard.getNumber("Arm/pid/I Zone", 0);
-      //   double lff = SmartDashboard.getNumber("Arm/pid/Feed Forward", 0);
-      //   double lmax = SmartDashboard.getNumber("Arm/pid/Max Output", 0);
-      //   double lmin = SmartDashboard.getNumber("Arm/pid/Min Output", 0);
-
-      //   if ((lp != lkP)) {
-      //     armPid.setP(lp);
-      //     lkP = lp;
-      //   }
-      //   if ((li != lkI)) {
-      //     armPid.setI(li);
-      //     lkI = li;
-      //   }
-      //   if ((ld != lkD)) {
-      //     armPid.setD(ld);
-      //     lkD = ld;
-      //   }
-      //   if ((liz != lkIz)) {
-      //     armPid.setIZone(liz);
-      //     lkIz = liz;
-      //   }
-      //   if ((lff != lkFF)) {
-      //     armPid.setFF(lff);
-      //     lkFF = lff;
-      //   }
-      //   if ((lmax != lkMaxOutput) || (lmin != lkMinOutput)) {
-      //     armPid.setOutputRange(lmin, lmax);
-      //     lkMinOutput = lmin;
-      //     lkMaxOutput = lmax;
-      //   }
-    }
+    super.updateInputs(inputs);
   }
 }
