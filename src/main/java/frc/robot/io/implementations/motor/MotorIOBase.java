@@ -105,4 +105,9 @@ public abstract class MotorIOBase implements MotorIO {
   public PIDController getPid() {
     return settings.pid;
   }
+
+  @Override
+  public void disablePid() {
+    softwarePidEnabled = false;
+  }
 }

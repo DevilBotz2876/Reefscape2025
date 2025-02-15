@@ -91,4 +91,7 @@ public interface MotorIO {
    * @return
    */
   public PIDController getPid();
+
+  /** Disables the software PID loop */
+  public void disablePid();
 }
