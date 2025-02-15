@@ -2,9 +2,12 @@ package frc.robot.config.game.reefscape2025;
 
 import edu.wpi.first.apriltag.AprilTagFieldLayout;
 import edu.wpi.first.apriltag.AprilTagFields;
+import edu.wpi.first.math.controller.ArmFeedforward;
+import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.geometry.Rotation3d;
 import edu.wpi.first.math.geometry.Transform3d;
 import edu.wpi.first.math.geometry.Translation3d;
+import edu.wpi.first.math.system.plant.DCMotor;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
@@ -22,18 +25,20 @@ import frc.robot.Robot;
 import frc.robot.io.implementations.arm.ArmIOStub;
 import frc.robot.io.implementations.elevator.ElevatorIOStub;
 import frc.robot.io.implementations.intake.IntakeIOStub;
+import frc.robot.io.implementations.motor.MotorIOArmStub;
+import frc.robot.io.implementations.motor.MotorIOBase.MotorIOBaseSettings;
 import frc.robot.subsystems.controls.algae.AlgaeControls;
-import frc.robot.subsystems.controls.arm.ArmControls;
+import frc.robot.subsystems.controls.arm.CoralArmControls;
 import frc.robot.subsystems.controls.drive.DriveControls;
 import frc.robot.subsystems.controls.elevator.ElevatorControls;
 import frc.robot.subsystems.controls.vision.VisionControls;
 import frc.robot.subsystems.implementations.algae.AlgaeSubsystem;
-import frc.robot.subsystems.implementations.arm.ArmSubsystem;
 import frc.robot.subsystems.implementations.drive.DriveBase;
 import frc.robot.subsystems.implementations.elevator.ElevatorSubsystem;
+import frc.robot.subsystems.implementations.motor.ArmMotorSubsystem;
 import frc.robot.subsystems.implementations.vision.VisionSubsystem;
 import frc.robot.subsystems.interfaces.Algae;
-import frc.robot.subsystems.interfaces.Arm;
+import frc.robot.subsystems.interfaces.ArmV2.ArmSettings;
 import frc.robot.subsystems.interfaces.Vision.Camera;
 import java.util.ArrayList;
 
@@ -43,7 +48,7 @@ public class RobotConfig {
   public static SendableChooser<Command> autoChooser;
   public static VisionSubsystem vision;
   public static ElevatorSubsystem elevator;
-  public static ArmSubsystem arm;
+  public static ArmMotorSubsystem coralArm;
   public static AlgaeSubsystem algaeSubsystem;
 
   // Controls
@@ -64,8 +69,8 @@ public class RobotConfig {
       boolean stubAuto,
       boolean stubVision,
       boolean stubElevator,
-      boolean stubArm) {
-    this(stubDrive, stubAuto, stubVision, stubElevator, stubArm, true);
+      boolean stubCoralArm) {
+    this(stubDrive, stubAuto, stubVision, stubElevator, stubCoralArm, true);
   }
 
   public RobotConfig() {
@@ -77,7 +82,7 @@ public class RobotConfig {
       boolean stubAuto,
       boolean stubVision,
       boolean stubElevator,
-      boolean stubArm,
+      boolean stubCoralArm,
       boolean stubAlgaeSubsystem) {
     if (stubDrive) {
       drive = new DriveBase();
@@ -117,10 +122,26 @@ public class RobotConfig {
       elevator = new ElevatorSubsystem(new ElevatorIOStub());
     }
 
-    if (stubArm) {
-      arm =
-          new ArmSubsystem(
-              new ArmIOStub(Arm.Constants.maxAngleInDegrees, Arm.Constants.minAngleInDegrees));
+    if (stubCoralArm) {
+      MotorIOBaseSettings motorSettings = new MotorIOBaseSettings();
+      motorSettings.motor.gearing = 50;
+      motorSettings.motor.inverted = false;
+      motorSettings.pid = new PIDController(1.0, 0, 0);
+
+      ArmSettings armSettings = new ArmSettings();
+      armSettings.minAngleInDegrees = 0;
+      armSettings.maxAngleInDegrees = 150;
+      armSettings.startingAngleInDegrees = armSettings.minAngleInDegrees;
+      armSettings.feedforward = new ArmFeedforward(0, 0.222, 0.001, 0);
+      armSettings.color = new Color8Bit(Color.kBlue);
+      armSettings.armLengthInMeters = 0.5;
+      armSettings.armMassInKg = 0.81;
+      armSettings.motor = DCMotor.getNEO(1);
+      armSettings.simulateGravity = true;
+
+      coralArm =
+          new ArmMotorSubsystem(
+              new MotorIOArmStub(motorSettings, armSettings), "Coral", armSettings);
     }
 
     if (stubAlgaeSubsystem) {
@@ -148,7 +169,7 @@ public class RobotConfig {
     ElevatorControls.setupController(elevator, mainController);
     ElevatorControls.addSysId(elevator);
 
-    ArmControls.setupController(arm, mainController);
+    CoralArmControls.setupController(coralArm, mainController);
 
     AlgaeControls.setupController(algaeSubsystem, mainController);
 
@@ -165,11 +186,6 @@ public class RobotConfig {
         coralRoot.append(
             new MechanismLigament2d("Elevator", 5, 90, 10, new Color8Bit(Color.kLightSlateGray)));
     elevator.setLigament(elevatorLigament2d);
-
-    MechanismLigament2d armLigament2d =
-        elevatorLigament2d.append(
-            new MechanismLigament2d("Arm", 10, 0, 6, new Color8Bit(Color.kYellow)));
-    arm.setLigament(armLigament2d);
 
     MechanismLigament2d algaeArmLigament2d =
         algaeRoot.append(
