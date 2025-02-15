@@ -33,6 +33,7 @@ public class CoralArmControls {
     settings.voltage = -0.5;
     settings.minResetCurrent = 0.5;
     settings.resetPositionRad = Units.degreesToRadians(arm.getSettings().minAngleInDegrees - 15); // We have an offest about 15 degrees
+    settings.initialReverseDuration = 1.0; // Set the seconds of reverse before zero. Set to zero if there shound be no reverse
     Command autoCalibrateCommand = new MotorAutoResetEncoderCommand((Motor) arm, settings);
     SmartDashboard.putData("Auto Calibrate Coral Arm", autoCalibrateCommand);
   }
