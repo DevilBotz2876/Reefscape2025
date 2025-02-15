@@ -4,7 +4,6 @@ import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.RobotController;
-import edu.wpi.first.wpilibj.RobotState;
 import frc.robot.io.interfaces.MotorIO;
 
 /**
@@ -39,9 +38,6 @@ public abstract class MotorIOBase implements MotorIO {
     inputs.velocityRPMs = Units.radiansPerSecondToRotationsPerMinute(inputs.velocityRadPerSec);
     inputs.positionDegrees = Units.radiansToDegrees(inputs.positionRad);
 
-    if (RobotState.isDisabled()) {
-      softwarePidEnabled = false;
-    }
     /* Software PID Implementation */
     if (softwarePidEnabled) {
       double appliedVolts = 0;
