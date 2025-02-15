@@ -92,19 +92,28 @@ integration process.
                * ...
       * [`io/`](src/main/java/frc/robot/io): generic *low-level* hardware IO (e.g. Motors, Limit Switches, Sensors, etc)
          * [`interfaces/`](src/main/java/frc/robot/io/interfaces/): *hardware interfaces* that are common for all possible implementations.  E.g. a MotorIO would generally have a way to at least `setVoltage` and get status such as `voltage` applied and actual `amperage` used.
-            * [`MotorIO.java`](src/main/java/frc/robot/io/interfaces/MotorIO.java): _TODO_
+            * [`MotorIO.java`](src/main/java/frc/robot/io/interfaces/MotorIO.java): Defines the minimum expected interface (settings, control, and status) for a generic motor.
+               * `setVoltage(double volts)`
+               * `setVelocity(double velocityRadPerSec, double ffVolts)`
+               * `setPosition(double positionRad, double ffVolts)`
+               * `getPid()`
             * `GizmoIO.java`
             * `ArmIO.java`
             * `ClimberIO.java`
             * ...
          * [`implementations/`](src/main/java/frc/robot/io/implementations/): Hardware specific implementations of the hardware IO interfaces.  Each interface may have one or more implementations depending on manufacturer, model, etc.  _Each interface must have a simulation stub implementation_
             * `motor/`
-               * [`MotorIOBase.java`](src/main/java/frc/robot/io/implementations/motor/MotorIOBase.java): _TODO_
-               * [`MotorIOStub.java`](src/main/java/frc/robot/io/implementations/motor/MotorIOStub.java): _TODO_
-               * [`MotorIOArmStub.java`](src/main/java/frc/robot/io/implementations/motor/MotorIOArmStub.java): _TODO_
-               * [`MotorIOFlywheelStub.java`](src/main/java/frc/robot/io/implementations/motor/MotorIOFlywheelStub.java): _TODO_
-               * [`MotorIOElevatorStub.java`](src/main/java/frc/robot/io/implementations/motor/MotorIOElevatorStub.java): _TODO_
-               * [`MotorIOSparkMax.java`](src/main/java/frc/robot/io/implementations/motor/MotorIOSparkMax.java): _TODO_
+               * [`MotorIOBase.java`](src/main/java/frc/robot/io/implementations/motor/MotorIOBase.java): The base *abstract* implementation of the [Motor](src/main/java/frc/robot/io/interfaces/MotorIO.java) interface.  All motor implementations should extend this base class.  It implements the following functionality:
+                  * generates status in other units (e.g. from radians to degrees, RPMs, etc)
+                  * implements _software_ based velocity and position PID control
+               * Stub Implementations - for software bring-up in simulation. Each implements the physics of different types of mechanisms
+                  * [`MotorIOStub.java`](src/main/java/frc/robot/io/implementations/motor/MotorIOStub.java): Generic DC Motor based Mechanism (uses DCMotorSim)
+                  * [`MotorIOArmStub.java`](src/main/java/frc/robot/io/implementations/motor/MotorIOArmStub.java): Motor connected to an [Arm](src\main\java\frc\robot\subsystems\interfaces\ArmV2.java) Mechanism (uses SingleJointedArmSim)
+                  * [`MotorIOFlywheelStub.java`](src/main/java/frc/robot/io/implementations/motor/MotorIOFlywheelStub.java): Motor connected to a [Flywheel](src\main\java\frc\robot\subsystems\interfaces\Flywheel.java)/Roller Mechanism (uses FlywheelSim)
+                  * [`MotorIOElevatorStub.java`](src/main/java/frc/robot/io/implementations/motor/MotorIOElevatorStub.java): Motor connected to an [Elevator](src\main\java\frc\robot\subsystems\interfaces\ElevatorV2.java) Mechanism (uses ElevatorSim)
+               * Real Implementations
+                  * [`MotorIOSparkMax.java`](src/main/java/frc/robot/io/implementations/motor/MotorIOSparkMax.java): SparkMax Motor Controller implementation
+                  * [`MotorIOTalonFx.java`](src/main/java/frc/robot/io/implementations/motor/MotorIOTalonFx.java): TalonFx Motor Controller implementation
             * `gizmo/`
                * `GizmoIOStub.java`: Dummy/Stub implementation of a "Gizmo"
                * `GizmoIOAcme.java`: Implementation of the Acme brand/model of a "Gizmo"
