@@ -19,7 +19,6 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.Robot;
-import frc.robot.commands.driveAssist.DriveToStationY;
 import frc.robot.io.implementations.arm.ArmIOStub;
 import frc.robot.io.implementations.elevator.ElevatorIOStub;
 import frc.robot.io.implementations.intake.IntakeIOStub;
@@ -42,7 +41,7 @@ import java.util.ArrayList;
 public class RobotConfig {
   public static DriveBase drive;
   public static SendableChooser<Command> autoChooser;
-  
+
   public static VisionSubsystem vision;
   public static ElevatorSubsystem elevator;
   public static ArmSubsystem arm;
@@ -83,7 +82,6 @@ public class RobotConfig {
       boolean stubAlgaeSubsystem) {
     if (stubDrive) {
       drive = new DriveBase();
-
     }
 
     if (stubAuto) {

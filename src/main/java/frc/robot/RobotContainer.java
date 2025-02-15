@@ -8,8 +8,6 @@ import edu.wpi.first.wpilibj.Preferences;
 import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.config.game.reefscape2025.*;
-import frc.robot.subsystems.controls.drive.DriveControls;
-
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.Properties;
@@ -67,5 +65,4 @@ public class RobotContainer {
   public Command getAutonomousCommand() {
     return RobotConfig.autoChooser.getSelected();
   }
- 
 }

@@ -1,11 +1,7 @@
 package frc.robot.subsystems.controls.drive;
 
-import java.util.Map;
-
 import com.pathplanner.lib.auto.AutoBuilder;
-import com.pathplanner.lib.commands.PathfindingCommand;
 import com.pathplanner.lib.path.PathConstraints;
-
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
@@ -14,26 +10,38 @@ import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.SelectCommand;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
-import frc.robot.RobotContainer;
 import frc.robot.commands.common.drive.DriveCommand;
-import frc.robot.commands.driveAssist.DriveToStationY;
 import frc.robot.config.game.reefscape2025.RobotConfig;
 import frc.robot.subsystems.interfaces.Drive;
+import java.util.Map;
 
 public class DriveControls {
-  private enum TargetPoseOptions {
-    ORIGIN,
-    FEEDER_1,
-    FEEDER_2,
-    PROCESSOR
+  private enum TargetPoseOption {
+    ORIGIN(0),
+    FEEDER_1(1),
+    FEEDER_2(2),
+    PROCESSOR(3),
+    REEF_A(4),
+    REEF_G(5);
+
+    private int index;
+
+    public int getIndex() {
+      return this.index;
+    }
+
+    // public
+    private TargetPoseOption(int idx) {
+      this.index = idx;
+    }
   }
 
-  
+  protected static int myCoolPoseKeyIdx = 0;
+
   public static void setupController(Drive drive, CommandXboxController controller) {
     SubsystemBase driveSubsystem = (SubsystemBase) drive;
     driveSubsystem.setDefaultCommand(
@@ -52,55 +60,73 @@ public class DriveControls {
         .start()
         .onTrue(
             new InstantCommand(
-                () -> {
-                  if (drive.isFieldOrientedDrive()) {
-                    drive.setFieldOrientedDrive(false);
-                  } else {
-                    drive.setFieldOrientedDrive(true);
-                  }
-                })); // Toggle Drive Orientation
+                () ->
+                    drive.setFieldOrientedDrive(
+                        !drive.isFieldOrientedDrive()))); // Toggle Drive Orientation
 
-    //                 List<Waypoint> waypoints = PathPlannerPath.waypointsFromPoses(
-    //         new Pose2d(2.0,4.0, Rotation2d.fromDegrees(0)),
-    //         new Pose2d(7.0, 4.0, Rotation2d.fromDegrees(0))
-    // );
-    
     // Define destinations for our "dynamic go-to-pose" functionality
-    Pose2d poseOrigin = new Pose2d(0,0,Rotation2d.fromDegrees(0)),
-      poseFeeder1 = new Pose2d(1,4,Rotation2d.fromDegrees(0)),
-      poseFeeder2 = new Pose2d(4,1,Rotation2d.fromDegrees(0)),
-      poseProcessor = new Pose2d(6,6,Rotation2d.fromDegrees(0));
+    Pose2d poseOrigin = new Pose2d(0, 0, Rotation2d.fromDegrees(0)),
+        poseFeeder1 = new Pose2d(1.05, 7, Rotation2d.fromDegrees(130)),
+        poseFeeder2 = new Pose2d(1.05, 1, Rotation2d.fromDegrees(230)),
+        poseProcessor = new Pose2d(6, 0.75, Rotation2d.fromDegrees(270)),
+        poseReefA = new Pose2d(3.25, 4.05, Rotation2d.fromDegrees(0)),
+        poseReefG = new Pose2d(5.5, 3.95, Rotation2d.fromDegrees(180));
     PathConstraints constraints = new PathConstraints(4.2672, 9.4664784, 2 * Math.PI, 4 * Math.PI);
 
-    // Temporary UI to allow user to modify destination on-the-fly 
-    SendableChooser<String> chooser = new SendableChooser<>();
-    chooser.setDefaultOption("Origin", "O");
-    chooser.addOption("Feeder 1", "F1");
-    chooser.addOption("Feeder 2", "F2");
-    chooser.addOption("Processor", "P");
+    // Temporary UI to allow user to modify destination on-the-fly
+    SendableChooser<TargetPoseOption> chooser = new SendableChooser<>();
+    chooser.setDefaultOption("Origin", TargetPoseOption.ORIGIN);
+    chooser.addOption("Feeder 1", TargetPoseOption.FEEDER_1);
+    chooser.addOption("Feeder 2", TargetPoseOption.FEEDER_2);
+    chooser.addOption("Processor", TargetPoseOption.PROCESSOR);
+    chooser.addOption("Reef A", TargetPoseOption.REEF_A);
+    chooser.addOption("Reef G", TargetPoseOption.REEF_G);
     SmartDashboard.putData("Pose choices", chooser);
 
-    
-    // Define command to go to specific pose
-    Command coolGoToPose = new SelectCommand<>(Map.ofEntries(
-      Map.entry(DriveControls.TargetPoseOptions.ORIGIN, AutoBuilder.pathfindToPose(poseOrigin, constraints, 0.0)),
-      Map.entry(DriveControls.TargetPoseOptions.FEEDER_1, AutoBuilder.pathfindToPose(poseFeeder1, constraints, 0.0)),
-      Map.entry(DriveControls.TargetPoseOptions.FEEDER_2, AutoBuilder.pathfindToPose(poseFeeder2, constraints, 0.0)),
-      Map.entry(DriveControls.TargetPoseOptions.PROCESSOR, AutoBuilder.pathfindToPose(poseProcessor, constraints, 0.0))
-    ), () -> {
-      switch (chooser.getSelected()) {
-        case "F1":
-          return DriveControls.TargetPoseOptions.FEEDER_1;
-        case "F2":
-          return DriveControls.TargetPoseOptions.FEEDER_2;
-        case "P":
-          return DriveControls.TargetPoseOptions.PROCESSOR;
-        default:
-          return DriveControls.TargetPoseOptions.ORIGIN;
-      }
-    });
+    // Define behavior for chosing destination of on-the-fly pose
+    SmartDashboard.putNumber("Chosen Pose Index", myCoolPoseKeyIdx);
+    chooser.onChange(
+        (chosenPose) -> {
+          myCoolPoseKeyIdx = chosenPose.getIndex();
+          SmartDashboard.putNumber("Chosen Pose Index", myCoolPoseKeyIdx);
+        });
+    controller
+        .povUp()
+        .onTrue(
+            new InstantCommand(
+                () -> {
+                  if (++myCoolPoseKeyIdx == TargetPoseOption.values().length) myCoolPoseKeyIdx = 1;
+                  SmartDashboard.putNumber("Chosen Pose Index", myCoolPoseKeyIdx);
+                }));
 
-    // dynamically go to destination 
+    // Define command to go to specific pose
+    Command coolGoToPose =
+        new SelectCommand<>(
+            Map.ofEntries(
+                Map.entry(
+                    TargetPoseOption.ORIGIN.getIndex(),
+                    AutoBuilder.pathfindToPose(poseOrigin, constraints, 0.0)),
+                Map.entry(
+                    TargetPoseOption.FEEDER_1.getIndex(),
+                    AutoBuilder.pathfindToPose(poseFeeder1, constraints, 0.0)),
+                Map.entry(
+                    TargetPoseOption.FEEDER_2.getIndex(),
+                    AutoBuilder.pathfindToPose(poseFeeder2, constraints, 0.0)),
+                Map.entry(
+                    TargetPoseOption.PROCESSOR.getIndex(),
+                    AutoBuilder.pathfindToPose(poseProcessor, constraints, 0.0)),
+                Map.entry(
+                    TargetPoseOption.REEF_A.getIndex(),
+                    AutoBuilder.pathfindToPose(poseReefA, constraints, 0.0)),
+                Map.entry(
+                    TargetPoseOption.REEF_G.getIndex(),
+                    AutoBuilder.pathfindToPose(poseReefG, constraints, 0.0))),
+            () -> {
+              return myCoolPoseKeyIdx;
+            });
+    // ), () -> { return chooser.getSelected(); });
+
+    // dynamically go to destination
     controller.a().whileTrue(coolGoToPose);
   }
 
