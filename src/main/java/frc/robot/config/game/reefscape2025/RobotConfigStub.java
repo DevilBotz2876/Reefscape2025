@@ -30,7 +30,6 @@ import frc.robot.subsystems.interfaces.Flywheel.FlywheelSettings;
 
 /* Override Phoenix specific constants here */
 public class RobotConfigStub extends RobotConfig {
-  private final ArmMotorSubsystem coralArm;
   private final ArmMotorSubsystem algaeArm;
   private final ArmMotorSubsystem climberArm;
   private final ElevatorMotorSubsystem elevator;
@@ -42,27 +41,6 @@ public class RobotConfigStub extends RobotConfig {
     drive = new DriveSwerveYAGSL("yagsl/stub");
     if (Robot.isSimulation()) {
       drive.setPose(new Pose2d(new Translation2d(1, 1), new Rotation2d()));
-    }
-
-    {
-      MotorIOBaseSettings motorSettings = new MotorIOBaseSettings();
-      motorSettings.motor.gearing = 50;
-      motorSettings.motor.inverted = false;
-      motorSettings.pid = new PIDController(1.0, 0, 0);
-
-      ArmSettings armSettings = new ArmSettings();
-      armSettings.minAngleInDegrees = -75;
-      armSettings.maxAngleInDegrees = 75;
-      armSettings.startingAngleInDegrees = armSettings.minAngleInDegrees;
-      armSettings.feedforward = new ArmFeedforward(0, 0.222, 0.001, 0);
-      armSettings.color = new Color8Bit(Color.kBlue);
-      armSettings.armLengthInMeters = 0.5;
-      armSettings.armMassInKg = 1.0;
-      armSettings.motor = DCMotor.getNEO(1);
-      armSettings.simulateGravity = true;
-      coralArm =
-          new ArmMotorSubsystem(
-              new MotorIOArmStub(motorSettings, armSettings), "Coral", armSettings);
     }
 
     {
