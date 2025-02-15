@@ -50,6 +50,9 @@ public interface MotorIO {
     public double positionMeters =
         0.0; // the current position of the linear mechanism connected to the motor shaft (in
     // meters)
+
+    public boolean forwardLimit = false;
+    public boolean reverseLimit = false;
   }
 
   /**

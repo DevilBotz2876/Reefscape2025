@@ -49,6 +49,7 @@ public class RobotConfig {
   public static VisionSubsystem vision;
   public static ElevatorSubsystem elevator;
   public static ArmMotorSubsystem coralArm;
+  public static ArmMotorSubsystem climberArm;
   public static AlgaeSubsystem algaeSubsystem;
 
   // Controls

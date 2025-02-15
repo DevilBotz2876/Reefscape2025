@@ -11,6 +11,7 @@ import com.revrobotics.spark.SparkMax;
 import com.revrobotics.spark.config.SparkBaseConfig;
 import com.revrobotics.spark.config.SparkMaxConfig;
 import edu.wpi.first.math.util.Units;
+import edu.wpi.first.wpilibj.DigitalInput;
 
 /** A "SparkMax" controller implementation of a MotorIO */
 public class MotorIOSparkMax extends MotorIOBase {
@@ -25,6 +26,7 @@ public class MotorIOSparkMax extends MotorIOBase {
   private final RelativeEncoder encoder;
   private final SparkClosedLoopController pid;
   SparkMaxConfig motorConfig = new SparkMaxConfig();
+  DigitalInput reverseLimit = new DigitalInput(1);
 
   public MotorIOSparkMax(MotorIOBaseSettings motorSettings, SparkMaxSettings sparkMaxSettings) {
     super(motorSettings);
@@ -63,7 +65,8 @@ public class MotorIOSparkMax extends MotorIOBase {
 
     inputs.velocityMetersPerSec = inputs.velocityRadPerSec * motorSettings.motor.drumRadiusMeters;
     inputs.positionMeters = inputs.positionRad * motorSettings.motor.drumRadiusMeters;
-
+    inputs.forwardLimit = getForwardLimit();
+    inputs.reverseLimit = getReverseLimit();
     super.updateInputs(inputs);
   }
 
@@ -101,5 +104,13 @@ public class MotorIOSparkMax extends MotorIOBase {
   @Override
   public void resetEncoder(double positionRad) {
     encoder.setPosition(Units.radiansToRotations(positionRad));
+  }
+
+  private boolean getForwardLimit() {
+    return false;
+  }
+
+  private boolean getReverseLimit() {
+    return !reverseLimit.get();
   }
 }
