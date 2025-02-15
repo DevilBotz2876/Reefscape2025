@@ -33,6 +33,7 @@ public class ArmMotorSubsystem extends MotorSubsystem implements ArmV2 {
                 getName(), sim2dSize / 2, settings.startingAngleInDegrees, 15, settings.color));
 
     SmartDashboard.putData(getName() + "/2D Simulation", mech2d);
+    // SmartDashboard.putData(getName() + "/FF", this.settings.feedforward);
   }
 
   @Override

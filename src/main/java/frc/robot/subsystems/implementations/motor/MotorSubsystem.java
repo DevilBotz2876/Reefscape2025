@@ -43,6 +43,8 @@ public class MotorSubsystem extends SubsystemBase implements Motor {
         getName() + "/Quasistatic Forward", sysIdQuasistatic(SysIdRoutine.Direction.kForward));
     SmartDashboard.putData(
         getName() + "/Quasistatic Reverse", sysIdQuasistatic(SysIdRoutine.Direction.kReverse));
+
+    SmartDashboard.putData(getName() + "/Subsystem", this);
   }
 
   @Override

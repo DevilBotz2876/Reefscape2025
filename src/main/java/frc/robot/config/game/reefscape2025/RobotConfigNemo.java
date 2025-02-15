@@ -32,13 +32,13 @@ public class RobotConfigNemo extends RobotConfig {
       // 20:1 gear box, 30 teeth on the arm cog and 15 teeth on the motor cog
       motorSettings.motor.gearing = 20 * (30.0 / 15.0);
       motorSettings.motor.inverted = true; // false for Sim
-      motorSettings.pid = new PIDController(0.0, 0, 0);
+      motorSettings.pid = new PIDController(0.35, 0.0, 0);
 
       ArmSettings armSettings = new ArmSettings();
       armSettings.minAngleInDegrees = -90;
       armSettings.maxAngleInDegrees = 60;
       armSettings.startingAngleInDegrees = armSettings.minAngleInDegrees;
-      armSettings.feedforward = new ArmFeedforward(0.0, 0.0, 0.0, 0.0);
+      armSettings.feedforward = new ArmFeedforward(0.0, 0.16, 0.0, 0.0);
       armSettings.color = new Color8Bit(Color.kRed);
       armSettings.armLengthInMeters = 0.5;
       armSettings.armMassInKg = 1.0;

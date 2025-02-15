@@ -42,7 +42,7 @@ public class MotorAutoResetEncoderCommand extends Command {
 
   @Override
   public void execute() {
-    if(settings.currentReverseDuration <= 0) {
+    if (settings.currentReverseDuration <= 0) {
       motor.runVoltage(settings.voltage);
 
       /* TODO: Add code to use limit switch if one exists */

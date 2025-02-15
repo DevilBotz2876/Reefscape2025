@@ -5,6 +5,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
+import frc.robot.commands.common.arm.ArmToPositionV2;
 import frc.robot.commands.common.motor.MotorAutoResetEncoderCommand;
 import frc.robot.commands.common.motor.MotorAutoResetEncoderCommand.MotorAutoResetEncoderSettings;
 import frc.robot.commands.common.motor.MotorBringUpCommand;
@@ -21,9 +22,9 @@ public class CoralArmControls {
             (Motor) arm,
             () -> {
               if (controller.povRight().getAsBoolean()) {
-                return 1.0;
+                return 0.01;
               } else if (controller.povLeft().getAsBoolean()) {
-                return -1.0;
+                return -0.01;
               }
               return 0.0;
             }));
@@ -32,10 +33,15 @@ public class CoralArmControls {
     MotorAutoResetEncoderSettings settings = new MotorAutoResetEncoderSettings();
     settings.voltage = -0.5;
     settings.minResetCurrent = 0.5;
-    settings.resetPositionRad = Units.degreesToRadians(arm.getSettings().minAngleInDegrees - 15); // We have an offest about 15 degrees
-    settings.initialReverseDuration = 1.0; // Set the seconds of reverse before zero. Set to zero if there shound be no reverse
+    settings.resetPositionRad =
+        Units.degreesToRadians(
+            arm.getSettings().minAngleInDegrees - 10); // We have an offest about 15 degrees
+    settings.initialReverseDuration =
+        1.0; // Set the seconds of reverse before zero. Set to zero if there shound be no reverse
     Command autoCalibrateCommand = new MotorAutoResetEncoderCommand((Motor) arm, settings);
     SmartDashboard.putData("Auto Calibrate Coral Arm", autoCalibrateCommand);
-  }
 
+    Command armToNeg60Command = new ArmToPositionV2(arm, () -> 20);
+    SmartDashboard.putData("Arm To -20", armToNeg60Command);
+  }
 }

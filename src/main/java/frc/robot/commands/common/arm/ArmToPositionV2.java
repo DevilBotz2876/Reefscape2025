@@ -35,7 +35,8 @@ public class ArmToPositionV2 extends Command {
 
   @Override
   public boolean isFinished() {
-    return arm.isAtSetpoint();
+    // return arm.isAtSetpoint();
+    return false;
   }
 
   @Override
