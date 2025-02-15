@@ -108,9 +108,9 @@ integration process.
                   * implements _software_ based velocity and position PID control
                * Stub Implementations - for software bring-up in simulation. Each implements the physics of different types of mechanisms
                   * [`MotorIOStub.java`](src/main/java/frc/robot/io/implementations/motor/MotorIOStub.java): Generic DC Motor based Mechanism (uses DCMotorSim)
-                  * [`MotorIOArmStub.java`](src/main/java/frc/robot/io/implementations/motor/MotorIOArmStub.java): Motor connected to an [Arm](src\main\java\frc\robot\subsystems\interfaces\ArmV2.java) Mechanism (uses SingleJointedArmSim)
-                  * [`MotorIOFlywheelStub.java`](src/main/java/frc/robot/io/implementations/motor/MotorIOFlywheelStub.java): Motor connected to a [Flywheel](src\main\java\frc\robot\subsystems\interfaces\Flywheel.java)/Roller Mechanism (uses FlywheelSim)
-                  * [`MotorIOElevatorStub.java`](src/main/java/frc/robot/io/implementations/motor/MotorIOElevatorStub.java): Motor connected to an [Elevator](src\main\java\frc\robot\subsystems\interfaces\ElevatorV2.java) Mechanism (uses ElevatorSim)
+                  * [`MotorIOArmStub.java`](src/main/java/frc/robot/io/implementations/motor/MotorIOArmStub.java): Motor connected to an [Arm](src/main/java/frc/robot/subsystems/interfaces/ArmV2.java) Mechanism (uses SingleJointedArmSim)
+                  * [`MotorIOFlywheelStub.java`](src/main/java/frc/robot/io/implementations/motor/MotorIOFlywheelStub.java): Motor connected to a [Flywheel](src/main/java/frc/robot/subsystems/interfaces/Flywheel.java)/Roller Mechanism (uses FlywheelSim)
+                  * [`MotorIOElevatorStub.java`](src/main/java/frc/robot/io/implementations/motor/MotorIOElevatorStub.java): Motor connected to an [Elevator](src/main/java/frc/robot/subsystems/interfaces/ElevatorV2.java) Mechanism (uses ElevatorSim)
                * Real Implementations
                   * [`MotorIOSparkMax.java`](src/main/java/frc/robot/io/implementations/motor/MotorIOSparkMax.java): SparkMax Motor Controller implementation
                   * [`MotorIOTalonFx.java`](src/main/java/frc/robot/io/implementations/motor/MotorIOTalonFx.java): TalonFx Motor Controller implementation
