@@ -31,9 +31,10 @@ public class CoralArmControls {
     /* Add Auto Zero */
     MotorAutoResetEncoderSettings settings = new MotorAutoResetEncoderSettings();
     settings.voltage = -0.5;
-    settings.minResetCurrent = 0.6;
-    settings.resetPositionRad = Units.degreesToRadians(arm.getSettings().minAngleInDegrees);
+    settings.minResetCurrent = 0.5;
+    settings.resetPositionRad = Units.degreesToRadians(arm.getSettings().minAngleInDegrees - 15); // We have an offest about 15 degrees
     Command autoCalibrateCommand = new MotorAutoResetEncoderCommand((Motor) arm, settings);
     SmartDashboard.putData("Auto Calibrate Coral Arm", autoCalibrateCommand);
   }
+
 }

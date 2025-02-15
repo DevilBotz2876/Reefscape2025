@@ -35,8 +35,8 @@ public class RobotConfigNemo extends RobotConfig {
       motorSettings.pid = new PIDController(0.0, 0, 0);
 
       ArmSettings armSettings = new ArmSettings();
-      armSettings.minAngleInDegrees = 0;
-      armSettings.maxAngleInDegrees = 150;
+      armSettings.minAngleInDegrees = -90;
+      armSettings.maxAngleInDegrees = 60;
       armSettings.startingAngleInDegrees = armSettings.minAngleInDegrees;
       armSettings.feedforward = new ArmFeedforward(0.0, 0.0, 0.0, 0.0);
       armSettings.color = new Color8Bit(Color.kRed);
