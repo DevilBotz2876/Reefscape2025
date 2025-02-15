@@ -6,6 +6,8 @@ import edu.wpi.first.math.system.plant.DCMotor;
 import edu.wpi.first.wpilibj.util.Color;
 import edu.wpi.first.wpilibj.util.Color8Bit;
 import frc.robot.io.implementations.motor.MotorIOBase.MotorIOBaseSettings;
+import frc.robot.io.implementations.motor.MotorIOSparkMax;
+import frc.robot.io.implementations.motor.MotorIOSparkMax.SparkMaxSettings;
 import frc.robot.io.implementations.motor.MotorIOTalonFx;
 import frc.robot.io.implementations.motor.MotorIOTalonFx.TalonFxSettings;
 import frc.robot.subsystems.implementations.drive.DriveBase;
@@ -25,6 +27,34 @@ public class RobotConfigNemo extends RobotConfig {
     Drive.Constants.rotatePidKd = 0.0;
     DriveBase.Constants.rotatePidErrorInDegrees = 1;
     drive = new DriveSwerveYAGSL("yagsl/nemo");
+
+    // algae arm
+    {
+      MotorIOBaseSettings algaeArmMotorSettings = new MotorIOBaseSettings();
+      algaeArmMotorSettings.motor.gearing = 50;
+      algaeArmMotorSettings.motor.inverted = false;
+      algaeArmMotorSettings.pid = new PIDController(0, 0, 0);
+
+      ArmSettings algaeArmSettings = new ArmSettings();
+      algaeArmSettings.minAngleInDegrees = -15;
+      algaeArmSettings.maxAngleInDegrees = 105;
+      algaeArmSettings.startingAngleInDegrees = algaeArmSettings.maxAngleInDegrees;
+      algaeArmSettings.color = new Color8Bit(Color.kGreen);
+      algaeArmSettings.feedforward = new ArmFeedforward(0, 0, 0, 0);
+      algaeArmSettings.armLengthInMeters = 0.75;
+      algaeArmSettings.armMassInKg = 1.0;
+      algaeArmSettings.motor = DCMotor.getKrakenX60(1);
+      algaeArmSettings.simulateGravity = false;
+
+      SparkMaxSettings algaeArmSparkMaxSettings = new SparkMaxSettings();
+      algaeArmSparkMaxSettings.canId = 21;
+
+      algaeArm =
+          new ArmMotorSubsystem(
+              new MotorIOSparkMax(algaeArmMotorSettings, algaeArmSparkMaxSettings),
+              "Algae",
+              algaeArmSettings);
+    }
 
     // Coral Arm
     {

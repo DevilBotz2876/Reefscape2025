@@ -14,7 +14,6 @@ public class ElevatorIOStub implements ElevatorIO {
   private final DCMotor elevatorGearbox = DCMotor.getNEO(1);
 
   private double currentVolts = 0.0;
-  private double targetMeters = 0.0;
 
   // There is no PID or other closed-loop control here.  This class is meant to simulate real HW.
   // Some real HW does have closed-loop control available.  If we wanted to simulate that we could

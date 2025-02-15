@@ -22,22 +22,18 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.Robot;
-import frc.robot.io.implementations.arm.ArmIOStub;
 import frc.robot.io.implementations.elevator.ElevatorIOStub;
-import frc.robot.io.implementations.intake.IntakeIOStub;
 import frc.robot.io.implementations.motor.MotorIOArmStub;
 import frc.robot.io.implementations.motor.MotorIOBase.MotorIOBaseSettings;
-import frc.robot.subsystems.controls.algae.AlgaeControls;
+import frc.robot.subsystems.controls.arm.AlgaeArmControls;
 import frc.robot.subsystems.controls.arm.CoralArmControls;
 import frc.robot.subsystems.controls.drive.DriveControls;
 import frc.robot.subsystems.controls.elevator.ElevatorControls;
 import frc.robot.subsystems.controls.vision.VisionControls;
-import frc.robot.subsystems.implementations.algae.AlgaeSubsystem;
 import frc.robot.subsystems.implementations.drive.DriveBase;
 import frc.robot.subsystems.implementations.elevator.ElevatorSubsystem;
 import frc.robot.subsystems.implementations.motor.ArmMotorSubsystem;
 import frc.robot.subsystems.implementations.vision.VisionSubsystem;
-import frc.robot.subsystems.interfaces.Algae;
 import frc.robot.subsystems.interfaces.ArmV2.ArmSettings;
 import frc.robot.subsystems.interfaces.Vision.Camera;
 import java.util.ArrayList;
@@ -49,7 +45,7 @@ public class RobotConfig {
   public static VisionSubsystem vision;
   public static ElevatorSubsystem elevator;
   public static ArmMotorSubsystem coralArm;
-  public static AlgaeSubsystem algaeSubsystem;
+  public static ArmMotorSubsystem algaeArm;
 
   // Controls
   public CommandXboxController mainController = new CommandXboxController(0);
@@ -69,8 +65,9 @@ public class RobotConfig {
       boolean stubAuto,
       boolean stubVision,
       boolean stubElevator,
-      boolean stubCoralArm) {
-    this(stubDrive, stubAuto, stubVision, stubElevator, stubCoralArm, true);
+      boolean stubCoralArm,
+      boolean stubAlgaeArm) {
+    this(stubDrive, stubAuto, stubVision, stubElevator, stubCoralArm, stubAlgaeArm, true);
   }
 
   public RobotConfig() {
@@ -83,6 +80,7 @@ public class RobotConfig {
       boolean stubVision,
       boolean stubElevator,
       boolean stubCoralArm,
+      boolean stubAlgaeArm,
       boolean stubAlgaeSubsystem) {
     if (stubDrive) {
       drive = new DriveBase();
@@ -122,6 +120,28 @@ public class RobotConfig {
       elevator = new ElevatorSubsystem(new ElevatorIOStub());
     }
 
+    if (stubAlgaeArm) {
+      MotorIOBaseSettings algaeMotorSettings = new MotorIOBaseSettings();
+      algaeMotorSettings.motor.gearing = 50;
+      algaeMotorSettings.motor.inverted = false;
+      algaeMotorSettings.pid = new PIDController(1.0, 0, 0);
+
+      ArmSettings algaeArmSettings = new ArmSettings();
+      algaeArmSettings.minAngleInDegrees = 0;
+      algaeArmSettings.maxAngleInDegrees = 150;
+      algaeArmSettings.startingAngleInDegrees = algaeArmSettings.minAngleInDegrees;
+      algaeArmSettings.feedforward = new ArmFeedforward(0, 0.222, 0.001, 0);
+      algaeArmSettings.color = new Color8Bit(Color.kBlue);
+      algaeArmSettings.armLengthInMeters = 0.5;
+      algaeArmSettings.armMassInKg = 0.81;
+      algaeArmSettings.motor = DCMotor.getNEO(1);
+      algaeArmSettings.simulateGravity = true;
+
+      algaeArm =
+          new ArmMotorSubsystem(
+              new MotorIOArmStub(algaeMotorSettings, algaeArmSettings), "Algae", algaeArmSettings);
+    }
+
     if (stubCoralArm) {
       MotorIOBaseSettings motorSettings = new MotorIOBaseSettings();
       motorSettings.motor.gearing = 50;
@@ -143,14 +163,6 @@ public class RobotConfig {
           new ArmMotorSubsystem(
               new MotorIOArmStub(motorSettings, armSettings), "Coral", armSettings);
     }
-
-    if (stubAlgaeSubsystem) {
-      algaeSubsystem =
-          new AlgaeSubsystem(
-              new IntakeIOStub(),
-              new ArmIOStub(
-                  Algae.Constants.maxArmAngleDegrees, Algae.Constants.minArmAngleDegrees));
-    }
   }
 
   public void configureBindings() {
@@ -171,7 +183,7 @@ public class RobotConfig {
 
     CoralArmControls.setupController(coralArm, mainController);
 
-    AlgaeControls.setupController(algaeSubsystem, mainController);
+    AlgaeArmControls.setupController(algaeArm, mainController);
 
     setupSimGUI();
   }
@@ -204,8 +216,6 @@ public class RobotConfig {
     intakeLigaments2d.add(
         algaeArmLigament2d.append(
             new MechanismLigament2d("Wheel Spoke D", 2.5, 270, 6, new Color8Bit(Color.kRed))));
-
-    algaeSubsystem.setLigament(algaeArmLigament2d, intakeLigaments2d);
 
     SmartDashboard.putData("2D Simulation", mech2d);
   }
