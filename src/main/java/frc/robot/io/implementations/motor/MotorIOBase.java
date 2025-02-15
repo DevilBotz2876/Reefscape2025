@@ -48,7 +48,6 @@ public abstract class MotorIOBase implements MotorIO {
             ffVolts
                 + settings.pid.calculate(inputs.positionRad, targetPositionRad)
                     * RobotController.getBatteryVoltage();
-        System.out.print("ffVolts: " + ffVolts + " appliedVolts: " + appliedVolts);
 
       } else {
         /* Software based velocity PID */

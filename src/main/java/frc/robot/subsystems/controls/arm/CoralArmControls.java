@@ -39,9 +39,9 @@ public class CoralArmControls {
     settings.initialReverseDuration =
         1.0; // Set the seconds of reverse before zero. Set to zero if there shound be no reverse
     Command autoCalibrateCommand = new MotorAutoResetEncoderCommand((Motor) arm, settings);
-    SmartDashboard.putData("Auto Calibrate Coral Arm", autoCalibrateCommand);
+    SmartDashboard.putData(motorSubsystem.getName() + "/Commands/Auto Calibrate Coral Arm", autoCalibrateCommand);
 
-    Command armToNeg60Command = new ArmToPositionV2(arm, () -> 20);
-    SmartDashboard.putData("Arm To -20", armToNeg60Command);
+    Command armToNeg60Command = new ArmToPositionV2(arm, () -> -20);
+    SmartDashboard.putData(motorSubsystem.getName() + "/Commands/Arm To -20", armToNeg60Command);
   }
 }
