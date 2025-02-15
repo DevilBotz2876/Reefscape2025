@@ -22,9 +22,9 @@ public class ClimberArmControls {
             (Motor) arm,
             () -> {
               if (controller.y().getAsBoolean()) {
-                return 1.0;
+                return 0.2;
               } else if (controller.a().getAsBoolean()) {
-                return -1.0;
+                return -0.2;
               }
               return 0.0;
             }));
