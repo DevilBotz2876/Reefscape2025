@@ -2,6 +2,7 @@ package frc.robot.subsystems.implementations.motor;
 
 import static edu.wpi.first.units.Units.Volts;
 
+import edu.wpi.first.wpilibj.RobotState;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -52,10 +53,15 @@ public class MotorSubsystem extends SubsystemBase implements Motor {
     super.periodic();
     io.updateInputs(inputs);
     Logger.processInputs(getName(), inputs);
+
+    if (RobotState.isDisabled()) {
+      runVoltage(0);
+    }
   }
 
   @Override
   public void runVoltage(double volts) {
+    io.disablePid(); // Disable the PID if we are setting the voltage directly
     io.setVoltage(volts);
   }
 

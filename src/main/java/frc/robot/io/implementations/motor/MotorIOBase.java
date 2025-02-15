@@ -120,4 +120,8 @@ public abstract class MotorIOBase implements MotorIO {
             + Units.radiansToDegrees(positionRad)
             + " degrees)");
   }
+
+  public void disablePid() {
+    softwarePidEnabled = false;
+  }
 }
