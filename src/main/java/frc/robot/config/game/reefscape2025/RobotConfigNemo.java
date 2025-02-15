@@ -44,6 +44,8 @@ public class RobotConfigNemo extends RobotConfig {
       armSettings.armMassInKg = 1.0;
       armSettings.motor = DCMotor.getKrakenX60(1);
       armSettings.simulateGravity = true;
+      armSettings.maxVelocityInDegreesPerSecond = 360 * 2;
+      armSettings.maxAccelerationInDegreesPerSecondSquared = 360;
 
       TalonFxSettings talonFxSettings = new TalonFxSettings();
       talonFxSettings.canId = 21;

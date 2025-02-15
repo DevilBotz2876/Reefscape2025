@@ -1,5 +1,8 @@
 package frc.robot.subsystems.implementations.motor;
 
+import edu.wpi.first.math.trajectory.TrapezoidProfile;
+import edu.wpi.first.math.trajectory.TrapezoidProfile.Constraints;
+import edu.wpi.first.math.trajectory.TrapezoidProfile.State;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.smartdashboard.Mechanism2d;
 import edu.wpi.first.wpilibj.smartdashboard.MechanismLigament2d;
@@ -22,6 +25,12 @@ public class ArmMotorSubsystem extends MotorSubsystem implements ArmV2 {
     super(io, "Arm[" + name + "]");
     this.settings = settings;
 
+    motionProfile =
+        new TrapezoidProfile(
+            new Constraints(
+                Units.degreesToRadians(settings.maxVelocityInDegreesPerSecond),
+                Units.degreesToRadians(settings.maxAccelerationInDegreesPerSecondSquared)));
+
     double sim2dSize = settings.armLengthInMeters * 64 * 2;
     mech2d = new Mechanism2d(sim2dSize, sim2dSize);
 
@@ -33,11 +42,22 @@ public class ArmMotorSubsystem extends MotorSubsystem implements ArmV2 {
                 getName(), sim2dSize / 2, settings.startingAngleInDegrees, 15, settings.color));
 
     SmartDashboard.putData(getName() + "/2D Simulation", mech2d);
-    // SmartDashboard.putData(getName() + "/FF", this.settings.feedforward);
   }
 
   @Override
   public void periodic() {
+    if (motionProfileEnabled) {
+      io.setPosition(
+          nextState.position,
+          settings.feedforward.calculate(
+              nextState.position, Units.degreesToRadians(settings.maxVelocityInDegreesPerSecond)));
+      Logger.recordOutput(getName() + "/targetMotionProfiledAngleRad", nextState.position);
+      Logger.recordOutput(
+          getName() + "/targetMotionProfiledAngleDegrees",
+          Units.radiansToDegrees(nextState.position));
+      nextState = motionProfile.calculate(0.02, nextState, targetState);
+    }
+
     super.periodic();
     Logger.recordOutput(getName() + "/targetAngleRad", targetAngleRad);
     Logger.recordOutput(getName() + "/targetAngleDegrees", targetAngleDegrees);
@@ -60,10 +80,12 @@ public class ArmMotorSubsystem extends MotorSubsystem implements ArmV2 {
   public void setTargetAngle(double degrees) {
     this.targetAngleDegrees = degrees;
     this.targetAngleRad = Units.degreesToRadians(targetAngleDegrees);
-    io.setPosition(
-        this.targetAngleRad,
-        settings.feedforward.calculate(
-            this.targetAngleRad, Units.degreesToRadians(settings.maxVelocityInDegreesPerSecond)));
+
+    targetState = new State(this.targetAngleRad, 0);
+    nextState =
+        motionProfile.calculate(
+            0.02, new State(inputs.positionRad, inputs.velocityDegreesPerSec), targetState);
+    motionProfileEnabled = true;
   }
 
   @Override

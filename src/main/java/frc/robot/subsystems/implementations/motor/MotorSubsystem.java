@@ -2,6 +2,8 @@ package frc.robot.subsystems.implementations.motor;
 
 import static edu.wpi.first.units.Units.Volts;
 
+import edu.wpi.first.math.trajectory.TrapezoidProfile;
+import edu.wpi.first.math.trajectory.TrapezoidProfile.State;
 import edu.wpi.first.wpilibj.RobotState;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -20,6 +22,10 @@ public class MotorSubsystem extends SubsystemBase implements Motor {
   protected final MotorIO io;
   protected final MotorIOInputsAutoLogged inputs = new MotorIOInputsAutoLogged();
   private final SysIdRoutine sysId;
+  protected TrapezoidProfile motionProfile;
+  protected State targetState;
+  protected State nextState;
+  protected boolean motionProfileEnabled = false;
 
   public MotorSubsystem(MotorIO io, String name) {
     this.io = io;
@@ -62,6 +68,7 @@ public class MotorSubsystem extends SubsystemBase implements Motor {
   @Override
   public void runVoltage(double volts) {
     io.disablePid(); // Disable the PID if we are setting the voltage directly
+    motionProfileEnabled = false;
     io.setVoltage(volts);
   }
 
