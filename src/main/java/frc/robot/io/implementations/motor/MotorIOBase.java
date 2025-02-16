@@ -105,4 +105,18 @@ public abstract class MotorIOBase implements MotorIO {
   public PIDController getPid() {
     return settings.pid;
   }
+
+  @Override
+  public void resetEncoder(double positionRad) {
+    System.out.println(
+        "TODO: reset encoder to: "
+            + positionRad
+            + " radians ("
+            + Units.radiansToDegrees(positionRad)
+            + " degrees)");
+  }
+
+  public void disablePid() {
+    softwarePidEnabled = false;
+  }
 }
