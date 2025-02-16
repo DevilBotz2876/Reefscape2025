@@ -78,4 +78,11 @@ public class MotorIOTalonFx extends MotorIOBase {
 
     super.updateInputs(inputs);
   }
+
+  @Override
+  public void resetEncoder(double positionRad) {
+    motorFx.setPosition(
+        edu.wpi.first.math.util.Units.radiansToRotations(
+            positionRad * motorSettings.motor.gearing));
+  }
 }

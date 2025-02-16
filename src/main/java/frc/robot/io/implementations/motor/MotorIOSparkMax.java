@@ -97,4 +97,9 @@ public class MotorIOSparkMax extends MotorIOBase {
             ffVolts);
     return result == REVLibError.kOk;
   }
+
+  @Override
+  public void resetEncoder(double positionRad) {
+    encoder.setPosition(Units.radiansToRotations(positionRad));
+  }
 }

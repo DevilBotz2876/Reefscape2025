@@ -48,4 +48,9 @@ public class MotorIOFlywheelStub extends MotorIOBase {
   public final boolean setPosition(double positionRad, double ffVolts) {
     return false;
   }
+
+  @Override
+  public void resetEncoder(double positionRad) {
+    System.out.println("Resetting encoder for a flywheel is not supported!");
+  }
 }
