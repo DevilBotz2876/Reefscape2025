@@ -4,6 +4,7 @@ import edu.wpi.first.apriltag.AprilTagFieldLayout;
 import edu.wpi.first.apriltag.AprilTagFields;
 import edu.wpi.first.math.controller.ArmFeedforward;
 import edu.wpi.first.math.controller.PIDController;
+import edu.wpi.first.math.controller.SimpleMotorFeedforward;
 import edu.wpi.first.math.geometry.Rotation3d;
 import edu.wpi.first.math.geometry.Transform3d;
 import edu.wpi.first.math.geometry.Translation3d;
@@ -22,25 +23,23 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.Robot;
-import frc.robot.io.implementations.arm.ArmIOStub;
 import frc.robot.io.implementations.elevator.ElevatorIOStub;
-import frc.robot.io.implementations.intake.IntakeIOStub;
 import frc.robot.io.implementations.motor.MotorIOArmStub;
 import frc.robot.io.implementations.motor.MotorIOBase.MotorIOBaseSettings;
-import frc.robot.subsystems.controls.algae.AlgaeControls;
+import frc.robot.io.implementations.motor.MotorIOFlywheelStub;
 import frc.robot.subsystems.controls.arm.CoralArmControls;
 import frc.robot.subsystems.controls.drive.DriveControls;
 import frc.robot.subsystems.controls.elevator.ElevatorControls;
+import frc.robot.subsystems.controls.flywheel.FlywheelControls;
 import frc.robot.subsystems.controls.vision.VisionControls;
-import frc.robot.subsystems.implementations.algae.AlgaeSubsystem;
 import frc.robot.subsystems.implementations.drive.DriveBase;
 import frc.robot.subsystems.implementations.elevator.ElevatorSubsystem;
 import frc.robot.subsystems.implementations.motor.ArmMotorSubsystem;
+import frc.robot.subsystems.implementations.motor.FlywheelMotorSubsystem;
 import frc.robot.subsystems.implementations.vision.VisionSubsystem;
-import frc.robot.subsystems.interfaces.Algae;
 import frc.robot.subsystems.interfaces.ArmV2.ArmSettings;
+import frc.robot.subsystems.interfaces.Flywheel.FlywheelSettings;
 import frc.robot.subsystems.interfaces.Vision.Camera;
-import java.util.ArrayList;
 
 /* Put all constants here with reasonable defaults */
 public class RobotConfig {
@@ -49,7 +48,8 @@ public class RobotConfig {
   public static VisionSubsystem vision;
   public static ElevatorSubsystem elevator;
   public static ArmMotorSubsystem coralArm;
-  public static AlgaeSubsystem algaeSubsystem;
+  public static FlywheelMotorSubsystem algaeFlywheel;
+  // public static AlgaeSubsystem algaeSubsystem;
 
   // Controls
   public CommandXboxController mainController = new CommandXboxController(0);
@@ -83,7 +83,7 @@ public class RobotConfig {
       boolean stubVision,
       boolean stubElevator,
       boolean stubCoralArm,
-      boolean stubAlgaeSubsystem) {
+      boolean stubAlgaeFlywheel) {
     if (stubDrive) {
       drive = new DriveBase();
     }
@@ -144,12 +144,21 @@ public class RobotConfig {
               new MotorIOArmStub(motorSettings, armSettings), "Coral", armSettings);
     }
 
-    if (stubAlgaeSubsystem) {
-      algaeSubsystem =
-          new AlgaeSubsystem(
-              new IntakeIOStub(),
-              new ArmIOStub(
-                  Algae.Constants.maxArmAngleDegrees, Algae.Constants.minArmAngleDegrees));
+    if (stubAlgaeFlywheel) {
+      MotorIOBaseSettings motorSettings = new MotorIOBaseSettings();
+      motorSettings.motor.gearing = 1; // TODO get actual gearing
+      motorSettings.motor.inverted = false;
+      motorSettings.pid = new PIDController(0, 0, 0);
+
+      FlywheelSettings flywheelSettings = new FlywheelSettings();
+      flywheelSettings.color = new Color8Bit(Color.kPurple);
+      flywheelSettings.feedforward = new SimpleMotorFeedforward(0, 0);
+      flywheelSettings.moiKgMetersSquared = 0.001;
+      flywheelSettings.motor = DCMotor.getNeo550(1);
+
+      algaeFlywheel =
+          new FlywheelMotorSubsystem(
+              new MotorIOFlywheelStub(motorSettings, flywheelSettings), "Algae", flywheelSettings);
     }
   }
 
@@ -171,7 +180,7 @@ public class RobotConfig {
 
     CoralArmControls.setupController(coralArm, mainController);
 
-    AlgaeControls.setupController(algaeSubsystem, mainController);
+    FlywheelControls.setupController(algaeFlywheel, mainController);
 
     setupSimGUI();
   }
@@ -186,26 +195,6 @@ public class RobotConfig {
         coralRoot.append(
             new MechanismLigament2d("Elevator", 5, 90, 10, new Color8Bit(Color.kLightSlateGray)));
     elevator.setLigament(elevatorLigament2d);
-
-    MechanismLigament2d algaeArmLigament2d =
-        algaeRoot.append(
-            new MechanismLigament2d("Algae Arm", 10, 90, 6, new Color8Bit(Color.kOrange)));
-
-    ArrayList<MechanismLigament2d> intakeLigaments2d = new ArrayList<MechanismLigament2d>();
-    intakeLigaments2d.add(
-        algaeArmLigament2d.append(
-            new MechanismLigament2d("Wheel Spoke A", 2.5, 0, 6, new Color8Bit(Color.kGray))));
-    intakeLigaments2d.add(
-        algaeArmLigament2d.append(
-            new MechanismLigament2d("Wheel Spoke B", 2.5, 90, 6, new Color8Bit(Color.kRed))));
-    intakeLigaments2d.add(
-        algaeArmLigament2d.append(
-            new MechanismLigament2d("Wheel Spoke C", 2.5, 180, 6, new Color8Bit(Color.kGray))));
-    intakeLigaments2d.add(
-        algaeArmLigament2d.append(
-            new MechanismLigament2d("Wheel Spoke D", 2.5, 270, 6, new Color8Bit(Color.kRed))));
-
-    algaeSubsystem.setLigament(algaeArmLigament2d, intakeLigaments2d);
 
     SmartDashboard.putData("2D Simulation", mech2d);
   }
