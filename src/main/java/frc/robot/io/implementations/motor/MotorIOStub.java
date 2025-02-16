@@ -2,6 +2,7 @@ package frc.robot.io.implementations.motor;
 
 import edu.wpi.first.math.system.plant.DCMotor;
 import edu.wpi.first.math.system.plant.LinearSystemId;
+import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.simulation.DCMotorSim;
 
 /**
@@ -11,16 +12,24 @@ import edu.wpi.first.wpilibj.simulation.DCMotorSim;
 public class MotorIOStub extends MotorIOBase {
   private final DCMotorSim motorSim;
   private double appliedVolts = 0;
+  private MotorSimulationSettings simSettings;
 
   public static class MotorSimulationSettings {
     // DC Motor Simulation Settings
     public DCMotor motor = DCMotor.getNEO(1);
     public double moiKgMetersSquared = 1.0;
+
+    // TODO: should not hard-code these values.  Need to be set/passed in from 
+    // RobotConfigStub.java somehow.
+    public double forwardLimitPositionDegrees = 90.0;
+    public double reverseLimitPositionDegrees = 10.0;
   }
 
   public MotorIOStub(
       MotorIOBaseSettings motorSettings, MotorSimulationSettings simulationSettings) {
     super(motorSettings);
+
+    simSettings = simulationSettings;
 
     motorSim =
         new DCMotorSim(
@@ -46,6 +55,18 @@ public class MotorIOStub extends MotorIOBase {
     inputs.velocityRadPerSec = motorSim.getAngularVelocityRadPerSec();
     inputs.positionRad = motorSim.getAngularPositionRad();
     inputs.accelerationRadPerSecSq = motorSim.getAngularAccelerationRadPerSecSq();
+
+    if (Units.radiansToDegrees(motorSim.getAngularPositionRad()) <= simSettings.reverseLimitPositionDegrees) {
+      inputs.reverseLimit = true;
+    } else {
+      inputs.reverseLimit = false;
+    }
+
+    if (Units.radiansToDegrees(motorSim.getAngularPositionRad()) <= simSettings.forwardLimitPositionDegrees) {
+      inputs.forwardLimit = false;
+    } else {
+      inputs.forwardLimit = true;
+    }
 
     super.updateInputs(inputs);
   }

@@ -70,16 +70,18 @@ public class RobotConfigStub extends RobotConfig {
       motorSettings.motor.gearing = 50;
       motorSettings.motor.inverted = false;
       motorSettings.pid = new PIDController(1, 0, 0);
+      motorSettings.reverseLimitChannel = 1;
+      motorSettings.reverseLimitNegate = true;
 
       ArmSettings armSettings = new ArmSettings();
       armSettings.minAngleInDegrees = 0;
-      armSettings.maxAngleInDegrees = 90;
+      armSettings.maxAngleInDegrees = 135;
       armSettings.startingAngleInDegrees = armSettings.maxAngleInDegrees;
       armSettings.color = new Color8Bit(Color.kRed);
       armSettings.feedforward = new ArmFeedforward(0.0021633, 0.060731, 0.9481, 0);
       armSettings.armLengthInMeters = 0.5;
       armSettings.armMassInKg = 0.75;
-      armSettings.motor = DCMotor.getKrakenX60(1);
+      armSettings.motor = DCMotor.getNEO(1);
       armSettings.simulateGravity = true;
 
       climberArm =
