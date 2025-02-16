@@ -19,7 +19,7 @@ public class MotorIOStub extends MotorIOBase {
     public DCMotor motor = DCMotor.getNEO(1);
     public double moiKgMetersSquared = 1.0;
 
-    // TODO: should not hard-code these values.  Need to be set/passed in from 
+    // TODO: should not hard-code these values.  Need to be set/passed in from
     // RobotConfigStub.java somehow.
     public double forwardLimitPositionDegrees = 90.0;
     public double reverseLimitPositionDegrees = 10.0;
@@ -56,13 +56,15 @@ public class MotorIOStub extends MotorIOBase {
     inputs.positionRad = motorSim.getAngularPositionRad();
     inputs.accelerationRadPerSecSq = motorSim.getAngularAccelerationRadPerSecSq();
 
-    if (Units.radiansToDegrees(motorSim.getAngularPositionRad()) <= simSettings.reverseLimitPositionDegrees) {
+    if (Units.radiansToDegrees(motorSim.getAngularPositionRad())
+        <= simSettings.reverseLimitPositionDegrees) {
       inputs.reverseLimit = true;
     } else {
       inputs.reverseLimit = false;
     }
 
-    if (Units.radiansToDegrees(motorSim.getAngularPositionRad()) <= simSettings.forwardLimitPositionDegrees) {
+    if (Units.radiansToDegrees(motorSim.getAngularPositionRad())
+        <= simSettings.forwardLimitPositionDegrees) {
       inputs.forwardLimit = false;
     } else {
       inputs.forwardLimit = true;

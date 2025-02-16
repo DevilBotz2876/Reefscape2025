@@ -6,12 +6,11 @@ import edu.wpi.first.math.system.plant.DCMotor;
 import edu.wpi.first.wpilibj.util.Color;
 import edu.wpi.first.wpilibj.util.Color8Bit;
 import frc.robot.io.implementations.motor.MotorIOBase.MotorIOBaseSettings;
-import frc.robot.io.implementations.motor.MotorIOSparkMax.SparkMaxSettings;
 import frc.robot.io.implementations.motor.MotorIOSparkMax;
+import frc.robot.io.implementations.motor.MotorIOSparkMax.SparkMaxSettings;
 import frc.robot.io.implementations.motor.MotorIOTalonFx;
 import frc.robot.io.implementations.motor.MotorIOTalonFx.TalonFxSettings;
 import frc.robot.subsystems.controls.arm.ClimberArmControls;
-import frc.robot.subsystems.controls.arm.CoralArmControls;
 import frc.robot.subsystems.implementations.drive.DriveBase;
 import frc.robot.subsystems.implementations.drive.DriveSwerveYAGSL;
 import frc.robot.subsystems.implementations.motor.ArmMotorSubsystem;
@@ -56,9 +55,8 @@ public class RobotConfigNemo extends RobotConfig {
           new ArmMotorSubsystem(
               // new MotorIOArmStub(motorSettings, armSettings), "Coral", armSettings);
               new MotorIOTalonFx(motorSettings, talonFxSettings), "Coral", armSettings);
-
     }
-    //climber
+    // climber
     {
       MotorIOBaseSettings motorSettings = new MotorIOBaseSettings();
       // 25:1 gear box ratio
@@ -86,7 +84,6 @@ public class RobotConfigNemo extends RobotConfig {
           new ArmMotorSubsystem(
               // new MotorIOArmStub(motorSettings, armSettings), "Coral", armSettings);
               new MotorIOSparkMax(motorSettings, settings), "Climber", armSettings);
-
     }
     ClimberArmControls.setupController(climberArm, mainController);
   }

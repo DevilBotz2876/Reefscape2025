@@ -28,7 +28,7 @@ public class MotorIOSparkMax extends MotorIOBase {
   SparkMaxConfig motorConfig = new SparkMaxConfig();
 
   DigitalInput reverseLimit = null;
-  DigitalInput forwardLimit = null; 
+  DigitalInput forwardLimit = null;
 
   public MotorIOSparkMax(MotorIOBaseSettings motorSettings, SparkMaxSettings sparkMaxSettings) {
     super(motorSettings);
@@ -119,7 +119,8 @@ public class MotorIOSparkMax extends MotorIOBase {
     if (forwardLimit == null) {
       return false;
     }
-    // TODO: check if fwd limit switch is configured/plugged directly into spark max motor.getForwardLimitSwitch()
+    // TODO: check if fwd limit switch is configured/plugged directly into spark max
+    // motor.getForwardLimitSwitch()
     boolean limit = forwardLimit.get();
     if (motorSettings.forwardLimitNegate) {
       return !limit;
@@ -131,7 +132,8 @@ public class MotorIOSparkMax extends MotorIOBase {
     if (reverseLimit == null) {
       return false;
     }
-    // TODO: check if reverse limit switch is configured/plugged directly into spark max motor.getReverseLimitSwitch()
+    // TODO: check if reverse limit switch is configured/plugged directly into spark max
+    // motor.getReverseLimitSwitch()
     boolean limit = reverseLimit.get();
     if (motorSettings.reverseLimitNegate) {
       return !limit;

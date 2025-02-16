@@ -18,7 +18,7 @@ public abstract class MotorIOBase implements MotorIO {
     public MotorIOSettings motor = new MotorIOSettings();
     public PIDController pid =
         new PIDController(1.0, 0, 0); // PID values need to be set with units of radians
-    
+
     public int forwardLimitChannel = -1;
     public boolean forwardLimitNegate = false;
     public int reverseLimitChannel = -1;

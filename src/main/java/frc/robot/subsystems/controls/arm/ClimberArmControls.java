@@ -5,10 +5,9 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
-import frc.robot.commands.common.arm.ArmCommandV2;
 import frc.robot.commands.common.motor.MotorAutoResetEncoderCommand;
-import frc.robot.commands.common.motor.MotorBringUpCommand;
 import frc.robot.commands.common.motor.MotorAutoResetEncoderCommand.MotorAutoResetEncoderSettings;
+import frc.robot.commands.common.motor.MotorBringUpCommand;
 import frc.robot.subsystems.interfaces.ArmV2;
 import frc.robot.subsystems.interfaces.Motor;
 

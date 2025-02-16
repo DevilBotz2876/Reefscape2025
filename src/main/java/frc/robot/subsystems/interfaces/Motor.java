@@ -15,8 +15,6 @@ public interface Motor {
    */
   public double getCurrent();
 
-
-
   /**
    * Resets the relative encoder to the specified value (in radians)
    *
@@ -24,7 +22,7 @@ public interface Motor {
    */
   public void resetEncoder(double positionRad);
 
-    /**
+  /**
    * Gets the forward limit switch
    *
    * @return returns boolean true or false
@@ -37,5 +35,4 @@ public interface Motor {
    * @return returns boolean true or false
    */
   public boolean getReverseLimit();
-
 }
