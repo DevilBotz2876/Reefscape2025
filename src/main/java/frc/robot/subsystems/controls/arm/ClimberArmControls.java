@@ -40,19 +40,21 @@ public class ClimberArmControls {
     settings.resetPositionRad = Units.degreesToRadians(arm.getSettings().minAngleInDegrees);
 
     Command autoCalibrateCommand = new MotorAutoResetEncoderCommand((Motor) arm, settings);
-    SmartDashboard.putData("Climber Auto Calibrate ", autoCalibrateCommand);
+    SmartDashboard.putData(
+        armSubsystem.getName() + "/Commands/Climber Auto Calibrate ", autoCalibrateCommand);
     // assign to button temporarily to debug.
     // controller.y().onTrue(runCalibration);
 
     DoubleSupplier endClimbPosition = () -> 100.0;
     Command endClimberPosition = new ArmToPositionV2(arm, endClimbPosition);
-    SmartDashboard.putData("Climber To End", endClimberPosition);
+    SmartDashboard.putData(armSubsystem.getName() + "/Commands/Climber To End", endClimberPosition);
     // assign to button temporarily to debug.
     // controller.b().onTrue(endClimberPosition);
 
     DoubleSupplier startClimbPosition = () -> 0.0;
     Command startClimberPosition = new ArmToPositionV2(arm, startClimbPosition);
-    SmartDashboard.putData("Climber To Start", startClimberPosition);
+    SmartDashboard.putData(
+        armSubsystem.getName() + "/Commands/Climber To Start", startClimberPosition);
     // assign to button temporarily to debug.
     // controller.a().onTrue(startClimberPosition);
   }
