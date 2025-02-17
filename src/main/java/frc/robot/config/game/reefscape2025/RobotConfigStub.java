@@ -31,7 +31,6 @@ import frc.robot.subsystems.interfaces.Flywheel.FlywheelSettings;
 /* Override Phoenix specific constants here */
 public class RobotConfigStub extends RobotConfig {
   private final ArmMotorSubsystem algaeArm;
-  private final ArmMotorSubsystem climberArm;
   private final ElevatorMotorSubsystem elevator;
   private final FlywheelMotorSubsystem algaeIntake;
 
@@ -63,30 +62,6 @@ public class RobotConfigStub extends RobotConfig {
       algaeArm =
           new ArmMotorSubsystem(
               new MotorIOArmStub(motorSettings, armSettings), "Algae", armSettings);
-    }
-
-    {
-      MotorIOBaseSettings motorSettings = new MotorIOBaseSettings();
-      motorSettings.motor.gearing = 50;
-      motorSettings.motor.inverted = false;
-      motorSettings.pid = new PIDController(1, 0, 0);
-      motorSettings.minLimitChannel = 1;
-      motorSettings.minLimitNegate = true;
-
-      ArmSettings armSettings = new ArmSettings();
-      armSettings.minAngleInDegrees = 0;
-      armSettings.maxAngleInDegrees = 135;
-      armSettings.startingAngleInDegrees = armSettings.minAngleInDegrees;
-      armSettings.color = new Color8Bit(Color.kRed);
-      armSettings.feedforward = new ArmFeedforward(0.0021633, 0.060731, 0.9481, 0);
-      armSettings.armLengthInMeters = 0.5;
-      armSettings.armMassInKg = 0.75;
-      armSettings.motor = DCMotor.getNEO(1);
-      armSettings.simulateGravity = true;
-
-      climberArm =
-          new ArmMotorSubsystem(
-              new MotorIOArmStub(motorSettings, armSettings), "Climber", armSettings);
     }
 
     {
@@ -139,8 +114,8 @@ public class RobotConfigStub extends RobotConfig {
 
     CoralArmControls.setupController(coralArm, mainController);
     AlgaeArmControls.setupController(algaeArm, mainController);
-    ClimberArmControls.setupController(climberArm, mainController);
     ElevatorControlsV2.setupController(elevator, mainController);
     FlywheelControls.setupController(algaeIntake, mainController);
+    ClimberArmControls.setupController(climberArm, mainController);
   }
 }

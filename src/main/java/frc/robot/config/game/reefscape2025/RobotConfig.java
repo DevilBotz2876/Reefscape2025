@@ -85,6 +85,17 @@ public class RobotConfig {
       boolean stubElevator,
       boolean stubCoralArm,
       boolean stubAlgaeSubsystem) {
+    this(stubDrive, stubAuto, stubVision, stubElevator, stubCoralArm, stubAlgaeSubsystem, true);
+  }
+
+  public RobotConfig(
+      boolean stubDrive,
+      boolean stubAuto,
+      boolean stubVision,
+      boolean stubElevator,
+      boolean stubCoralArm,
+      boolean stubAlgaeSubsystem,
+      boolean stubClimberArm) {
     if (stubDrive) {
       drive = new DriveBase();
     }
@@ -151,6 +162,30 @@ public class RobotConfig {
               new IntakeIOStub(),
               new ArmIOStub(
                   Algae.Constants.maxArmAngleDegrees, Algae.Constants.minArmAngleDegrees));
+    }
+
+    if (stubClimberArm) {
+      MotorIOBaseSettings motorSettings = new MotorIOBaseSettings();
+      motorSettings.motor.gearing = 50;
+      motorSettings.motor.inverted = false;
+      motorSettings.pid = new PIDController(1, 0, 0);
+      motorSettings.minLimitChannel = 1;
+      motorSettings.minLimitNegate = true;
+
+      ArmSettings armSettings = new ArmSettings();
+      armSettings.minAngleInDegrees = 0;
+      armSettings.maxAngleInDegrees = 135;
+      armSettings.startingAngleInDegrees = armSettings.minAngleInDegrees;
+      armSettings.color = new Color8Bit(Color.kRed);
+      armSettings.feedforward = new ArmFeedforward(0.0021633, 0.060731, 0.9481, 0);
+      armSettings.armLengthInMeters = 0.5;
+      armSettings.armMassInKg = 0.75;
+      armSettings.motor = DCMotor.getNEO(1);
+      armSettings.simulateGravity = true;
+
+      climberArm =
+          new ArmMotorSubsystem(
+              new MotorIOArmStub(motorSettings, armSettings), "Climber", armSettings);
     }
   }
 
