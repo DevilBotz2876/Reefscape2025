@@ -11,10 +11,12 @@ import frc.robot.subsystems.interfaces.ElevatorV2.ElevatorSettings;
 public class MotorIOElevatorStub extends MotorIOBase {
   private final ElevatorSim elevatorSim;
   private double appliedVolts = 0;
+  private final ElevatorSettings elevatorSettings;
 
   /** Constructor that allows setting whether the motor is inverted */
   public MotorIOElevatorStub(MotorIOBaseSettings motorSettings, ElevatorSettings elevatorSettings) {
     super(motorSettings);
+    this.elevatorSettings = elevatorSettings;
 
     // Simulate a Kraken X60 motor with the shaft connected to a mechanism with the specified moment
     // of inertia and gear ratio
@@ -44,6 +46,19 @@ public class MotorIOElevatorStub extends MotorIOBase {
     inputs.currentAmps = elevatorSim.getCurrentDrawAmps();
     inputs.velocityMetersPerSec = elevatorSim.getVelocityMetersPerSecond();
     inputs.positionMeters = elevatorSim.getPositionMeters();
+
+    // Simulate limit switch behavior
+    if (inputs.positionMeters <= elevatorSettings.minHeightInMeters) {
+      inputs.atMinLimit = true;
+    } else {
+      inputs.atMinLimit = false;
+    }
+
+    if (inputs.positionMeters <= elevatorSettings.maxHeightInMeters) {
+      inputs.atMaxLimit = false;
+    } else {
+      inputs.atMaxLimit = true;
+    }
 
     super.updateInputs(inputs);
   }

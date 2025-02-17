@@ -74,8 +74,8 @@ public class MotorIOSparkMax extends MotorIOBase {
 
     inputs.velocityMetersPerSec = inputs.velocityRadPerSec * motorSettings.motor.drumRadiusMeters;
     inputs.positionMeters = inputs.positionRad * motorSettings.motor.drumRadiusMeters;
-    inputs.forwardLimit = getForwardLimit();
-    inputs.reverseLimit = getReverseLimit();
+    inputs.atMaxLimit = getForwardLimit();
+    inputs.atMinLimit = getReverseLimit();
     super.updateInputs(inputs);
   }
 

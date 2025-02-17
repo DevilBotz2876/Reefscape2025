@@ -21,8 +21,8 @@ public class MotorIOStub extends MotorIOBase {
 
     // TODO: should not hard-code these values.  Need to be set/passed in from
     // RobotConfigStub.java somehow.
-    public double forwardLimitPositionDegrees = 90.0;
-    public double reverseLimitPositionDegrees = 10.0;
+    public double maxLimitPositionRad = Units.degreesToRadians(90.0);
+    public double minLimitPositionRad = Units.degreesToRadians(10.0);
   }
 
   public MotorIOStub(
@@ -56,18 +56,17 @@ public class MotorIOStub extends MotorIOBase {
     inputs.positionRad = motorSim.getAngularPositionRad();
     inputs.accelerationRadPerSecSq = motorSim.getAngularAccelerationRadPerSecSq();
 
-    if (Units.radiansToDegrees(motorSim.getAngularPositionRad())
-        <= simSettings.reverseLimitPositionDegrees) {
-      inputs.reverseLimit = true;
+    // Simulate limit switch behavior
+    if (inputs.positionRad <= simSettings.minLimitPositionRad) {
+      inputs.atMinLimit = true;
     } else {
-      inputs.reverseLimit = false;
+      inputs.atMinLimit = false;
     }
 
-    if (Units.radiansToDegrees(motorSim.getAngularPositionRad())
-        <= simSettings.forwardLimitPositionDegrees) {
-      inputs.forwardLimit = false;
+    if (inputs.positionRad <= simSettings.maxLimitPositionRad) {
+      inputs.atMaxLimit = false;
     } else {
-      inputs.forwardLimit = true;
+      inputs.atMaxLimit = true;
     }
 
     super.updateInputs(inputs);

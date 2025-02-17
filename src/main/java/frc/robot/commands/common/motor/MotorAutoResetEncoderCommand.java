@@ -45,11 +45,11 @@ public class MotorAutoResetEncoderCommand extends Command {
     if (settings.currentReverseDuration <= 0) {
       motor.runVoltage(settings.voltage);
 
-      if (settings.voltage > 0.0 && motor.getForwardLimit()) {
+      if (settings.voltage > 0.0 && motor.maxLimitTriggered()) {
         motor.runVoltage(0);
         done = true;
       }
-      if (settings.voltage < 0.0 && motor.getReverseLimit()) {
+      if (settings.voltage < 0.0 && motor.minLimitTriggered()) {
         motor.runVoltage(0);
         done = true;
       }
