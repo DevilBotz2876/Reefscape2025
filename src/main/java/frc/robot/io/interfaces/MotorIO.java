@@ -101,4 +101,7 @@ public interface MotorIO {
    * @positionRad the current position in radians
    */
   public void resetEncoder(double positionRad);
+
+  /** Disables the software PID loop */
+  public void disablePid();
 }

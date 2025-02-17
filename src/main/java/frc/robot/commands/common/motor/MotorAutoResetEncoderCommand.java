@@ -20,6 +20,10 @@ public class MotorAutoResetEncoderCommand extends Command {
     // whatever is native to the resetEncoder function
     public double resetPositionRad = 0;
 
+    public double initialReverseDuration = 0;
+
+    public double currentReverseDuration = 0;
+
     // Optional: If there's a limit switch, this will return true when the limit switch is
     // triggered. Otherwise, minCurrentAtReset will be used to dectect the limit
     public BooleanSupplier limitTriggered = null;
@@ -33,13 +37,14 @@ public class MotorAutoResetEncoderCommand extends Command {
   @Override
   public void initialize() {
     done = false;
+    settings.currentReverseDuration = settings.initialReverseDuration;
   }
 
   @Override
   public void execute() {
-    motor.runVoltage(settings.voltage);
+    if (settings.currentReverseDuration <= 0) {
+      motor.runVoltage(settings.voltage);
 
-    /* TODO: Add code to use limit switch if one exists */
     if (settings.voltage > 0.0 && motor.getForwardLimit()) {
       motor.runVoltage(0);
       done = true;
@@ -49,9 +54,13 @@ public class MotorAutoResetEncoderCommand extends Command {
       done = true;
     }
 
-    if (motor.getCurrent() > settings.minResetCurrent) {
-      motor.runVoltage(0);
-      done = true;
+      if (motor.getCurrent() > settings.minResetCurrent) {
+        motor.runVoltage(0);
+        done = true;
+      }
+    } else {
+      motor.runVoltage(-settings.voltage);
+      settings.currentReverseDuration -= 0.02; // execute is called every 20ms
     }
   }
 

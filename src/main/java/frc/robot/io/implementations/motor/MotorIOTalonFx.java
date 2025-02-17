@@ -72,12 +72,17 @@ public class MotorIOTalonFx extends MotorIOBase {
     inputs.positionRad =
         edu.wpi.first.math.util.Units.rotationsToRadians(
             motorFx.getPosition().getValueAsDouble() / motorSettings.motor.gearing);
+    inputs.velocityRadPerSec =
+        edu.wpi.first.math.util.Units.rotationsPerMinuteToRadiansPerSecond(
+            motorFx.getVelocity().getValueAsDouble() / motorSettings.motor.gearing);
 
     super.updateInputs(inputs);
   }
 
   @Override
   public void resetEncoder(double positionRad) {
-    motorFx.setPosition(edu.wpi.first.math.util.Units.radiansToRotations(positionRad));
+    motorFx.setPosition(
+        edu.wpi.first.math.util.Units.radiansToRotations(
+            positionRad * motorSettings.motor.gearing));
   }
 }
