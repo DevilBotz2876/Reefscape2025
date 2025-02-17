@@ -16,8 +16,6 @@ import frc.robot.io.implementations.motor.MotorIOBase.MotorIOBaseSettings;
 import frc.robot.io.implementations.motor.MotorIOElevatorStub;
 import frc.robot.io.implementations.motor.MotorIOFlywheelStub;
 import frc.robot.subsystems.controls.arm.AlgaeArmControls;
-import frc.robot.subsystems.controls.arm.ClimberArmControls;
-import frc.robot.subsystems.controls.arm.CoralArmControls;
 import frc.robot.subsystems.controls.elevator.ElevatorControlsV2;
 import frc.robot.subsystems.controls.flywheel.FlywheelControls;
 import frc.robot.subsystems.implementations.drive.DriveSwerveYAGSL;
@@ -112,10 +110,8 @@ public class RobotConfigStub extends RobotConfig {
     // Configure the default bindings of the parent class
     // super.configureBindings();
 
-    CoralArmControls.setupController(coralArm, mainController);
     AlgaeArmControls.setupController(algaeArm, mainController);
     ElevatorControlsV2.setupController(elevator, mainController);
     FlywheelControls.setupController(algaeIntake, mainController);
-    ClimberArmControls.setupController(climberArm, mainController);
   }
 }

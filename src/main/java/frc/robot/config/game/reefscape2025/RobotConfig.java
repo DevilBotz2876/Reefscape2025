@@ -28,6 +28,7 @@ import frc.robot.io.implementations.intake.IntakeIOStub;
 import frc.robot.io.implementations.motor.MotorIOArmStub;
 import frc.robot.io.implementations.motor.MotorIOBase.MotorIOBaseSettings;
 import frc.robot.subsystems.controls.algae.AlgaeControls;
+import frc.robot.subsystems.controls.arm.ClimberArmControls;
 import frc.robot.subsystems.controls.arm.CoralArmControls;
 import frc.robot.subsystems.controls.drive.DriveControls;
 import frc.robot.subsystems.controls.elevator.ElevatorControls;
@@ -202,11 +203,12 @@ public class RobotConfig {
 
     VisionControls.addGUI(vision, driverTab);
 
+    CoralArmControls.setupController(coralArm, mainController);
+    ClimberArmControls.setupController(climberArm, mainController);
+
+    // Old subsystems to be replaced
     ElevatorControls.setupController(elevator, mainController);
     ElevatorControls.addSysId(elevator);
-
-    CoralArmControls.setupController(coralArm, mainController);
-
     AlgaeControls.setupController(algaeSubsystem, mainController);
 
     setupSimGUI();
