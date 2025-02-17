@@ -32,6 +32,7 @@ public class MotorIOArmStub extends MotorIOBase {
 
   @Override
   public void setVoltage(double volts) {
+    super.setVoltage(volts);
     appliedVolts = calculateSafeVoltage(volts);
   }
 

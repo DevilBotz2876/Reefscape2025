@@ -76,7 +76,8 @@ public class RobotConfigStub extends RobotConfig {
       ArmSettings armSettings = new ArmSettings();
       armSettings.minAngleInDegrees = 0;
       armSettings.maxAngleInDegrees = 135;
-      armSettings.startingAngleInDegrees = armSettings.maxAngleInDegrees;
+      // armSettings.startingAngleInDegrees = armSettings.maxAngleInDegrees;
+      armSettings.startingAngleInDegrees = armSettings.minAngleInDegrees;
       armSettings.color = new Color8Bit(Color.kRed);
       armSettings.feedforward = new ArmFeedforward(0.0021633, 0.060731, 0.9481, 0);
       armSettings.armLengthInMeters = 0.5;
