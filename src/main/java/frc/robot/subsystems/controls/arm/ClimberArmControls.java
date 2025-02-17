@@ -3,7 +3,6 @@ package frc.robot.subsystems.controls.arm;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.commands.common.arm.ArmToPositionV2;
@@ -41,11 +40,7 @@ public class ClimberArmControls {
     settings.resetPositionRad = Units.degreesToRadians(arm.getSettings().minAngleInDegrees);
 
     Command autoCalibrateCommand = new MotorAutoResetEncoderCommand((Motor) arm, settings);
-    Command runCalibration =
-        new InstantCommand(() -> arm.enableOpenLoop())
-            .withName("Disable Climber PID")
-            .andThen(autoCalibrateCommand);
-    SmartDashboard.putData("Climber Auto Calibrate ", runCalibration);
+    SmartDashboard.putData("Climber Auto Calibrate ", autoCalibrateCommand);
     // assign to button temporarily to debug.
     // controller.y().onTrue(runCalibration);
 

@@ -16,12 +16,13 @@ import frc.robot.io.interfaces.MotorIO;
 public abstract class MotorIOBase implements MotorIO {
   public static class MotorIOBaseSettings {
     public MotorIOSettings motor = new MotorIOSettings();
-    public PIDController pid = new PIDController(1.0, 0, 0); // PID values are unit-less.
+    public PIDController pid =
+        new PIDController(1.0, 0, 0); // PID values need to be set using native units (radians)
 
-    public int forwardLimitChannel = -1;
-    public boolean forwardLimitNegate = false;
-    public int reverseLimitChannel = -1;
-    public boolean reverseLimitNegate = false;
+    public int maxLimitChannel = -1;
+    public boolean maxLimitNegate = false;
+    public int minLimitChannel = -1;
+    public boolean minLimitNegate = false;
   }
 
   private final MotorIOBaseSettings settings;
@@ -103,12 +104,6 @@ public abstract class MotorIOBase implements MotorIO {
     } else {
       return false;
     }
-  }
-
-  @Override
-  public void setVoltage(double volts) {
-    softwarePidEnabled = false;
-    positionPid = false;
   }
 
   @Override

@@ -11,7 +11,6 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
 import frc.robot.io.interfaces.MotorIO;
 import frc.robot.io.interfaces.MotorIOInputsAutoLogged;
-import frc.robot.subsystems.interfaces.LimitSwitch;
 import frc.robot.subsystems.interfaces.Motor;
 import org.littletonrobotics.junction.Logger;
 
@@ -19,7 +18,7 @@ import org.littletonrobotics.junction.Logger;
  * The MotorSubsystem class implements the basic functionality of a generic mechanism that uses a
  * motor. It implements shared sysId routines as well as the Motor interface
  */
-public class MotorSubsystem extends SubsystemBase implements Motor, LimitSwitch {
+public class MotorSubsystem extends SubsystemBase implements Motor {
   protected final MotorIO io;
   protected final MotorIOInputsAutoLogged inputs = new MotorIOInputsAutoLogged();
   private final SysIdRoutine sysId;

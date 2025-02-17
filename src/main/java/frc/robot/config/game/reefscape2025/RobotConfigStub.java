@@ -70,8 +70,8 @@ public class RobotConfigStub extends RobotConfig {
       motorSettings.motor.gearing = 50;
       motorSettings.motor.inverted = false;
       motorSettings.pid = new PIDController(1, 0, 0);
-      motorSettings.reverseLimitChannel = 1;
-      motorSettings.reverseLimitNegate = true;
+      motorSettings.minLimitChannel = 1;
+      motorSettings.minLimitNegate = true;
 
       ArmSettings armSettings = new ArmSettings();
       armSettings.minAngleInDegrees = 0;

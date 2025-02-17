@@ -21,4 +21,18 @@ public interface Motor {
    * @param positonRad the current position in radians
    */
   public void resetEncoder(double positionRad);
+
+  /**
+   * Returns status of the max limit switch
+   *
+   * @return returns true if limit switch is triggered, otherwise false.
+   */
+  public boolean maxLimitTriggered();
+
+  /**
+   * Returns status of the min limit switch
+   *
+   * @return returns true if limit switch is triggered, otherwise false.
+   */
+  public boolean minLimitTriggered();
 }

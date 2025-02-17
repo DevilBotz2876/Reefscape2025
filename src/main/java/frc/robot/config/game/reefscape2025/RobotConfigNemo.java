@@ -65,8 +65,8 @@ public class RobotConfigNemo extends RobotConfig {
       motorSettings.motor.gearing = 25;
       motorSettings.motor.inverted = false; // false for Sim
       motorSettings.pid = new PIDController(0.0, 0, 0);
-      motorSettings.reverseLimitChannel = 1;
-      motorSettings.reverseLimitNegate = true;
+      motorSettings.minLimitChannel = 1;
+      motorSettings.minLimitNegate = true;
 
       ArmSettings armSettings = new ArmSettings();
       armSettings.minAngleInDegrees = 0;
