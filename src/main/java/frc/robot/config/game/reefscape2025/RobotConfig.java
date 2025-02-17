@@ -203,12 +203,12 @@ public class RobotConfig {
 
     VisionControls.addGUI(vision, driverTab);
 
+    ElevatorControls.setupController(elevator, mainController);
+    ElevatorControls.addSysId(elevator);
+
     CoralArmControls.setupController(coralArm, mainController);
     ClimberArmControls.setupController(climberArm, mainController);
 
-    // Old subsystems to be replaced
-    ElevatorControls.setupController(elevator, mainController);
-    ElevatorControls.addSysId(elevator);
     AlgaeControls.setupController(algaeSubsystem, mainController);
 
     setupSimGUI();
