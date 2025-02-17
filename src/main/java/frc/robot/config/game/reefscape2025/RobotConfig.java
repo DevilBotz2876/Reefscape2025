@@ -11,9 +11,6 @@ import edu.wpi.first.math.system.plant.DCMotor;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
-import edu.wpi.first.wpilibj.smartdashboard.Mechanism2d;
-import edu.wpi.first.wpilibj.smartdashboard.MechanismLigament2d;
-import edu.wpi.first.wpilibj.smartdashboard.MechanismRoot2d;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.util.Color;
@@ -27,8 +24,6 @@ import frc.robot.io.implementations.elevator.ElevatorIOStub;
 import frc.robot.io.implementations.intake.IntakeIOStub;
 import frc.robot.io.implementations.motor.MotorIOArmStub;
 import frc.robot.io.implementations.motor.MotorIOBase.MotorIOBaseSettings;
-import frc.robot.subsystems.controls.algae.AlgaeControls;
-import frc.robot.subsystems.controls.arm.CoralArmControls;
 import frc.robot.subsystems.controls.drive.DriveControls;
 import frc.robot.subsystems.controls.elevator.ElevatorControls;
 import frc.robot.subsystems.controls.vision.VisionControls;
@@ -40,7 +35,6 @@ import frc.robot.subsystems.implementations.vision.VisionSubsystem;
 import frc.robot.subsystems.interfaces.Algae;
 import frc.robot.subsystems.interfaces.ArmV2.ArmSettings;
 import frc.robot.subsystems.interfaces.Vision.Camera;
-import java.util.ArrayList;
 
 /* Put all constants here with reasonable defaults */
 public class RobotConfig {
@@ -162,51 +156,13 @@ public class RobotConfig {
     vision.setVisionMeasurementConsumer(drive::addVisionMeasurement);
 
     DriveControls.setupController(drive, mainController);
-    DriveControls.addGUI(drive, driverTab);
 
     VisionControls.addGUI(vision, driverTab);
 
     ElevatorControls.setupController(elevator, mainController);
-    ElevatorControls.addSysId(elevator);
 
-    CoralArmControls.setupController(coralArm, mainController);
-
-    AlgaeControls.setupController(algaeSubsystem, mainController);
-
-    setupSimGUI();
-  }
-
-  public void setupSimGUI() {
-    Mechanism2d mech2d = new Mechanism2d(60, 60);
-    MechanismRoot2d coralRoot = mech2d.getRoot("coral", 0, 0);
-
-    MechanismRoot2d algaeRoot = mech2d.getRoot("algae", 20, 0);
-
-    MechanismLigament2d elevatorLigament2d =
-        coralRoot.append(
-            new MechanismLigament2d("Elevator", 5, 90, 10, new Color8Bit(Color.kLightSlateGray)));
-    elevator.setLigament(elevatorLigament2d);
-
-    MechanismLigament2d algaeArmLigament2d =
-        algaeRoot.append(
-            new MechanismLigament2d("Algae Arm", 10, 90, 6, new Color8Bit(Color.kOrange)));
-
-    ArrayList<MechanismLigament2d> intakeLigaments2d = new ArrayList<MechanismLigament2d>();
-    intakeLigaments2d.add(
-        algaeArmLigament2d.append(
-            new MechanismLigament2d("Wheel Spoke A", 2.5, 0, 6, new Color8Bit(Color.kGray))));
-    intakeLigaments2d.add(
-        algaeArmLigament2d.append(
-            new MechanismLigament2d("Wheel Spoke B", 2.5, 90, 6, new Color8Bit(Color.kRed))));
-    intakeLigaments2d.add(
-        algaeArmLigament2d.append(
-            new MechanismLigament2d("Wheel Spoke C", 2.5, 180, 6, new Color8Bit(Color.kGray))));
-    intakeLigaments2d.add(
-        algaeArmLigament2d.append(
-            new MechanismLigament2d("Wheel Spoke D", 2.5, 270, 6, new Color8Bit(Color.kRed))));
-
-    algaeSubsystem.setLigament(algaeArmLigament2d, intakeLigaments2d);
-
-    SmartDashboard.putData("2D Simulation", mech2d);
+    if (null != RobotConfig.autoChooser) {
+      SmartDashboard.putData("Autonomous", RobotConfig.autoChooser);
+    }
   }
 }
