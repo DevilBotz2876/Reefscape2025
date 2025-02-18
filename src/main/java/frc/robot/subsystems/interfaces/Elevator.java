@@ -11,8 +11,8 @@ public interface Elevator {
     public double maxHeightInMeters = 1.0;
     public double startingHeightInMeters = 0.0;
 
-    public double maxVelocityInMetersPerSecond = 45;
-    public double maxAccelerationInMetersPerSecondSquared = 120;
+    public double maxVelocityInMetersPerSecond = 0.3;
+    public double maxAccelerationInMetersPerSecondSquared = 0.3;
 
     public double targetHeightToleranceInMeters = 0.01;
 
