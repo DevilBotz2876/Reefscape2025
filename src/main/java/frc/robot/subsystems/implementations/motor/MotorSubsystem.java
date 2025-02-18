@@ -78,12 +78,12 @@ public class MotorSubsystem extends SubsystemBase implements Motor {
   }
 
   @Override
-  public boolean forwardLimitTriggered() {
+  public boolean getForwardLimit() {
     return inputs.forwardLimit;
   }
 
   @Override
-  public boolean reverseLimitTriggered() {
+  public boolean getReverseLimit() {
     return inputs.reverseLimit;
   }
 

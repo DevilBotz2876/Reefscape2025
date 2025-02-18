@@ -27,12 +27,12 @@ public interface Motor {
    *
    * @return returns true if limit switch is triggered, otherwise false.
    */
-  public boolean forwardLimitTriggered();
+  public boolean getForwardLimit();
 
   /**
    * Returns status of the reverse limit switch
    *
    * @return returns true if limit switch is triggered, otherwise false.
    */
-  public boolean reverseLimitTriggered();
+  public boolean getReverseLimit();
 }
