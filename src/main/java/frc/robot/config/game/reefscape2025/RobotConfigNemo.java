@@ -10,7 +10,6 @@ import frc.robot.io.implementations.motor.MotorIOSparkMax;
 import frc.robot.io.implementations.motor.MotorIOSparkMax.SparkMaxSettings;
 import frc.robot.io.implementations.motor.MotorIOTalonFx;
 import frc.robot.io.implementations.motor.MotorIOTalonFx.TalonFxSettings;
-import frc.robot.subsystems.controls.arm.ClimberArmControls;
 import frc.robot.subsystems.implementations.drive.DriveBase;
 import frc.robot.subsystems.implementations.drive.DriveSwerveYAGSL;
 import frc.robot.subsystems.implementations.motor.ArmMotorSubsystem;
@@ -20,7 +19,7 @@ import frc.robot.subsystems.interfaces.Drive;
 /* Override Nemo specific constants here */
 public class RobotConfigNemo extends RobotConfig {
   public RobotConfigNemo() {
-    super(false, true, true, true, false, true);
+    super(false, true, true, true, false, true, false);
 
     // Nemo has a Swerve drive train
     Drive.Constants.rotatePidKp = 0.025;
@@ -87,6 +86,5 @@ public class RobotConfigNemo extends RobotConfig {
               // new MotorIOArmStub(motorSettings, armSettings), "Coral", armSettings);
               new MotorIOSparkMax(motorSettings, settings), "Climber", armSettings);
     }
-    ClimberArmControls.setupController(climberArm, mainController);
   }
 }

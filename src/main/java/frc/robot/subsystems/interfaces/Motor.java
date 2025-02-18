@@ -23,16 +23,16 @@ public interface Motor {
   public void resetEncoder(double positionRad);
 
   /**
-   * Gets the forward limit switch
+   * Returns status of the forward limit switch
    *
-   * @return returns boolean true or false
+   * @return returns true if limit switch is triggered, otherwise false.
    */
   public boolean getForwardLimit();
 
   /**
-   * Gets the reverse limit switch
+   * Returns status of the reverse limit switch
    *
-   * @return returns boolean true or false
+   * @return returns true if limit switch is triggered, otherwise false.
    */
   public boolean getReverseLimit();
 }

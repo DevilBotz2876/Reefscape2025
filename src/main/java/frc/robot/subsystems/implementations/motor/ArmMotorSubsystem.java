@@ -94,11 +94,6 @@ public class ArmMotorSubsystem extends MotorSubsystem implements ArmV2 {
   }
 
   @Override
-  public void enableOpenLoop() {
-    io.setVoltage(0);
-  }
-
-  @Override
   public boolean isAtMaxLimit() {
     return (getTargetAngle() >= settings.maxAngleInDegrees);
   }

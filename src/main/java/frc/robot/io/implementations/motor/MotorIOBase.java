@@ -106,12 +106,6 @@ public abstract class MotorIOBase implements MotorIO {
   }
 
   @Override
-  public void setVoltage(double volts) {
-    softwarePidEnabled = false;
-    positionPid = false;
-  }
-
-  @Override
   public PIDController getPid() {
     return settings.pid;
   }

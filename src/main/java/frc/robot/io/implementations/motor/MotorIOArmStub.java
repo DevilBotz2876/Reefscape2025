@@ -32,7 +32,6 @@ public class MotorIOArmStub extends MotorIOBase {
 
   @Override
   public void setVoltage(double volts) {
-    super.setVoltage(volts);
     appliedVolts = calculateSafeVoltage(volts);
   }
 
@@ -46,13 +45,14 @@ public class MotorIOArmStub extends MotorIOBase {
     inputs.velocityRadPerSec = armSim.getVelocityRadPerSec();
     inputs.positionRad = armSim.getAngleRads();
 
+    // Simulate limit switch behavior
     if (Units.radiansToDegrees(armSim.getAngleRads()) <= armSettings.minAngleInDegrees + 1) {
       inputs.reverseLimit = true;
     } else {
       inputs.reverseLimit = false;
     }
 
-    if (Units.radiansToDegrees(armSim.getAngleRads()) <= armSettings.maxAngleInDegrees - 1) {
+    if (Units.radiansToDegrees(armSim.getAngleRads()) >= armSettings.maxAngleInDegrees - 1) {
       inputs.forwardLimit = false;
     } else {
       inputs.forwardLimit = true;

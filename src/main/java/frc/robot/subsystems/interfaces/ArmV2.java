@@ -50,9 +50,6 @@ public interface ArmV2 {
    */
   public void setTargetAngle(double degrees);
 
-  /** Stop holding positon/angle. Run in open loop mode. */
-  public void enableOpenLoop();
-
   /**
    * @return true if arm angle is at (or greater than) the max limit
    */
