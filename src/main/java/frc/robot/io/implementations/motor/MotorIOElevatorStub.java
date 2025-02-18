@@ -49,15 +49,15 @@ public class MotorIOElevatorStub extends MotorIOBase {
 
     // Simulate limit switch behavior
     if (inputs.positionMeters < elevatorSettings.minHeightInMeters) {
-      inputs.atReverseLimit = true;
+      inputs.reverseLimit = true;
     } else {
-      inputs.atReverseLimit = false;
+      inputs.reverseLimit = false;
     }
 
     if (inputs.positionMeters > elevatorSettings.maxHeightInMeters) {
-      inputs.atForwardLimit = false;
+      inputs.forwardLimit = false;
     } else {
-      inputs.atForwardLimit = true;
+      inputs.forwardLimit = true;
     }
 
     super.updateInputs(inputs);

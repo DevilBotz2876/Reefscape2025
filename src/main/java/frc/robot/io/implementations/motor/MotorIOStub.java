@@ -58,15 +58,15 @@ public class MotorIOStub extends MotorIOBase {
 
     // Simulate limit switch behavior
     if (inputs.positionRad < simSettings.reverseLimitPositionRads) {
-      inputs.atReverseLimit = true;
+      inputs.reverseLimit = true;
     } else {
-      inputs.atReverseLimit = false;
+      inputs.reverseLimit = false;
     }
 
     if (inputs.positionRad > simSettings.forwardLimitPositionRad) {
-      inputs.atForwardLimit = false;
+      inputs.forwardLimit = false;
     } else {
-      inputs.atForwardLimit = true;
+      inputs.forwardLimit = true;
     }
 
     super.updateInputs(inputs);
