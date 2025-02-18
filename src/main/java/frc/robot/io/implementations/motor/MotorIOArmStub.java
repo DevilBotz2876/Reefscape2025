@@ -46,13 +46,13 @@ public class MotorIOArmStub extends MotorIOBase {
     inputs.positionRad = armSim.getAngleRads();
 
     // Simulate limit switch behavior
-    if (inputs.positionRad < Units.degreesToRadians(armSettings.minAngleInDegrees)) {
+    if (Units.radiansToDegrees(armSim.getAngleRads()) < armSettings.minAngleInDegrees + 1) {
       inputs.reverseLimit = true;
     } else {
       inputs.reverseLimit = false;
     }
 
-    if (inputs.positionRad > Units.degreesToRadians(armSettings.maxAngleInDegrees)) {
+    if (Units.radiansToDegrees(armSim.getAngleRads()) > armSettings.maxAngleInDegrees - 1) {
       inputs.forwardLimit = false;
     } else {
       inputs.forwardLimit = true;
