@@ -5,10 +5,10 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
-import frc.robot.commands.common.elevator.ElevatorCommand;
 import frc.robot.commands.common.elevator.ElevatorToPosition;
 import frc.robot.commands.common.motor.MotorAutoResetEncoderCommand;
 import frc.robot.commands.common.motor.MotorAutoResetEncoderCommand.MotorAutoResetEncoderSettings;
+import frc.robot.commands.common.motor.MotorBringUpCommand;
 import frc.robot.subsystems.interfaces.Elevator;
 import frc.robot.subsystems.interfaces.Motor;
 
@@ -23,8 +23,12 @@ public class ElevatorControls {
   public static void setupController(Elevator elevator, CommandXboxController controller) {
     SubsystemBase subsystem = (SubsystemBase) elevator;
     subsystem.setDefaultCommand(
-        new ElevatorCommand(
-            elevator,
+        // TODO: Change this to use the elevator command (see commented lines below) after initial
+        // bringup and Feedforward/PID tuning
+        new MotorBringUpCommand(
+            (Motor) elevator,
+            //        new ElevatorCommand(
+            //            elevator,
             () -> {
               if (controller.pov(0).getAsBoolean()) {
                 return 1.0;
