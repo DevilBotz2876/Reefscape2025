@@ -887,27 +887,6 @@
       }
     },
     {
-      "name": "Tab 7",
-      "grid_layout": {
-        "layouts": [],
-        "containers": [
-          {
-            "title": "Flywheel at -1200 RPM",
-            "x": 512.0,
-            "y": 128.0,
-            "width": 256.0,
-            "height": 128.0,
-            "type": "Command",
-            "properties": {
-              "topic": "/SmartDashboard/Flywheel[Algae]/Commands/Flywheel at -1200 RPM",
-              "period": 0.06,
-              "show_type": true
-            }
-          }
-        ]
-      }
-    },
-    {
       "name": "Driver",
       "grid_layout": {
         "layouts": [],
