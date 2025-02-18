@@ -664,6 +664,268 @@
           }
         ]
       }
+    },
+    {
+      "name": "Flywheel[Algae]",
+      "grid_layout": {
+        "layouts": [
+          {
+            "title": "Flywheel[Algae] Sys ID",
+            "x": 768.0,
+            "y": 0.0,
+            "width": 256.0,
+            "height": 512.0,
+            "type": "List Layout",
+            "properties": {
+              "label_position": "TOP"
+            },
+            "children": [
+              {
+                "title": "Dynamic Forward",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 256.0,
+                "height": 128.0,
+                "type": "Command",
+                "properties": {
+                  "topic": "/SmartDashboard/Flywheel[Algae]/Dynamic Forward",
+                  "period": 0.06,
+                  "show_type": true
+                }
+              },
+              {
+                "title": "Dynamic Forward",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 256.0,
+                "height": 128.0,
+                "type": "Command",
+                "properties": {
+                  "topic": "/SmartDashboard/Flywheel[Algae]/Dynamic Forward",
+                  "period": 0.06,
+                  "show_type": true
+                }
+              },
+              {
+                "title": "Quasistatic Forward",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 256.0,
+                "height": 128.0,
+                "type": "Command",
+                "properties": {
+                  "topic": "/SmartDashboard/Flywheel[Algae]/Quasistatic Forward",
+                  "period": 0.06,
+                  "show_type": true
+                }
+              },
+              {
+                "title": "Quasistatic Reverse",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 256.0,
+                "height": 128.0,
+                "type": "Command",
+                "properties": {
+                  "topic": "/SmartDashboard/Flywheel[Algae]/Quasistatic Reverse",
+                  "period": 0.06,
+                  "show_type": true
+                }
+              }
+            ]
+          },
+          {
+            "title": "Flywheel[Algae] Velocity",
+            "x": 512.0,
+            "y": 0.0,
+            "width": 256.0,
+            "height": 640.0,
+            "type": "List Layout",
+            "properties": {
+              "label_position": "TOP"
+            },
+            "children": [
+              {
+                "title": "Flywheel at 1200 RPM",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 256.0,
+                "height": 128.0,
+                "type": "Command",
+                "properties": {
+                  "topic": "/SmartDashboard/Flywheel[Algae]/Commands/Flywheel at 1200 RPM",
+                  "period": 0.06,
+                  "show_type": true
+                }
+              },
+              {
+                "title": "Flywheel at 600 RPM",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 256.0,
+                "height": 128.0,
+                "type": "Command",
+                "properties": {
+                  "topic": "/SmartDashboard/Flywheel[Algae]/Commands/Flywheel at 600 RPM",
+                  "period": 0.06,
+                  "show_type": true
+                }
+              },
+              {
+                "title": "Flywheel at 300 RPM",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 256.0,
+                "height": 128.0,
+                "type": "Command",
+                "properties": {
+                  "topic": "/SmartDashboard/Flywheel[Algae]/Commands/Flywheel at 300 RPM",
+                  "period": 0.06,
+                  "show_type": true
+                }
+              },
+              {
+                "title": "Flywheel at -300 RPM",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 256.0,
+                "height": 128.0,
+                "type": "Command",
+                "properties": {
+                  "topic": "/SmartDashboard/Flywheel[Algae]/Commands/Flywheel at -300 RPM",
+                  "period": 0.06,
+                  "show_type": true
+                }
+              },
+              {
+                "title": "Flywheel at -600 RPM",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 256.0,
+                "height": 128.0,
+                "type": "Command",
+                "properties": {
+                  "topic": "/SmartDashboard/Flywheel[Algae]/Commands/Flywheel at -600 RPM",
+                  "period": 0.06,
+                  "show_type": true
+                }
+              },
+              {
+                "title": "Flywheel at -1200 RPM",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 256.0,
+                "height": 128.0,
+                "type": "Command",
+                "properties": {
+                  "topic": "/SmartDashboard/Flywheel[Algae]/Commands/Flywheel at -1200 RPM",
+                  "period": 0.06,
+                  "show_type": true
+                }
+              }
+            ]
+          }
+        ],
+        "containers": [
+          {
+            "title": "AppliedVolts",
+            "x": 0.0,
+            "y": 0.0,
+            "width": 256.0,
+            "height": 256.0,
+            "type": "Graph",
+            "properties": {
+              "topic": "/AdvantageKit/Flywheel[Algae]/AppliedVolts",
+              "period": 0.033,
+              "data_type": "double",
+              "time_displayed": 5.0,
+              "color": 4278238420,
+              "line_width": 2.0
+            }
+          },
+          {
+            "title": "CurrentAmps",
+            "x": 0.0,
+            "y": 256.0,
+            "width": 256.0,
+            "height": 256.0,
+            "type": "Graph",
+            "properties": {
+              "topic": "/AdvantageKit/Flywheel[Algae]/CurrentAmps",
+              "period": 0.033,
+              "data_type": "double",
+              "time_displayed": 5.0,
+              "color": 4278238420,
+              "line_width": 2.0
+            }
+          },
+          {
+            "title": "Flywheel[Algae] PID",
+            "x": 256.0,
+            "y": 0.0,
+            "width": 256.0,
+            "height": 384.0,
+            "type": "PIDController",
+            "properties": {
+              "topic": "/SmartDashboard/Flywheel[Algae]/PID",
+              "period": 0.06
+            }
+          },
+          {
+            "title": "Subsystem",
+            "x": 0.0,
+            "y": 512.0,
+            "width": 512.0,
+            "height": 128.0,
+            "type": "Subsystem",
+            "properties": {
+              "topic": "/SmartDashboard/Flywheel[Algae]/Subsystem",
+              "period": 0.06
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "Tab 7",
+      "grid_layout": {
+        "layouts": [],
+        "containers": [
+          {
+            "title": "Flywheel at -1200 RPM",
+            "x": 512.0,
+            "y": 128.0,
+            "width": 256.0,
+            "height": 128.0,
+            "type": "Command",
+            "properties": {
+              "topic": "/SmartDashboard/Flywheel[Algae]/Commands/Flywheel at -1200 RPM",
+              "period": 0.06,
+              "show_type": true
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "Driver",
+      "grid_layout": {
+        "layouts": [],
+        "containers": [
+          {
+            "title": "my-first-photonvision cam",
+            "x": 0.0,
+            "y": 0.0,
+            "width": 384.0,
+            "height": 384.0,
+            "type": "Camera Stream",
+            "properties": {
+              "topic": "/CameraPublisher/my-first-photonvision",
+              "period": 0.06
+            }
+          }
+        ]
+      }
     }
   ]
 }
