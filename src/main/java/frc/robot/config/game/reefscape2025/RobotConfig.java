@@ -186,11 +186,11 @@ public class RobotConfig {
       MotorIOBaseSettings motorSettings = new MotorIOBaseSettings();
       motorSettings.motor.gearing = 1; // TODO get actual gearing
       motorSettings.motor.inverted = false;
-      motorSettings.pid = new PIDController(0, 0, 0);
+      motorSettings.pid = new PIDController(0.025, 0, 0);
 
       FlywheelSettings flywheelSettings = new FlywheelSettings();
       flywheelSettings.color = new Color8Bit(Color.kPurple);
-      flywheelSettings.feedforward = new SimpleMotorFeedforward(0, 0);
+      flywheelSettings.feedforward = new SimpleMotorFeedforward(0, 0.01025);
       flywheelSettings.moiKgMetersSquared = 0.001;
       flywheelSettings.motor = DCMotor.getNeo550(1);
 
