@@ -20,8 +20,8 @@ public abstract class MotorIOBase implements MotorIO {
 
     public int maxLimitChannel = -1;
     public boolean maxLimitNegate = false;
-    public int minLimitChannel = -1;
-    public boolean minLimitNegate = false;
+    public int reverseLimitChannel = -1;
+    public boolean reverseLimitNegate = false;
   }
 
   private final MotorIOBaseSettings settings;

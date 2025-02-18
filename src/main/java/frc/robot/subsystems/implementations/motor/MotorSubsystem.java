@@ -79,12 +79,12 @@ public class MotorSubsystem extends SubsystemBase implements Motor {
 
   @Override
   public boolean maxLimitTriggered() {
-    return inputs.atMaxLimit;
+    return inputs.atForwardLimit;
   }
 
   @Override
   public boolean minLimitTriggered() {
-    return inputs.atMinLimit;
+    return inputs.atReverseLimit;
   }
 
   @Override

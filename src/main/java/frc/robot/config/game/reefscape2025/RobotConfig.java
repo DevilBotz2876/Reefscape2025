@@ -170,8 +170,8 @@ public class RobotConfig {
       motorSettings.motor.gearing = 50;
       motorSettings.motor.inverted = false;
       motorSettings.pid = new PIDController(1, 0, 0);
-      motorSettings.minLimitChannel = 1;
-      motorSettings.minLimitNegate = true;
+      motorSettings.reverseLimitChannel = 1;
+      motorSettings.reverseLimitNegate = true;
 
       ArmSettings armSettings = new ArmSettings();
       armSettings.minAngleInDegrees = 0;
