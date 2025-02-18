@@ -21,7 +21,7 @@ public class MotorIOStub extends MotorIOBase {
 
     // TODO: should not hard-code these values.  Need to be set/passed in from
     // RobotConfigStub.java somehow.
-    public double forwardLimitPositionRad = Units.degreesToRadians(90.0);
+    public double forwardLimitPositionRads = Units.degreesToRadians(90.0);
     public double reverseLimitPositionRads = Units.degreesToRadians(10.0);
   }
 
@@ -63,7 +63,7 @@ public class MotorIOStub extends MotorIOBase {
       inputs.reverseLimit = false;
     }
 
-    if (inputs.positionRad > simSettings.forwardLimitPositionRad) {
+    if (inputs.positionRad > simSettings.forwardLimitPositionRads) {
       inputs.forwardLimit = false;
     } else {
       inputs.forwardLimit = true;
