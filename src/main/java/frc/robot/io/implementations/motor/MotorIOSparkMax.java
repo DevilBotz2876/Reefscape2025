@@ -57,8 +57,8 @@ public class MotorIOSparkMax extends MotorIOBase {
     if (motorSettings.reverseLimitChannel > -1) {
       reverseLimit = new DigitalInput(motorSettings.reverseLimitChannel);
     }
-    if (motorSettings.reverseLimitChannel > -1) {
-      forwardLimit = new DigitalInput(motorSettings.reverseLimitChannel);
+    if (motorSettings.forwardLimitChannel > -1) {
+      forwardLimit = new DigitalInput(motorSettings.forwardLimitChannel);
     }
   }
 
