@@ -57,8 +57,8 @@ public class MotorIOSparkMax extends MotorIOBase {
     if (motorSettings.reverseLimitChannel > -1) {
       reverseLimitSwitch = new DigitalInput(motorSettings.reverseLimitChannel);
     }
-    if (motorSettings.maxLimitChannel > -1) {
-      forwardLimitSwitch = new DigitalInput(motorSettings.maxLimitChannel);
+    if (motorSettings.forwardLimitChannel > -1) {
+      forwardLimitSwitch = new DigitalInput(motorSettings.forwardLimitChannel);
     }
   }
 
@@ -122,7 +122,7 @@ public class MotorIOSparkMax extends MotorIOBase {
     // TODO: check if fwd limit switch is configured/plugged directly into spark max
     // motor.getForwardLimitSwitch()
     boolean limit = forwardLimitSwitch.get();
-    if (motorSettings.maxLimitNegate) {
+    if (motorSettings.forwardLimitNegate) {
       return !limit;
     }
     return limit;

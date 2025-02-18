@@ -18,8 +18,8 @@ public abstract class MotorIOBase implements MotorIO {
     public MotorIOSettings motor = new MotorIOSettings();
     public PIDController pid = new PIDController(1.0, 0, 0); // PID values are unit-less.
 
-    public int maxLimitChannel = -1;
-    public boolean maxLimitNegate = false;
+    public int forwardLimitChannel = -1;
+    public boolean forwardLimitNegate = false;
     public int reverseLimitChannel = -1;
     public boolean reverseLimitNegate = false;
   }
