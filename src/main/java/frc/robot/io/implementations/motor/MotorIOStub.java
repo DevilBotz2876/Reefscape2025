@@ -57,13 +57,13 @@ public class MotorIOStub extends MotorIOBase {
     inputs.accelerationRadPerSecSq = motorSim.getAngularAccelerationRadPerSecSq();
 
     // Simulate limit switch behavior
-    if (motorSim.getAngularPositionRad() < simSettings.reverseLimitPositionRads) {
+    if (motorSim.getAngularPositionRad() <= simSettings.reverseLimitPositionRads) {
       inputs.reverseLimit = true;
     } else {
       inputs.reverseLimit = false;
     }
 
-    if (motorSim.getAngularPositionRad() > simSettings.forwardLimitPositionRads) {
+    if (motorSim.getAngularPositionRad() >= simSettings.forwardLimitPositionRads) {
       inputs.forwardLimit = false;
     } else {
       inputs.forwardLimit = true;
