@@ -3,6 +3,7 @@ package frc.robot.subsystems.controls.flywheel;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
+import frc.robot.commands.common.flywheel.FlywheelCommand;
 import frc.robot.commands.common.flywheel.FlywheelVelocity;
 import frc.robot.commands.common.motor.MotorBringUpCommand;
 import frc.robot.subsystems.interfaces.Flywheel;
@@ -13,18 +14,32 @@ public class FlywheelControls {
   // Left Bumper = Increase Rotation CCW
   public static void setupController(Flywheel flywheel, CommandXboxController controller) {
     SubsystemBase flywheelSubsystem = (SubsystemBase) flywheel;
-    flywheelSubsystem.setDefaultCommand(
-        new MotorBringUpCommand(
-            (Motor) flywheel,
-            () -> {
-              if (controller.rightBumper().getAsBoolean()) {
-                return 1.0;
-              } else if (controller.leftBumper().getAsBoolean()) {
-                return -1.0;
-              }
-              return 0.0;
-            }));
+    // flywheelSubsystem.setDefaultCommand(
+    //     new FlywheelCommand(
+    //         flywheel,
+    //         () -> {
+    //           if (controller.rightBumper().getAsBoolean()) {
+    //             return 1.0;
+    //           } else if (controller.leftBumper().getAsBoolean()) {
+    //             return -1.0;
+    //           }
+    //           return 0.0;
+    //         }));
 
+    flywheelSubsystem.setDefaultCommand(
+      new MotorBringUpCommand(
+          (Motor) flywheel,
+          () -> {
+            if (controller.rightBumper().getAsBoolean()) {
+              return 1.0;
+            } else if (controller.leftBumper().getAsBoolean()) {
+              return -1.0;
+            }
+            return 0.0;
+          }));
+
+
+    // won't work if MotorBringUpCommand is Default Command
     SmartDashboard.putData(
         flywheelSubsystem.getName() + "/Commands/Flywheel at 1200 RPM",
         new FlywheelVelocity(flywheel, () -> 1200));

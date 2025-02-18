@@ -27,9 +27,10 @@ public class FlywheelCommand extends Command {
   public void execute() {
     double currentSpeed = speed.getAsDouble();
 
-    targetVelocity += currentSpeed * flywheel.getSettings().maxVelocityInRPMs / 50;
-    targetVelocity = MathUtil.clamp(targetVelocity, 0, flywheel.getSettings().maxVelocityInRPMs);
-
-    flywheel.setTargetVelocity(targetVelocity);
+    if (0 != currentSpeed) {
+      targetVelocity += currentSpeed * flywheel.getSettings().maxVelocityInRPMs / 50;
+      targetVelocity = MathUtil.clamp(targetVelocity, 0, flywheel.getSettings().maxVelocityInRPMs);
+      flywheel.setTargetVelocity(targetVelocity);
+    }
   }
 }
