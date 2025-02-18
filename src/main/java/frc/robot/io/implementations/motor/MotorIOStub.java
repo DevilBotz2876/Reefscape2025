@@ -21,8 +21,8 @@ public class MotorIOStub extends MotorIOBase {
 
     // TODO: should not hard-code these values.  Need to be set/passed in from
     // RobotConfigStub.java somehow.
-    public double forwardLimitPositionRads = Units.degreesToRadians(90.0);
-    public double reverseLimitPositionRads = Units.degreesToRadians(10.0);
+    public double forwardLimitPositionRads = Units.degreesToRadians(85.0);
+    public double reverseLimitPositionRads = Units.degreesToRadians(5.0);
   }
 
   public MotorIOStub(
