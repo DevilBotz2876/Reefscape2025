@@ -78,6 +78,16 @@ public class MotorSubsystem extends SubsystemBase implements Motor {
   }
 
   @Override
+  public boolean getForwardLimit() {
+    return inputs.forwardLimit;
+  }
+
+  @Override
+  public boolean getReverseLimit() {
+    return inputs.reverseLimit;
+  }
+
+  @Override
   public void resetEncoder(double positionRad) {
     io.resetEncoder(positionRad);
   }

@@ -14,24 +14,21 @@ import frc.robot.io.implementations.motor.MotorIOArmStub;
 import frc.robot.io.implementations.motor.MotorIOBase.MotorIOBaseSettings;
 import frc.robot.io.implementations.motor.MotorIOElevatorStub;
 import frc.robot.subsystems.controls.arm.AlgaeArmControls;
-import frc.robot.subsystems.controls.arm.ClimberArmControls;
-import frc.robot.subsystems.controls.arm.CoralArmControls;
 import frc.robot.subsystems.controls.elevator.ElevatorControlsV2;
 import frc.robot.subsystems.controls.flywheel.FlywheelControls;
 import frc.robot.subsystems.implementations.drive.DriveSwerveYAGSL;
 import frc.robot.subsystems.implementations.motor.ArmMotorSubsystem;
 import frc.robot.subsystems.implementations.motor.ElevatorMotorSubsystem;
-import frc.robot.subsystems.interfaces.ArmV2.ArmSettings;
+import frc.robot.subsystems.interfaces.Arm.ArmSettings;
 import frc.robot.subsystems.interfaces.ElevatorV2.ElevatorSettings;
 
 /* Override Phoenix specific constants here */
 public class RobotConfigStub extends RobotConfig {
   private final ArmMotorSubsystem algaeArm;
-  private final ArmMotorSubsystem climberArm;
   private final ElevatorMotorSubsystem elevator;
 
   public RobotConfigStub() {
-    super(false, false, false);
+    super(false, true, false);
 
     drive = new DriveSwerveYAGSL("yagsl/stub");
     if (Robot.isSimulation()) {
@@ -64,28 +61,6 @@ public class RobotConfigStub extends RobotConfig {
       MotorIOBaseSettings motorSettings = new MotorIOBaseSettings();
       motorSettings.motor.gearing = 50;
       motorSettings.motor.inverted = false;
-      motorSettings.pid = new PIDController(1, 0, 0);
-
-      ArmSettings armSettings = new ArmSettings();
-      armSettings.minAngleInDegrees = 0;
-      armSettings.maxAngleInDegrees = 90;
-      armSettings.startingAngleInDegrees = armSettings.maxAngleInDegrees;
-      armSettings.color = new Color8Bit(Color.kRed);
-      armSettings.feedforward = new ArmFeedforward(0.0021633, 0.060731, 0.9481, 0);
-      armSettings.armLengthInMeters = 0.5;
-      armSettings.armMassInKg = 0.75;
-      armSettings.motor = DCMotor.getKrakenX60(1);
-      armSettings.simulateGravity = true;
-
-      climberArm =
-          new ArmMotorSubsystem(
-              new MotorIOArmStub(motorSettings, armSettings), "Climber", armSettings);
-    }
-
-    {
-      MotorIOBaseSettings motorSettings = new MotorIOBaseSettings();
-      motorSettings.motor.gearing = 50;
-      motorSettings.motor.inverted = false;
       motorSettings.motor.drumRadiusMeters = 0.050; // 50 mm radius
       motorSettings.pid = new PIDController(0, 0, 0);
 
@@ -108,11 +83,9 @@ public class RobotConfigStub extends RobotConfig {
   @Override
   public void configureBindings() {
     // Configure the default bindings of the parent class
-    // super.configureBindings();
+    super.configureBindings();
 
-    CoralArmControls.setupController(coralArm, mainController);
     AlgaeArmControls.setupController(algaeArm, mainController);
-    ClimberArmControls.setupController(climberArm, mainController);
     ElevatorControlsV2.setupController(elevator, mainController);
     FlywheelControls.setupController(algaeFlywheel, mainController);
   }

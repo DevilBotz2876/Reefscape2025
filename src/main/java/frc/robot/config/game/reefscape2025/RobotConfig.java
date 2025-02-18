@@ -12,9 +12,6 @@ import edu.wpi.first.math.system.plant.DCMotor;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
-import edu.wpi.first.wpilibj.smartdashboard.Mechanism2d;
-import edu.wpi.first.wpilibj.smartdashboard.MechanismLigament2d;
-import edu.wpi.first.wpilibj.smartdashboard.MechanismRoot2d;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.util.Color;
@@ -27,6 +24,7 @@ import frc.robot.io.implementations.elevator.ElevatorIOStub;
 import frc.robot.io.implementations.motor.MotorIOArmStub;
 import frc.robot.io.implementations.motor.MotorIOBase.MotorIOBaseSettings;
 import frc.robot.io.implementations.motor.MotorIOFlywheelStub;
+import frc.robot.subsystems.controls.arm.ClimberArmControls;
 import frc.robot.subsystems.controls.arm.CoralArmControls;
 import frc.robot.subsystems.controls.drive.DriveControls;
 import frc.robot.subsystems.controls.elevator.ElevatorControls;
@@ -37,7 +35,7 @@ import frc.robot.subsystems.implementations.elevator.ElevatorSubsystem;
 import frc.robot.subsystems.implementations.motor.ArmMotorSubsystem;
 import frc.robot.subsystems.implementations.motor.FlywheelMotorSubsystem;
 import frc.robot.subsystems.implementations.vision.VisionSubsystem;
-import frc.robot.subsystems.interfaces.ArmV2.ArmSettings;
+import frc.robot.subsystems.interfaces.Arm.ArmSettings;
 import frc.robot.subsystems.interfaces.Flywheel.FlywheelSettings;
 import frc.robot.subsystems.interfaces.Vision.Camera;
 
@@ -48,8 +46,8 @@ public class RobotConfig {
   public static VisionSubsystem vision;
   public static ElevatorSubsystem elevator;
   public static ArmMotorSubsystem coralArm;
+  public static ArmMotorSubsystem climberArm;
   public static FlywheelMotorSubsystem algaeFlywheel;
-  // public static AlgaeSubsystem algaeSubsystem;
 
   // Controls
   public CommandXboxController mainController = new CommandXboxController(0);
@@ -84,6 +82,17 @@ public class RobotConfig {
       boolean stubElevator,
       boolean stubCoralArm,
       boolean stubAlgaeFlywheel) {
+    this(stubDrive, stubAuto, stubVision, stubElevator, stubCoralArm, stubAlgaeFlywheel, true);
+  }
+
+  public RobotConfig(
+      boolean stubDrive,
+      boolean stubAuto,
+      boolean stubVision,
+      boolean stubElevator,
+      boolean stubCoralArm,
+      boolean stubAlgaeFlywheel,
+      boolean stubClimberArm) {
     if (stubDrive) {
       drive = new DriveBase();
     }
@@ -144,6 +153,35 @@ public class RobotConfig {
               new MotorIOArmStub(motorSettings, armSettings), "Coral", armSettings);
     }
 
+    if (stubClimberArm) {
+      MotorIOBaseSettings motorSettings = new MotorIOBaseSettings();
+      motorSettings.motor.gearing = 50;
+      motorSettings.motor.inverted = false;
+      motorSettings.pid = new PIDController(0, 0, 0);
+      motorSettings.reverseLimitChannel = 1;
+      motorSettings.reverseLimitNegate = true;
+
+      ArmSettings armSettings = new ArmSettings();
+      armSettings.minAngleInDegrees = 0;
+      armSettings.maxAngleInDegrees = 135;
+      armSettings.startingAngleInDegrees = 90;
+      armSettings.color = new Color8Bit(Color.kRed);
+      armSettings.feedforward = new ArmFeedforward(0, 0, 0, 0);
+      armSettings.armLengthInMeters = 0.5;
+      armSettings.armMassInKg = 0.75;
+      armSettings.motor = DCMotor.getNEO(1);
+      armSettings.simulateGravity = true;
+
+      ClimberArmControls.Constants.autoZeroSettings.voltage = -1.0;
+      ClimberArmControls.Constants.autoZeroSettings.minResetCurrent = 40.0;
+      ClimberArmControls.Constants.autoZeroSettings.resetPositionRad =
+          Units.degreesToRadians(armSettings.minAngleInDegrees);
+
+      climberArm =
+          new ArmMotorSubsystem(
+              new MotorIOArmStub(motorSettings, armSettings), "Climber", armSettings);
+    }
+
     if (stubAlgaeFlywheel) {
       MotorIOBaseSettings motorSettings = new MotorIOBaseSettings();
       motorSettings.motor.gearing = 1; // TODO get actual gearing
@@ -171,31 +209,19 @@ public class RobotConfig {
     vision.setVisionMeasurementConsumer(drive::addVisionMeasurement);
 
     DriveControls.setupController(drive, mainController);
-    DriveControls.addGUI(drive, driverTab);
 
     VisionControls.addGUI(vision, driverTab);
 
+    CoralArmControls.setupController(coralArm, mainController);
     ElevatorControls.setupController(elevator, mainController);
-    ElevatorControls.addSysId(elevator);
 
     CoralArmControls.setupController(coralArm, mainController);
+    ClimberArmControls.setupController(climberArm, mainController);
 
     FlywheelControls.setupController(algaeFlywheel, mainController);
 
-    setupSimGUI();
-  }
-
-  public void setupSimGUI() {
-    Mechanism2d mech2d = new Mechanism2d(60, 60);
-    MechanismRoot2d coralRoot = mech2d.getRoot("coral", 0, 0);
-
-    MechanismRoot2d algaeRoot = mech2d.getRoot("algae", 20, 0);
-
-    MechanismLigament2d elevatorLigament2d =
-        coralRoot.append(
-            new MechanismLigament2d("Elevator", 5, 90, 10, new Color8Bit(Color.kLightSlateGray)));
-    elevator.setLigament(elevatorLigament2d);
-
-    SmartDashboard.putData("2D Simulation", mech2d);
+    if (null != RobotConfig.autoChooser) {
+      SmartDashboard.putData("Autonomous", RobotConfig.autoChooser);
+    }
   }
 }
