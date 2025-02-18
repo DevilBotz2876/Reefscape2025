@@ -24,6 +24,9 @@ import frc.robot.io.implementations.elevator.ElevatorIOStub;
 import frc.robot.io.implementations.intake.IntakeIOStub;
 import frc.robot.io.implementations.motor.MotorIOArmStub;
 import frc.robot.io.implementations.motor.MotorIOBase.MotorIOBaseSettings;
+import frc.robot.subsystems.controls.algae.AlgaeControls;
+import frc.robot.subsystems.controls.arm.ClimberArmControls;
+import frc.robot.subsystems.controls.arm.CoralArmControls;
 import frc.robot.subsystems.controls.drive.DriveControls;
 import frc.robot.subsystems.controls.elevator.ElevatorControls;
 import frc.robot.subsystems.controls.vision.VisionControls;
@@ -197,6 +200,10 @@ public class RobotConfig {
 
     ElevatorControls.setupController(elevator, mainController);
 
+    CoralArmControls.setupController(coralArm, mainController);
+    ClimberArmControls.setupController(climberArm, mainController);
+
+    AlgaeControls.setupController(algaeSubsystem, mainController);
     if (null != RobotConfig.autoChooser) {
       SmartDashboard.putData("Autonomous", RobotConfig.autoChooser);
     }
