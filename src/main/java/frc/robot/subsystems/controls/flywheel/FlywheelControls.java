@@ -24,19 +24,24 @@ public class FlywheelControls {
               }
               return 0.0;
             }));
-    
-      SmartDashboard.putData(
-          flywheelSubsystem.getName() + "/Commands/Flywheel at 1200 RPM", new FlywheelVelocity(flywheel, () -> 1200));
-      SmartDashboard.putData(
-          flywheelSubsystem.getName() + "/Commands/Flywheel at 600 RPM", new FlywheelVelocity(flywheel, () -> 600));
-      SmartDashboard.putData(
-          flywheelSubsystem.getName() + "/Commands/Flywheel at 300 RPM", new FlywheelVelocity(flywheel, () -> 300));
-      SmartDashboard.putData(
-          flywheelSubsystem.getName() + "/Commands/Flywheel at -300 RPM", new FlywheelVelocity(flywheel, () -> -300));
-      SmartDashboard.putData(
-          flywheelSubsystem.getName() + "/Commands/Flywheel at -600 RPM", new FlywheelVelocity(flywheel, () -> -600));
-      SmartDashboard.putData(
-          flywheelSubsystem.getName() + "/Commands/Flywheel at -1200 RPM", new FlywheelVelocity(flywheel, () -> -1200));
 
+    SmartDashboard.putData(
+        flywheelSubsystem.getName() + "/Commands/Flywheel at 1200 RPM",
+        new FlywheelVelocity(flywheel, () -> 1200));
+    SmartDashboard.putData(
+        flywheelSubsystem.getName() + "/Commands/Flywheel at 600 RPM",
+        new FlywheelVelocity(flywheel, () -> 600));
+    SmartDashboard.putData(
+        flywheelSubsystem.getName() + "/Commands/Flywheel at 300 RPM",
+        new FlywheelVelocity(flywheel, () -> 300));
+    SmartDashboard.putData(
+        flywheelSubsystem.getName() + "/Commands/Flywheel at -300 RPM",
+        new FlywheelVelocity(flywheel, () -> -300));
+    SmartDashboard.putData(
+        flywheelSubsystem.getName() + "/Commands/Flywheel at -600 RPM",
+        new FlywheelVelocity(flywheel, () -> -600));
+    SmartDashboard.putData(
+        flywheelSubsystem.getName() + "/Commands/Flywheel at -1200 RPM",
+        new FlywheelVelocity(flywheel, () -> -1200));
   }
 }

@@ -111,23 +111,23 @@ public class RobotConfigNemo extends RobotConfig {
 
     // Algae Flywheel
     {
-        MotorIOBaseSettings motorSettings = new MotorIOBaseSettings();
-        motorSettings.motor.gearing = 1; // TODO get the actual gearing
-        motorSettings.motor.inverted = false; // TODO get the actual inversion
-        motorSettings.pid = new PIDController(0, 0, 0);
-  
-        FlywheelSettings flywheelSettings = new FlywheelSettings();
-        flywheelSettings.color = new Color8Bit(Color.kBlack);
-        flywheelSettings.feedforward = new SimpleMotorFeedforward(0, 0);
-        flywheelSettings.moiKgMetersSquared = 0.001;
-        flywheelSettings.motor = DCMotor.getNeo550(1);
-  
-        SparkMaxSettings sparkMaxSettings = new SparkMaxSettings();
-        sparkMaxSettings.canId = 30;
-  
-        algaeFlywheel =
-            new FlywheelMotorSubsystem(
-                new MotorIOSparkMax(motorSettings, sparkMaxSettings), "Algae", flywheelSettings);
+      MotorIOBaseSettings motorSettings = new MotorIOBaseSettings();
+      motorSettings.motor.gearing = 1; // TODO get the actual gearing
+      motorSettings.motor.inverted = false; // TODO get the actual inversion
+      motorSettings.pid = new PIDController(0, 0, 0);
+
+      FlywheelSettings flywheelSettings = new FlywheelSettings();
+      flywheelSettings.color = new Color8Bit(Color.kBlack);
+      flywheelSettings.feedforward = new SimpleMotorFeedforward(0, 0);
+      flywheelSettings.moiKgMetersSquared = 0.001;
+      flywheelSettings.motor = DCMotor.getNeo550(1);
+
+      SparkMaxSettings sparkMaxSettings = new SparkMaxSettings();
+      sparkMaxSettings.canId = 30;
+
+      algaeFlywheel =
+          new FlywheelMotorSubsystem(
+              new MotorIOSparkMax(motorSettings, sparkMaxSettings), "Algae", flywheelSettings);
     }
   }
 }
