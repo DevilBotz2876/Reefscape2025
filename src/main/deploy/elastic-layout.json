@@ -62,104 +62,6 @@
       }
     },
     {
-      "name": "Driver",
-      "grid_layout": {
-        "layouts": [],
-        "containers": [
-          {
-            "title": "Field Oriented",
-            "x": 0.0,
-            "y": 0.0,
-            "width": 256.0,
-            "height": 128.0,
-            "type": "Boolean Box",
-            "properties": {
-              "topic": "/Shuffleboard/Driver/Field Oriented",
-              "period": 0.06,
-              "data_type": "boolean",
-              "true_color": 4283215696,
-              "false_color": 4294198070,
-              "true_icon": "None",
-              "false_icon": "None"
-            }
-          }
-        ]
-      }
-    },
-    {
-      "name": "SysID",
-      "grid_layout": {
-        "layouts": [
-          {
-            "title": "Elevator",
-            "x": 0.0,
-            "y": 0.0,
-            "width": 256.0,
-            "height": 512.0,
-            "type": "List Layout",
-            "properties": {
-              "label_position": "TOP"
-            },
-            "children": [
-              {
-                "title": "Elevator Dynamic Forward",
-                "x": 768.0,
-                "y": 0.0,
-                "width": 256.0,
-                "height": 128.0,
-                "type": "Command",
-                "properties": {
-                  "topic": "/SmartDashboard/Elevator Dynamic Forward",
-                  "period": 0.06,
-                  "show_type": true
-                }
-              },
-              {
-                "title": "Elevator Dynamic Reverse",
-                "x": 768.0,
-                "y": 128.0,
-                "width": 256.0,
-                "height": 128.0,
-                "type": "Command",
-                "properties": {
-                  "topic": "/SmartDashboard/Elevator Dynamic Reverse",
-                  "period": 0.06,
-                  "show_type": true
-                }
-              },
-              {
-                "title": "Elevator Quasistatic Forward",
-                "x": 768.0,
-                "y": 128.0,
-                "width": 256.0,
-                "height": 128.0,
-                "type": "Command",
-                "properties": {
-                  "topic": "/SmartDashboard/Elevator Quasistatic Forward",
-                  "period": 0.06,
-                  "show_type": true
-                }
-              },
-              {
-                "title": "Elevator Quasistatic Reverse",
-                "x": 768.0,
-                "y": 384.0,
-                "width": 256.0,
-                "height": 128.0,
-                "type": "Command",
-                "properties": {
-                  "topic": "/SmartDashboard/Elevator Quasistatic Reverse",
-                  "period": 0.06,
-                  "show_type": true
-                }
-              }
-            ]
-          }
-        ],
-        "containers": []
-      }
-    },
-    {
       "name": "Autonomous",
       "grid_layout": {
         "layouts": [],
@@ -201,7 +103,59 @@
       }
     },
     {
-      "name": "Coral Arm",
+      "name": "Pit",
+      "grid_layout": {
+        "layouts": [
+          {
+            "title": "Auto Calibrate Elevator",
+            "x": 256.0,
+            "y": 0.0,
+            "width": 256.0,
+            "height": 128.0,
+            "type": "List Layout",
+            "properties": {
+              "label_position": "TOP"
+            },
+            "children": [
+              {
+                "title": "running",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 128.0,
+                "height": 128.0,
+                "type": "Boolean Box",
+                "properties": {
+                  "topic": "/SmartDashboard/Elevator[Coral]/Commands/Auto Calibrate Elevator/running",
+                  "period": 0.06,
+                  "data_type": "boolean",
+                  "true_color": 4283215696,
+                  "false_color": 4294198070,
+                  "true_icon": "None",
+                  "false_icon": "None"
+                }
+              }
+            ]
+          }
+        ],
+        "containers": [
+          {
+            "title": "Auto Calibrate Coral Arm",
+            "x": 0.0,
+            "y": 0.0,
+            "width": 256.0,
+            "height": 128.0,
+            "type": "Command",
+            "properties": {
+              "topic": "/SmartDashboard/Arm[Coral]/Commands/Auto Calibrate Coral Arm",
+              "period": 0.06,
+              "show_type": true
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "Arm[Coral]",
       "grid_layout": {
         "layouts": [
           {
@@ -462,14 +416,14 @@
             }
           },
           {
-            "title": "targetMotionProfiledAngleRad",
+            "title": "targetMotionProfiledAngleDegrees",
             "x": 256.0,
             "y": 640.0,
             "width": 256.0,
             "height": 256.0,
             "type": "Radial Gauge",
             "properties": {
-              "topic": "/AdvantageKit/RealOutputs/Arm[Coral]/targetMotionProfiledAngleRad",
+              "topic": "/AdvantageKit/RealOutputs/Arm[Coral]/targetMotionProfiledAngleDegrees",
               "period": 0.06,
               "data_type": "double",
               "start_angle": -140.0,
@@ -498,19 +452,415 @@
       }
     },
     {
-      "name": "Coral Elevator",
+      "name": "Elevator[Coral]",
       "grid_layout": {
-        "layouts": [],
+        "layouts": [
+          {
+            "title": "Elevator Sys ID",
+            "x": 768.0,
+            "y": 0.0,
+            "width": 256.0,
+            "height": 512.0,
+            "type": "List Layout",
+            "properties": {
+              "label_position": "TOP"
+            },
+            "children": [
+              {
+                "title": "Dynamic Forward",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 256.0,
+                "height": 128.0,
+                "type": "Command",
+                "properties": {
+                  "topic": "/SmartDashboard/Elevator[Coral]/Dynamic Forward",
+                  "period": 0.06,
+                  "show_type": false
+                }
+              },
+              {
+                "title": "Dynamic Reverse",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 256.0,
+                "height": 128.0,
+                "type": "Command",
+                "properties": {
+                  "topic": "/SmartDashboard/Elevator[Coral]/Dynamic Reverse",
+                  "period": 0.06,
+                  "show_type": false
+                }
+              },
+              {
+                "title": "Quasistatic Forward",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 256.0,
+                "height": 128.0,
+                "type": "Command",
+                "properties": {
+                  "topic": "/SmartDashboard/Elevator[Coral]/Quasistatic Forward",
+                  "period": 0.06,
+                  "show_type": false
+                }
+              },
+              {
+                "title": "Quasistatic Reverse",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 256.0,
+                "height": 128.0,
+                "type": "Command",
+                "properties": {
+                  "topic": "/SmartDashboard/Elevator[Coral]/Quasistatic Reverse",
+                  "period": 0.06,
+                  "show_type": false
+                }
+              }
+            ]
+          },
+          {
+            "title": "Elevator Height",
+            "x": 512.0,
+            "y": 0.0,
+            "width": 256.0,
+            "height": 640.0,
+            "type": "List Layout",
+            "properties": {
+              "label_position": "TOP"
+            },
+            "children": [
+              {
+                "title": "Elevator To 0\"",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 256.0,
+                "height": 128.0,
+                "type": "Command",
+                "properties": {
+                  "topic": "/SmartDashboard/Elevator[Coral]/Commands/Elevator To 0\"",
+                  "period": 0.06,
+                  "show_type": false
+                }
+              },
+              {
+                "title": "Elevator To 12\"",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 256.0,
+                "height": 128.0,
+                "type": "Command",
+                "properties": {
+                  "topic": "/SmartDashboard/Elevator[Coral]/Commands/Elevator To 12\"",
+                  "period": 0.06,
+                  "show_type": false
+                }
+              },
+              {
+                "title": "Elevator To 24\"",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 256.0,
+                "height": 128.0,
+                "type": "Command",
+                "properties": {
+                  "topic": "/SmartDashboard/Elevator[Coral]/Commands/Elevator To 24\"",
+                  "period": 0.06,
+                  "show_type": false
+                }
+              },
+              {
+                "title": "Elevator To 36\"",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 256.0,
+                "height": 128.0,
+                "type": "Command",
+                "properties": {
+                  "topic": "/SmartDashboard/Elevator[Coral]/Commands/Elevator To 36\"",
+                  "period": 0.06,
+                  "show_type": false
+                }
+              },
+              {
+                "title": "Elevator To 48\"",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 256.0,
+                "height": 128.0,
+                "type": "Command",
+                "properties": {
+                  "topic": "/SmartDashboard/Elevator[Coral]/Commands/Elevator To 48\"",
+                  "period": 0.06,
+                  "show_type": false
+                }
+              }
+            ]
+          }
+        ],
         "containers": [
           {
             "title": "AppliedVolts",
             "x": 0.0,
-            "y": 256.0,
+            "y": 0.0,
             "width": 256.0,
             "height": 256.0,
             "type": "Graph",
             "properties": {
-              "topic": "/AdvantageKit/Elevator/AppliedVolts",
+              "topic": "/AdvantageKit/Elevator[Coral]/AppliedVolts",
+              "period": 0.033,
+              "data_type": "double",
+              "time_displayed": 5.0,
+              "min_value": -12.0,
+              "max_value": 12.0,
+              "color": 4278238420,
+              "line_width": 2.0
+            }
+          },
+          {
+            "title": "CurrentAmps",
+            "x": 0.0,
+            "y": 256.0,
+            "width": 256.0,
+            "height": 256.0,
+            "type": "Radial Gauge",
+            "properties": {
+              "topic": "/AdvantageKit/Elevator[Coral]/CurrentAmps",
+              "period": 0.033,
+              "data_type": "double",
+              "start_angle": -140.0,
+              "end_angle": 140.0,
+              "min_value": 0.0,
+              "max_value": 100.0,
+              "number_of_labels": 8,
+              "wrap_value": false,
+              "show_pointer": true,
+              "show_ticks": true
+            }
+          },
+          {
+            "title": "PositionMeters",
+            "x": 512.0,
+            "y": 640.0,
+            "width": 256.0,
+            "height": 256.0,
+            "type": "Radial Gauge",
+            "properties": {
+              "topic": "/AdvantageKit/Elevator[Coral]/PositionMeters",
+              "period": 0.033,
+              "data_type": "double",
+              "start_angle": -140.0,
+              "end_angle": 140.0,
+              "min_value": 0.0,
+              "max_value": 2.0,
+              "number_of_labels": 8,
+              "wrap_value": false,
+              "show_pointer": true,
+              "show_ticks": true
+            }
+          },
+          {
+            "title": "targetHeightMeters",
+            "x": 0.0,
+            "y": 640.0,
+            "width": 256.0,
+            "height": 256.0,
+            "type": "Radial Gauge",
+            "properties": {
+              "topic": "/AdvantageKit/RealOutputs/Elevator[Coral]/targetHeightMeters",
+              "period": 0.06,
+              "data_type": "double",
+              "start_angle": -140.0,
+              "end_angle": 140.0,
+              "min_value": 0.0,
+              "max_value": 2.0,
+              "number_of_labels": 8,
+              "wrap_value": false,
+              "show_pointer": true,
+              "show_ticks": true
+            }
+          },
+          {
+            "title": "Elevator PID",
+            "x": 256.0,
+            "y": 0.0,
+            "width": 256.0,
+            "height": 384.0,
+            "type": "PIDController",
+            "properties": {
+              "topic": "/SmartDashboard/Elevator[Coral]/PID",
+              "period": 0.06
+            }
+          },
+          {
+            "title": "Auto Calibrate Elevator",
+            "x": 256.0,
+            "y": 384.0,
+            "width": 256.0,
+            "height": 128.0,
+            "type": "Command",
+            "properties": {
+              "topic": "/SmartDashboard/Elevator[Coral]/Commands/Auto Calibrate Elevator",
+              "period": 0.06,
+              "show_type": true
+            }
+          },
+          {
+            "title": "Subsystem",
+            "x": 0.0,
+            "y": 512.0,
+            "width": 512.0,
+            "height": 128.0,
+            "type": "Subsystem",
+            "properties": {
+              "topic": "/SmartDashboard/Elevator[Coral]/Subsystem",
+              "period": 0.06
+            }
+          },
+          {
+            "title": "targetMotionProfiledHeightMeters",
+            "x": 256.0,
+            "y": 640.0,
+            "width": 256.0,
+            "height": 256.0,
+            "type": "Radial Gauge",
+            "properties": {
+              "topic": "/AdvantageKit/RealOutputs/Elevator[Coral]/targetMotionProfiledHeightMeters",
+              "period": 0.06,
+              "data_type": "double",
+              "start_angle": -140.0,
+              "end_angle": 140.0,
+              "min_value": 0.0,
+              "max_value": 2.0,
+              "number_of_labels": 8,
+              "wrap_value": false,
+              "show_pointer": true,
+              "show_ticks": true
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "Arm[Climber]",
+      "grid_layout": {
+        "layouts": [
+          {
+            "title": "Climber Position",
+            "x": 512.0,
+            "y": 0.0,
+            "width": 256.0,
+            "height": 512.0,
+            "type": "List Layout",
+            "properties": {
+              "label_position": "TOP"
+            },
+            "children": [
+              {
+                "title": "Climber To Start",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 256.0,
+                "height": 128.0,
+                "type": "Command",
+                "properties": {
+                  "topic": "/SmartDashboard/Arm[Climber]/Commands/Climber To Start",
+                  "period": 0.06,
+                  "show_type": true
+                }
+              },
+              {
+                "title": "Climber To End",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 256.0,
+                "height": 128.0,
+                "type": "Command",
+                "properties": {
+                  "topic": "/SmartDashboard/Arm[Climber]/Commands/Climber To End",
+                  "period": 0.06,
+                  "show_type": true
+                }
+              }
+            ]
+          },
+          {
+            "title": "Climber Sys ID",
+            "x": 768.0,
+            "y": 0.0,
+            "width": 256.0,
+            "height": 512.0,
+            "type": "List Layout",
+            "properties": {
+              "label_position": "TOP"
+            },
+            "children": [
+              {
+                "title": "Dynamic Forward",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 256.0,
+                "height": 128.0,
+                "type": "Command",
+                "properties": {
+                  "topic": "/SmartDashboard/Arm[Climber]/Dynamic Forward",
+                  "period": 0.06,
+                  "show_type": true
+                }
+              },
+              {
+                "title": "Dynamic Reverse",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 256.0,
+                "height": 128.0,
+                "type": "Command",
+                "properties": {
+                  "topic": "/SmartDashboard/Arm[Climber]/Dynamic Reverse",
+                  "period": 0.06,
+                  "show_type": true
+                }
+              },
+              {
+                "title": "Quasistatic Forward",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 256.0,
+                "height": 128.0,
+                "type": "Command",
+                "properties": {
+                  "topic": "/SmartDashboard/Arm[Climber]/Quasistatic Forward",
+                  "period": 0.06,
+                  "show_type": true
+                }
+              },
+              {
+                "title": "Quasistatic Reverse",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 256.0,
+                "height": 128.0,
+                "type": "Command",
+                "properties": {
+                  "topic": "/SmartDashboard/Arm[Climber]/Quasistatic Reverse",
+                  "period": 0.06,
+                  "show_type": true
+                }
+              }
+            ]
+          }
+        ],
+        "containers": [
+          {
+            "title": "AppliedVolts",
+            "x": 0.0,
+            "y": 0.0,
+            "width": 256.0,
+            "height": 256.0,
+            "type": "Graph",
+            "properties": {
+              "topic": "/AdvantageKit/Arm[Climber]/AppliedVolts",
               "period": 0.033,
               "data_type": "double",
               "time_displayed": 5.0,
@@ -521,12 +871,12 @@
           {
             "title": "CurrentAmps",
             "x": 0.0,
-            "y": 0.0,
+            "y": 256.0,
             "width": 256.0,
             "height": 256.0,
             "type": "Graph",
             "properties": {
-              "topic": "/AdvantageKit/Elevator/CurrentAmps",
+              "topic": "/AdvantageKit/Arm[Climber]/CurrentAmps",
               "period": 0.033,
               "data_type": "double",
               "time_displayed": 5.0,
@@ -535,71 +885,101 @@
             }
           },
           {
-            "title": "PositionMeters",
-            "x": 0.0,
-            "y": 512.0,
-            "width": 256.0,
-            "height": 256.0,
-            "type": "Number Bar",
-            "properties": {
-              "topic": "/AdvantageKit/Elevator/PositionMeters",
-              "period": 0.06,
-              "data_type": "double",
-              "min_value": -1.0,
-              "max_value": 1.0,
-              "divisions": 5,
-              "inverted": false,
-              "orientation": "horizontal"
-            }
-          }
-        ]
-      }
-    },
-    {
-      "name": "Pit",
-      "grid_layout": {
-        "layouts": [
-          {
-            "title": "Auto Calibrate Elevator",
+            "title": "Climber PID",
             "x": 256.0,
             "y": 0.0,
             "width": 256.0,
-            "height": 128.0,
-            "type": "List Layout",
+            "height": 384.0,
+            "type": "PIDController",
             "properties": {
-              "label_position": "TOP"
-            },
-            "children": [
-              {
-                "title": "running",
-                "x": 0.0,
-                "y": 0.0,
-                "width": 128.0,
-                "height": 128.0,
-                "type": "Boolean Box",
-                "properties": {
-                  "topic": "/SmartDashboard/Elevator[Coral]/Commands/Auto Calibrate Elevator/running",
-                  "period": 0.06,
-                  "data_type": "boolean",
-                  "true_color": 4283215696,
-                  "false_color": 4294198070,
-                  "true_icon": "None",
-                  "false_icon": "None"
-                }
-              }
-            ]
-          }
-        ],
-        "containers": [
+              "topic": "/SmartDashboard/Arm[Climber]/PID",
+              "period": 0.06
+            }
+          },
           {
-            "title": "Auto Calibrate Coral Arm",
+            "title": "PositionDegrees",
+            "x": 512.0,
+            "y": 640.0,
+            "width": 256.0,
+            "height": 256.0,
+            "type": "Radial Gauge",
+            "properties": {
+              "topic": "/AdvantageKit/Arm[Climber]/PositionDegrees",
+              "period": 0.06,
+              "data_type": "double",
+              "start_angle": -140.0,
+              "end_angle": 140.0,
+              "min_value": 0.0,
+              "max_value": 100.0,
+              "number_of_labels": 8,
+              "wrap_value": false,
+              "show_pointer": true,
+              "show_ticks": true
+            }
+          },
+          {
+            "title": "targetAngleDegrees",
             "x": 0.0,
-            "y": 0.0,
+            "y": 640.0,
+            "width": 256.0,
+            "height": 256.0,
+            "type": "Radial Gauge",
+            "properties": {
+              "topic": "/AdvantageKit/RealOutputs/Arm[Climber]/targetAngleDegrees",
+              "period": 0.06,
+              "data_type": "double",
+              "start_angle": -140.0,
+              "end_angle": 140.0,
+              "min_value": 0.0,
+              "max_value": 100.0,
+              "number_of_labels": 8,
+              "wrap_value": false,
+              "show_pointer": true,
+              "show_ticks": true
+            }
+          },
+          {
+            "title": "targetMotionProfiledAngleDegrees",
+            "x": 256.0,
+            "y": 640.0,
+            "width": 256.0,
+            "height": 256.0,
+            "type": "Radial Gauge",
+            "properties": {
+              "topic": "/AdvantageKit/RealOutputs/Arm[Climber]/targetMotionProfiledAngleDegrees",
+              "period": 0.06,
+              "data_type": "double",
+              "start_angle": -140.0,
+              "end_angle": 140.0,
+              "min_value": 0.0,
+              "max_value": 100.0,
+              "number_of_labels": 8,
+              "wrap_value": false,
+              "show_pointer": true,
+              "show_ticks": true
+            }
+          },
+          {
+            "title": "Subsystem",
+            "x": 0.0,
+            "y": 512.0,
+            "width": 512.0,
+            "height": 128.0,
+            "type": "Subsystem",
+            "properties": {
+              "topic": "/SmartDashboard/Arm[Climber]/Subsystem",
+              "period": 0.06
+            }
+          },
+          {
+            "title": "Climber Auto Calibrate ",
+            "x": 256.0,
+            "y": 384.0,
             "width": 256.0,
             "height": 128.0,
             "type": "Command",
             "properties": {
-              "topic": "/SmartDashboard/Arm[Coral]/Commands/Auto Calibrate Coral Arm",
+              "topic": "/SmartDashboard/Arm[Climber]/Commands/Climber Auto Calibrate ",
               "period": 0.06,
               "show_type": true
             }

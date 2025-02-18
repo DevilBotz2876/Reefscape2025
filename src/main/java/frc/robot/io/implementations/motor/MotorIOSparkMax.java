@@ -11,6 +11,7 @@ import com.revrobotics.spark.SparkMax;
 import com.revrobotics.spark.config.SparkBaseConfig;
 import com.revrobotics.spark.config.SparkMaxConfig;
 import edu.wpi.first.math.util.Units;
+import edu.wpi.first.wpilibj.DigitalInput;
 
 /** A "SparkMax" controller implementation of a MotorIO */
 public class MotorIOSparkMax extends MotorIOBase {
@@ -25,6 +26,9 @@ public class MotorIOSparkMax extends MotorIOBase {
   private final RelativeEncoder encoder;
   private final SparkClosedLoopController pid;
   SparkMaxConfig motorConfig = new SparkMaxConfig();
+
+  DigitalInput reverseLimit = null;
+  DigitalInput forwardLimit = null;
 
   public MotorIOSparkMax(MotorIOBaseSettings motorSettings, SparkMaxSettings sparkMaxSettings) {
     super(motorSettings);
@@ -49,6 +53,13 @@ public class MotorIOSparkMax extends MotorIOBase {
         SparkBase.PersistMode.kPersistParameters);
     encoder = motor.getEncoder();
     pid = motor.getClosedLoopController();
+
+    if (motorSettings.reverseLimitChannel > -1) {
+      reverseLimit = new DigitalInput(motorSettings.reverseLimitChannel);
+    }
+    if (motorSettings.forwardLimitChannel > -1) {
+      forwardLimit = new DigitalInput(motorSettings.forwardLimitChannel);
+    }
   }
 
   @Override
@@ -63,7 +74,8 @@ public class MotorIOSparkMax extends MotorIOBase {
 
     inputs.velocityMetersPerSec = inputs.velocityRadPerSec * motorSettings.motor.drumRadiusMeters;
     inputs.positionMeters = inputs.positionRad * motorSettings.motor.drumRadiusMeters;
-
+    inputs.forwardLimit = getForwardLimit();
+    inputs.reverseLimit = getReverseLimit();
     super.updateInputs(inputs);
   }
 
@@ -101,5 +113,31 @@ public class MotorIOSparkMax extends MotorIOBase {
   @Override
   public void resetEncoder(double positionRad) {
     encoder.setPosition(Units.radiansToRotations(positionRad));
+  }
+
+  private boolean getForwardLimit() {
+    if (forwardLimit == null) {
+      return false;
+    }
+    // TODO: check if fwd limit switch is configured/plugged directly into spark max
+    // motor.getForwardLimitSwitch()
+    boolean limit = forwardLimit.get();
+    if (motorSettings.forwardLimitNegate) {
+      return !limit;
+    }
+    return limit;
+  }
+
+  private boolean getReverseLimit() {
+    if (reverseLimit == null) {
+      return false;
+    }
+    // TODO: check if reverse limit switch is configured/plugged directly into spark max
+    // motor.getReverseLimitSwitch()
+    boolean limit = reverseLimit.get();
+    if (motorSettings.reverseLimitNegate) {
+      return !limit;
+    }
+    return limit;
   }
 }

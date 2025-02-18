@@ -6,6 +6,8 @@ import edu.wpi.first.math.system.plant.DCMotor;
 import edu.wpi.first.wpilibj.util.Color;
 import edu.wpi.first.wpilibj.util.Color8Bit;
 import frc.robot.io.implementations.motor.MotorIOBase.MotorIOBaseSettings;
+import frc.robot.io.implementations.motor.MotorIOSparkMax;
+import frc.robot.io.implementations.motor.MotorIOSparkMax.SparkMaxSettings;
 import frc.robot.io.implementations.motor.MotorIOTalonFx;
 import frc.robot.io.implementations.motor.MotorIOTalonFx.TalonFxSettings;
 import frc.robot.subsystems.implementations.drive.DriveBase;
@@ -17,7 +19,7 @@ import frc.robot.subsystems.interfaces.Drive;
 /* Override Nemo specific constants here */
 public class RobotConfigNemo extends RobotConfig {
   public RobotConfigNemo() {
-    super(false, true, true, true, false, true);
+    super(false, true, true, true, false, true, false);
 
     // Nemo has a Swerve drive train
     Drive.Constants.rotatePidKp = 0.025;
@@ -54,6 +56,35 @@ public class RobotConfigNemo extends RobotConfig {
           new ArmMotorSubsystem(
               // new MotorIOArmStub(motorSettings, armSettings), "Coral", armSettings);
               new MotorIOTalonFx(motorSettings, talonFxSettings), "Coral", armSettings);
+    }
+    // climber
+    {
+      MotorIOBaseSettings motorSettings = new MotorIOBaseSettings();
+      // 25:1 gear box ratio
+      motorSettings.motor.gearing = 25;
+      motorSettings.motor.inverted = false; // false for Sim
+      motorSettings.pid = new PIDController(0.0, 0, 0);
+      motorSettings.reverseLimitChannel = 1;
+      motorSettings.reverseLimitNegate = true;
+
+      ArmSettings armSettings = new ArmSettings();
+      armSettings.minAngleInDegrees = 0;
+      armSettings.maxAngleInDegrees = 135;
+      armSettings.startingAngleInDegrees = armSettings.minAngleInDegrees;
+      armSettings.feedforward = new ArmFeedforward(0.0, 0.0, 0.0, 0.0);
+      armSettings.color = new Color8Bit(Color.kRed);
+      armSettings.armLengthInMeters = 0.5;
+      armSettings.armMassInKg = 1.0;
+      armSettings.motor = DCMotor.getNEO(1);
+      armSettings.simulateGravity = true;
+
+      SparkMaxSettings settings = new SparkMaxSettings();
+      settings.canId = 50;
+
+      climberArm =
+          new ArmMotorSubsystem(
+              // new MotorIOArmStub(motorSettings, armSettings), "Coral", armSettings);
+              new MotorIOSparkMax(motorSettings, settings), "Climber", armSettings);
     }
   }
 }

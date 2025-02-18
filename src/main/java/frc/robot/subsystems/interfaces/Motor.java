@@ -21,4 +21,18 @@ public interface Motor {
    * @param positonRad the current position in radians
    */
   public void resetEncoder(double positionRad);
+
+  /**
+   * Returns status of the forward limit switch
+   *
+   * @return returns true if limit switch is triggered, otherwise false.
+   */
+  public boolean getForwardLimit();
+
+  /**
+   * Returns status of the reverse limit switch
+   *
+   * @return returns true if limit switch is triggered, otherwise false.
+   */
+  public boolean getReverseLimit();
 }

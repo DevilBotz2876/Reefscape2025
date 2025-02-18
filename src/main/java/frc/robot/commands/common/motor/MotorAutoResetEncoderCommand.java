@@ -45,7 +45,14 @@ public class MotorAutoResetEncoderCommand extends Command {
     if (settings.currentReverseDuration <= 0) {
       motor.runVoltage(settings.voltage);
 
-      /* TODO: Add code to use limit switch if one exists */
+      if (settings.voltage > 0.0 && motor.getForwardLimit()) {
+        motor.runVoltage(0);
+        done = true;
+      }
+      if (settings.voltage < 0.0 && motor.getReverseLimit()) {
+        motor.runVoltage(0);
+        done = true;
+      }
 
       if (motor.getCurrent() > settings.minResetCurrent) {
         motor.runVoltage(0);
