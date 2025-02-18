@@ -2,7 +2,7 @@ package frc.robot.io.implementations.motor;
 
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.simulation.SingleJointedArmSim;
-import frc.robot.subsystems.interfaces.ArmV2.ArmSettings;
+import frc.robot.subsystems.interfaces.Arm.ArmSettings;
 
 /**
  * A "Stub" implementation of a MotorIO that can be used for initial software bring-up/testing in
@@ -53,9 +53,9 @@ public class MotorIOArmStub extends MotorIOBase {
     }
 
     if (Units.radiansToDegrees(armSim.getAngleRads()) >= armSettings.maxAngleInDegrees - 1) {
-      inputs.forwardLimit = false;
-    } else {
       inputs.forwardLimit = true;
+    } else {
+      inputs.forwardLimit = false;
     }
 
     super.updateInputs(inputs);

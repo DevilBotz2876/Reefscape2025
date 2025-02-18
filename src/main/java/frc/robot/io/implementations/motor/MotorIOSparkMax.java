@@ -1,10 +1,7 @@
 package frc.robot.io.implementations.motor;
 
-import com.revrobotics.REVLibError;
 import com.revrobotics.RelativeEncoder;
-import com.revrobotics.spark.ClosedLoopSlot;
 import com.revrobotics.spark.SparkBase;
-import com.revrobotics.spark.SparkBase.ControlType;
 import com.revrobotics.spark.SparkClosedLoopController;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
 import com.revrobotics.spark.SparkMax;
@@ -71,11 +68,9 @@ public class MotorIOSparkMax extends MotorIOBase {
             encoder.getVelocity() / motorSettings.motor.gearing);
     inputs.positionRad =
         Units.rotationsToRadians(encoder.getPosition() / motorSettings.motor.gearing);
-
-    inputs.velocityMetersPerSec = inputs.velocityRadPerSec * motorSettings.motor.drumRadiusMeters;
-    inputs.positionMeters = inputs.positionRad * motorSettings.motor.drumRadiusMeters;
     inputs.forwardLimit = getForwardLimit();
     inputs.reverseLimit = getReverseLimit();
+
     super.updateInputs(inputs);
   }
 
@@ -85,6 +80,7 @@ public class MotorIOSparkMax extends MotorIOBase {
     motor.setVoltage(calculateSafeVoltage(volts));
   }
 
+  /*
   @Override
   public boolean setVelocity(double velocityRadPerSec, double ffVolts) {
     REVLibError result;
@@ -109,10 +105,11 @@ public class MotorIOSparkMax extends MotorIOBase {
             ffVolts);
     return result == REVLibError.kOk;
   }
+    */
 
   @Override
-  public void resetEncoder(double positionRad) {
-    encoder.setPosition(Units.radiansToRotations(positionRad));
+  public void resetEncoder(double position) {
+    encoder.setPosition(Units.radiansToRotations(normalizePositionToRad(position)));
   }
 
   private boolean getForwardLimit() {

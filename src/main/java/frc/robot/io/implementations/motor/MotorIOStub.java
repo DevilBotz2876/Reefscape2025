@@ -64,9 +64,9 @@ public class MotorIOStub extends MotorIOBase {
     }
 
     if (motorSim.getAngularPositionRad() >= simSettings.forwardLimitPositionRads) {
-      inputs.forwardLimit = false;
-    } else {
       inputs.forwardLimit = true;
+    } else {
+      inputs.forwardLimit = false;
     }
 
     super.updateInputs(inputs);
