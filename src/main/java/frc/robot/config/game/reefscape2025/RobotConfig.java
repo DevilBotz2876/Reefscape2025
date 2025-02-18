@@ -19,24 +19,19 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.Robot;
-import frc.robot.io.implementations.arm.ArmIOStub;
 import frc.robot.io.implementations.elevator.ElevatorIOStub;
-import frc.robot.io.implementations.intake.IntakeIOStub;
 import frc.robot.io.implementations.motor.MotorIOArmStub;
 import frc.robot.io.implementations.motor.MotorIOBase.MotorIOBaseSettings;
-import frc.robot.subsystems.controls.algae.AlgaeControls;
 import frc.robot.subsystems.controls.arm.ClimberArmControls;
 import frc.robot.subsystems.controls.arm.CoralArmControls;
 import frc.robot.subsystems.controls.drive.DriveControls;
 import frc.robot.subsystems.controls.elevator.ElevatorControls;
 import frc.robot.subsystems.controls.vision.VisionControls;
-import frc.robot.subsystems.implementations.algae.AlgaeSubsystem;
 import frc.robot.subsystems.implementations.drive.DriveBase;
 import frc.robot.subsystems.implementations.elevator.ElevatorSubsystem;
 import frc.robot.subsystems.implementations.motor.ArmMotorSubsystem;
 import frc.robot.subsystems.implementations.vision.VisionSubsystem;
-import frc.robot.subsystems.interfaces.Algae;
-import frc.robot.subsystems.interfaces.ArmV2.ArmSettings;
+import frc.robot.subsystems.interfaces.Arm.ArmSettings;
 import frc.robot.subsystems.interfaces.Vision.Camera;
 
 /* Put all constants here with reasonable defaults */
@@ -47,7 +42,6 @@ public class RobotConfig {
   public static ElevatorSubsystem elevator;
   public static ArmMotorSubsystem coralArm;
   public static ArmMotorSubsystem climberArm;
-  public static AlgaeSubsystem algaeSubsystem;
 
   // Controls
   public CommandXboxController mainController = new CommandXboxController(0);
@@ -153,32 +147,31 @@ public class RobotConfig {
               new MotorIOArmStub(motorSettings, armSettings), "Coral", armSettings);
     }
 
-    if (stubAlgaeSubsystem) {
-      algaeSubsystem =
-          new AlgaeSubsystem(
-              new IntakeIOStub(),
-              new ArmIOStub(
-                  Algae.Constants.maxArmAngleDegrees, Algae.Constants.minArmAngleDegrees));
-    }
+    if (stubAlgaeSubsystem) {}
 
     if (stubClimberArm) {
       MotorIOBaseSettings motorSettings = new MotorIOBaseSettings();
       motorSettings.motor.gearing = 50;
       motorSettings.motor.inverted = false;
-      motorSettings.pid = new PIDController(1, 0, 0);
+      motorSettings.pid = new PIDController(0, 0, 0);
       motorSettings.reverseLimitChannel = 1;
       motorSettings.reverseLimitNegate = true;
 
       ArmSettings armSettings = new ArmSettings();
       armSettings.minAngleInDegrees = 0;
       armSettings.maxAngleInDegrees = 135;
-      armSettings.startingAngleInDegrees = armSettings.minAngleInDegrees;
+      armSettings.startingAngleInDegrees = 90;
       armSettings.color = new Color8Bit(Color.kRed);
-      armSettings.feedforward = new ArmFeedforward(0.0021633, 0.060731, 0.9481, 0);
+      armSettings.feedforward = new ArmFeedforward(0, 0, 0, 0);
       armSettings.armLengthInMeters = 0.5;
       armSettings.armMassInKg = 0.75;
       armSettings.motor = DCMotor.getNEO(1);
       armSettings.simulateGravity = true;
+
+      ClimberArmControls.Constants.autoZeroSettings.voltage = -1.0;
+      ClimberArmControls.Constants.autoZeroSettings.minResetCurrent = 40.0;
+      ClimberArmControls.Constants.autoZeroSettings.resetPositionRad =
+          Units.degreesToRadians(armSettings.minAngleInDegrees);
 
       climberArm =
           new ArmMotorSubsystem(
@@ -198,12 +191,12 @@ public class RobotConfig {
 
     VisionControls.addGUI(vision, driverTab);
 
+    CoralArmControls.setupController(coralArm, mainController);
     ElevatorControls.setupController(elevator, mainController);
 
     CoralArmControls.setupController(coralArm, mainController);
     ClimberArmControls.setupController(climberArm, mainController);
 
-    AlgaeControls.setupController(algaeSubsystem, mainController);
     if (null != RobotConfig.autoChooser) {
       SmartDashboard.putData("Autonomous", RobotConfig.autoChooser);
     }

@@ -24,7 +24,7 @@ public abstract class MotorIOBase implements MotorIO {
     public boolean reverseLimitNegate = false;
   }
 
-  private final MotorIOBaseSettings settings;
+  protected final MotorIOBaseSettings settings;
   private double targetPositionRad = 0;
   private double targetVelocityRadPerSec = 0;
   private double ffVolts = 0;
@@ -41,6 +41,8 @@ public abstract class MotorIOBase implements MotorIO {
     inputs.velocityDegreesPerSec = Units.radiansToDegrees(inputs.velocityRadPerSec);
     inputs.velocityRPMs = Units.radiansPerSecondToRotationsPerMinute(inputs.velocityRadPerSec);
     inputs.positionDegrees = Units.radiansToDegrees(inputs.positionRad);
+    inputs.velocityMetersPerSec = normalizePositionToMeters(inputs.velocityRadPerSec);
+    inputs.positionMeters = normalizePositionToMeters(inputs.positionRad);
 
     /* Software PID Implementation */
     if (softwarePidEnabled) {
@@ -93,6 +95,20 @@ public abstract class MotorIOBase implements MotorIO {
   }
 
   @Override
+  public final double normalizePositionToRad(double position) {
+    if (0 != settings.motor.drumRadiusMeters) {
+      position /= settings.motor.drumRadiusMeters;
+    }
+
+    return position;
+  }
+
+  @Override
+  public final double normalizePositionToMeters(double positionRad) {
+    return positionRad * settings.motor.drumRadiusMeters;
+  }
+
+  @Override
   public boolean setPosition(double positionRad, double ffVolts) {
     if (settings.pid != null) {
       this.targetPositionRad = positionRad;
@@ -111,13 +127,8 @@ public abstract class MotorIOBase implements MotorIO {
   }
 
   @Override
-  public void resetEncoder(double positionRad) {
-    System.out.println(
-        "TODO: reset encoder to: "
-            + positionRad
-            + " radians ("
-            + Units.radiansToDegrees(positionRad)
-            + " degrees)");
+  public void resetEncoder(double position) {
+    System.out.println("TODO: reset encoder to: " + normalizePositionToRad(position));
   }
 
   public void disablePid() {

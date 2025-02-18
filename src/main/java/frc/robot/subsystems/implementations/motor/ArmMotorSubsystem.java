@@ -9,10 +9,10 @@ import edu.wpi.first.wpilibj.smartdashboard.MechanismLigament2d;
 import edu.wpi.first.wpilibj.smartdashboard.MechanismRoot2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.io.interfaces.MotorIO;
-import frc.robot.subsystems.interfaces.ArmV2;
+import frc.robot.subsystems.interfaces.Arm;
 import org.littletonrobotics.junction.Logger;
 
-public class ArmMotorSubsystem extends MotorSubsystem implements ArmV2 {
+public class ArmMotorSubsystem extends MotorSubsystem implements Arm {
   private final ArmSettings settings;
   private double targetAngleDegrees = 0;
   private double targetAngleRad = 0;

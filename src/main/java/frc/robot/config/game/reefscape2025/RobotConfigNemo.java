@@ -3,6 +3,7 @@ package frc.robot.config.game.reefscape2025;
 import edu.wpi.first.math.controller.ArmFeedforward;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.system.plant.DCMotor;
+import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.util.Color;
 import edu.wpi.first.wpilibj.util.Color8Bit;
 import frc.robot.io.implementations.motor.MotorIOBase.MotorIOBaseSettings;
@@ -10,10 +11,12 @@ import frc.robot.io.implementations.motor.MotorIOSparkMax;
 import frc.robot.io.implementations.motor.MotorIOSparkMax.SparkMaxSettings;
 import frc.robot.io.implementations.motor.MotorIOTalonFx;
 import frc.robot.io.implementations.motor.MotorIOTalonFx.TalonFxSettings;
+import frc.robot.subsystems.controls.arm.ClimberArmControls;
+import frc.robot.subsystems.controls.arm.CoralArmControls;
 import frc.robot.subsystems.implementations.drive.DriveBase;
 import frc.robot.subsystems.implementations.drive.DriveSwerveYAGSL;
 import frc.robot.subsystems.implementations.motor.ArmMotorSubsystem;
-import frc.robot.subsystems.interfaces.ArmV2.ArmSettings;
+import frc.robot.subsystems.interfaces.Arm.ArmSettings;
 import frc.robot.subsystems.interfaces.Drive;
 
 /* Override Nemo specific constants here */
@@ -52,6 +55,14 @@ public class RobotConfigNemo extends RobotConfig {
       TalonFxSettings talonFxSettings = new TalonFxSettings();
       talonFxSettings.canId = 21;
 
+      CoralArmControls.Constants.autoZeroSettings.voltage = -0.5;
+      CoralArmControls.Constants.autoZeroSettings.minResetCurrent = 0.5;
+      CoralArmControls.Constants.autoZeroSettings.resetPositionRad =
+          Units.degreesToRadians(
+              armSettings.minAngleInDegrees - 10); // We have an offest about 15 degrees
+      CoralArmControls.Constants.autoZeroSettings.initialReverseDuration =
+          1.0; // Set the seconds of reverse before zero. Set to zero if there shound be no reverse
+
       coralArm =
           new ArmMotorSubsystem(
               // new MotorIOArmStub(motorSettings, armSettings), "Coral", armSettings);
@@ -80,6 +91,13 @@ public class RobotConfigNemo extends RobotConfig {
 
       SparkMaxSettings settings = new SparkMaxSettings();
       settings.canId = 50;
+
+      ClimberArmControls.Constants.autoZeroSettings.voltage = -1;
+      // Set this to something big, we are never going to use stall current to detect if climber has
+      // reached it's end of range of motion.
+      ClimberArmControls.Constants.autoZeroSettings.minResetCurrent = 10.0;
+      ClimberArmControls.Constants.autoZeroSettings.resetPositionRad =
+          Units.degreesToRadians(armSettings.minAngleInDegrees);
 
       climberArm =
           new ArmMotorSubsystem(

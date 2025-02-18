@@ -22,7 +22,7 @@ import frc.robot.subsystems.implementations.drive.DriveSwerveYAGSL;
 import frc.robot.subsystems.implementations.motor.ArmMotorSubsystem;
 import frc.robot.subsystems.implementations.motor.ElevatorMotorSubsystem;
 import frc.robot.subsystems.implementations.motor.FlywheelMotorSubsystem;
-import frc.robot.subsystems.interfaces.ArmV2.ArmSettings;
+import frc.robot.subsystems.interfaces.Arm.ArmSettings;
 import frc.robot.subsystems.interfaces.ElevatorV2.ElevatorSettings;
 import frc.robot.subsystems.interfaces.Flywheel.FlywheelSettings;
 
