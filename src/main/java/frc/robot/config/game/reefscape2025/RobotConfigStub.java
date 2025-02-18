@@ -33,7 +33,7 @@ public class RobotConfigStub extends RobotConfig {
   private final FlywheelMotorSubsystem algaeIntake;
 
   public RobotConfigStub() {
-    super(false, false, false);
+    super(false, true, false);
 
     drive = new DriveSwerveYAGSL("yagsl/stub");
     if (Robot.isSimulation()) {
@@ -108,7 +108,7 @@ public class RobotConfigStub extends RobotConfig {
   @Override
   public void configureBindings() {
     // Configure the default bindings of the parent class
-    // super.configureBindings();
+    super.configureBindings();
 
     AlgaeArmControls.setupController(algaeArm, mainController);
     ElevatorControlsV2.setupController(elevator, mainController);

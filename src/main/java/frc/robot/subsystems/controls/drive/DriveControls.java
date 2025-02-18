@@ -1,13 +1,10 @@
 package frc.robot.subsystems.controls.drive;
 
 import edu.wpi.first.math.MathUtil;
-import edu.wpi.first.wpilibj.shuffleboard.BuiltInWidgets;
-import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.commands.common.drive.DriveCommand;
-import frc.robot.config.game.reefscape2025.RobotConfig;
 import frc.robot.subsystems.interfaces.Drive;
 
 public class DriveControls {
@@ -36,22 +33,5 @@ public class DriveControls {
                     drive.setFieldOrientedDrive(true);
                   }
                 })); // Toggle Drive Orientation
-  }
-
-  public static void addGUI(Drive drive, ShuffleboardTab tab) {
-    //    int colIndex = 0;
-    //    int rowIndex = 0;
-
-    /* Autonomous Chooser */
-    tab.add("Autononmous", RobotConfig.autoChooser)
-        .withWidget(BuiltInWidgets.kComboBoxChooser)
-        //        .withPosition(colIndex, rowIndex++)
-        .withSize(2, 1);
-
-    /* Field Oriented Drive Indicator */
-    tab.addBoolean("Field Oriented", () -> drive.isFieldOrientedDrive())
-        .withWidget(BuiltInWidgets.kBooleanBox)
-        //      .withPosition(colIndex, rowIndex++)
-        .withSize(2, 1);
   }
 }
