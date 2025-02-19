@@ -88,7 +88,7 @@ public class RobotConfigNemo extends RobotConfig {
                   / 2); // 3/4" inner diameter to 1 3/4" outer. Average diameter calculated For now,
       // use the diameter so that
       // we don't reach the limits
-      motorSettings.pid = new PIDController(0, 0, 0); // TODO: Tune PID controller
+      motorSettings.pid = new PIDController(1.0, 0, 0); // TODO: Tune PID controller
 
       ElevatorSettings elevatorSettings = new ElevatorSettings();
       elevatorSettings.minHeightInMeters = 0.0;
@@ -97,14 +97,14 @@ public class RobotConfigNemo extends RobotConfig {
       elevatorSettings.startingHeightInMeters = elevatorSettings.minHeightInMeters;
       elevatorSettings.color = new Color8Bit(Color.kSilver);
       elevatorSettings.feedforward =
-          new ElevatorFeedforward(0, 0.46, 0, 0); // TODO: Tune feedforward
+          new ElevatorFeedforward(0, 0.13, 0.1, 0); // TODO: Tune feedforward
       elevatorSettings.carriageMassKg = 5.0;
       elevatorSettings.motor = DCMotor.getKrakenX60(1);
       elevatorSettings.simulateGravity = true;
 
       SparkMaxSettings sparkMaxSettings = new SparkMaxSettings();
       sparkMaxSettings.canId = 20;
-
+      elevatorSettings.maxVelocityInMetersPerSecond = 0.3;
       ElevatorControls.Constants.autoZeroSettings.voltage = 1.0;
       ElevatorControls.Constants.autoZeroSettings.minResetCurrent = 30;
       ElevatorControls.Constants.autoZeroSettings.resetPositionRad =

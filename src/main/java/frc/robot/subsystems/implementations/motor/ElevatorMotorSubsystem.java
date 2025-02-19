@@ -99,9 +99,7 @@ public class ElevatorMotorSubsystem extends MotorSubsystem implements Elevator {
     targetState = new State(this.targetHeightRad, 0);
     nextState =
         motionProfile.calculate(
-            0.02,
-            new State(inputs.positionRad, io.normalizePositionToRad(inputs.velocityMetersPerSec)),
-            targetState);
+            0.02, new State(inputs.positionRad, inputs.velocityRadPerSec), targetState);
     motionProfileEnabled = true;
   }
 
