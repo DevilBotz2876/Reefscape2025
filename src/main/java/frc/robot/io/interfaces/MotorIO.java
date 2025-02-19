@@ -102,7 +102,7 @@ public interface MotorIO {
    *     the motor
    * @return true if the motor is capable of automatically moving and staying at a specific position
    */
-  public boolean setPosition(double position, double ffVolts);
+  public boolean setPosition(double positionRad, double ffVolts);
 
   /**
    * Returns the current PID Controller object for this motor
@@ -112,12 +112,11 @@ public interface MotorIO {
   public PIDController getPid();
 
   /**
-   * Resets the relative encoder to the specified position If drumRadiusMeters = 0, position is in
-   * radians. Otherwise, position is in meters.
+   * Resets the relative encoder to the specified position
    *
-   * @position the current position in radians or meters depending on drumRadiusMeters
+   * @position the current position in radians
    */
-  public void resetEncoder(double position);
+  public void resetEncoder(double positionRad);
 
   /** Disables the software PID loop */
   public void disablePid();

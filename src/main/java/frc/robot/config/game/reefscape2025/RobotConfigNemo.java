@@ -89,7 +89,8 @@ public class RobotConfigNemo extends RobotConfig {
       elevatorSettings.maxHeightInMeters = Units.inchesToMeters(21 + 31); // 2-stage 21" and 31"
       elevatorSettings.startingHeightInMeters = elevatorSettings.minHeightInMeters;
       elevatorSettings.color = new Color8Bit(Color.kSilver);
-      elevatorSettings.feedforward = new ElevatorFeedforward(0, 2.50, 0, 0); // TODO: Tune feedforward
+      elevatorSettings.feedforward =
+          new ElevatorFeedforward(0, 2.50, 0, 0); // TODO: Tune feedforward
       elevatorSettings.carriageMassKg = 5.0;
       elevatorSettings.motor = DCMotor.getKrakenX60(1);
       elevatorSettings.simulateGravity = true;

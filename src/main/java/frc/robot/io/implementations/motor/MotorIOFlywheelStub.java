@@ -50,7 +50,7 @@ public class MotorIOFlywheelStub extends MotorIOBase {
   }
 
   @Override
-  public void resetEncoder(double position) {
+  public void resetEncoder(double positionRad) {
     System.out.println("Resetting encoder for a flywheel is not supported!");
   }
 }
