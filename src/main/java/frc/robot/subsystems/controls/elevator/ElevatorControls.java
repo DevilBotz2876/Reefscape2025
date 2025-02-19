@@ -31,9 +31,9 @@ public class ElevatorControls {
             //            elevator,
             () -> {
               if (controller.pov(0).getAsBoolean()) {
-                return 1.0;
+                return 0.1;
               } else if (controller.pov(180).getAsBoolean()) {
-                return -1.0;
+                return -0.1;
               }
               return 0.0;
             }));
@@ -47,6 +47,12 @@ public class ElevatorControls {
     SmartDashboard.putData(
         subsystem.getName() + "/Commands/Elevator To 0\"",
         new ElevatorToPosition(elevator, () -> Units.inchesToMeters(0)));
+    SmartDashboard.putData(
+        subsystem.getName() + "/Commands/Elevator To 6.5 meters\"",
+        new ElevatorToPosition(elevator, () -> 6.5));
+    SmartDashboard.putData(
+        subsystem.getName() + "/Commands/Elevator To 6.0 meters \"",
+        new ElevatorToPosition(elevator, () -> 6.5));
     SmartDashboard.putData(
         subsystem.getName() + "/Commands/Elevator To 12\"",
         new ElevatorToPosition(elevator, () -> Units.inchesToMeters(12)));

@@ -78,19 +78,26 @@ public class RobotConfigNemo extends RobotConfig {
       MotorIOBaseSettings motorSettings = new MotorIOBaseSettings();
       motorSettings.motor.gearing = 9; /* 2x 3:1 gear boxes */
       motorSettings.motor.inverted = false;
+      // motorSettings.forwardLimitChannel = 7;
+      // motorSettings.forwardLimitNegate = true;
+      motorSettings.reverseLimitChannel = 2;
+      motorSettings.reverseLimitNegate = true;
       motorSettings.motor.drumRadiusMeters =
           Units.inchesToMeters(
-              (1.75 / 2)); // 3/4" inner diameter to 1 3/4" outer. For now, use the diameter so that
+              ((1.75 + 0.75) / 2)
+                  / 2); // 3/4" inner diameter to 1 3/4" outer. Average diameter calculated For now,
+      // use the diameter so that
       // we don't reach the limits
       motorSettings.pid = new PIDController(0, 0, 0); // TODO: Tune PID controller
 
       ElevatorSettings elevatorSettings = new ElevatorSettings();
       elevatorSettings.minHeightInMeters = 0.0;
-      elevatorSettings.maxHeightInMeters = Units.inchesToMeters(21 + 31); // 2-stage 21" and 31"
+      elevatorSettings.maxHeightInMeters =
+          Units.inchesToMeters(74 - 18); // highest point:74 lowest point:18
       elevatorSettings.startingHeightInMeters = elevatorSettings.minHeightInMeters;
       elevatorSettings.color = new Color8Bit(Color.kSilver);
       elevatorSettings.feedforward =
-          new ElevatorFeedforward(0, 2.50, 0, 0); // TODO: Tune feedforward
+          new ElevatorFeedforward(0, 0.46, 0, 0); // TODO: Tune feedforward
       elevatorSettings.carriageMassKg = 5.0;
       elevatorSettings.motor = DCMotor.getKrakenX60(1);
       elevatorSettings.simulateGravity = true;
@@ -99,7 +106,7 @@ public class RobotConfigNemo extends RobotConfig {
       sparkMaxSettings.canId = 20;
 
       ElevatorControls.Constants.autoZeroSettings.voltage = 1.0;
-      ElevatorControls.Constants.autoZeroSettings.minResetCurrent = 50;
+      ElevatorControls.Constants.autoZeroSettings.minResetCurrent = 30;
       ElevatorControls.Constants.autoZeroSettings.resetPositionRad =
           elevatorSettings.maxHeightInMeters / motorSettings.motor.drumRadiusMeters;
       ElevatorControls.Constants.autoZeroSettings.initialReverseDuration =
