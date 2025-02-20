@@ -127,8 +127,8 @@ public abstract class MotorIOBase implements MotorIO {
   }
 
   @Override
-  public void resetEncoder(double position) {
-    System.out.println("TODO: reset encoder to: " + normalizePositionToRad(position));
+  public void resetEncoder(double positionRad) {
+    System.out.println("TODO: reset encoder to: " + positionRad);
   }
 
   public void disablePid() {

@@ -1,7 +1,7 @@
 package frc.robot.io.implementations.motor;
 
 import edu.wpi.first.wpilibj.simulation.ElevatorSim;
-import frc.robot.subsystems.interfaces.ElevatorV2.ElevatorSettings;
+import frc.robot.subsystems.interfaces.Elevator.ElevatorSettings;
 
 /**
  * A "Stub" implementation of a MotorIO that can be used for initial software bring-up/testing in
@@ -44,8 +44,9 @@ public class MotorIOElevatorStub extends MotorIOBase {
 
     inputs.appliedVolts = appliedVolts;
     inputs.currentAmps = elevatorSim.getCurrentDrawAmps();
-    inputs.velocityMetersPerSec = elevatorSim.getVelocityMetersPerSecond();
-    inputs.positionMeters = elevatorSim.getPositionMeters();
+    inputs.velocityRadPerSec =
+        elevatorSim.getVelocityMetersPerSecond() / settings.motor.drumRadiusMeters;
+    inputs.positionRad = elevatorSim.getPositionMeters() / settings.motor.drumRadiusMeters;
 
     // Simulate limit switch behavior
     if (inputs.positionMeters < elevatorSettings.minHeightInMeters) {
@@ -55,9 +56,9 @@ public class MotorIOElevatorStub extends MotorIOBase {
     }
 
     if (inputs.positionMeters > elevatorSettings.maxHeightInMeters) {
-      inputs.forwardLimit = false;
-    } else {
       inputs.forwardLimit = true;
+    } else {
+      inputs.forwardLimit = false;
     }
 
     super.updateInputs(inputs);

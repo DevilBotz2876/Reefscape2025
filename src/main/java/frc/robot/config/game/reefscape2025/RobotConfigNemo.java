@@ -1,6 +1,7 @@
 package frc.robot.config.game.reefscape2025;
 
 import edu.wpi.first.math.controller.ArmFeedforward;
+import edu.wpi.first.math.controller.ElevatorFeedforward;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.system.plant.DCMotor;
 import edu.wpi.first.math.util.Units;
@@ -13,16 +14,19 @@ import frc.robot.io.implementations.motor.MotorIOTalonFx;
 import frc.robot.io.implementations.motor.MotorIOTalonFx.TalonFxSettings;
 import frc.robot.subsystems.controls.arm.ClimberArmControls;
 import frc.robot.subsystems.controls.arm.CoralArmControls;
+import frc.robot.subsystems.controls.elevator.ElevatorControls;
 import frc.robot.subsystems.implementations.drive.DriveBase;
 import frc.robot.subsystems.implementations.drive.DriveSwerveYAGSL;
 import frc.robot.subsystems.implementations.motor.ArmMotorSubsystem;
+import frc.robot.subsystems.implementations.motor.ElevatorMotorSubsystem;
 import frc.robot.subsystems.interfaces.Arm.ArmSettings;
 import frc.robot.subsystems.interfaces.Drive;
+import frc.robot.subsystems.interfaces.Elevator.ElevatorSettings;
 
 /* Override Nemo specific constants here */
 public class RobotConfigNemo extends RobotConfig {
   public RobotConfigNemo() {
-    super(false, true, true, true, false, true, false);
+    super(false, true, true, false, false, false);
 
     // Nemo has a Swerve drive train
     Drive.Constants.rotatePidKp = 0.025;
@@ -68,6 +72,51 @@ public class RobotConfigNemo extends RobotConfig {
               // new MotorIOArmStub(motorSettings, armSettings), "Coral", armSettings);
               new MotorIOTalonFx(motorSettings, talonFxSettings), "Coral", armSettings);
     }
+
+    // Elevator
+    {
+      MotorIOBaseSettings motorSettings = new MotorIOBaseSettings();
+      motorSettings.motor.gearing = 9; /* 2x 3:1 gear boxes */
+      motorSettings.motor.inverted = false;
+      // motorSettings.forwardLimitChannel = 7;
+      // motorSettings.forwardLimitNegate = true;
+      motorSettings.reverseLimitChannel = 2;
+      motorSettings.reverseLimitNegate = true;
+      motorSettings.motor.drumRadiusMeters =
+          Units.inchesToMeters(
+              ((1.75 + 0.75) / 2)
+                  / 2); // 3/4" inner diameter to 1 3/4" outer. Average diameter calculated For now,
+      // use the diameter so that
+      // we don't reach the limits
+      motorSettings.pid = new PIDController(1.0, 0, 0); // TODO: Tune PID controller
+
+      ElevatorSettings elevatorSettings = new ElevatorSettings();
+      elevatorSettings.minHeightInMeters = 0.0;
+      elevatorSettings.maxHeightInMeters =
+          Units.inchesToMeters(74 - 18); // highest point:74 lowest point:18
+      elevatorSettings.startingHeightInMeters = elevatorSettings.minHeightInMeters;
+      elevatorSettings.color = new Color8Bit(Color.kSilver);
+      elevatorSettings.feedforward =
+          new ElevatorFeedforward(0, 0.13, 0.1, 0); // TODO: Tune feedforward
+      elevatorSettings.carriageMassKg = 5.0;
+      elevatorSettings.motor = DCMotor.getKrakenX60(1);
+      elevatorSettings.simulateGravity = true;
+
+      SparkMaxSettings sparkMaxSettings = new SparkMaxSettings();
+      sparkMaxSettings.canId = 20;
+      elevatorSettings.maxVelocityInMetersPerSecond = 0.3;
+      ElevatorControls.Constants.autoZeroSettings.voltage = 1.0;
+      ElevatorControls.Constants.autoZeroSettings.minResetCurrent = 30;
+      ElevatorControls.Constants.autoZeroSettings.resetPositionRad =
+          elevatorSettings.maxHeightInMeters / motorSettings.motor.drumRadiusMeters;
+      ElevatorControls.Constants.autoZeroSettings.initialReverseDuration =
+          1.0; // Set the seconds of reverse before zero. Set to zero if there shound be no reverse
+
+      elevator =
+          new ElevatorMotorSubsystem(
+              new MotorIOSparkMax(motorSettings, sparkMaxSettings), "Coral", elevatorSettings);
+    }
+
     // climber
     {
       MotorIOBaseSettings motorSettings = new MotorIOBaseSettings();

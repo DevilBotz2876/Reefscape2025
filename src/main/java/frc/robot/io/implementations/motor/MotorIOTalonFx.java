@@ -80,9 +80,9 @@ public class MotorIOTalonFx extends MotorIOBase {
   }
 
   @Override
-  public void resetEncoder(double position) {
+  public void resetEncoder(double positionRad) {
     motorFx.setPosition(
         edu.wpi.first.math.util.Units.radiansToRotations(
-            normalizePositionToRad(position) * motorSettings.motor.gearing));
+            positionRad * motorSettings.motor.gearing));
   }
 }

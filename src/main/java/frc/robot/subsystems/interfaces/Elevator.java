@@ -1,94 +1,74 @@
 package frc.robot.subsystems.interfaces;
 
-import static edu.wpi.first.units.Units.Volts;
+import edu.wpi.first.math.controller.ElevatorFeedforward;
+import edu.wpi.first.math.system.plant.DCMotor;
+import edu.wpi.first.wpilibj.util.Color;
+import edu.wpi.first.wpilibj.util.Color8Bit;
 
-import edu.wpi.first.wpilibj.smartdashboard.MechanismLigament2d;
-import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.InstantCommand;
-import edu.wpi.first.wpilibj2.command.Subsystem;
-import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
-import org.littletonrobotics.junction.Logger;
+public interface Elevator {
+  public static class ElevatorSettings {
+    public double minHeightInMeters = 0.0;
+    public double maxHeightInMeters = 1.0;
+    public double startingHeightInMeters = 0.0;
 
-public interface Elevator extends Subsystem {
-  public static class Constants {
-    public static double maxPositionInMeters = 1.25;
-    public static double minPositionInMeters = 0.0;
+    public double maxVelocityInMetersPerSecond = 0.3;
+    public double maxAccelerationInMetersPerSecondSquared = 0.3;
 
-    public static double reefL4InMeters = 1.00;
-    public static double reefL3InMeters = 0.75;
-    public static double reefL2InMeters = 0.50;
-    public static double reefL1InMeters = 0.25;
+    public double targetHeightToleranceInMeters = 0.01;
 
-    public static double upOpenLoopVoltsMax = 9.0;
-    public static double downOpenLoopVoltsMax = -6.0;
+    // feedforward is in *meter* units
+    public ElevatorFeedforward feedforward = new ElevatorFeedforward(0, 0, 0);
 
-    public static double maxVelocityInDegreesPerSecond = 45;
-    public static double maxAccelerationInDegreesPerSecondSquared = 120;
+    // 2D Graphic Params
+    public Color8Bit color = new Color8Bit(Color.kWhite);
 
-    // PID and FF values from the wpi elevatorsim example
-    public static double maxVelocity = 2.45;
-    public static double maxAcceleration = 2.45;
-    public static double pidDt = 0.02;
-
-    public static double pidKp = 5.0;
-    public static double pidKi = 0.0;
-    public static double pidKd = 0.0;
-    public static double pidTimeoutInSeconds = 3.0;
-    public static double pidErrorInMeters = 2.0;
-
-    public static double ffKs = 0.0;
-    public static double ffKv = 0.762;
-    public static double ffKa = 0.0;
-    public static double ffKg = 0.762;
+    // Elevator Simulation Settings
+    public DCMotor motor = DCMotor.getNEO(1);
+    public boolean simulateGravity = true;
+    public double carriageMassKg =
+        1.0; // The weight of the moveable portion of the elevator mechanism
   }
 
-  /** runs the elevator at a voltage. */
-  public void runVoltage(double volts);
+  /**
+   * Returns the current elevator height
+   *
+   * @return the current elevator height in meters
+   */
+  public double getCurrentHeight();
 
-  /** Returns the current postition of the elevator in meters. */
-  public double getPosition();
+  /**
+   * Returns the desired elevator height
+   *
+   * @return the desired target height in meters
+   */
+  public double getTargetHeight();
 
-  /** Returns the target postition of the elevator in meters. */
-  public double getTargetPosition();
+  /**
+   * Sets the desired target elevator height
+   *
+   * @param meters the desired target height in meters
+   */
+  public void setTargetHeight(double meters);
 
-  /** Returns true if the elevator is at the maximum limit. */
-  public boolean isAtUpperLimit();
+  /**
+   * @return true if elevator height is at (or greater than) the max limit
+   */
+  public boolean isAtMaxLimit();
 
-  /** Returns true if the elevator is at the minimum limit. */
-  public boolean isAtLowerLimit();
+  /**
+   * @return true if elevator height is at (or less than) the min limit
+   */
+  public boolean isAtMinLimit();
 
-  /** Returns velocity in meters per second of the elevator. */
-  public double getVelocityPerSecond();
-
-  /** Set the postition of the elevator in meters. */
-  public void setPosition(double meters);
-
-  /** Returns true if the elevator is at the setpoint. */
+  /**
+   * @return true if the current elevator height is at the desired target height
+   */
   public boolean isAtSetpoint();
 
-  /** Disable any closed loop controls, i.e PID */
-  public void disableClosedLoop();
-
-  public default void setLigament(MechanismLigament2d ligament2d) {}
-  ;
-
-  public default SysIdRoutine createSystemIdRoutine(String subsystemName) {
-    return new SysIdRoutine(
-        new SysIdRoutine.Config(
-            null,
-            null,
-            null,
-            (state) -> Logger.recordOutput(subsystemName + "/SysIdState", state.toString())),
-        new SysIdRoutine.Mechanism((voltage) -> runVoltage(voltage.in(Volts)), null, this));
-  }
-
-  /** Returns a command to run a quasistatic test in the specified direction. */
-  public default Command sysIdQuasistatic(SysIdRoutine.Direction direction) {
-    return new InstantCommand();
-  }
-
-  /** Returns a command to run a dynamic test in the specified direction. */
-  public default Command sysIdDynamic(SysIdRoutine.Direction direction) {
-    return new InstantCommand();
-  }
+  /**
+   * Returns the elevator settings
+   *
+   * @return the current elevator settings
+   */
+  public ElevatorSettings getSettings();
 }
