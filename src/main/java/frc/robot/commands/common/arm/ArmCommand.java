@@ -10,7 +10,6 @@ public class ArmCommand extends Command {
   Arm arm;
   DoubleSupplier speed;
   double targetPosition;
-  double maxArmVelocityInDegreesPerSec = Arm.Constants.maxVelocityInDegreesPerSecond;
 
   public ArmCommand(Arm arm, DoubleSupplier speed) {
     this.arm = arm;
@@ -21,18 +20,21 @@ public class ArmCommand extends Command {
 
   @Override
   public void initialize() {
-    targetPosition = arm.getAngle();
+    targetPosition = arm.getCurrentAngle();
   }
 
   @Override
   public void execute() {
     double currentSpeed = speed.getAsDouble();
+    if (0 != currentSpeed) {
+      targetPosition += currentSpeed * arm.getSettings().maxVelocityInDegreesPerSecond / 50;
+      targetPosition =
+          MathUtil.clamp(
+              targetPosition,
+              arm.getSettings().minAngleInDegrees,
+              arm.getSettings().maxAngleInDegrees);
 
-    targetPosition += currentSpeed * maxArmVelocityInDegreesPerSec / 50;
-    targetPosition =
-        MathUtil.clamp(
-            targetPosition, Arm.Constants.minAngleInDegrees, Arm.Constants.maxAngleInDegrees);
-
-    arm.setAngle(targetPosition);
+      arm.setTargetAngle(targetPosition);
+    }
   }
 }

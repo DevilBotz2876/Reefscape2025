@@ -18,7 +18,7 @@ public interface MotorIO {
     public double gearing =
         1.0; // Set this to match any gearboxes attached the shaft *after* the encoder
     public double drumRadiusMeters =
-        0.0; // If the motor is connected to a linear system (e.g. elevator), indicate the radius of
+        1.0; // If the motor is connected to a linear system (e.g. elevator), indicate the radius of
     // the spool/gear here
   }
 
@@ -50,6 +50,9 @@ public interface MotorIO {
     public double positionMeters =
         0.0; // the current position of the linear mechanism connected to the motor shaft (in
     // meters)
+
+    public boolean forwardLimit = false;
+    public boolean reverseLimit = false;
   }
 
   /**
@@ -76,9 +79,25 @@ public interface MotorIO {
   public boolean setVelocity(double velocityRadPerSec, double ffVolts);
 
   /**
+   * Takes in a position in meters or radians and converts it to radians
+   *
+   * @param position in radians or meters
+   * @return position in radians
+   */
+  public double normalizePositionToRad(double position);
+
+  /**
+   * Takes in a position in radians and converts it to meters
+   *
+   * @param position in radians
+   * @return position in meters
+   */
+  public double normalizePositionToMeters(double positionRad);
+
+  /**
    * Optional: Run closed loop (using a PID) to reach a specific position
    *
-   * @param positionRad desired position
+   * @param position desired position (in radians or meters if drumRadiusMeters != 0)
    * @param ffVolts feedforward voltage which depends on the static friction of what is connected to
    *     the motor
    * @return true if the motor is capable of automatically moving and staying at a specific position
@@ -91,4 +110,14 @@ public interface MotorIO {
    * @return
    */
   public PIDController getPid();
+
+  /**
+   * Resets the relative encoder to the specified position
+   *
+   * @position the current position in radians
+   */
+  public void resetEncoder(double positionRad);
+
+  /** Disables the software PID loop */
+  public void disablePid();
 }

@@ -27,7 +27,7 @@ public class ArmToPosition extends Command {
           "START: " + this.getClass().getSimpleName() + " angle: " + targetPositionDegrees);
     }
 
-    arm.setAngle(targetPositionDegrees);
+    arm.setTargetAngle(targetPositionDegrees);
   }
 
   @Override

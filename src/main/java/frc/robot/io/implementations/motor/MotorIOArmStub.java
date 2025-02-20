@@ -2,7 +2,7 @@ package frc.robot.io.implementations.motor;
 
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.simulation.SingleJointedArmSim;
-import frc.robot.subsystems.interfaces.ArmV2.ArmSettings;
+import frc.robot.subsystems.interfaces.Arm.ArmSettings;
 
 /**
  * A "Stub" implementation of a MotorIO that can be used for initial software bring-up/testing in
@@ -11,6 +11,7 @@ import frc.robot.subsystems.interfaces.ArmV2.ArmSettings;
 public class MotorIOArmStub extends MotorIOBase {
   private final SingleJointedArmSim armSim;
   private double appliedVolts = 0;
+  private ArmSettings armSettings;
 
   public MotorIOArmStub(MotorIOBaseSettings motorSettings, ArmSettings armSettings) {
     super(motorSettings);
@@ -25,6 +26,8 @@ public class MotorIOArmStub extends MotorIOBase {
             Units.degreesToRadians(armSettings.maxAngleInDegrees),
             armSettings.simulateGravity,
             Units.degreesToRadians(armSettings.startingAngleInDegrees));
+
+    this.armSettings = armSettings;
   }
 
   @Override
@@ -41,6 +44,19 @@ public class MotorIOArmStub extends MotorIOBase {
     inputs.currentAmps = armSim.getCurrentDrawAmps();
     inputs.velocityRadPerSec = armSim.getVelocityRadPerSec();
     inputs.positionRad = armSim.getAngleRads();
+
+    // Simulate limit switch behavior
+    if (Units.radiansToDegrees(armSim.getAngleRads()) <= armSettings.minAngleInDegrees + 1) {
+      inputs.reverseLimit = true;
+    } else {
+      inputs.reverseLimit = false;
+    }
+
+    if (Units.radiansToDegrees(armSim.getAngleRads()) >= armSettings.maxAngleInDegrees - 1) {
+      inputs.forwardLimit = true;
+    } else {
+      inputs.forwardLimit = false;
+    }
 
     super.updateInputs(inputs);
   }

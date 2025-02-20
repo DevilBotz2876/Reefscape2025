@@ -1,33 +1,33 @@
-package frc.robot.commands.common.arm;
+package frc.robot.commands.common.elevator;
 
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
-import frc.robot.subsystems.interfaces.ArmV2;
+import frc.robot.subsystems.interfaces.Elevator;
 import java.util.function.DoubleSupplier;
 
-public class ArmToPositionV2 extends Command {
-  ArmV2 arm;
+public class ElevatorToPosition extends Command {
+  Elevator elevator;
   DoubleSupplier positionDegrees;
-  double targetPositionDegrees;
+  double targetPositionMeters;
 
-  public ArmToPositionV2(ArmV2 arm, DoubleSupplier positionDegrees) {
-    this.arm = arm;
-    this.positionDegrees = positionDegrees;
+  public ElevatorToPosition(Elevator elevator, DoubleSupplier positionMeters) {
+    this.elevator = elevator;
+    this.positionDegrees = positionMeters;
 
-    addRequirements((SubsystemBase) arm);
+    addRequirements((SubsystemBase) elevator);
   }
 
   @Override
   public void initialize() {
-    targetPositionDegrees = positionDegrees.getAsDouble();
+    targetPositionMeters = positionDegrees.getAsDouble();
 
     if (Constants.debugCommands) {
       System.out.println(
-          "START: " + this.getClass().getSimpleName() + " angle: " + targetPositionDegrees);
+          "START: " + this.getClass().getSimpleName() + " position: " + targetPositionMeters);
     }
 
-    arm.setTargetAngle(targetPositionDegrees);
+    elevator.setTargetHeight(targetPositionMeters);
   }
 
   @Override
@@ -35,7 +35,7 @@ public class ArmToPositionV2 extends Command {
 
   @Override
   public boolean isFinished() {
-    return arm.isAtSetpoint();
+    return elevator.isAtSetpoint();
   }
 
   @Override
