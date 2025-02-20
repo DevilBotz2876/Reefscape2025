@@ -3,6 +3,7 @@ package frc.robot.subsystems.implementations.motor;
 import static edu.wpi.first.units.Units.Volts;
 
 import edu.wpi.first.math.trajectory.TrapezoidProfile;
+import edu.wpi.first.math.trajectory.TrapezoidProfile.Constraints;
 import edu.wpi.first.math.trajectory.TrapezoidProfile.State;
 import edu.wpi.first.wpilibj.RobotState;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -98,5 +99,9 @@ public class MotorSubsystem extends SubsystemBase implements Motor {
 
   private Command sysIdDynamic(SysIdRoutine.Direction direction) {
     return sysId.dynamic(direction);
+  }
+
+  protected void setMotionProfileConstraintsRad(Constraints motionProfileConstraintsRad) {
+    motionProfile = new TrapezoidProfile(motionProfileConstraintsRad);
   }
 }
