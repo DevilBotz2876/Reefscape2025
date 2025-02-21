@@ -91,7 +91,7 @@ public class DriveControls {
           SmartDashboard.putNumber("Chosen Pose Index", myCoolPoseKeyIdx);
         });
     controller
-        .povUp()
+        .x()
         .onTrue(
             new InstantCommand(
                 () -> {
@@ -127,7 +127,7 @@ public class DriveControls {
     // ), () -> { return chooser.getSelected(); });
 
     // dynamically go to destination
-    controller.a().whileTrue(coolGoToPose);
+    controller.b().whileTrue(coolGoToPose);
   }
 
   public static void addGUI(Drive drive, ShuffleboardTab tab) {
