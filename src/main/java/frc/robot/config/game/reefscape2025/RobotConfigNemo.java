@@ -54,7 +54,7 @@ public class RobotConfigNemo extends RobotConfig {
       algaeArmSettings.simulateGravity = false;
 
       SparkMaxSettings algaeArmSparkMaxSettings = new SparkMaxSettings();
-      algaeArmSparkMaxSettings.canId = 21;
+      algaeArmSparkMaxSettings.canId = 31;
 
       algaeArm =
           new ArmMotorSubsystem(
