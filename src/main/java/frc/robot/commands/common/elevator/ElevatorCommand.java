@@ -7,10 +7,9 @@ import frc.robot.subsystems.interfaces.Elevator;
 import java.util.function.DoubleSupplier;
 
 public class ElevatorCommand extends Command {
-  private final Elevator elevator;
-  private DoubleSupplier speed;
+  Elevator elevator;
+  DoubleSupplier speed;
   double targetPosition;
-  double maxElevatorVelocity = Elevator.Constants.maxVelocity;
 
   public ElevatorCommand(Elevator elevator, DoubleSupplier speed) {
     this.elevator = elevator;
@@ -21,20 +20,22 @@ public class ElevatorCommand extends Command {
 
   @Override
   public void initialize() {
-    targetPosition = elevator.getPosition();
+    targetPosition = elevator.getCurrentHeight();
   }
 
   @Override
   public void execute() {
     double currentSpeed = speed.getAsDouble();
 
-    targetPosition += currentSpeed * maxElevatorVelocity / 50;
-    targetPosition =
-        MathUtil.clamp(
-            targetPosition,
-            Elevator.Constants.minPositionInMeters,
-            Elevator.Constants.maxPositionInMeters);
+    if (0 != currentSpeed) {
+      targetPosition += currentSpeed * elevator.getSettings().maxVelocityInMetersPerSecond / 50;
+      targetPosition =
+          MathUtil.clamp(
+              targetPosition,
+              elevator.getSettings().minHeightInMeters,
+              elevator.getSettings().maxHeightInMeters);
 
-    elevator.setPosition(targetPosition);
+      elevator.setTargetHeight(targetPosition);
+    }
   }
 }

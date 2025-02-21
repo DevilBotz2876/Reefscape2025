@@ -5,8 +5,6 @@ import com.pathplanner.lib.path.PathConstraints;
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
-import edu.wpi.first.wpilibj.shuffleboard.BuiltInWidgets;
-import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -15,7 +13,6 @@ import edu.wpi.first.wpilibj2.command.SelectCommand;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.commands.common.drive.DriveCommand;
-import frc.robot.config.game.reefscape2025.RobotConfig;
 import frc.robot.subsystems.interfaces.Drive;
 import java.util.Map;
 
@@ -128,22 +125,5 @@ public class DriveControls {
 
     // dynamically go to destination
     controller.b().whileTrue(coolGoToPose);
-  }
-
-  public static void addGUI(Drive drive, ShuffleboardTab tab) {
-    //    int colIndex = 0;
-    //    int rowIndex = 0;
-
-    /* Autonomous Chooser */
-    tab.add("Autononmous", RobotConfig.autoChooser)
-        .withWidget(BuiltInWidgets.kComboBoxChooser)
-        //        .withPosition(colIndex, rowIndex++)
-        .withSize(2, 1);
-
-    /* Field Oriented Drive Indicator */
-    tab.addBoolean("Field Oriented", () -> drive.isFieldOrientedDrive())
-        .withWidget(BuiltInWidgets.kBooleanBox)
-        //      .withPosition(colIndex, rowIndex++)
-        .withSize(2, 1);
   }
 }

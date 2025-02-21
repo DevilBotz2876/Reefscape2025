@@ -180,14 +180,15 @@ public class VisionSubsystem extends SubsystemBase implements Vision {
         // Log estimated robot pose for debugging
         debugRobotPoses.add(currentEstimatedRobotPose.get().estimatedPose.toPose2d());
       } else {
-        // TODO add NULL when no pose available.
         // debugRobotPoses.add(new Pose2d());
-        debugRobotPoses.add(null);
+
+        // Adding null to this list causes robot program to crash.
+        // debugRobotPoses.add(null);
       }
     }
 
     // Record estimated robot pose to AdvantageKit networktables
-    if (!simEnabled) {
+    if (debugRobotPoses.size() > 0) {
       Logger.recordOutput(
           "VisionSubsystem/DEBUGestimatedCameraPoses",
           debugRobotPoses.toArray(new Pose2d[debugRobotPoses.size()]));

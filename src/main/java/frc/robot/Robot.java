@@ -4,6 +4,9 @@
 
 package frc.robot;
 
+import edu.wpi.first.net.WebServer;
+import edu.wpi.first.wpilibj.Filesystem;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.config.game.reefscape2025.*;
@@ -70,6 +73,11 @@ public class Robot extends LoggedRobot {
     // be added.
     // END: Setup AdvantageKit
     m_robotContainer = new RobotContainer();
+
+    SmartDashboard.putData(CommandScheduler.getInstance());
+
+    /* Start Webserver for Elastic Remote Layout JSON download */
+    WebServer.start(5800, Filesystem.getDeployDirectory().getPath());
   }
 
   @Override

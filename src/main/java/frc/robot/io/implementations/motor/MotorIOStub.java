@@ -1,36 +1,48 @@
 package frc.robot.io.implementations.motor;
 
-import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.system.plant.DCMotor;
 import edu.wpi.first.math.system.plant.LinearSystemId;
+import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.simulation.DCMotorSim;
-import frc.robot.io.interfaces.MotorIO;
 
 /**
  * A "Stub" implementation of a MotorIO that can be used for initial software bring-up/testing in
- * simulation
+ * simulation.
  */
-public class MotorIOStub implements MotorIO {
-  private boolean inverted = false;
+public class MotorIOStub extends MotorIOBase {
   private final DCMotorSim motorSim;
+  private double appliedVolts = 0;
+  private MotorSimulationSettings simSettings;
 
-  private double appliedVolts = 0.0;
+  public static class MotorSimulationSettings {
+    // DC Motor Simulation Settings
+    public DCMotor motor = DCMotor.getNEO(1);
+    public double moiKgMetersSquared = 1.0;
 
-  /** Default constructor that doesn't take any arguments. */
-  public MotorIOStub() {
-    this(false, 0.025, 1.0);
+    // TODO: should not hard-code these values.  Need to be set/passed in from
+    // RobotConfigStub.java somehow.
+    public double forwardLimitPositionRads = Units.degreesToRadians(85.0);
+    public double reverseLimitPositionRads = Units.degreesToRadians(5.0);
   }
 
-  /** Constructor that allows setting whether the motor is inverted */
-  public MotorIOStub(boolean inverted, double moi, double gearing) {
-    this.inverted = inverted;
+  public MotorIOStub(
+      MotorIOBaseSettings motorSettings, MotorSimulationSettings simulationSettings) {
+    super(motorSettings);
 
-    // Simulate a Kraken X60 motor with the shaft connected to a mechanism with the specified moment
-    // of inertia and gear ratio
+    simSettings = simulationSettings;
+
     motorSim =
         new DCMotorSim(
-            LinearSystemId.createDCMotorSystem(DCMotor.getKrakenX60(1), moi, gearing),
-            DCMotor.getKrakenX60(1));
+            LinearSystemId.createDCMotorSystem(
+                simulationSettings.motor,
+                simulationSettings.moiKgMetersSquared,
+                motorSettings.motor.gearing),
+            simulationSettings.motor);
+  }
+
+  @Override
+  public void setVoltage(double volts) {
+    appliedVolts = calculateSafeVoltage(volts);
   }
 
   @Override
@@ -42,13 +54,21 @@ public class MotorIOStub implements MotorIO {
     inputs.currentAmps = motorSim.getCurrentDrawAmps();
     inputs.velocityRadPerSec = motorSim.getAngularVelocityRadPerSec();
     inputs.positionRad = motorSim.getAngularPositionRad();
-  }
+    inputs.accelerationRadPerSecSq = motorSim.getAngularAccelerationRadPerSecSq();
 
-  @Override
-  public void setVoltage(double volts) {
-    appliedVolts = MathUtil.clamp(volts, -12.0, 12.0);
-    if (inverted) {
-      appliedVolts = -appliedVolts;
+    // Simulate limit switch behavior
+    if (motorSim.getAngularPositionRad() <= simSettings.reverseLimitPositionRads) {
+      inputs.reverseLimit = true;
+    } else {
+      inputs.reverseLimit = false;
     }
+
+    if (motorSim.getAngularPositionRad() >= simSettings.forwardLimitPositionRads) {
+      inputs.forwardLimit = true;
+    } else {
+      inputs.forwardLimit = false;
+    }
+
+    super.updateInputs(inputs);
   }
 }

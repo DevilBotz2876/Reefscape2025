@@ -71,6 +71,7 @@ public class DriveSwerveYAGSL extends DriveBase {
     // they will be called directly from this subsystem
     swerveDrive.stopOdometryThread();
 
+    RobotConfig config;
     try {
       config = RobotConfig.fromGUISettings();
 
