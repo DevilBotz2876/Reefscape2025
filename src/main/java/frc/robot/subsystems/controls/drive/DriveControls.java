@@ -61,14 +61,25 @@ public class DriveControls {
                     drive.setFieldOrientedDrive(
                         !drive.isFieldOrientedDrive()))); // Toggle Drive Orientation
 
+    // BLUE
+    // // Define destinations for our "dynamic go-to-pose" functionality
+    // Pose2d poseOrigin = new Pose2d(0, 0, Rotation2d.fromDegrees(0)),
+    //     poseFeeder1 = new Pose2d(1.05, 7, Rotation2d.fromDegrees(130)),
+    //     poseFeeder2 = new Pose2d(1.05, 1, Rotation2d.fromDegrees(230)),
+    //     poseProcessor = new Pose2d(6, 0.75, Rotation2d.fromDegrees(270)),
+    //     poseReefA = new Pose2d(3.25, 4.05, Rotation2d.fromDegrees(0)),
+    //     poseReefG = new Pose2d(5.5, 3.95, Rotation2d.fromDegrees(180));
+
     // Define destinations for our "dynamic go-to-pose" functionality
     Pose2d poseOrigin = new Pose2d(0, 0, Rotation2d.fromDegrees(0)),
-        poseFeeder1 = new Pose2d(1.05, 7, Rotation2d.fromDegrees(130)),
-        poseFeeder2 = new Pose2d(1.05, 1, Rotation2d.fromDegrees(230)),
-        poseProcessor = new Pose2d(6, 0.75, Rotation2d.fromDegrees(270)),
-        poseReefA = new Pose2d(3.25, 4.05, Rotation2d.fromDegrees(0)),
-        poseReefG = new Pose2d(5.5, 3.95, Rotation2d.fromDegrees(180));
+        poseFeeder1 = new Pose2d(16.02, 6.9, Rotation2d.fromDegrees(50)),
+        poseFeeder2 = new Pose2d(16.02, 1, Rotation2d.fromDegrees(-50)),
+        poseProcessor = new Pose2d(11.5, 7.3, Rotation2d.fromDegrees(90)),
+        poseReefA = new Pose2d(14.5, 3.875, Rotation2d.fromDegrees(180)),
+        poseReefG = new Pose2d(11.6, 4.175, Rotation2d.fromDegrees(0));
     PathConstraints constraints = new PathConstraints(4.2672, 9.4664784, 2 * Math.PI, 4 * Math.PI);
+    // PathConstraints constraints = new PathConstraints(2, 4.5, 2 * Math.PI, 4 * Math.PI);
+
 
     // Temporary UI to allow user to modify destination on-the-fly
     SendableChooser<TargetPoseOption> chooser = new SendableChooser<>();
