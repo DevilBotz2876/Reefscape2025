@@ -77,7 +77,7 @@ public class RobotConfigNemo extends RobotConfig {
     {
       MotorIOBaseSettings motorSettings = new MotorIOBaseSettings();
       motorSettings.motor.gearing = 9; /* 2x 3:1 gear boxes */
-      motorSettings.motor.inverted = false;
+      motorSettings.motor.inverted = true;
       // motorSettings.forwardLimitChannel = 7;
       // motorSettings.forwardLimitNegate = true;
       motorSettings.reverseLimitChannel = 2;

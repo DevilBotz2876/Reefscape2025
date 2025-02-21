@@ -76,8 +76,8 @@ public class MotorIOSparkMax extends MotorIOBase {
 
   @Override
   public void setVoltage(double volts) {
-    // Set the voltage output for the top motor
-    motor.setVoltage(calculateSafeVoltage(volts));
+    // Inversion is handled in the SparkMax Controller config, always set it to false
+    motor.setVoltage(calculateSafeVoltage(volts, false));
   }
 
   /*

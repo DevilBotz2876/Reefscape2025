@@ -73,9 +73,9 @@ public abstract class MotorIOBase implements MotorIO {
    * @param volts
    * @return normalized voltage
    */
-  public final double calculateSafeVoltage(double volts) {
+  public final double calculateSafeVoltage(double volts, boolean inverted) {
     volts = MathUtil.clamp(volts, -12.0, 12.0);
-    if (settings.motor.inverted) {
+    if (inverted) {
       volts = -volts;
     }
     return volts;

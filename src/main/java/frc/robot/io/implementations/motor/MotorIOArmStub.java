@@ -32,7 +32,7 @@ public class MotorIOArmStub extends MotorIOBase {
 
   @Override
   public void setVoltage(double volts) {
-    appliedVolts = calculateSafeVoltage(volts);
+    appliedVolts = calculateSafeVoltage(volts, settings.motor.inverted);
   }
 
   @Override
