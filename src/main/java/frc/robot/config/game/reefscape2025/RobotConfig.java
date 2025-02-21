@@ -137,7 +137,7 @@ public class RobotConfig {
       algaeArmSettings.maxAngleInDegrees = 150;
       algaeArmSettings.startingAngleInDegrees = algaeArmSettings.minAngleInDegrees;
       algaeArmSettings.feedforward = new ArmFeedforward(0, 0.222, 0.001, 0);
-      algaeArmSettings.color = new Color8Bit(Color.kBlue);
+      algaeArmSettings.color = new Color8Bit(Color.kGreen);
       algaeArmSettings.armLengthInMeters = 0.5;
       algaeArmSettings.armMassInKg = 0.81;
       algaeArmSettings.motor = DCMotor.getNEO(1);
