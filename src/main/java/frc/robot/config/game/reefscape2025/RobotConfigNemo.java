@@ -45,37 +45,37 @@ public class RobotConfigNemo extends RobotConfig {
             "my-first-photonvision", // back
             new Transform3d(
                 new Translation3d(
-                    Units.inchesToMeters(3),
-                    Units.inchesToMeters(10.75),
-                    Units.inchesToMeters(36.75)),
-                new Rotation3d(0.0, Units.degreesToRadians(30), Units.degreesToRadians(10)))));
+                    Units.inchesToMeters(-14.5),
+                    Units.inchesToMeters(-3.75),
+                    Units.inchesToMeters(7)),
+                new Rotation3d(0.0, Units.degreesToRadians(-5), Units.degreesToRadians(180)))));
     vision.addCamera(
         new Camera(
-            "left",
+            "left_camera",
             new Transform3d(
                 new Translation3d(
                     Units.inchesToMeters(-4.4),
                     Units.inchesToMeters(14.5),
                     Units.inchesToMeters(7)),
-                new Rotation3d(0.0, Units.degreesToRadians(-5), Units.degreesToRadians(0.0)))));
+                new Rotation3d(0.0, Units.degreesToRadians(-5), Units.degreesToRadians(90)))));
     vision.addCamera(
         new Camera(
-            "right",
+            "right_camera",
             new Transform3d(
                 new Translation3d(
                     Units.inchesToMeters(-4.4),
                     Units.inchesToMeters(-14.5),
                     Units.inchesToMeters(7)),
-                new Rotation3d(0.0, Units.degreesToRadians(-5), Units.degreesToRadians(0.0)))));
+                new Rotation3d(0.0, Units.degreesToRadians(-5), Units.degreesToRadians(270)))));
     vision.addCamera(
         new Camera(
-            "front", // back
+            "front_camera",
             new Transform3d(
                 new Translation3d(
-                    Units.inchesToMeters(-14.5),
-                    Units.inchesToMeters(-3.75),
-                    Units.inchesToMeters(7)),
-                new Rotation3d(0.0, Units.degreesToRadians(-5), Units.degreesToRadians(0.0)))));
+                    Units.inchesToMeters(3),
+                    Units.inchesToMeters(10.75),
+                    Units.inchesToMeters(36.75)),
+                new Rotation3d(0.0, Units.degreesToRadians(30), Units.degreesToRadians(10)))));
 
     // Coral Arm
     {

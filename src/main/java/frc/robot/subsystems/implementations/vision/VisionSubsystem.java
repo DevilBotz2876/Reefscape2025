@@ -161,28 +161,36 @@ public class VisionSubsystem extends SubsystemBase implements Vision {
 
       Optional<EstimatedRobotPose> currentEstimatedRobotPose = camera.getEstimatedRobotPose();
       if (currentEstimatedRobotPose.isPresent()) {
-        Optional<Double> distanceToBestTarget =
-            getDistanceToAprilTag(camera.getBestTarget().getFiducialId());
+        // Optional<Double> distanceToBestTarget =
+        //     getDistanceToAprilTag(camera.getBestTarget().getFiducialId());
         // TODO remove unnecessary condition: distanceToBestTarget always available if
         // currentEstimateRobotPose
-        if (distanceToBestTarget.isPresent()) {
-          double distance = distanceToBestTarget.get();
+        // TODO getDistanceToAprilTag only reads from primaryCamera, update to use any camera
+        // if (distanceToBestTarget.isPresent()) {
+        //   double distance = distanceToBestTarget.get();
 
-          // Add vision measurement to the consumer.
-          if (visionMeasurementConsumer != null) {
-            visionMeasurementConsumer.add(
-                currentEstimatedRobotPose.get().estimatedPose.toPose2d(),
-                currentEstimatedRobotPose.get().timestampSeconds,
-                null);
-          }
+        //   // Add vision measurement to the consumer.
+        //   if (visionMeasurementConsumer != null) {
+        //     visionMeasurementConsumer.add(
+        //         currentEstimatedRobotPose.get().estimatedPose.toPose2d(),
+        //         currentEstimatedRobotPose.get().timestampSeconds,
+        //         null);
+        //   }
+        // }
+
+        // Add vision measurement to the consumer.
+        if (visionMeasurementConsumer != null) {
+          visionMeasurementConsumer.add(
+              currentEstimatedRobotPose.get().estimatedPose.toPose2d(),
+              currentEstimatedRobotPose.get().timestampSeconds,
+              null);
         }
 
         // Log estimated robot pose for debugging
         debugRobotPoses.add(currentEstimatedRobotPose.get().estimatedPose.toPose2d());
       } else {
-        // debugRobotPoses.add(new Pose2d());
-
-        // Adding null to this list causes robot program to crash.
+        // TODO add NULL when no pose available.
+        debugRobotPoses.add(new Pose2d(-10.0, -10.0, new Rotation2d(0)));
         // debugRobotPoses.add(null);
       }
     }
