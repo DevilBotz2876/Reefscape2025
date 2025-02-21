@@ -1,6 +1,6 @@
 {
   "version": 1.0,
-  "grid_size": 128,
+  "grid_size": 64,
   "tabs": [
     {
       "name": "Teleoperated",
@@ -117,7 +117,7 @@
             "properties": {
               "topic": "/SmartDashboard/Arm[Coral]/Commands/Auto Calibrate Coral Arm",
               "period": 0.06,
-              "show_type": true
+              "show_type": false
             }
           },
           {
@@ -130,7 +130,7 @@
             "properties": {
               "topic": "/SmartDashboard/Elevator[Coral]/Commands/Auto Calibrate Elevator",
               "period": 0.06,
-              "show_type": true
+              "show_type": false
             }
           },
           {
@@ -143,7 +143,7 @@
             "properties": {
               "topic": "/SmartDashboard/Arm[Climber]/Commands/Climber Auto Calibrate ",
               "period": 0.06,
-              "show_type": true
+              "show_type": false
             }
           }
         ]
@@ -154,19 +154,32 @@
       "grid_layout": {
         "layouts": [
           {
-            "title": "Arm Position",
-            "x": 512.0,
+            "title": "Commands",
+            "x": 256.0,
             "y": 0.0,
             "width": 256.0,
-            "height": 640.0,
+            "height": 704.0,
             "type": "List Layout",
             "properties": {
               "label_position": "TOP"
             },
             "children": [
               {
+                "title": "Arm To -45",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 256.0,
+                "height": 128.0,
+                "type": "Command",
+                "properties": {
+                  "topic": "/SmartDashboard/Arm[Coral]/Commands/Arm To -45",
+                  "period": 0.06,
+                  "show_type": false
+                }
+              },
+              {
                 "title": "Arm To -90",
-                "x": 768.0,
+                "x": 0.0,
                 "y": 0.0,
                 "width": 256.0,
                 "height": 128.0,
@@ -174,82 +187,69 @@
                 "properties": {
                   "topic": "/SmartDashboard/Arm[Coral]/Commands/Arm To -90",
                   "period": 0.06,
-                  "show_type": true
-                }
-              },
-              {
-                "title": "Arm To -45",
-                "x": 768.0,
-                "y": 128.0,
-                "width": 256.0,
-                "height": 128.0,
-                "type": "Command",
-                "properties": {
-                  "topic": "/SmartDashboard/Arm[Coral]/Commands/Arm To -45",
-                  "period": 0.06,
-                  "show_type": true
+                  "show_type": false
                 }
               },
               {
                 "title": "Arm To 0",
-                "x": 768.0,
-                "y": 256.0,
+                "x": 0.0,
+                "y": 0.0,
                 "width": 256.0,
                 "height": 128.0,
                 "type": "Command",
                 "properties": {
                   "topic": "/SmartDashboard/Arm[Coral]/Commands/Arm To 0",
                   "period": 0.06,
-                  "show_type": true
+                  "show_type": false
                 }
               },
               {
                 "title": "Arm To 15",
-                "x": 768.0,
-                "y": 384.0,
+                "x": 0.0,
+                "y": 0.0,
                 "width": 256.0,
                 "height": 128.0,
                 "type": "Command",
                 "properties": {
                   "topic": "/SmartDashboard/Arm[Coral]/Commands/Arm To 15",
                   "period": 0.06,
-                  "show_type": true
+                  "show_type": false
                 }
               },
               {
                 "title": "Arm To 45",
-                "x": 768.0,
-                "y": 384.0,
+                "x": 0.0,
+                "y": 0.0,
                 "width": 256.0,
                 "height": 128.0,
                 "type": "Command",
                 "properties": {
                   "topic": "/SmartDashboard/Arm[Coral]/Commands/Arm To 45",
                   "period": 0.06,
-                  "show_type": true
+                  "show_type": false
                 }
               },
               {
                 "title": "Arm To 75",
-                "x": 768.0,
-                "y": 512.0,
+                "x": 0.0,
+                "y": 0.0,
                 "width": 256.0,
                 "height": 128.0,
                 "type": "Command",
                 "properties": {
                   "topic": "/SmartDashboard/Arm[Coral]/Commands/Arm To 75",
                   "period": 0.06,
-                  "show_type": true
+                  "show_type": false
                 }
               }
             ]
           },
           {
-            "title": "Sys ID",
-            "x": 768.0,
-            "y": 0.0,
+            "title": "SysID",
+            "x": 512.0,
+            "y": 256.0,
             "width": 256.0,
-            "height": 512.0,
+            "height": 448.0,
             "type": "List Layout",
             "properties": {
               "label_position": "TOP"
@@ -263,9 +263,9 @@
                 "height": 128.0,
                 "type": "Command",
                 "properties": {
-                  "topic": "/SmartDashboard/Arm[Coral]/Dynamic Forward",
+                  "topic": "/SmartDashboard/Arm[Coral]/SysID/Dynamic Forward",
                   "period": 0.06,
-                  "show_type": true
+                  "show_type": false
                 }
               },
               {
@@ -276,9 +276,9 @@
                 "height": 128.0,
                 "type": "Command",
                 "properties": {
-                  "topic": "/SmartDashboard/Arm[Coral]/Dynamic Reverse",
+                  "topic": "/SmartDashboard/Arm[Coral]/SysID/Dynamic Reverse",
                   "period": 0.06,
-                  "show_type": true
+                  "show_type": false
                 }
               },
               {
@@ -289,9 +289,9 @@
                 "height": 128.0,
                 "type": "Command",
                 "properties": {
-                  "topic": "/SmartDashboard/Arm[Coral]/Quasistatic Forward",
+                  "topic": "/SmartDashboard/Arm[Coral]/SysID/Quasistatic Forward",
                   "period": 0.06,
-                  "show_type": true
+                  "show_type": false
                 }
               },
               {
@@ -302,9 +302,236 @@
                 "height": 128.0,
                 "type": "Command",
                 "properties": {
-                  "topic": "/SmartDashboard/Arm[Coral]/Quasistatic Reverse",
+                  "topic": "/SmartDashboard/Arm[Coral]/SysID/Quasistatic Reverse",
                   "period": 0.06,
-                  "show_type": true
+                  "show_type": false
+                }
+              }
+            ]
+          },
+          {
+            "title": "feedforward",
+            "x": 768.0,
+            "y": 0.0,
+            "width": 256.0,
+            "height": 320.0,
+            "type": "List Layout",
+            "properties": {
+              "label_position": "TOP"
+            },
+            "children": [
+              {
+                "title": "Ka",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 128.0,
+                "height": 128.0,
+                "type": "Text Display",
+                "properties": {
+                  "topic": "/SmartDashboard/Arm[Coral]/feedforward/Ka",
+                  "period": 0.06,
+                  "data_type": "double",
+                  "show_submit_button": true
+                }
+              },
+              {
+                "title": "Kg",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 128.0,
+                "height": 128.0,
+                "type": "Text Display",
+                "properties": {
+                  "topic": "/SmartDashboard/Arm[Coral]/feedforward/Kg",
+                  "period": 0.06,
+                  "data_type": "double",
+                  "show_submit_button": true
+                }
+              },
+              {
+                "title": "Ks",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 128.0,
+                "height": 128.0,
+                "type": "Text Display",
+                "properties": {
+                  "topic": "/SmartDashboard/Arm[Coral]/feedforward/Ks",
+                  "period": 0.06,
+                  "data_type": "double",
+                  "show_submit_button": true
+                }
+              },
+              {
+                "title": "Kv",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 128.0,
+                "height": 128.0,
+                "type": "Text Display",
+                "properties": {
+                  "topic": "/SmartDashboard/Arm[Coral]/feedforward/Kv",
+                  "period": 0.06,
+                  "data_type": "double",
+                  "show_submit_button": true
+                }
+              }
+            ]
+          },
+          {
+            "title": "motionProfile",
+            "x": 512.0,
+            "y": 0.0,
+            "width": 256.0,
+            "height": 256.0,
+            "type": "List Layout",
+            "properties": {
+              "label_position": "TOP"
+            },
+            "children": [
+              {
+                "title": "maxAcceleration (deg per sec^2)",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 128.0,
+                "height": 128.0,
+                "type": "Text Display",
+                "properties": {
+                  "topic": "/SmartDashboard/Arm[Coral]/motionProfile/maxAcceleration (deg per sec^2)",
+                  "period": 0.06,
+                  "data_type": "double",
+                  "show_submit_button": true
+                }
+              },
+              {
+                "title": "maxVelocity (deg per sec)",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 128.0,
+                "height": 128.0,
+                "type": "Text Display",
+                "properties": {
+                  "topic": "/SmartDashboard/Arm[Coral]/motionProfile/maxVelocity (deg per sec)",
+                  "period": 0.06,
+                  "data_type": "double",
+                  "show_submit_button": true
+                }
+              }
+            ]
+          },
+          {
+            "title": "Arm[Coral]",
+            "x": 0.0,
+            "y": 0.0,
+            "width": 256.0,
+            "height": 576.0,
+            "type": "List Layout",
+            "properties": {
+              "label_position": "TOP"
+            },
+            "children": [
+              {
+                "title": "AppliedVolts",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 128.0,
+                "height": 128.0,
+                "type": "Text Display",
+                "properties": {
+                  "topic": "/AdvantageKit/Arm[Coral]/AppliedVolts",
+                  "period": 0.06,
+                  "data_type": "double",
+                  "show_submit_button": false
+                }
+              },
+              {
+                "title": "CurrentAmps",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 128.0,
+                "height": 128.0,
+                "type": "Text Display",
+                "properties": {
+                  "topic": "/AdvantageKit/Arm[Coral]/CurrentAmps",
+                  "period": 0.06,
+                  "data_type": "double",
+                  "show_submit_button": false
+                }
+              },
+              {
+                "title": "PositionDegrees",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 128.0,
+                "height": 128.0,
+                "type": "Text Display",
+                "properties": {
+                  "topic": "/AdvantageKit/Arm[Coral]/PositionDegrees",
+                  "period": 0.06,
+                  "data_type": "double",
+                  "show_submit_button": false
+                }
+              },
+              {
+                "title": "targetMotionProfiledAngleDegrees",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 128.0,
+                "height": 128.0,
+                "type": "Text Display",
+                "properties": {
+                  "topic": "/AdvantageKit/RealOutputs/Arm[Coral]/targetMotionProfiledAngleDegrees",
+                  "period": 0.06,
+                  "data_type": "double",
+                  "show_submit_button": false
+                }
+              },
+              {
+                "title": "targetAngleDegrees",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 128.0,
+                "height": 128.0,
+                "type": "Text Display",
+                "properties": {
+                  "topic": "/AdvantageKit/RealOutputs/Arm[Coral]/targetAngleDegrees",
+                  "period": 0.06,
+                  "data_type": "double",
+                  "show_submit_button": false
+                }
+              },
+              {
+                "title": "ForwardLimit",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 128.0,
+                "height": 128.0,
+                "type": "Boolean Box",
+                "properties": {
+                  "topic": "/AdvantageKit/Arm[Coral]/ForwardLimit",
+                  "period": 0.06,
+                  "data_type": "boolean",
+                  "true_color": 4283215696,
+                  "false_color": 4294198070,
+                  "true_icon": "None",
+                  "false_icon": "None"
+                }
+              },
+              {
+                "title": "ReverseLimit",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 128.0,
+                "height": 128.0,
+                "type": "Boolean Box",
+                "properties": {
+                  "topic": "/AdvantageKit/Arm[Coral]/ReverseLimit",
+                  "period": 0.06,
+                  "data_type": "boolean",
+                  "true_color": 4283215696,
+                  "false_color": 4294198070,
+                  "true_icon": "None",
+                  "false_icon": "None"
                 }
               }
             ]
@@ -312,41 +539,9 @@
         ],
         "containers": [
           {
-            "title": "AppliedVolts",
-            "x": 0.0,
-            "y": 0.0,
-            "width": 256.0,
-            "height": 256.0,
-            "type": "Graph",
-            "properties": {
-              "topic": "/AdvantageKit/Arm[Coral]/AppliedVolts",
-              "period": 0.033,
-              "data_type": "double",
-              "time_displayed": 5.0,
-              "color": 4278238420,
-              "line_width": 2.0
-            }
-          },
-          {
-            "title": "CurrentAmps",
-            "x": 0.0,
-            "y": 256.0,
-            "width": 256.0,
-            "height": 256.0,
-            "type": "Graph",
-            "properties": {
-              "topic": "/AdvantageKit/Arm[Coral]/CurrentAmps",
-              "period": 0.033,
-              "data_type": "double",
-              "time_displayed": 5.0,
-              "color": 4278238420,
-              "line_width": 2.0
-            }
-          },
-          {
             "title": "PID",
-            "x": 256.0,
-            "y": 0.0,
+            "x": 768.0,
+            "y": 320.0,
             "width": 256.0,
             "height": 384.0,
             "type": "PIDController",
@@ -356,336 +551,16 @@
             }
           },
           {
-            "title": "PositionDegrees",
-            "x": 512.0,
-            "y": 640.0,
-            "width": 256.0,
-            "height": 256.0,
-            "type": "Radial Gauge",
-            "properties": {
-              "topic": "/AdvantageKit/Arm[Coral]/PositionDegrees",
-              "period": 0.06,
-              "data_type": "double",
-              "start_angle": -140.0,
-              "end_angle": 140.0,
-              "min_value": -100.0,
-              "max_value": 100.0,
-              "number_of_labels": 8,
-              "wrap_value": false,
-              "show_pointer": true,
-              "show_ticks": true
-            }
-          },
-          {
             "title": "Auto Calibrate Coral Arm",
-            "x": 256.0,
-            "y": 384.0,
+            "x": 0.0,
+            "y": 576.0,
             "width": 256.0,
             "height": 128.0,
             "type": "Command",
             "properties": {
               "topic": "/SmartDashboard/Arm[Coral]/Commands/Auto Calibrate Coral Arm",
               "period": 0.06,
-              "show_type": true
-            }
-          },
-          {
-            "title": "targetAngleDegrees",
-            "x": 0.0,
-            "y": 640.0,
-            "width": 256.0,
-            "height": 256.0,
-            "type": "Radial Gauge",
-            "properties": {
-              "topic": "/AdvantageKit/RealOutputs/Arm[Coral]/targetAngleDegrees",
-              "period": 0.06,
-              "data_type": "double",
-              "start_angle": -140.0,
-              "end_angle": 140.0,
-              "min_value": -100.0,
-              "max_value": 100.0,
-              "number_of_labels": 8,
-              "wrap_value": false,
-              "show_pointer": true,
-              "show_ticks": true
-            }
-          },
-          {
-            "title": "targetMotionProfiledAngleDegrees",
-            "x": 256.0,
-            "y": 640.0,
-            "width": 256.0,
-            "height": 256.0,
-            "type": "Radial Gauge",
-            "properties": {
-              "topic": "/AdvantageKit/RealOutputs/Arm[Coral]/targetMotionProfiledAngleDegrees",
-              "period": 0.06,
-              "data_type": "double",
-              "start_angle": -140.0,
-              "end_angle": 140.0,
-              "min_value": -100.0,
-              "max_value": 100.0,
-              "number_of_labels": 8,
-              "wrap_value": false,
-              "show_pointer": true,
-              "show_ticks": true
-            }
-          },
-          {
-            "title": "Subsystem",
-            "x": 0.0,
-            "y": 512.0,
-            "width": 512.0,
-            "height": 128.0,
-            "type": "Subsystem",
-            "properties": {
-              "topic": "/SmartDashboard/Arm[Coral]/Subsystem",
-              "period": 0.06
-            }
-          }
-        ]
-      }
-    },
-    {
-      "name": "Arm[Climber]",
-      "grid_layout": {
-        "layouts": [
-          {
-            "title": "Climber Position",
-            "x": 512.0,
-            "y": 0.0,
-            "width": 256.0,
-            "height": 512.0,
-            "type": "List Layout",
-            "properties": {
-              "label_position": "TOP"
-            },
-            "children": [
-              {
-                "title": "Climber To Start",
-                "x": 0.0,
-                "y": 0.0,
-                "width": 256.0,
-                "height": 128.0,
-                "type": "Command",
-                "properties": {
-                  "topic": "/SmartDashboard/Arm[Climber]/Commands/Climber To Start",
-                  "period": 0.06,
-                  "show_type": true
-                }
-              },
-              {
-                "title": "Climber To End",
-                "x": 0.0,
-                "y": 0.0,
-                "width": 256.0,
-                "height": 128.0,
-                "type": "Command",
-                "properties": {
-                  "topic": "/SmartDashboard/Arm[Climber]/Commands/Climber To End",
-                  "period": 0.06,
-                  "show_type": true
-                }
-              }
-            ]
-          },
-          {
-            "title": "Climber Sys ID",
-            "x": 768.0,
-            "y": 0.0,
-            "width": 256.0,
-            "height": 512.0,
-            "type": "List Layout",
-            "properties": {
-              "label_position": "TOP"
-            },
-            "children": [
-              {
-                "title": "Dynamic Forward",
-                "x": 0.0,
-                "y": 0.0,
-                "width": 256.0,
-                "height": 128.0,
-                "type": "Command",
-                "properties": {
-                  "topic": "/SmartDashboard/Arm[Climber]/Dynamic Forward",
-                  "period": 0.06,
-                  "show_type": true
-                }
-              },
-              {
-                "title": "Dynamic Reverse",
-                "x": 0.0,
-                "y": 0.0,
-                "width": 256.0,
-                "height": 128.0,
-                "type": "Command",
-                "properties": {
-                  "topic": "/SmartDashboard/Arm[Climber]/Dynamic Reverse",
-                  "period": 0.06,
-                  "show_type": true
-                }
-              },
-              {
-                "title": "Quasistatic Forward",
-                "x": 0.0,
-                "y": 0.0,
-                "width": 256.0,
-                "height": 128.0,
-                "type": "Command",
-                "properties": {
-                  "topic": "/SmartDashboard/Arm[Climber]/Quasistatic Forward",
-                  "period": 0.06,
-                  "show_type": true
-                }
-              },
-              {
-                "title": "Quasistatic Reverse",
-                "x": 0.0,
-                "y": 0.0,
-                "width": 256.0,
-                "height": 128.0,
-                "type": "Command",
-                "properties": {
-                  "topic": "/SmartDashboard/Arm[Climber]/Quasistatic Reverse",
-                  "period": 0.06,
-                  "show_type": true
-                }
-              }
-            ]
-          }
-        ],
-        "containers": [
-          {
-            "title": "AppliedVolts",
-            "x": 0.0,
-            "y": 0.0,
-            "width": 256.0,
-            "height": 256.0,
-            "type": "Graph",
-            "properties": {
-              "topic": "/AdvantageKit/Arm[Climber]/AppliedVolts",
-              "period": 0.033,
-              "data_type": "double",
-              "time_displayed": 5.0,
-              "color": 4278238420,
-              "line_width": 2.0
-            }
-          },
-          {
-            "title": "CurrentAmps",
-            "x": 0.0,
-            "y": 256.0,
-            "width": 256.0,
-            "height": 256.0,
-            "type": "Graph",
-            "properties": {
-              "topic": "/AdvantageKit/Arm[Climber]/CurrentAmps",
-              "period": 0.033,
-              "data_type": "double",
-              "time_displayed": 5.0,
-              "color": 4278238420,
-              "line_width": 2.0
-            }
-          },
-          {
-            "title": "Climber PID",
-            "x": 256.0,
-            "y": 0.0,
-            "width": 256.0,
-            "height": 384.0,
-            "type": "PIDController",
-            "properties": {
-              "topic": "/SmartDashboard/Arm[Climber]/PID",
-              "period": 0.06
-            }
-          },
-          {
-            "title": "targetAngleDegrees",
-            "x": 0.0,
-            "y": 640.0,
-            "width": 256.0,
-            "height": 256.0,
-            "type": "Radial Gauge",
-            "properties": {
-              "topic": "/AdvantageKit/RealOutputs/Arm[Climber]/targetAngleDegrees",
-              "period": 0.06,
-              "data_type": "double",
-              "start_angle": -140.0,
-              "end_angle": 140.0,
-              "min_value": 0.0,
-              "max_value": 135.0,
-              "number_of_labels": 8,
-              "wrap_value": false,
-              "show_pointer": true,
-              "show_ticks": true
-            }
-          },
-          {
-            "title": "Subsystem",
-            "x": 0.0,
-            "y": 512.0,
-            "width": 512.0,
-            "height": 128.0,
-            "type": "Subsystem",
-            "properties": {
-              "topic": "/SmartDashboard/Arm[Climber]/Subsystem",
-              "period": 0.06
-            }
-          },
-          {
-            "title": "Climber Auto Calibrate ",
-            "x": 256.0,
-            "y": 384.0,
-            "width": 256.0,
-            "height": 128.0,
-            "type": "Command",
-            "properties": {
-              "topic": "/SmartDashboard/Arm[Climber]/Commands/Climber Auto Calibrate ",
-              "period": 0.06,
-              "show_type": true
-            }
-          },
-          {
-            "title": "PositionDegrees",
-            "x": 512.0,
-            "y": 640.0,
-            "width": 256.0,
-            "height": 256.0,
-            "type": "Radial Gauge",
-            "properties": {
-              "topic": "/AdvantageKit/Arm[Climber]/PositionDegrees",
-              "period": 0.06,
-              "data_type": "double",
-              "start_angle": -140.0,
-              "end_angle": 140.0,
-              "min_value": 0.0,
-              "max_value": 135.0,
-              "number_of_labels": 8,
-              "wrap_value": false,
-              "show_pointer": true,
-              "show_ticks": true
-            }
-          },
-          {
-            "title": "targetMotionProfiledAngleDegrees",
-            "x": 256.0,
-            "y": 640.0,
-            "width": 256.0,
-            "height": 256.0,
-            "type": "Radial Gauge",
-            "properties": {
-              "topic": "/AdvantageKit/RealOutputs/Arm[Climber]/targetMotionProfiledAngleDegrees",
-              "period": 0.06,
-              "data_type": "double",
-              "start_angle": -140.0,
-              "end_angle": 140.0,
-              "min_value": 0.0,
-              "max_value": 135.0,
-              "number_of_labels": 8,
-              "wrap_value": false,
-              "show_pointer": true,
-              "show_ticks": true
+              "show_type": false
             }
           }
         ]
@@ -696,8 +571,8 @@
       "grid_layout": {
         "layouts": [
           {
-            "title": "Elevator Sys ID",
-            "x": 768.0,
+            "title": "Elevator[Coral]",
+            "x": 0.0,
             "y": 0.0,
             "width": 256.0,
             "height": 512.0,
@@ -707,65 +582,117 @@
             },
             "children": [
               {
-                "title": "Dynamic Forward",
+                "title": "AppliedVolts",
                 "x": 0.0,
                 "y": 0.0,
-                "width": 256.0,
+                "width": 128.0,
                 "height": 128.0,
-                "type": "Command",
+                "type": "Text Display",
                 "properties": {
-                  "topic": "/SmartDashboard/Elevator[Coral]/Dynamic Forward",
+                  "topic": "/AdvantageKit/Elevator[Coral]/AppliedVolts",
                   "period": 0.06,
-                  "show_type": false
+                  "data_type": "double",
+                  "show_submit_button": false
                 }
               },
               {
-                "title": "Dynamic Reverse",
+                "title": "CurrentAmps",
                 "x": 0.0,
                 "y": 0.0,
-                "width": 256.0,
+                "width": 128.0,
                 "height": 128.0,
-                "type": "Command",
+                "type": "Text Display",
                 "properties": {
-                  "topic": "/SmartDashboard/Elevator[Coral]/Dynamic Reverse",
+                  "topic": "/AdvantageKit/Elevator[Coral]/CurrentAmps",
                   "period": 0.06,
-                  "show_type": false
+                  "data_type": "double",
+                  "show_submit_button": false
                 }
               },
               {
-                "title": "Quasistatic Forward",
+                "title": "PositionMeters",
                 "x": 0.0,
                 "y": 0.0,
-                "width": 256.0,
+                "width": 128.0,
                 "height": 128.0,
-                "type": "Command",
+                "type": "Text Display",
                 "properties": {
-                  "topic": "/SmartDashboard/Elevator[Coral]/Quasistatic Forward",
+                  "topic": "/AdvantageKit/Elevator[Coral]/PositionMeters",
                   "period": 0.06,
-                  "show_type": false
+                  "data_type": "double",
+                  "show_submit_button": false
                 }
               },
               {
-                "title": "Quasistatic Reverse",
+                "title": "targetMotionProfiledHeightMeters",
                 "x": 0.0,
                 "y": 0.0,
-                "width": 256.0,
+                "width": 128.0,
                 "height": 128.0,
-                "type": "Command",
+                "type": "Text Display",
                 "properties": {
-                  "topic": "/SmartDashboard/Elevator[Coral]/Quasistatic Reverse",
+                  "topic": "/AdvantageKit/RealOutputs/Elevator[Coral]/targetMotionProfiledHeightMeters",
                   "period": 0.06,
-                  "show_type": false
+                  "data_type": "double",
+                  "show_submit_button": false
+                }
+              },
+              {
+                "title": "targetHeightMeters",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 128.0,
+                "height": 128.0,
+                "type": "Text Display",
+                "properties": {
+                  "topic": "/AdvantageKit/RealOutputs/Elevator[Coral]/targetHeightMeters",
+                  "period": 0.06,
+                  "data_type": "double",
+                  "show_submit_button": false
+                }
+              },
+              {
+                "title": "ForwardLimit",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 128.0,
+                "height": 128.0,
+                "type": "Boolean Box",
+                "properties": {
+                  "topic": "/AdvantageKit/Elevator[Coral]/ForwardLimit",
+                  "period": 0.06,
+                  "data_type": "boolean",
+                  "true_color": 4283215696,
+                  "false_color": 4294198070,
+                  "true_icon": "None",
+                  "false_icon": "None"
+                }
+              },
+              {
+                "title": "ReverseLimit",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 128.0,
+                "height": 128.0,
+                "type": "Boolean Box",
+                "properties": {
+                  "topic": "/AdvantageKit/Elevator[Coral]/ReverseLimit",
+                  "period": 0.06,
+                  "data_type": "boolean",
+                  "true_color": 4283215696,
+                  "false_color": 4294198070,
+                  "true_icon": "None",
+                  "false_icon": "None"
                 }
               }
             ]
           },
           {
-            "title": "Elevator Height",
-            "x": 512.0,
+            "title": "Commands",
+            "x": 256.0,
             "y": 0.0,
             "width": 256.0,
-            "height": 640.0,
+            "height": 704.0,
             "type": "List Layout",
             "properties": {
               "label_position": "TOP"
@@ -837,94 +764,188 @@
                 }
               }
             ]
+          },
+          {
+            "title": "motionProfile",
+            "x": 512.0,
+            "y": 0.0,
+            "width": 256.0,
+            "height": 256.0,
+            "type": "List Layout",
+            "properties": {
+              "label_position": "TOP"
+            },
+            "children": [
+              {
+                "title": "maxAcceleration (meters per sec^2)",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 128.0,
+                "height": 128.0,
+                "type": "Text Display",
+                "properties": {
+                  "topic": "/SmartDashboard/Elevator[Coral]/motionProfile/maxAcceleration (meters per sec^2)",
+                  "period": 0.06,
+                  "data_type": "double",
+                  "show_submit_button": true
+                }
+              },
+              {
+                "title": "maxVelocity (meters per sec)",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 128.0,
+                "height": 128.0,
+                "type": "Text Display",
+                "properties": {
+                  "topic": "/SmartDashboard/Elevator[Coral]/motionProfile/maxVelocity (meters per sec)",
+                  "period": 0.06,
+                  "data_type": "double",
+                  "show_submit_button": true
+                }
+              }
+            ]
+          },
+          {
+            "title": "feedforward",
+            "x": 768.0,
+            "y": 0.0,
+            "width": 256.0,
+            "height": 320.0,
+            "type": "List Layout",
+            "properties": {
+              "label_position": "TOP"
+            },
+            "children": [
+              {
+                "title": "Ka",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 128.0,
+                "height": 128.0,
+                "type": "Text Display",
+                "properties": {
+                  "topic": "/SmartDashboard/Elevator[Coral]/feedforward/Ka",
+                  "period": 0.06,
+                  "data_type": "double",
+                  "show_submit_button": true
+                }
+              },
+              {
+                "title": "Kg",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 128.0,
+                "height": 128.0,
+                "type": "Text Display",
+                "properties": {
+                  "topic": "/SmartDashboard/Elevator[Coral]/feedforward/Kg",
+                  "period": 0.06,
+                  "data_type": "double",
+                  "show_submit_button": true
+                }
+              },
+              {
+                "title": "Ks",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 128.0,
+                "height": 128.0,
+                "type": "Text Display",
+                "properties": {
+                  "topic": "/SmartDashboard/Elevator[Coral]/feedforward/Ks",
+                  "period": 0.06,
+                  "data_type": "double",
+                  "show_submit_button": true
+                }
+              },
+              {
+                "title": "Kv",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 128.0,
+                "height": 128.0,
+                "type": "Text Display",
+                "properties": {
+                  "topic": "/SmartDashboard/Elevator[Coral]/feedforward/Kv",
+                  "period": 0.06,
+                  "data_type": "double",
+                  "show_submit_button": true
+                }
+              }
+            ]
+          },
+          {
+            "title": "SysID",
+            "x": 512.0,
+            "y": 256.0,
+            "width": 256.0,
+            "height": 448.0,
+            "type": "List Layout",
+            "properties": {
+              "label_position": "TOP"
+            },
+            "children": [
+              {
+                "title": "Dynamic Forward",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 256.0,
+                "height": 128.0,
+                "type": "Command",
+                "properties": {
+                  "topic": "/SmartDashboard/Elevator[Coral]/SysID/Dynamic Forward",
+                  "period": 0.06,
+                  "show_type": false
+                }
+              },
+              {
+                "title": "Dynamic Reverse",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 256.0,
+                "height": 128.0,
+                "type": "Command",
+                "properties": {
+                  "topic": "/SmartDashboard/Elevator[Coral]/SysID/Dynamic Reverse",
+                  "period": 0.06,
+                  "show_type": false
+                }
+              },
+              {
+                "title": "Quasistatic Forward",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 256.0,
+                "height": 128.0,
+                "type": "Command",
+                "properties": {
+                  "topic": "/SmartDashboard/Elevator[Coral]/SysID/Quasistatic Forward",
+                  "period": 0.06,
+                  "show_type": false
+                }
+              },
+              {
+                "title": "Quasistatic Reverse",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 256.0,
+                "height": 128.0,
+                "type": "Command",
+                "properties": {
+                  "topic": "/SmartDashboard/Elevator[Coral]/SysID/Quasistatic Reverse",
+                  "period": 0.06,
+                  "show_type": false
+                }
+              }
+            ]
           }
         ],
         "containers": [
           {
-            "title": "AppliedVolts",
-            "x": 0.0,
-            "y": 0.0,
-            "width": 256.0,
-            "height": 256.0,
-            "type": "Graph",
-            "properties": {
-              "topic": "/AdvantageKit/Elevator[Coral]/AppliedVolts",
-              "period": 0.033,
-              "data_type": "double",
-              "time_displayed": 5.0,
-              "min_value": -12.0,
-              "max_value": 12.0,
-              "color": 4278238420,
-              "line_width": 2.0
-            }
-          },
-          {
-            "title": "CurrentAmps",
-            "x": 0.0,
-            "y": 256.0,
-            "width": 256.0,
-            "height": 256.0,
-            "type": "Radial Gauge",
-            "properties": {
-              "topic": "/AdvantageKit/Elevator[Coral]/CurrentAmps",
-              "period": 0.033,
-              "data_type": "double",
-              "start_angle": -140.0,
-              "end_angle": 140.0,
-              "min_value": 0.0,
-              "max_value": 100.0,
-              "number_of_labels": 8,
-              "wrap_value": false,
-              "show_pointer": true,
-              "show_ticks": true
-            }
-          },
-          {
-            "title": "PositionMeters",
-            "x": 512.0,
-            "y": 640.0,
-            "width": 256.0,
-            "height": 256.0,
-            "type": "Radial Gauge",
-            "properties": {
-              "topic": "/AdvantageKit/Elevator[Coral]/PositionMeters",
-              "period": 0.033,
-              "data_type": "double",
-              "start_angle": -140.0,
-              "end_angle": 140.0,
-              "min_value": 0.0,
-              "max_value": 2.0,
-              "number_of_labels": 8,
-              "wrap_value": false,
-              "show_pointer": true,
-              "show_ticks": true
-            }
-          },
-          {
-            "title": "targetHeightMeters",
-            "x": 0.0,
-            "y": 640.0,
-            "width": 256.0,
-            "height": 256.0,
-            "type": "Radial Gauge",
-            "properties": {
-              "topic": "/AdvantageKit/RealOutputs/Elevator[Coral]/targetHeightMeters",
-              "period": 0.06,
-              "data_type": "double",
-              "start_angle": -140.0,
-              "end_angle": 140.0,
-              "min_value": 0.0,
-              "max_value": 2.0,
-              "number_of_labels": 8,
-              "wrap_value": false,
-              "show_pointer": true,
-              "show_ticks": true
-            }
-          },
-          {
-            "title": "Elevator PID",
-            "x": 256.0,
-            "y": 0.0,
+            "title": "PID",
+            "x": 768.0,
+            "y": 320.0,
             "width": 256.0,
             "height": 384.0,
             "type": "PIDController",
@@ -935,51 +956,689 @@
           },
           {
             "title": "Auto Calibrate Elevator",
-            "x": 256.0,
-            "y": 384.0,
+            "x": 0.0,
+            "y": 576.0,
             "width": 256.0,
             "height": 128.0,
             "type": "Command",
             "properties": {
               "topic": "/SmartDashboard/Elevator[Coral]/Commands/Auto Calibrate Elevator",
               "period": 0.06,
-              "show_type": true
+              "show_type": false
             }
+          }
+        ]
+      }
+    },
+    {
+      "name": "Arm[Climber]",
+      "grid_layout": {
+        "layouts": [
+          {
+            "title": "Arm[Climber]",
+            "x": 0.0,
+            "y": 0.0,
+            "width": 256.0,
+            "height": 512.0,
+            "type": "List Layout",
+            "properties": {
+              "label_position": "TOP"
+            },
+            "children": [
+              {
+                "title": "AppliedVolts",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 128.0,
+                "height": 128.0,
+                "type": "Text Display",
+                "properties": {
+                  "topic": "/AdvantageKit/Arm[Climber]/AppliedVolts",
+                  "period": 0.06,
+                  "data_type": "double",
+                  "show_submit_button": false
+                }
+              },
+              {
+                "title": "CurrentAmps",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 128.0,
+                "height": 128.0,
+                "type": "Text Display",
+                "properties": {
+                  "topic": "/AdvantageKit/Arm[Climber]/CurrentAmps",
+                  "period": 0.06,
+                  "data_type": "double",
+                  "show_submit_button": false
+                }
+              },
+              {
+                "title": "PositionDegrees",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 128.0,
+                "height": 128.0,
+                "type": "Text Display",
+                "properties": {
+                  "topic": "/AdvantageKit/Arm[Climber]/PositionDegrees",
+                  "period": 0.06,
+                  "data_type": "double",
+                  "show_submit_button": false
+                }
+              },
+              {
+                "title": "targetMotionProfiledAngleDegrees",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 128.0,
+                "height": 128.0,
+                "type": "Text Display",
+                "properties": {
+                  "topic": "/AdvantageKit/RealOutputs/Arm[Climber]/targetMotionProfiledAngleDegrees",
+                  "period": 0.06,
+                  "data_type": "double",
+                  "show_submit_button": false
+                }
+              },
+              {
+                "title": "targetAngleDegrees",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 128.0,
+                "height": 128.0,
+                "type": "Text Display",
+                "properties": {
+                  "topic": "/AdvantageKit/RealOutputs/Arm[Climber]/targetAngleDegrees",
+                  "period": 0.06,
+                  "data_type": "double",
+                  "show_submit_button": false
+                }
+              },
+              {
+                "title": "ForwardLimit",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 128.0,
+                "height": 128.0,
+                "type": "Boolean Box",
+                "properties": {
+                  "topic": "/AdvantageKit/Arm[Climber]/ForwardLimit",
+                  "period": 0.06,
+                  "data_type": "boolean",
+                  "true_color": 4283215696,
+                  "false_color": 4294198070,
+                  "true_icon": "None",
+                  "false_icon": "None"
+                }
+              },
+              {
+                "title": "ReverseLimit",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 128.0,
+                "height": 128.0,
+                "type": "Boolean Box",
+                "properties": {
+                  "topic": "/AdvantageKit/Arm[Climber]/ReverseLimit",
+                  "period": 0.06,
+                  "data_type": "boolean",
+                  "true_color": 4283215696,
+                  "false_color": 4294198070,
+                  "true_icon": "None",
+                  "false_icon": "None"
+                }
+              }
+            ]
           },
           {
-            "title": "Subsystem",
-            "x": 0.0,
-            "y": 512.0,
-            "width": 512.0,
-            "height": 128.0,
-            "type": "Subsystem",
+            "title": "Commands",
+            "x": 256.0,
+            "y": 0.0,
+            "width": 256.0,
+            "height": 704.0,
+            "type": "List Layout",
             "properties": {
-              "topic": "/SmartDashboard/Elevator[Coral]/Subsystem",
+              "label_position": "TOP"
+            },
+            "children": [
+              {
+                "title": "Climber To End",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 256.0,
+                "height": 128.0,
+                "type": "Command",
+                "properties": {
+                  "topic": "/SmartDashboard/Arm[Climber]/Commands/Climber To End",
+                  "period": 0.06,
+                  "show_type": false
+                }
+              },
+              {
+                "title": "Climber To Start",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 256.0,
+                "height": 128.0,
+                "type": "Command",
+                "properties": {
+                  "topic": "/SmartDashboard/Arm[Climber]/Commands/Climber To Start",
+                  "period": 0.06,
+                  "show_type": false
+                }
+              }
+            ]
+          },
+          {
+            "title": "motionProfile",
+            "x": 512.0,
+            "y": 0.0,
+            "width": 256.0,
+            "height": 256.0,
+            "type": "List Layout",
+            "properties": {
+              "label_position": "TOP"
+            },
+            "children": [
+              {
+                "title": "maxAcceleration (deg per sec^2)",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 128.0,
+                "height": 128.0,
+                "type": "Text Display",
+                "properties": {
+                  "topic": "/SmartDashboard/Arm[Climber]/motionProfile/maxAcceleration (deg per sec^2)",
+                  "period": 0.06,
+                  "data_type": "double",
+                  "show_submit_button": true
+                }
+              },
+              {
+                "title": "maxVelocity (deg per sec)",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 128.0,
+                "height": 128.0,
+                "type": "Text Display",
+                "properties": {
+                  "topic": "/SmartDashboard/Arm[Climber]/motionProfile/maxVelocity (deg per sec)",
+                  "period": 0.06,
+                  "data_type": "double",
+                  "show_submit_button": true
+                }
+              }
+            ]
+          },
+          {
+            "title": "feedforward",
+            "x": 768.0,
+            "y": 0.0,
+            "width": 256.0,
+            "height": 320.0,
+            "type": "List Layout",
+            "properties": {
+              "label_position": "TOP"
+            },
+            "children": [
+              {
+                "title": "Ka",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 128.0,
+                "height": 128.0,
+                "type": "Text Display",
+                "properties": {
+                  "topic": "/SmartDashboard/Arm[Climber]/feedforward/Ka",
+                  "period": 0.06,
+                  "data_type": "double",
+                  "show_submit_button": true
+                }
+              },
+              {
+                "title": "Kg",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 128.0,
+                "height": 128.0,
+                "type": "Text Display",
+                "properties": {
+                  "topic": "/SmartDashboard/Arm[Climber]/feedforward/Kg",
+                  "period": 0.06,
+                  "data_type": "double",
+                  "show_submit_button": true
+                }
+              },
+              {
+                "title": "Ks",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 128.0,
+                "height": 128.0,
+                "type": "Text Display",
+                "properties": {
+                  "topic": "/SmartDashboard/Arm[Climber]/feedforward/Ks",
+                  "period": 0.06,
+                  "data_type": "double",
+                  "show_submit_button": true
+                }
+              },
+              {
+                "title": "Kv",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 128.0,
+                "height": 128.0,
+                "type": "Text Display",
+                "properties": {
+                  "topic": "/SmartDashboard/Arm[Climber]/feedforward/Kv",
+                  "period": 0.06,
+                  "data_type": "double",
+                  "show_submit_button": true
+                }
+              }
+            ]
+          },
+          {
+            "title": "SysID",
+            "x": 512.0,
+            "y": 256.0,
+            "width": 256.0,
+            "height": 448.0,
+            "type": "List Layout",
+            "properties": {
+              "label_position": "TOP"
+            },
+            "children": [
+              {
+                "title": "Dynamic Forward",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 256.0,
+                "height": 128.0,
+                "type": "Command",
+                "properties": {
+                  "topic": "/SmartDashboard/Arm[Climber]/SysID/Dynamic Forward",
+                  "period": 0.06,
+                  "show_type": false
+                }
+              },
+              {
+                "title": "Dynamic Reverse",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 256.0,
+                "height": 128.0,
+                "type": "Command",
+                "properties": {
+                  "topic": "/SmartDashboard/Arm[Climber]/SysID/Dynamic Reverse",
+                  "period": 0.06,
+                  "show_type": false
+                }
+              },
+              {
+                "title": "Quasistatic Forward",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 256.0,
+                "height": 128.0,
+                "type": "Command",
+                "properties": {
+                  "topic": "/SmartDashboard/Arm[Climber]/SysID/Quasistatic Forward",
+                  "period": 0.06,
+                  "show_type": false
+                }
+              },
+              {
+                "title": "Quasistatic Reverse",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 256.0,
+                "height": 128.0,
+                "type": "Command",
+                "properties": {
+                  "topic": "/SmartDashboard/Arm[Climber]/SysID/Quasistatic Reverse",
+                  "period": 0.06,
+                  "show_type": false
+                }
+              }
+            ]
+          }
+        ],
+        "containers": [
+          {
+            "title": "PID",
+            "x": 768.0,
+            "y": 320.0,
+            "width": 256.0,
+            "height": 384.0,
+            "type": "PIDController",
+            "properties": {
+              "topic": "/SmartDashboard/Arm[Climber]/PID",
               "period": 0.06
             }
           },
           {
-            "title": "targetMotionProfiledHeightMeters",
-            "x": 256.0,
-            "y": 640.0,
+            "title": "Climber Auto Calibrate ",
+            "x": 0.0,
+            "y": 576.0,
             "width": 256.0,
-            "height": 256.0,
-            "type": "Radial Gauge",
+            "height": 128.0,
+            "type": "Command",
             "properties": {
-              "topic": "/AdvantageKit/RealOutputs/Elevator[Coral]/targetMotionProfiledHeightMeters",
+              "topic": "/SmartDashboard/Arm[Climber]/Commands/Climber Auto Calibrate ",
               "period": 0.06,
-              "data_type": "double",
-              "start_angle": -140.0,
-              "end_angle": 140.0,
-              "min_value": 0.0,
-              "max_value": 2.0,
-              "number_of_labels": 8,
-              "wrap_value": false,
-              "show_pointer": true,
-              "show_ticks": true
+              "show_type": false
             }
           }
         ]
+      }
+    },
+    {
+      "name": "Arm[Algae]",
+      "grid_layout": {
+        "layouts": [
+          {
+            "title": "Arm[Algae]",
+            "x": 0.0,
+            "y": 0.0,
+            "width": 256.0,
+            "height": 448.0,
+            "type": "List Layout",
+            "properties": {
+              "label_position": "TOP"
+            },
+            "children": [
+              {
+                "title": "AppliedVolts",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 128.0,
+                "height": 128.0,
+                "type": "Text Display",
+                "properties": {
+                  "topic": "/AdvantageKit/Arm[Algae]/AppliedVolts",
+                  "period": 0.06,
+                  "data_type": "double",
+                  "show_submit_button": false
+                }
+              },
+              {
+                "title": "CurrentAmps",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 128.0,
+                "height": 128.0,
+                "type": "Text Display",
+                "properties": {
+                  "topic": "/AdvantageKit/Arm[Algae]/CurrentAmps",
+                  "period": 0.06,
+                  "data_type": "double",
+                  "show_submit_button": false
+                }
+              },
+              {
+                "title": "targetAngleDegrees",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 128.0,
+                "height": 128.0,
+                "type": "Text Display",
+                "properties": {
+                  "topic": "/AdvantageKit/RealOutputs/Arm[Algae]/targetAngleDegrees",
+                  "period": 0.06,
+                  "data_type": "double",
+                  "show_submit_button": false
+                }
+              },
+              {
+                "title": "PositionDegrees",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 128.0,
+                "height": 128.0,
+                "type": "Text Display",
+                "properties": {
+                  "topic": "/AdvantageKit/Arm[Algae]/PositionDegrees",
+                  "period": 0.06,
+                  "data_type": "double",
+                  "show_submit_button": false
+                }
+              },
+              {
+                "title": "ReverseLimit",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 128.0,
+                "height": 128.0,
+                "type": "Boolean Box",
+                "properties": {
+                  "topic": "/AdvantageKit/Arm[Algae]/ReverseLimit",
+                  "period": 0.06,
+                  "data_type": "boolean",
+                  "true_color": 4283215696,
+                  "false_color": 4294198070,
+                  "true_icon": "None",
+                  "false_icon": "None"
+                }
+              },
+              {
+                "title": "ForwardLimit",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 128.0,
+                "height": 128.0,
+                "type": "Boolean Box",
+                "properties": {
+                  "topic": "/AdvantageKit/Arm[Algae]/ForwardLimit",
+                  "period": 0.06,
+                  "data_type": "boolean",
+                  "true_color": 4283215696,
+                  "false_color": 4294198070,
+                  "true_icon": "None",
+                  "false_icon": "None"
+                }
+              }
+            ]
+          },
+          {
+            "title": "motionProfile",
+            "x": 512.0,
+            "y": 0.0,
+            "width": 256.0,
+            "height": 256.0,
+            "type": "List Layout",
+            "properties": {
+              "label_position": "TOP"
+            },
+            "children": [
+              {
+                "title": "maxAcceleration (deg per sec^2)",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 128.0,
+                "height": 128.0,
+                "type": "Text Display",
+                "properties": {
+                  "topic": "/SmartDashboard/Arm[Algae]/motionProfile/maxAcceleration (deg per sec^2)",
+                  "period": 0.06,
+                  "data_type": "double",
+                  "show_submit_button": true
+                }
+              },
+              {
+                "title": "maxVelocity (deg per sec)",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 128.0,
+                "height": 128.0,
+                "type": "Text Display",
+                "properties": {
+                  "topic": "/SmartDashboard/Arm[Algae]/motionProfile/maxVelocity (deg per sec)",
+                  "period": 0.06,
+                  "data_type": "double",
+                  "show_submit_button": true
+                }
+              }
+            ]
+          },
+          {
+            "title": "SysID",
+            "x": 512.0,
+            "y": 256.0,
+            "width": 256.0,
+            "height": 448.0,
+            "type": "List Layout",
+            "properties": {
+              "label_position": "TOP"
+            },
+            "children": [
+              {
+                "title": "Dynamic Forward",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 256.0,
+                "height": 128.0,
+                "type": "Command",
+                "properties": {
+                  "topic": "/SmartDashboard/Arm[Algae]/SysID/Dynamic Forward",
+                  "period": 0.06,
+                  "show_type": false
+                }
+              },
+              {
+                "title": "Dynamic Reverse",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 256.0,
+                "height": 128.0,
+                "type": "Command",
+                "properties": {
+                  "topic": "/SmartDashboard/Arm[Algae]/SysID/Dynamic Reverse",
+                  "period": 0.06,
+                  "show_type": false
+                }
+              },
+              {
+                "title": "Quasistatic Forward",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 256.0,
+                "height": 128.0,
+                "type": "Command",
+                "properties": {
+                  "topic": "/SmartDashboard/Arm[Algae]/SysID/Quasistatic Forward",
+                  "period": 0.06,
+                  "show_type": false
+                }
+              },
+              {
+                "title": "Quasistatic Reverse",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 256.0,
+                "height": 128.0,
+                "type": "Command",
+                "properties": {
+                  "topic": "/SmartDashboard/Arm[Algae]/SysID/Quasistatic Reverse",
+                  "period": 0.06,
+                  "show_type": false
+                }
+              }
+            ]
+          },
+          {
+            "title": "feedforward",
+            "x": 768.0,
+            "y": 0.0,
+            "width": 256.0,
+            "height": 320.0,
+            "type": "List Layout",
+            "properties": {
+              "label_position": "TOP"
+            },
+            "children": [
+              {
+                "title": "Ka",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 128.0,
+                "height": 128.0,
+                "type": "Text Display",
+                "properties": {
+                  "topic": "/SmartDashboard/Arm[Algae]/feedforward/Ka",
+                  "period": 0.06,
+                  "data_type": "double",
+                  "show_submit_button": true
+                }
+              },
+              {
+                "title": "Kg",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 128.0,
+                "height": 128.0,
+                "type": "Text Display",
+                "properties": {
+                  "topic": "/SmartDashboard/Arm[Algae]/feedforward/Kg",
+                  "period": 0.06,
+                  "data_type": "double",
+                  "show_submit_button": true
+                }
+              },
+              {
+                "title": "Ks",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 128.0,
+                "height": 128.0,
+                "type": "Text Display",
+                "properties": {
+                  "topic": "/SmartDashboard/Arm[Algae]/feedforward/Ks",
+                  "period": 0.06,
+                  "data_type": "double",
+                  "show_submit_button": true
+                }
+              },
+              {
+                "title": "Kv",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 128.0,
+                "height": 128.0,
+                "type": "Text Display",
+                "properties": {
+                  "topic": "/SmartDashboard/Arm[Algae]/feedforward/Kv",
+                  "period": 0.06,
+                  "data_type": "double",
+                  "show_submit_button": true
+                }
+              }
+            ]
+          }
+        ],
+        "containers": [
+          {
+            "title": "PID",
+            "x": 768.0,
+            "y": 320.0,
+            "width": 256.0,
+            "height": 384.0,
+            "type": "PIDController",
+            "properties": {
+              "topic": "/SmartDashboard/Arm[Algae]/PID",
+              "period": 0.06
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "Intake[Algae]",
+      "grid_layout": {
+        "layouts": [],
+        "containers": []
       }
     }
   ]
