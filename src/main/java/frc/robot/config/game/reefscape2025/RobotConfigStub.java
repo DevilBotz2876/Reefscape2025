@@ -3,6 +3,7 @@ package frc.robot.config.game.reefscape2025;
 import edu.wpi.first.math.controller.ArmFeedforward;
 import edu.wpi.first.math.controller.ElevatorFeedforward;
 import edu.wpi.first.math.controller.PIDController;
+import edu.wpi.first.math.controller.SimpleMotorFeedforward;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
@@ -13,19 +14,22 @@ import frc.robot.Robot;
 import frc.robot.io.implementations.motor.MotorIOArmStub;
 import frc.robot.io.implementations.motor.MotorIOBase.MotorIOBaseSettings;
 import frc.robot.io.implementations.motor.MotorIOElevatorStub;
+import frc.robot.io.implementations.motor.MotorIOFlywheelStub;
 import frc.robot.subsystems.controls.arm.AlgaeArmControls;
-import frc.robot.subsystems.controls.elevator.ElevatorControlsV2;
 import frc.robot.subsystems.controls.flywheel.FlywheelControls;
 import frc.robot.subsystems.implementations.drive.DriveSwerveYAGSL;
 import frc.robot.subsystems.implementations.motor.ArmMotorSubsystem;
 import frc.robot.subsystems.implementations.motor.ElevatorMotorSubsystem;
 import frc.robot.subsystems.interfaces.Arm.ArmSettings;
-import frc.robot.subsystems.interfaces.ElevatorV2.ElevatorSettings;
+import frc.robot.subsystems.interfaces.Elevator.ElevatorSettings;
+import frc.robot.subsystems.implementations.motor.FlywheelMotorSubsystem;
+import frc.robot.subsystems.interfaces.Arm.ArmSettings;
+import frc.robot.subsystems.interfaces.Flywheel.FlywheelSettings;
 
 /* Override Phoenix specific constants here */
 public class RobotConfigStub extends RobotConfig {
   private final ArmMotorSubsystem algaeArm;
-  private final ElevatorMotorSubsystem elevator;
+  private final FlywheelMotorSubsystem algaeIntake;
 
   public RobotConfigStub() {
     super(false, true, false);
@@ -78,6 +82,26 @@ public class RobotConfigStub extends RobotConfig {
           new ElevatorMotorSubsystem(
               new MotorIOElevatorStub(motorSettings, elevatorSettings), "Coral", elevatorSettings);
     }
+
+    {
+      MotorIOBaseSettings motorSettings = new MotorIOBaseSettings();
+      motorSettings.motor.gearing = 1;
+      motorSettings.motor.inverted = false;
+      motorSettings.pid = new PIDController(0, 0, 0);
+
+      FlywheelSettings flywheelSettings = new FlywheelSettings();
+      flywheelSettings.color = new Color8Bit(Color.kPurple);
+      flywheelSettings.feedforward = new SimpleMotorFeedforward(0, 0);
+      flywheelSettings.moiKgMetersSquared = 0.001;
+      flywheelSettings.motor = DCMotor.getNeo550(1);
+
+      algaeIntake =
+          new FlywheelMotorSubsystem(
+              new MotorIOFlywheelStub(motorSettings, flywheelSettings),
+              // new MotorIOStub(settings, simulationSettings),
+              "Algae",
+              flywheelSettings);
+    }
   }
 
   @Override
@@ -86,7 +110,6 @@ public class RobotConfigStub extends RobotConfig {
     super.configureBindings();
 
     AlgaeArmControls.setupController(algaeArm, mainController);
-    ElevatorControlsV2.setupController(elevator, mainController);
-    FlywheelControls.setupController(algaeFlywheel, mainController);
+    FlywheelControls.setupController(algaeIntake, mainController);
   }
 }

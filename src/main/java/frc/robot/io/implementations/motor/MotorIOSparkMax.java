@@ -108,8 +108,8 @@ public class MotorIOSparkMax extends MotorIOBase {
     */
 
   @Override
-  public void resetEncoder(double position) {
-    encoder.setPosition(Units.radiansToRotations(normalizePositionToRad(position)));
+  public void resetEncoder(double positionRad) {
+    encoder.setPosition(Units.radiansToRotations(positionRad) * settings.motor.gearing);
   }
 
   private boolean getForwardLimit() {

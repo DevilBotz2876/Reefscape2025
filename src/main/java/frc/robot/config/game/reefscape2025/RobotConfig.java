@@ -3,6 +3,7 @@ package frc.robot.config.game.reefscape2025;
 import edu.wpi.first.apriltag.AprilTagFieldLayout;
 import edu.wpi.first.apriltag.AprilTagFields;
 import edu.wpi.first.math.controller.ArmFeedforward;
+import edu.wpi.first.math.controller.ElevatorFeedforward;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.controller.SimpleMotorFeedforward;
 import edu.wpi.first.math.geometry.Rotation3d;
@@ -10,8 +11,6 @@ import edu.wpi.first.math.geometry.Transform3d;
 import edu.wpi.first.math.geometry.Translation3d;
 import edu.wpi.first.math.system.plant.DCMotor;
 import edu.wpi.first.math.util.Units;
-import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
-import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.util.Color;
@@ -20,23 +19,23 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.Robot;
-import frc.robot.io.implementations.elevator.ElevatorIOStub;
 import frc.robot.io.implementations.motor.MotorIOArmStub;
 import frc.robot.io.implementations.motor.MotorIOBase.MotorIOBaseSettings;
 import frc.robot.io.implementations.motor.MotorIOFlywheelStub;
+import frc.robot.io.implementations.motor.MotorIOElevatorStub;
 import frc.robot.subsystems.controls.arm.ClimberArmControls;
 import frc.robot.subsystems.controls.arm.CoralArmControls;
 import frc.robot.subsystems.controls.drive.DriveControls;
 import frc.robot.subsystems.controls.elevator.ElevatorControls;
 import frc.robot.subsystems.controls.flywheel.FlywheelControls;
-import frc.robot.subsystems.controls.vision.VisionControls;
 import frc.robot.subsystems.implementations.drive.DriveBase;
-import frc.robot.subsystems.implementations.elevator.ElevatorSubsystem;
 import frc.robot.subsystems.implementations.motor.ArmMotorSubsystem;
 import frc.robot.subsystems.implementations.motor.FlywheelMotorSubsystem;
 import frc.robot.subsystems.implementations.vision.VisionSubsystem;
 import frc.robot.subsystems.interfaces.Arm.ArmSettings;
 import frc.robot.subsystems.interfaces.Flywheel.FlywheelSettings;
+import frc.robot.subsystems.implementations.motor.ElevatorMotorSubsystem;
+import frc.robot.subsystems.interfaces.Elevator.ElevatorSettings;
 import frc.robot.subsystems.interfaces.Vision.Camera;
 
 /* Put all constants here with reasonable defaults */
@@ -44,7 +43,7 @@ public class RobotConfig {
   public static DriveBase drive;
   public static SendableChooser<Command> autoChooser;
   public static VisionSubsystem vision;
-  public static ElevatorSubsystem elevator;
+  protected static ElevatorMotorSubsystem elevator;
   public static ArmMotorSubsystem coralArm;
   public static ArmMotorSubsystem climberArm;
   public static FlywheelMotorSubsystem algaeFlywheel;
@@ -52,11 +51,6 @@ public class RobotConfig {
   // Controls
   public CommandXboxController mainController = new CommandXboxController(0);
   public CommandXboxController assistController = new CommandXboxController(1);
-  private final ShuffleboardTab driverTab = Shuffleboard.getTab("Driver");
-
-  // private final ShuffleboardTab pitTab = Shuffleboard.getTab("Pit");
-  // private final ShuffleboardTab debugTab = Shuffleboard.getTab("Debug");
-  // private final ShuffleboardTab sysIdTestTab = Shuffleboard.getTab("SysId");
 
   public RobotConfig(boolean stubDrive, boolean stubAuto, boolean stubVision) {
     this(stubDrive, stubAuto, stubVision, true, true, true);
@@ -128,7 +122,35 @@ public class RobotConfig {
     }
 
     if (stubElevator) {
-      elevator = new ElevatorSubsystem(new ElevatorIOStub());
+      MotorIOBaseSettings motorSettings = new MotorIOBaseSettings();
+      motorSettings.motor.gearing = 9;
+      motorSettings.motor.inverted = false;
+      motorSettings.motor.drumRadiusMeters = Units.inchesToMeters(0.75 / 2); // 3/4" diameter
+      motorSettings.pid = new PIDController(1.0, 0, 0);
+
+      ElevatorSettings elevatorSettings = new ElevatorSettings();
+      elevatorSettings.minHeightInMeters = 0.0;
+      elevatorSettings.maxHeightInMeters = 1.5;
+      elevatorSettings.startingHeightInMeters = elevatorSettings.minHeightInMeters;
+      elevatorSettings.targetHeightToleranceInMeters = 0.01;
+      elevatorSettings.color = new Color8Bit(Color.kSilver);
+      elevatorSettings.feedforward = new ElevatorFeedforward(0, 0.0351, 0.1, 0.0);
+      elevatorSettings.carriageMassKg = 2.0;
+      elevatorSettings.motor = DCMotor.getKrakenX60(1);
+      elevatorSettings.simulateGravity = true;
+      elevatorSettings.maxVelocityInMetersPerSecond = 1;
+      elevatorSettings.maxAccelerationInMetersPerSecondSquared = 1;
+
+      ElevatorControls.Constants.autoZeroSettings.voltage = 2.0;
+      ElevatorControls.Constants.autoZeroSettings.minResetCurrent = 40;
+      ElevatorControls.Constants.autoZeroSettings.resetPositionRad =
+          elevatorSettings.maxHeightInMeters / motorSettings.motor.drumRadiusMeters;
+      ElevatorControls.Constants.autoZeroSettings.initialReverseDuration =
+          0.0; // Set the seconds of reverse before zero. Set to zero if there shound be no reverse
+
+      elevator =
+          new ElevatorMotorSubsystem(
+              new MotorIOElevatorStub(motorSettings, elevatorSettings), "Coral", elevatorSettings);
     }
 
     if (stubCoralArm) {
@@ -138,8 +160,8 @@ public class RobotConfig {
       motorSettings.pid = new PIDController(1.0, 0, 0);
 
       ArmSettings armSettings = new ArmSettings();
-      armSettings.minAngleInDegrees = 0;
-      armSettings.maxAngleInDegrees = 150;
+      armSettings.minAngleInDegrees = -90;
+      armSettings.maxAngleInDegrees = 75;
       armSettings.startingAngleInDegrees = armSettings.minAngleInDegrees;
       armSettings.feedforward = new ArmFeedforward(0, 0.222, 0.001, 0);
       armSettings.color = new Color8Bit(Color.kBlue);
@@ -210,12 +232,8 @@ public class RobotConfig {
 
     DriveControls.setupController(drive, mainController);
 
-    VisionControls.addGUI(vision, driverTab);
-
     CoralArmControls.setupController(coralArm, mainController);
     ElevatorControls.setupController(elevator, mainController);
-
-    CoralArmControls.setupController(coralArm, mainController);
     ClimberArmControls.setupController(climberArm, mainController);
 
     FlywheelControls.setupController(algaeFlywheel, mainController);
