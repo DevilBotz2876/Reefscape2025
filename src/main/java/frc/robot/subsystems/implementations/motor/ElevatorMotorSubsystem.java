@@ -31,9 +31,9 @@ public class ElevatorMotorSubsystem extends MotorSubsystem implements Elevator {
     this.settings = settings;
 
     setMotionProfileConstraintsMeters(
-            new Constraints(
-                settings.maxVelocityInMetersPerSecond,
-                settings.maxAccelerationInMetersPerSecondSquared));
+        new Constraints(
+            settings.maxVelocityInMetersPerSecond,
+            settings.maxAccelerationInMetersPerSecondSquared));
 
     double sim2dSize = settings.maxHeightInMeters * 64;
     mech2d = new Mechanism2d(sim2dSize, sim2dSize);
