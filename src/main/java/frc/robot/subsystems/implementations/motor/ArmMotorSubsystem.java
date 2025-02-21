@@ -1,9 +1,11 @@
 package frc.robot.subsystems.implementations.motor;
 
+import edu.wpi.first.math.controller.ArmFeedforward;
 import edu.wpi.first.math.trajectory.TrapezoidProfile;
 import edu.wpi.first.math.trajectory.TrapezoidProfile.Constraints;
 import edu.wpi.first.math.trajectory.TrapezoidProfile.State;
 import edu.wpi.first.math.util.Units;
+import edu.wpi.first.util.sendable.SendableBuilder;
 import edu.wpi.first.wpilibj.smartdashboard.Mechanism2d;
 import edu.wpi.first.wpilibj.smartdashboard.MechanismLigament2d;
 import edu.wpi.first.wpilibj.smartdashboard.MechanismRoot2d;
@@ -21,15 +23,16 @@ public class ArmMotorSubsystem extends MotorSubsystem implements Arm {
   private final Mechanism2d mech2d;
   private final MechanismLigament2d armSegment;
 
+  private TrapezoidProfile.Constraints motionProfileConstraintsDegrees = new Constraints(0, 0);
+
   public ArmMotorSubsystem(MotorIO io, String name, ArmSettings settings) {
     super(io, "Arm[" + name + "]");
     this.settings = settings;
 
-    motionProfile =
-        new TrapezoidProfile(
-            new Constraints(
-                Units.degreesToRadians(settings.maxVelocityInDegreesPerSecond),
-                Units.degreesToRadians(settings.maxAccelerationInDegreesPerSecondSquared)));
+    setMotionProfileConstraintsDegrees(
+        new Constraints(
+            settings.maxVelocityInDegreesPerSecond,
+            settings.maxAccelerationInDegreesPerSecondSquared));
 
     double sim2dSize = settings.armLengthInMeters * 64 * 2;
     mech2d = new Mechanism2d(sim2dSize, sim2dSize);
@@ -107,5 +110,97 @@ public class ArmMotorSubsystem extends MotorSubsystem implements Arm {
   public boolean isAtSetpoint() {
     return (Math.abs(getCurrentAngle() - this.targetAngleDegrees)
         <= settings.targetAngleToleranceInDegrees);
+  }
+
+  @Override
+  public void initSendable(SendableBuilder builder) {
+    super.initSendable(builder);
+    builder.addDoubleProperty(
+        "motionProfile/maxVelocity (deg per sec)", this::getMaxVelocity, this::setMaxVelocity);
+    builder.addDoubleProperty(
+        "motionProfile/maxAcceleration (deg per sec^2)",
+        this::getMaxAcceleration,
+        this::setMaxAcceleration);
+    builder.addDoubleProperty(
+        "feedforward/Ks", () -> null == settings ? 0 : settings.feedforward.getKs(), this::setFFKs);
+    builder.addDoubleProperty(
+        "feedforward/Kg", () -> null == settings ? 0 : settings.feedforward.getKg(), this::setFFKg);
+    builder.addDoubleProperty(
+        "feedforward/Kv", () -> null == settings ? 0 : settings.feedforward.getKv(), this::setFFKv);
+    builder.addDoubleProperty(
+        "feedforward/Ka", () -> null == settings ? 0 : settings.feedforward.getKa(), this::setFFKa);
+  }
+
+  private double getMaxVelocity() {
+    if (null != motionProfileConstraintsDegrees) {
+      return motionProfileConstraintsDegrees.maxVelocity;
+    } else {
+      return 0;
+    }
+  }
+
+  private void setMaxVelocity(double velocityDegreesPerSec) {
+    if (motionProfileConstraintsDegrees.maxVelocity != velocityDegreesPerSec)
+      setMotionProfileConstraintsDegrees(
+          new Constraints(velocityDegreesPerSec, motionProfileConstraintsDegrees.maxAcceleration));
+  }
+
+  private double getMaxAcceleration() {
+    if (null != motionProfileConstraintsDegrees) {
+      return motionProfileConstraintsDegrees.maxAcceleration;
+    } else {
+      return 0;
+    }
+  }
+
+  private void setMaxAcceleration(double accelerationDegreesPerSecSquared) {
+    if (motionProfileConstraintsDegrees.maxAcceleration != accelerationDegreesPerSecSquared)
+      setMotionProfileConstraintsDegrees(
+          new Constraints(
+              motionProfileConstraintsDegrees.maxVelocity, accelerationDegreesPerSecSquared));
+  }
+
+  private void setMotionProfileConstraintsDegrees(Constraints motionProfileConstraintsDegrees) {
+    this.motionProfileConstraintsDegrees = motionProfileConstraintsDegrees;
+    setMotionProfileConstraintsRad(
+        new Constraints(
+            Units.degreesToRadians(motionProfileConstraintsDegrees.maxVelocity),
+            Units.degreesToRadians(motionProfileConstraintsDegrees.maxAcceleration)));
+  }
+
+  private void setFFKs(double Ks) {
+    settings.feedforward =
+        new ArmFeedforward(
+            Ks,
+            settings.feedforward.getKg(),
+            settings.feedforward.getKv(),
+            settings.feedforward.getKa());
+  }
+
+  private void setFFKg(double Kg) {
+    settings.feedforward =
+        new ArmFeedforward(
+            settings.feedforward.getKs(),
+            Kg,
+            settings.feedforward.getKv(),
+            settings.feedforward.getKa());
+  }
+
+  private void setFFKv(double Kv) {
+    settings.feedforward =
+        new ArmFeedforward(
+            settings.feedforward.getKs(),
+            settings.feedforward.getKg(),
+            Kv,
+            settings.feedforward.getKa());
+  }
+
+  private void setFFKa(double Ka) {
+    settings.feedforward =
+        new ArmFeedforward(
+            settings.feedforward.getKs(),
+            settings.feedforward.getKg(),
+            settings.feedforward.getKv(),
+            Ka);
   }
 }
