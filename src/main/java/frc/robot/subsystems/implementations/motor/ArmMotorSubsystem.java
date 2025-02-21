@@ -1,5 +1,6 @@
 package frc.robot.subsystems.implementations.motor;
 
+import edu.wpi.first.math.controller.ArmFeedforward;
 import edu.wpi.first.math.trajectory.TrapezoidProfile;
 import edu.wpi.first.math.trajectory.TrapezoidProfile.Constraints;
 import edu.wpi.first.math.trajectory.TrapezoidProfile.State;
@@ -115,9 +116,19 @@ public class ArmMotorSubsystem extends MotorSubsystem implements Arm {
   public void initSendable(SendableBuilder builder) {
     super.initSendable(builder);
     builder.addDoubleProperty(
-        "maxVelocity (deg per sec)", this::getMaxVelocity, this::setMaxVelocity);
+        "motionProfile/maxVelocity (deg per sec)", this::getMaxVelocity, this::setMaxVelocity);
     builder.addDoubleProperty(
-        "maxAcceleration (deg per sec^2)", this::getMaxAcceleration, this::setMaxAcceleration);
+        "motionProfile/maxAcceleration (deg per sec^2)",
+        this::getMaxAcceleration,
+        this::setMaxAcceleration);
+    builder.addDoubleProperty(
+        "feedforward/Ks", () -> null == settings ? 0 : settings.feedforward.getKs(), this::setFFKs);
+    builder.addDoubleProperty(
+        "feedforward/Kg", () -> null == settings ? 0 : settings.feedforward.getKg(), this::setFFKg);
+    builder.addDoubleProperty(
+        "feedforward/Kv", () -> null == settings ? 0 : settings.feedforward.getKv(), this::setFFKv);
+    builder.addDoubleProperty(
+        "feedforward/Ka", () -> null == settings ? 0 : settings.feedforward.getKa(), this::setFFKa);
   }
 
   private double getMaxVelocity() {
@@ -155,5 +166,41 @@ public class ArmMotorSubsystem extends MotorSubsystem implements Arm {
         new Constraints(
             Units.degreesToRadians(motionProfileConstraintsDegrees.maxVelocity),
             Units.degreesToRadians(motionProfileConstraintsDegrees.maxAcceleration)));
+  }
+
+  private void setFFKs(double Ks) {
+    settings.feedforward =
+        new ArmFeedforward(
+            Ks,
+            settings.feedforward.getKg(),
+            settings.feedforward.getKv(),
+            settings.feedforward.getKa());
+  }
+
+  private void setFFKg(double Kg) {
+    settings.feedforward =
+        new ArmFeedforward(
+            settings.feedforward.getKs(),
+            Kg,
+            settings.feedforward.getKv(),
+            settings.feedforward.getKa());
+  }
+
+  private void setFFKv(double Kv) {
+    settings.feedforward =
+        new ArmFeedforward(
+            settings.feedforward.getKs(),
+            settings.feedforward.getKg(),
+            Kv,
+            settings.feedforward.getKa());
+  }
+
+  private void setFFKa(double Ka) {
+    settings.feedforward =
+        new ArmFeedforward(
+            settings.feedforward.getKs(),
+            settings.feedforward.getKg(),
+            settings.feedforward.getKv(),
+            Ka);
   }
 }

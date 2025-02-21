@@ -44,15 +44,17 @@ public class MotorSubsystem extends SubsystemBase implements Motor {
     SmartDashboard.putData(getName() + "/PID", io.getPid());
 
     SmartDashboard.putData(
-        getName() + "/Dynamic Forward", sysIdDynamic(SysIdRoutine.Direction.kForward));
+        getName() + "/SysID/Dynamic Forward", sysIdDynamic(SysIdRoutine.Direction.kForward));
     SmartDashboard.putData(
-        getName() + "/Dynamic Reverse", sysIdDynamic(SysIdRoutine.Direction.kReverse));
+        getName() + "/SysID/Dynamic Reverse", sysIdDynamic(SysIdRoutine.Direction.kReverse));
     SmartDashboard.putData(
-        getName() + "/Quasistatic Forward", sysIdQuasistatic(SysIdRoutine.Direction.kForward));
+        getName() + "/SysID/Quasistatic Forward",
+        sysIdQuasistatic(SysIdRoutine.Direction.kForward));
     SmartDashboard.putData(
-        getName() + "/Quasistatic Reverse", sysIdQuasistatic(SysIdRoutine.Direction.kReverse));
+        getName() + "/SysID/Quasistatic Reverse",
+        sysIdQuasistatic(SysIdRoutine.Direction.kReverse));
 
-    SmartDashboard.putData(getName() + "/Subsystem", this);
+    SmartDashboard.putData(getName(), this);
   }
 
   @Override
