@@ -5,6 +5,7 @@ import edu.wpi.first.apriltag.AprilTagFields;
 import edu.wpi.first.math.controller.ArmFeedforward;
 import edu.wpi.first.math.controller.ElevatorFeedforward;
 import edu.wpi.first.math.controller.PIDController;
+import edu.wpi.first.math.controller.SimpleMotorFeedforward;
 import edu.wpi.first.math.geometry.Rotation3d;
 import edu.wpi.first.math.geometry.Transform3d;
 import edu.wpi.first.math.geometry.Translation3d;
@@ -20,16 +21,20 @@ import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.Robot;
 import frc.robot.io.implementations.motor.MotorIOArmStub;
 import frc.robot.io.implementations.motor.MotorIOBase.MotorIOBaseSettings;
+import frc.robot.io.implementations.motor.MotorIOFlywheelStub;
 import frc.robot.io.implementations.motor.MotorIOElevatorStub;
 import frc.robot.subsystems.controls.arm.ClimberArmControls;
 import frc.robot.subsystems.controls.arm.CoralArmControls;
 import frc.robot.subsystems.controls.drive.DriveControls;
 import frc.robot.subsystems.controls.elevator.ElevatorControls;
+import frc.robot.subsystems.controls.flywheel.FlywheelControls;
 import frc.robot.subsystems.implementations.drive.DriveBase;
 import frc.robot.subsystems.implementations.motor.ArmMotorSubsystem;
-import frc.robot.subsystems.implementations.motor.ElevatorMotorSubsystem;
+import frc.robot.subsystems.implementations.motor.FlywheelMotorSubsystem;
 import frc.robot.subsystems.implementations.vision.VisionSubsystem;
 import frc.robot.subsystems.interfaces.Arm.ArmSettings;
+import frc.robot.subsystems.interfaces.Flywheel.FlywheelSettings;
+import frc.robot.subsystems.implementations.motor.ElevatorMotorSubsystem;
 import frc.robot.subsystems.interfaces.Elevator.ElevatorSettings;
 import frc.robot.subsystems.interfaces.Vision.Camera;
 
@@ -41,6 +46,7 @@ public class RobotConfig {
   protected static ElevatorMotorSubsystem elevator;
   public static ArmMotorSubsystem coralArm;
   public static ArmMotorSubsystem climberArm;
+  public static FlywheelMotorSubsystem algaeFlywheel;
 
   // Controls
   public CommandXboxController mainController = new CommandXboxController(0);
@@ -69,8 +75,8 @@ public class RobotConfig {
       boolean stubVision,
       boolean stubElevator,
       boolean stubCoralArm,
-      boolean stubAlgaeSubsystem) {
-    this(stubDrive, stubAuto, stubVision, stubElevator, stubCoralArm, stubAlgaeSubsystem, true);
+      boolean stubAlgaeFlywheel) {
+    this(stubDrive, stubAuto, stubVision, stubElevator, stubCoralArm, stubAlgaeFlywheel, true);
   }
 
   public RobotConfig(
@@ -79,7 +85,7 @@ public class RobotConfig {
       boolean stubVision,
       boolean stubElevator,
       boolean stubCoralArm,
-      boolean stubAlgaeSubsystem,
+      boolean stubAlgaeFlywheel,
       boolean stubClimberArm) {
     if (stubDrive) {
       drive = new DriveBase();
@@ -169,8 +175,6 @@ public class RobotConfig {
               new MotorIOArmStub(motorSettings, armSettings), "Coral", armSettings);
     }
 
-    if (stubAlgaeSubsystem) {}
-
     if (stubClimberArm) {
       MotorIOBaseSettings motorSettings = new MotorIOBaseSettings();
       motorSettings.motor.gearing = 50;
@@ -199,6 +203,23 @@ public class RobotConfig {
           new ArmMotorSubsystem(
               new MotorIOArmStub(motorSettings, armSettings), "Climber", armSettings);
     }
+
+    if (stubAlgaeFlywheel) {
+      MotorIOBaseSettings motorSettings = new MotorIOBaseSettings();
+      motorSettings.motor.gearing = 1; // TODO get actual gearing
+      motorSettings.motor.inverted = false;
+      motorSettings.pid = new PIDController(0.025, 0, 0);
+
+      FlywheelSettings flywheelSettings = new FlywheelSettings();
+      flywheelSettings.color = new Color8Bit(Color.kPurple);
+      flywheelSettings.feedforward = new SimpleMotorFeedforward(0, 0.01025);
+      flywheelSettings.moiKgMetersSquared = 0.001;
+      flywheelSettings.motor = DCMotor.getNeo550(1);
+
+      algaeFlywheel =
+          new FlywheelMotorSubsystem(
+              new MotorIOFlywheelStub(motorSettings, flywheelSettings), "Algae", flywheelSettings);
+    }
   }
 
   public void configureBindings() {
@@ -214,6 +235,8 @@ public class RobotConfig {
     CoralArmControls.setupController(coralArm, mainController);
     ElevatorControls.setupController(elevator, mainController);
     ClimberArmControls.setupController(climberArm, mainController);
+
+    FlywheelControls.setupController(algaeFlywheel, mainController);
 
     if (null != RobotConfig.autoChooser) {
       SmartDashboard.putData("Autonomous", RobotConfig.autoChooser);

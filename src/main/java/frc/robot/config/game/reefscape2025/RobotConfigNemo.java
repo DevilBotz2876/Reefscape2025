@@ -3,6 +3,7 @@ package frc.robot.config.game.reefscape2025;
 import edu.wpi.first.math.controller.ArmFeedforward;
 import edu.wpi.first.math.controller.ElevatorFeedforward;
 import edu.wpi.first.math.controller.PIDController;
+import edu.wpi.first.math.controller.SimpleMotorFeedforward;
 import edu.wpi.first.math.system.plant.DCMotor;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.util.Color;
@@ -18,9 +19,11 @@ import frc.robot.subsystems.controls.elevator.ElevatorControls;
 import frc.robot.subsystems.implementations.drive.DriveBase;
 import frc.robot.subsystems.implementations.drive.DriveSwerveYAGSL;
 import frc.robot.subsystems.implementations.motor.ArmMotorSubsystem;
-import frc.robot.subsystems.implementations.motor.ElevatorMotorSubsystem;
+import frc.robot.subsystems.implementations.motor.FlywheelMotorSubsystem;
 import frc.robot.subsystems.interfaces.Arm.ArmSettings;
 import frc.robot.subsystems.interfaces.Drive;
+import frc.robot.subsystems.interfaces.Flywheel.FlywheelSettings;
+import frc.robot.subsystems.implementations.motor.ElevatorMotorSubsystem;
 import frc.robot.subsystems.interfaces.Elevator.ElevatorSettings;
 
 /* Override Nemo specific constants here */
@@ -152,6 +155,27 @@ public class RobotConfigNemo extends RobotConfig {
           new ArmMotorSubsystem(
               // new MotorIOArmStub(motorSettings, armSettings), "Coral", armSettings);
               new MotorIOSparkMax(motorSettings, settings), "Climber", armSettings);
+    }
+
+    // Algae Flywheel
+    {
+      MotorIOBaseSettings motorSettings = new MotorIOBaseSettings();
+      motorSettings.motor.gearing = 1; // TODO get the actual gearing
+      motorSettings.motor.inverted = false; // TODO get the actual inversion
+      motorSettings.pid = new PIDController(0, 0, 0);
+
+      FlywheelSettings flywheelSettings = new FlywheelSettings();
+      flywheelSettings.color = new Color8Bit(Color.kBlack);
+      flywheelSettings.feedforward = new SimpleMotorFeedforward(0, 0);
+      flywheelSettings.moiKgMetersSquared = 0.001;
+      flywheelSettings.motor = DCMotor.getNeo550(1);
+
+      SparkMaxSettings sparkMaxSettings = new SparkMaxSettings();
+      sparkMaxSettings.canId = 30;
+
+      algaeFlywheel =
+          new FlywheelMotorSubsystem(
+              new MotorIOSparkMax(motorSettings, sparkMaxSettings), "Algae", flywheelSettings);
     }
   }
 }
