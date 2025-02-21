@@ -37,7 +37,6 @@ import frc.robot.subsystems.interfaces.Vision.Camera;
 public class RobotConfig {
   public static DriveBase drive;
   public static SendableChooser<Command> autoChooser;
-
   public static VisionSubsystem vision;
   protected static ElevatorMotorSubsystem elevator;
   public static ArmMotorSubsystem coralArm;
