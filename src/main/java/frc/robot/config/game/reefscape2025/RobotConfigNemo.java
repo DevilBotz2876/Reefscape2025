@@ -27,26 +27,26 @@ public class RobotConfigNemo extends RobotConfig {
         new Camera(
             "my-first-photonvision", // back
             new Transform3d(
-                new Translation3d(0.0, 0.0, 0.0),
-                new Rotation3d(0.0, Units.degreesToRadians(0.0), Units.degreesToRadians(0.0)))));
+                new Translation3d(Units.inchesToMeters(3), Units.inchesToMeters(10.75), Units.inchesToMeters(36.75)),
+                new Rotation3d(0.0, Units.degreesToRadians(30), Units.degreesToRadians(10)))));
     vision.addCamera(
         new Camera(
           "left",
           new Transform3d(
-              new Translation3d(0.0, 0.0, 0.0),
-              new Rotation3d(0.0, Units.degreesToRadians(0.0), Units.degreesToRadians(0.0)))));
+              new Translation3d(Units.inchesToMeters(-4.4), Units.inchesToMeters(14.5), Units.inchesToMeters(7)),
+              new Rotation3d(0.0, Units.degreesToRadians(-5), Units.degreesToRadians(0.0)))));
     vision.addCamera(
         new Camera(
             "right",
             new Transform3d(
-                new Translation3d(0.0, 0.0, 0.0),
-                new Rotation3d(0.0, Units.degreesToRadians(0.0), Units.degreesToRadians(0.0)))));
+                new Translation3d(Units.inchesToMeters(-4.4), Units.inchesToMeters(-14.5), Units.inchesToMeters(7)),
+                new Rotation3d(0.0, Units.degreesToRadians(-5), Units.degreesToRadians(0.0)))));
     vision.addCamera(
         new Camera(
             "front", // back
             new Transform3d(
-                new Translation3d(0.0, 0.0, 0.0),
-                new Rotation3d(0.0, Units.degreesToRadians(0.0), Units.degreesToRadians(0.0)))));
+                new Translation3d(Units.inchesToMeters(-14.5), Units.inchesToMeters(-3.75), Units.inchesToMeters(7)),
+                new Rotation3d(0.0, Units.degreesToRadians(-5), Units.degreesToRadians(0.0)))));
     
   }
 }
