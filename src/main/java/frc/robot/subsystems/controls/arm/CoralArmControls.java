@@ -54,11 +54,14 @@ public class CoralArmControls {
     SmartDashboard.putData(
         motorSubsystem.getName() + "/Commands/Arm To 75", new ArmToPosition(arm, () -> 75));
 
-     SmartDashboard.putData(
-      motorSubsystem.getName() + "/Commands/Arm Voltage Up", new MotorBringUpCommand((Motor)arm ,() -> 0.01));
     SmartDashboard.putData(
-       motorSubsystem.getName() + "/Commands/Arm Voltage Down", new MotorBringUpCommand((Motor)arm ,() -> -0.01));
-       SmartDashboard.putData(
-        motorSubsystem.getName() + "/Commands/Arm Voltage 0", new MotorBringUpCommand((Motor)arm ,() -> 0));
+        motorSubsystem.getName() + "/Commands/Arm Voltage Up",
+        new MotorBringUpCommand((Motor) arm, () -> 0.01));
+    SmartDashboard.putData(
+        motorSubsystem.getName() + "/Commands/Arm Voltage Down",
+        new MotorBringUpCommand((Motor) arm, () -> -0.01));
+    SmartDashboard.putData(
+        motorSubsystem.getName() + "/Commands/Arm Voltage 0",
+        new MotorBringUpCommand((Motor) arm, () -> 0));
   }
 }

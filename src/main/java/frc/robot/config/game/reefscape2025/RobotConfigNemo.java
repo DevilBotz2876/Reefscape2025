@@ -26,7 +26,7 @@ import frc.robot.subsystems.interfaces.Elevator.ElevatorSettings;
 /* Override Nemo specific constants here */
 public class RobotConfigNemo extends RobotConfig {
   public RobotConfigNemo() {
-    super(false, true, true, false, false, false);
+    super(false, true, true, false, false, false, false);
 
     // Nemo has a Swerve drive train
     Drive.Constants.rotatePidKp = 0.025;
@@ -104,9 +104,10 @@ public class RobotConfigNemo extends RobotConfig {
 
       SparkMaxSettings sparkMaxSettings = new SparkMaxSettings();
       sparkMaxSettings.canId = 20;
-      elevatorSettings.maxVelocityInMetersPerSecond = 0.3;
+      elevatorSettings.maxVelocityInMetersPerSecond = 6.0;
+      elevatorSettings.maxAccelerationInMetersPerSecondSquared = 2.0;
       ElevatorControls.Constants.autoZeroSettings.voltage = 1.0;
-      ElevatorControls.Constants.autoZeroSettings.minResetCurrent = 30;
+      ElevatorControls.Constants.autoZeroSettings.minResetCurrent = 35;
       ElevatorControls.Constants.autoZeroSettings.resetPositionRad =
           elevatorSettings.maxHeightInMeters / motorSettings.motor.drumRadiusMeters;
       ElevatorControls.Constants.autoZeroSettings.initialReverseDuration =
