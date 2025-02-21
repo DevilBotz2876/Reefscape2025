@@ -30,11 +30,10 @@ public class ElevatorMotorSubsystem extends MotorSubsystem implements Elevator {
     super(io, "Elevator[" + name + "]");
     this.settings = settings;
 
-    motionProfile =
-        new TrapezoidProfile(
+    setMotionProfileConstraintsMeters(
             new Constraints(
-                io.normalizePositionToRad(settings.maxVelocityInMetersPerSecond),
-                io.normalizePositionToRad(settings.maxAccelerationInMetersPerSecondSquared)));
+                settings.maxVelocityInMetersPerSecond,
+                settings.maxAccelerationInMetersPerSecondSquared));
 
     double sim2dSize = settings.maxHeightInMeters * 64;
     mech2d = new Mechanism2d(sim2dSize, sim2dSize);
