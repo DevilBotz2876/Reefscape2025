@@ -73,7 +73,7 @@ public class DriveSwerveYAGSL extends DriveBase {
     try {
       config = RobotConfig.fromGUISettings();
 
-      final boolean enableFeedforward = true;
+      final boolean enableFeedforward = false;
       AutoBuilder.configure(
           swerveDrive::getPose, // Robot pose supplier
           swerveDrive::resetOdometry, // Method to reset odometry (will be called if your auto has a
