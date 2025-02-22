@@ -41,13 +41,13 @@ public class RobotConfigNemo extends RobotConfig {
       // 20:1 gear box, 30 teeth on the arm cog and 15 teeth on the motor cog
       motorSettings.motor.gearing = 20 * (30.0 / 15.0);
       motorSettings.motor.inverted = true; // false for Sim
-      motorSettings.pid = new PIDController(0.35, 0.0, 0);
+      motorSettings.pid = new PIDController(1.0, 0.0, 0);
 
       ArmSettings armSettings = new ArmSettings();
       armSettings.minAngleInDegrees = -90;
       armSettings.maxAngleInDegrees = 60;
       armSettings.startingAngleInDegrees = armSettings.minAngleInDegrees;
-      armSettings.feedforward = new ArmFeedforward(0.0, 0.16, 0.0, 0.0);
+      armSettings.feedforward = new ArmFeedforward(0.0, 0.22, 0.0, 0.01);
       armSettings.color = new Color8Bit(Color.kRed);
       armSettings.armLengthInMeters = 0.5;
       armSettings.armMassInKg = 1.0;
@@ -97,7 +97,7 @@ public class RobotConfigNemo extends RobotConfig {
       elevatorSettings.startingHeightInMeters = elevatorSettings.minHeightInMeters;
       elevatorSettings.color = new Color8Bit(Color.kSilver);
       elevatorSettings.feedforward =
-          new ElevatorFeedforward(0, 0.13, 0.1, 0); // TODO: Tune feedforward
+          new ElevatorFeedforward(0, 0.13, 0.0, 0); // TODO: Tune feedforward
       elevatorSettings.carriageMassKg = 5.0;
       elevatorSettings.motor = DCMotor.getKrakenX60(1);
       elevatorSettings.simulateGravity = true;
@@ -111,7 +111,7 @@ public class RobotConfigNemo extends RobotConfig {
       ElevatorControls.Constants.autoZeroSettings.resetPositionRad =
           elevatorSettings.maxHeightInMeters / motorSettings.motor.drumRadiusMeters;
       ElevatorControls.Constants.autoZeroSettings.initialReverseDuration =
-          1.0; // Set the seconds of reverse before zero. Set to zero if there shound be no reverse
+          0.0; // Set the seconds of reverse before zero. Set to zero if there shound be no reverse
 
       elevator =
           new ElevatorMotorSubsystem(
