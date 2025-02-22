@@ -88,10 +88,10 @@ public class RobotConfigNemo extends RobotConfig {
                   / 2); // 3/4" inner diameter to 1 3/4" outer. Average diameter calculated For now,
       // use the diameter so that
       // we don't reach the limits
-      motorSettings.pid = new PIDController(1.0, 0, 0); // TODO: Tune PID controller
+      motorSettings.pid = new PIDController(0.1, 0, 0); // TODO: Tune PID controller
 
       ElevatorSettings elevatorSettings = new ElevatorSettings();
-      elevatorSettings.minHeightInMeters = 0.0;
+      elevatorSettings.minHeightInMeters = 0.3;
       elevatorSettings.maxHeightInMeters =
           Units.inchesToMeters(74 - 18); // highest point:74 lowest point:18
       elevatorSettings.startingHeightInMeters = elevatorSettings.minHeightInMeters;
@@ -104,8 +104,9 @@ public class RobotConfigNemo extends RobotConfig {
 
       SparkMaxSettings sparkMaxSettings = new SparkMaxSettings();
       sparkMaxSettings.canId = 20;
-      elevatorSettings.maxVelocityInMetersPerSecond = 0.3;
-      ElevatorControls.Constants.autoZeroSettings.voltage = 1.0;
+      elevatorSettings.maxVelocityInMetersPerSecond = 2.0;
+      elevatorSettings.maxAccelerationInMetersPerSecondSquared = 8.0;
+      ElevatorControls.Constants.autoZeroSettings.voltage = 1.5;
       ElevatorControls.Constants.autoZeroSettings.minResetCurrent = 30;
       ElevatorControls.Constants.autoZeroSettings.resetPositionRad =
           elevatorSettings.maxHeightInMeters / motorSettings.motor.drumRadiusMeters;
