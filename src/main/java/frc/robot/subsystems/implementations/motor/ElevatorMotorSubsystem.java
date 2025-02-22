@@ -30,6 +30,7 @@ public class ElevatorMotorSubsystem extends MotorSubsystem implements Elevator {
     super(io, "Elevator[" + name + "]");
     this.settings = settings;
 
+    resetEncoder(io.normalizePositionToRad(settings.startingHeightInMeters));
     setMotionProfileConstraintsMeters(
         new Constraints(
             settings.maxVelocityInMetersPerSecond,

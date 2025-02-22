@@ -29,6 +29,7 @@ public class ArmMotorSubsystem extends MotorSubsystem implements Arm {
     super(io, "Arm[" + name + "]");
     this.settings = settings;
 
+    resetEncoder(Units.degreesToRadians(settings.startingAngleInDegrees));
     setMotionProfileConstraintsDegrees(
         new Constraints(
             settings.maxVelocityInDegreesPerSecond,
