@@ -1,7 +1,6 @@
 package frc.robot.subsystems.implementations.vision;
 
 import edu.wpi.first.apriltag.AprilTagFieldLayout;
-import edu.wpi.first.math.VecBuilder;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Transform3d;
@@ -178,7 +177,7 @@ public class VisionSubsystem extends SubsystemBase implements Vision {
          * Increase these numbers to trust the vision pose measurement less.
          */
 
-         // Add vision measurement to the consumer.
+        // Add vision measurement to the consumer.
         if (visionMeasurementConsumer != null) {
           visionMeasurementConsumer.add(
               currentEstimatedRobotPose.get().estimatedPose.toPose2d(),
