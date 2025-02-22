@@ -75,11 +75,11 @@ public class DriveControls {
         poseFeeder1 = new Pose2d(16.02, 6.9, Rotation2d.fromDegrees(50)),
         poseFeeder2 = new Pose2d(16.02, 1, Rotation2d.fromDegrees(-50)),
         poseProcessor = new Pose2d(11.5, 7.3, Rotation2d.fromDegrees(90)),
-        poseReefA = new Pose2d(14.5, 3.875, Rotation2d.fromDegrees(180)),
-        poseReefG = new Pose2d(11.6, 4.175, Rotation2d.fromDegrees(0));
-    PathConstraints constraints = new PathConstraints(4.2672, 9.4664784, 2 * Math.PI, 4 * Math.PI);
-    // PathConstraints constraints = new PathConstraints(2, 4.5, 2 * Math.PI, 4 * Math.PI);
-
+        poseReefA = new Pose2d(15, 4.175, Rotation2d.fromDegrees(180)),
+        poseReefG = new Pose2d(11, 4.175, Rotation2d.fromDegrees(0));
+    // PathConstraints constraints = new PathConstraints(4.2672, 9.4664784, 2 * Math.PI, 4 *
+    // Math.PI);
+    PathConstraints constraints = new PathConstraints(2, 4.5, 2 * Math.PI, 4 * Math.PI);
 
     // Temporary UI to allow user to modify destination on-the-fly
     SendableChooser<TargetPoseOption> chooser = new SendableChooser<>();
