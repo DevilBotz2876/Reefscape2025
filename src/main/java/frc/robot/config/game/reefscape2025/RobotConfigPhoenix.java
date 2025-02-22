@@ -1,6 +1,8 @@
 package frc.robot.config.game.reefscape2025;
 
+import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Rotation3d;
+import edu.wpi.first.math.geometry.Transform2d;
 import edu.wpi.first.math.geometry.Transform3d;
 import edu.wpi.first.math.geometry.Translation3d;
 import edu.wpi.first.math.util.Units;
@@ -21,6 +23,7 @@ public class RobotConfigPhoenix extends RobotConfig {
     DriveBase.Constants.rotatePidErrorInDegrees = 1;
     drive = new DriveSwerveYAGSL("yagsl/phoenix");
 
+    drive.setPose(drive.getPose().transformBy(new Transform2d(2, 5, Rotation2d.kZero)));
     vision.addCamera(
         new Camera(
             "my-first-photonvision",

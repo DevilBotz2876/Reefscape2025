@@ -3,6 +3,9 @@ package frc.robot.config.game.reefscape2025;
 import edu.wpi.first.math.controller.ArmFeedforward;
 import edu.wpi.first.math.controller.ElevatorFeedforward;
 import edu.wpi.first.math.controller.PIDController;
+import edu.wpi.first.math.geometry.Rotation3d;
+import edu.wpi.first.math.geometry.Transform3d;
+import edu.wpi.first.math.geometry.Translation3d;
 import edu.wpi.first.math.system.plant.DCMotor;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.util.Color;
@@ -22,6 +25,7 @@ import frc.robot.subsystems.implementations.motor.ElevatorMotorSubsystem;
 import frc.robot.subsystems.interfaces.Arm.ArmSettings;
 import frc.robot.subsystems.interfaces.Drive;
 import frc.robot.subsystems.interfaces.Elevator.ElevatorSettings;
+import frc.robot.subsystems.interfaces.Vision.Camera;
 
 /* Override Nemo specific constants here */
 public class RobotConfigNemo extends RobotConfig {
@@ -34,6 +38,44 @@ public class RobotConfigNemo extends RobotConfig {
     Drive.Constants.rotatePidKd = 0.0;
     DriveBase.Constants.rotatePidErrorInDegrees = 1;
     drive = new DriveSwerveYAGSL("yagsl/nemo");
+
+    // Camera placement at WPI practice field (2/21/2025)
+    vision.addCamera(
+        new Camera(
+            "my-first-photonvision", // back
+            new Transform3d(
+                new Translation3d(
+                    Units.inchesToMeters(-14.5),
+                    Units.inchesToMeters(-3.75),
+                    Units.inchesToMeters(7)),
+                new Rotation3d(0.0, Units.degreesToRadians(-5), Units.degreesToRadians(180)))));
+    vision.addCamera(
+        new Camera(
+            "left_camera",
+            new Transform3d(
+                new Translation3d(
+                    Units.inchesToMeters(-4.4),
+                    Units.inchesToMeters(14.5),
+                    Units.inchesToMeters(7)),
+                new Rotation3d(0.0, Units.degreesToRadians(-5), Units.degreesToRadians(90)))));
+    vision.addCamera(
+        new Camera(
+            "right_camera",
+            new Transform3d(
+                new Translation3d(
+                    Units.inchesToMeters(-4.4),
+                    Units.inchesToMeters(-14.5),
+                    Units.inchesToMeters(7)),
+                new Rotation3d(0.0, Units.degreesToRadians(-5), Units.degreesToRadians(270)))));
+    vision.addCamera(
+        new Camera(
+            "front_camera",
+            new Transform3d(
+                new Translation3d(
+                    Units.inchesToMeters(3),
+                    Units.inchesToMeters(-10.75),
+                    Units.inchesToMeters(36.75)),
+                new Rotation3d(0.0, Units.degreesToRadians(30), Units.degreesToRadians(10)))));
 
     // Coral Arm
     {

@@ -132,6 +132,15 @@ public interface Vision {
   public Optional<Double> getDistanceToAprilTag(int id);
 
   /**
+   * Returns the distance to the specified april tag in meters (relative to the specified camera)
+   *
+   * @param cameraIdx camera unique identifier
+   * @param tagId AprilTag ID
+   * @return distance to the specified april tag (in meters).
+   */
+  public double getDistanceToAprilTag2(int cameraIdx, int tagId);
+
+  /**
    * Returns the yaw in degrees to the specified april tag in meters (relative to the primary
    * camera)
    *
