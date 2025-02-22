@@ -15,7 +15,7 @@ import frc.robot.subsystems.interfaces.Elevator;
 
 public class DriveControls {
   public static void setupController(
-      Drive drive, Elevator elevator, Arm arm, CommandXboxController controller) {
+      Drive drive, CommandXboxController controller) {
     SubsystemBase driveSubsystem = (SubsystemBase) drive;
     driveSubsystem.setDefaultCommand(
         new DriveCommand(
@@ -40,25 +40,5 @@ public class DriveControls {
                     drive.setFieldOrientedDrive(true);
                   }
                 })); // Toggle Drive Orientation
-
-    SmartDashboard.putData(
-        "Drive " + "/Commands/Prepare For Intake",
-        new SequentialCommandGroup(
-            new ArmToPosition(arm, () -> -90).withTimeout(0),
-            new ElevatorToPosition(elevator, () -> 0.6)));
-
-    SmartDashboard.putData(
-        "Drive " + "/Commands/Intake",
-        new SequentialCommandGroup(new ElevatorToPosition(elevator, () -> 0.2)));
-
-    SmartDashboard.putData(
-        "Drive " + "/Commands/Prepare To Score L4",
-        new SequentialCommandGroup(
-            new ElevatorToPosition(elevator, () -> 1.0),
-            new ArmToPosition(arm, () -> 75),
-            new ElevatorToPosition(elevator, () -> 1.4)));
-    SmartDashboard.putData(
-        "Drive " + "/Commands/Score L4",
-        new SequentialCommandGroup(new ArmToPosition(arm, () -> -45)));
   }
 }

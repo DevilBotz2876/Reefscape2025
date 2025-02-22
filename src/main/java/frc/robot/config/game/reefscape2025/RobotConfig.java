@@ -209,7 +209,7 @@ public class RobotConfig {
     // Send vision-based odometry measurements to drive's odometry calculations
     vision.setVisionMeasurementConsumer(drive::addVisionMeasurement);
 
-    DriveControls.setupController(drive, elevator, coralArm, mainController);
+    DriveControls.setupController(drive, mainController);
 
     CoralArmControls.setupController(coralArm, mainController);
     ElevatorControls.setupController(elevator, mainController);
