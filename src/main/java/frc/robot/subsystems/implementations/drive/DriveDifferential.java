@@ -28,6 +28,7 @@ public class DriveDifferential extends DriveBase {
 
   /** Creates a new DriveTrain. */
   public DriveDifferential() {
+    super("Differential");
     setupTalons();
     resetEncoders();
   }

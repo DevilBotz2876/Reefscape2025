@@ -82,7 +82,7 @@ public class RobotConfig {
       boolean stubAlgaeSubsystem,
       boolean stubClimberArm) {
     if (stubDrive) {
-      drive = new DriveBase();
+      drive = new DriveBase("Stub");
     }
 
     if (stubAuto) {

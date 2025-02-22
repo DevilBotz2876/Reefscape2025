@@ -10,6 +10,7 @@ import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.numbers.N1;
 import edu.wpi.first.math.numbers.N3;
+import edu.wpi.first.util.sendable.SendableBuilder;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Filesystem;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -35,12 +36,17 @@ public class DriveSwerveYAGSL extends DriveBase {
   private final File swerveJsonDirectory;
   private SwerveDrive swerveDrive;
   @AutoLogOutput private boolean fieldOrientedDrive = false;
+  private PIDConstants translationPIDConstants =
+      new PIDConstants(5.0, 0.0, 0.0); // Translation PID constants
+  private PIDConstants rotationPIDConstants =
+      new PIDConstants(5.0, 0.0, 0.0); // Rotation PID constants
 
   // @AutoLogOutput
   DriveIO io = new DriveIO();
   private final DriveIOInputsAutoLogged inputs = new DriveIOInputsAutoLogged();
 
   public DriveSwerveYAGSL(String configPath) {
+    super("YAGSL");
     swerveJsonDirectory = new File(Filesystem.getDeployDirectory(), configPath);
 
     // \SwerveDriveTelemetry.verbosity = TelemetryVerbosity.HIGH;
@@ -69,11 +75,17 @@ public class DriveSwerveYAGSL extends DriveBase {
     // they will be called directly from this subsystem
     swerveDrive.stopOdometryThread();
 
-    RobotConfig config;
+    setupPathPlanner(translationPIDConstants, rotationPIDConstants);
+  }
+
+  private boolean setupPathPlanner(
+      PIDConstants translatonPIDConstants, PIDConstants rotationPIDConstants) {
     try {
+      RobotConfig config;
       config = RobotConfig.fromGUISettings();
 
       final boolean enableFeedforward = false;
+
       AutoBuilder.configure(
           swerveDrive::getPose, // Robot pose supplier
           swerveDrive::resetOdometry, // Method to reset odometry (will be called if your auto has a
@@ -92,9 +104,9 @@ public class DriveSwerveYAGSL extends DriveBase {
           // outputs individual module feedforwards
           new PPHolonomicDriveController( // PPHolonomicController is the built in path following
               // controller for holonomic drive trains
-              new PIDConstants(5.0, 0.0, 0.0), // Translation PID constants
-              new PIDConstants(5.0, 0.0, 0.0) // Rotation PID constants
-              ), // PPLTVController is the built in path following controller for differential drive
+              translationPIDConstants,
+              rotationPIDConstants), // PPLTVController is the built in path following controller
+          // for differential drive
           // trains
           config, // The robot configuration
           () -> {
@@ -109,10 +121,110 @@ public class DriveSwerveYAGSL extends DriveBase {
           },
           this // Reference to this subsystem to set requirements
           );
+      return true;
     } catch (Exception e) {
       // Handle exception as needed
       e.printStackTrace();
+      return false;
     }
+  }
+
+  @Override
+  public void initSendable(SendableBuilder builder) {
+    super.initSendable(builder);
+    builder.addDoubleProperty(
+        "translationPID/P", this::getTranslationPidKp, this::setTranslationPidKp);
+    builder.addDoubleProperty(
+        "translationPID/I", this::getTranslationPidKi, this::setTranslationPidKi);
+    builder.addDoubleProperty(
+        "translationPID/D", this::getTranslationPidKd, this::setTranslationPidKd);
+    builder.addDoubleProperty("rotationPID/P", this::getRotationPidKp, this::setRotationPidKp);
+    builder.addDoubleProperty("rotationPID/I", this::getRotationPidKi, this::setRotationPidKi);
+    builder.addDoubleProperty("rotationPID/D", this::getRotationPidKd, this::setRotationPidKd);
+  }
+
+  private double getTranslationPidKp() {
+    if (null != translationPIDConstants) {
+      return translationPIDConstants.kP;
+    } else {
+      return 0;
+    }
+  }
+
+  private double getTranslationPidKi() {
+    if (null != translationPIDConstants) {
+      return translationPIDConstants.kI;
+    } else {
+      return 0;
+    }
+  }
+
+  private double getTranslationPidKd() {
+    if (null != translationPIDConstants) {
+      return translationPIDConstants.kD;
+    } else {
+      return 0;
+    }
+  }
+
+  private double getRotationPidKp() {
+    if (null != rotationPIDConstants) {
+      return rotationPIDConstants.kP;
+    } else {
+      return 0;
+    }
+  }
+
+  private double getRotationPidKi() {
+    if (null != rotationPIDConstants) {
+      return rotationPIDConstants.kI;
+    } else {
+      return 0;
+    }
+  }
+
+  private double getRotationPidKd() {
+    if (null != rotationPIDConstants) {
+      return rotationPIDConstants.kD;
+    } else {
+      return 0;
+    }
+  }
+
+  private void setTranslationPidKp(double kP) {
+    this.translationPIDConstants =
+        new PIDConstants(kP, this.translationPIDConstants.kI, this.translationPIDConstants.kD);
+    setupPathPlanner(translationPIDConstants, rotationPIDConstants);
+  }
+
+  private void setTranslationPidKi(double kI) {
+    this.translationPIDConstants =
+        new PIDConstants(this.translationPIDConstants.kP, kI, this.translationPIDConstants.kD);
+    setupPathPlanner(translationPIDConstants, rotationPIDConstants);
+  }
+
+  private void setTranslationPidKd(double kD) {
+    this.translationPIDConstants =
+        new PIDConstants(this.translationPIDConstants.kP, this.translationPIDConstants.kI, kD);
+    setupPathPlanner(translationPIDConstants, rotationPIDConstants);
+  }
+
+  private void setRotationPidKp(double kP) {
+    this.rotationPIDConstants =
+        new PIDConstants(kP, this.rotationPIDConstants.kI, this.rotationPIDConstants.kD);
+    setupPathPlanner(translationPIDConstants, rotationPIDConstants);
+  }
+
+  private void setRotationPidKi(double kI) {
+    this.rotationPIDConstants =
+        new PIDConstants(this.rotationPIDConstants.kP, kI, this.rotationPIDConstants.kD);
+    setupPathPlanner(translationPIDConstants, rotationPIDConstants);
+  }
+
+  private void setRotationPidKd(double kD) {
+    this.rotationPIDConstants =
+        new PIDConstants(this.rotationPIDConstants.kP, this.rotationPIDConstants.kI, kD);
+    setupPathPlanner(translationPIDConstants, rotationPIDConstants);
   }
 
   @Override
