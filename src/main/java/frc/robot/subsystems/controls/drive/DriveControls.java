@@ -76,10 +76,13 @@ public class DriveControls {
         poseFeeder2 = new Pose2d(16.02, 1, Rotation2d.fromDegrees(-50)),
         poseProcessor = new Pose2d(11.5, 7.3, Rotation2d.fromDegrees(90)),
         poseReefA = new Pose2d(15, 4.175, Rotation2d.fromDegrees(180)),
-        poseReefG = new Pose2d(11, 4.175, Rotation2d.fromDegrees(0));
+        poseReefAClose = new Pose2d(14.5, 4.175, Rotation2d.fromDegrees(180)),
+        poseReefG = new Pose2d(11, 4.175, Rotation2d.fromDegrees(0)),
+        poseReefGClose = new Pose2d(11.5, 4.175, Rotation2d.fromDegrees(0));
     // PathConstraints constraints = new PathConstraints(4.2672, 9.4664784, 2 * Math.PI, 4 *
     // Math.PI);
-    PathConstraints constraints = new PathConstraints(2, 4.5, 2 * Math.PI, 4 * Math.PI);
+    // PathConstraints constraints = new PathConstraints(2, 4.5, 2 * Math.PI, 4 * Math.PI);
+    PathConstraints constraints = new PathConstraints(0.5, 4.5, Math.PI / 4, 4 * Math.PI);
 
     // Temporary UI to allow user to modify destination on-the-fly
     SendableChooser<TargetPoseOption> chooser = new SendableChooser<>();
@@ -125,10 +128,12 @@ public class DriveControls {
                     AutoBuilder.pathfindToPose(poseProcessor, constraints, 0.0)),
                 Map.entry(
                     TargetPoseOption.REEF_A.getIndex(),
-                    AutoBuilder.pathfindToPose(poseReefA, constraints, 0.0)),
+                    AutoBuilder.pathfindToPose(poseReefA, constraints, 0.5)
+                        .andThen(AutoBuilder.pathfindToPose(poseReefAClose, constraints, 0.0))),
                 Map.entry(
                     TargetPoseOption.REEF_G.getIndex(),
-                    AutoBuilder.pathfindToPose(poseReefG, constraints, 0.0))),
+                    AutoBuilder.pathfindToPose(poseReefG, constraints, 0.5)
+                        .andThen(AutoBuilder.pathfindToPose(poseReefGClose, constraints, 0.0)))),
             () -> {
               return myCoolPoseKeyIdx;
             });
