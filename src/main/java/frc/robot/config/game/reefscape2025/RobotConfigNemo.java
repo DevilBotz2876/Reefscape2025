@@ -30,7 +30,7 @@ import frc.robot.subsystems.interfaces.Vision.Camera;
 /* Override Nemo specific constants here */
 public class RobotConfigNemo extends RobotConfig {
   public RobotConfigNemo() {
-    super(false, true, true, false, false, false);
+    super(false, true, true, false, false, false, false);
 
     // Nemo has a Swerve drive train
     Drive.Constants.rotatePidKp = 0.025;
@@ -105,7 +105,7 @@ public class RobotConfigNemo extends RobotConfig {
       CoralArmControls.Constants.autoZeroSettings.minResetCurrent = 0.5;
       CoralArmControls.Constants.autoZeroSettings.resetPositionRad =
           Units.degreesToRadians(
-              armSettings.minAngleInDegrees - 10); // We have an offest about 15 degrees
+              armSettings.minAngleInDegrees); // We have an offest about 15 degrees
       CoralArmControls.Constants.autoZeroSettings.initialReverseDuration =
           1.0; // Set the seconds of reverse before zero. Set to zero if there shound be no reverse
 
