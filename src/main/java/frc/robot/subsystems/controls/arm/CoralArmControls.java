@@ -8,6 +8,7 @@ import frc.robot.commands.common.arm.ArmCommand;
 import frc.robot.commands.common.arm.ArmToPosition;
 import frc.robot.commands.common.motor.MotorAutoResetEncoderCommand;
 import frc.robot.commands.common.motor.MotorAutoResetEncoderCommand.MotorAutoResetEncoderSettings;
+import frc.robot.commands.common.motor.MotorBringUpCommand;
 import frc.robot.subsystems.interfaces.Arm;
 import frc.robot.subsystems.interfaces.Motor;
 
@@ -27,9 +28,9 @@ public class CoralArmControls {
             arm,
             () -> {
               if (controller.povRight().getAsBoolean()) {
-                return 0.01;
+                return 0.1;
               } else if (controller.povLeft().getAsBoolean()) {
-                return -0.01;
+                return -0.1;
               }
               return 0.0;
             }));
@@ -52,5 +53,15 @@ public class CoralArmControls {
         motorSubsystem.getName() + "/Commands/Arm To 45", new ArmToPosition(arm, () -> 45));
     SmartDashboard.putData(
         motorSubsystem.getName() + "/Commands/Arm To 75", new ArmToPosition(arm, () -> 75));
+
+    SmartDashboard.putData(
+        motorSubsystem.getName() + "/Commands/Arm Voltage Up",
+        new MotorBringUpCommand((Motor) arm, () -> 0.01));
+    SmartDashboard.putData(
+        motorSubsystem.getName() + "/Commands/Arm Voltage Down",
+        new MotorBringUpCommand((Motor) arm, () -> -0.01));
+    SmartDashboard.putData(
+        motorSubsystem.getName() + "/Commands/Arm Voltage 0",
+        new MotorBringUpCommand((Motor) arm, () -> 0));
   }
 }
