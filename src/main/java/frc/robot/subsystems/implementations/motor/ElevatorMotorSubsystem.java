@@ -68,8 +68,7 @@ public class ElevatorMotorSubsystem extends MotorSubsystem implements Elevator {
     if (motionProfileEnabled) {
       io.setPosition(
           nextState.position,
-          settings.feedforward.calculate(
-              io.normalizePositionToRad(settings.maxVelocityInMetersPerSecond)));
+          settings.feedforward.calculate(io.normalizePositionToRad(nextState.velocity)));
       Logger.recordOutput(getName() + "/targetMotionProfiledHeightRad", nextState.position);
       Logger.recordOutput(
           getName() + "/targetMotionProfiledHeightMeters",

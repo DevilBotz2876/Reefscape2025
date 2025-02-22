@@ -54,7 +54,7 @@ public class ArmMotorSubsystem extends MotorSubsystem implements Arm {
       io.setPosition(
           nextState.position,
           settings.feedforward.calculate(
-              nextState.position, Units.degreesToRadians(settings.maxVelocityInDegreesPerSecond)));
+              nextState.position, Units.degreesToRadians(nextState.velocity)));
       Logger.recordOutput(getName() + "/targetMotionProfiledAngleRad", nextState.position);
       Logger.recordOutput(
           getName() + "/targetMotionProfiledAngleDegrees",
