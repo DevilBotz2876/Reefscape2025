@@ -1,6 +1,7 @@
 package frc.robot.subsystems.implementations.vision;
 
 import edu.wpi.first.apriltag.AprilTagFieldLayout;
+import edu.wpi.first.math.VecBuilder;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Transform3d;
@@ -161,37 +162,27 @@ public class VisionSubsystem extends SubsystemBase implements Vision {
 
       Optional<EstimatedRobotPose> currentEstimatedRobotPose = camera.getEstimatedRobotPose();
       if (currentEstimatedRobotPose.isPresent()) {
-        // Optional<Double> distanceToBestTarget =
-        //     getDistanceToAprilTag(camera.getBestTarget().getFiducialId());
-        // TODO remove unnecessary condition: distanceToBestTarget always available if
-        // currentEstimateRobotPose
-        // TODO getDistanceToAprilTag only reads from primaryCamera, update to use any camera
-        // if (distanceToBestTarget.isPresent()) {
-        //   double distance = distanceToBestTarget.get();
-
-        //   // Add vision measurement to the consumer.
-        //   if (visionMeasurementConsumer != null) {
-        //     visionMeasurementConsumer.add(
-        //         currentEstimatedRobotPose.get().estimatedPose.toPose2d(),
-        //         currentEstimatedRobotPose.get().timestampSeconds,
-        //         null);
-        //   }
-        // }
+        double distanceToBestTarget =
+            getDistanceToAprilTag2(camera.index, camera.getBestTarget().getFiducialId());
 
         // Add vision measurement to the consumer.
-        if (visionMeasurementConsumer != null) {
+        if (visionMeasurementConsumer != null && distanceToBestTarget > 3) {
           visionMeasurementConsumer.add(
               currentEstimatedRobotPose.get().estimatedPose.toPose2d(),
               currentEstimatedRobotPose.get().timestampSeconds,
-              null);
+              VecBuilder.fill(
+                  distanceToBestTarget / 2, distanceToBestTarget / 2, distanceToBestTarget / 2));
         }
+        /* NOTE standard deviation format:
+         * (x position in meters, y position in meters, and heading in radians)
+         * Increase these numbers to trust the vision pose measurement less.
+         */
 
         // Log estimated robot pose for debugging
         debugRobotPoses.add(currentEstimatedRobotPose.get().estimatedPose.toPose2d());
       } else {
-        // TODO add NULL when no pose available.
+        // Display the robot pose "out of the arena" (indicating no pose found)
         debugRobotPoses.add(new Pose2d(-10.0, -10.0, new Rotation2d(0)));
-        // debugRobotPoses.add(null);
       }
     }
 
@@ -233,6 +224,21 @@ public class VisionSubsystem extends SubsystemBase implements Vision {
               + Constants.visionDistanceOffsetInMeters);
     }
     return Optional.empty();
+  }
+
+  @Override
+  public double getDistanceToAprilTag2(int cameraIdx, int tagId) {
+    PhotonTrackedTarget target = findAprilTag(tagId);
+    // TODO can this method pass in the camera object directly?
+    VisionCameraImpl thisCamera = cameras.get(cameraIdx);
+
+    // TODO ensure pitch direction (aka +/-) is correct for camera and target
+    return PhotonUtils.calculateDistanceToTargetMeters(
+            thisCamera.getRobotToCamera().getZ(),
+            fieldLayout.getTagPose(tagId).get().getZ(),
+            -thisCamera.getRobotToCamera().getRotation().getY(),
+            Units.degreesToRadians(target.getPitch()))
+        + Constants.visionDistanceOffsetInMeters;
   }
 
   @Override
