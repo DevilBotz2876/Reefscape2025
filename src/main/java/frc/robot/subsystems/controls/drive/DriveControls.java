@@ -1,7 +1,6 @@
 package frc.robot.subsystems.controls.drive;
 
 import edu.wpi.first.math.MathUtil;
-import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
@@ -43,18 +42,23 @@ public class DriveControls {
                 })); // Toggle Drive Orientation
 
     SmartDashboard.putData(
-        "Drive " + "/Commands/Prepare To Score L4",
+        "Drive " + "/Commands/Prepare For Intake",
         new SequentialCommandGroup(
-            new ElevatorToPosition(elevator, () -> Units.inchesToMeters(55)),
-            new ArmToPosition(arm, () -> 45)));
-    SmartDashboard.putData(
-        "Drive " + "/Commands/Score L4",
-        new SequentialCommandGroup(new ArmToPosition(arm, () -> -40)));
+            new ArmToPosition(arm, () -> -90).withTimeout(0),
+            new ElevatorToPosition(elevator, () -> 0.6)));
 
     SmartDashboard.putData(
-        "Drive " + "/Commands/Pick Up Coral",
+        "Drive " + "/Commands/Intake",
+        new SequentialCommandGroup(new ElevatorToPosition(elevator, () -> 0.2)));
+
+    SmartDashboard.putData(
+        "Drive " + "/Commands/Prepare To Score L4",
         new SequentialCommandGroup(
-            new ArmToPosition(arm, () -> -90).withTimeout(1.5),
-            new ElevatorToPosition(elevator, () -> 0.1)));
+            new ElevatorToPosition(elevator, () -> 1.0),
+            new ArmToPosition(arm, () -> 75),
+            new ElevatorToPosition(elevator, () -> 1.4)));
+    SmartDashboard.putData(
+        "Drive " + "/Commands/Score L4",
+        new SequentialCommandGroup(new ArmToPosition(arm, () -> -45)));
   }
 }
