@@ -162,21 +162,29 @@ public class VisionSubsystem extends SubsystemBase implements Vision {
 
       Optional<EstimatedRobotPose> currentEstimatedRobotPose = camera.getEstimatedRobotPose();
       if (currentEstimatedRobotPose.isPresent()) {
-        double distanceToBestTarget =
-            getDistanceToAprilTag2(camera.index, camera.getBestTarget().getFiducialId());
+        // double distanceToBestTarget =
+        //     getDistanceToAprilTag2(camera.index, camera.getBestTarget().getFiducialId());
 
         // Add vision measurement to the consumer.
-        if (visionMeasurementConsumer != null && distanceToBestTarget > 3) {
-          visionMeasurementConsumer.add(
-              currentEstimatedRobotPose.get().estimatedPose.toPose2d(),
-              currentEstimatedRobotPose.get().timestampSeconds,
-              VecBuilder.fill(
-                  distanceToBestTarget / 2, distanceToBestTarget / 2, distanceToBestTarget / 2));
-        }
+        // if (visionMeasurementConsumer != null && distanceToBestTarget > 3) {
+        //   visionMeasurementConsumer.add(
+        //       currentEstimatedRobotPose.get().estimatedPose.toPose2d(),
+        //       currentEstimatedRobotPose.get().timestampSeconds,
+        //       VecBuilder.fill(
+        //           distanceToBestTarget / 2, distanceToBestTarget / 2, distanceToBestTarget / 2));
+        // }
         /* NOTE standard deviation format:
          * (x position in meters, y position in meters, and heading in radians)
          * Increase these numbers to trust the vision pose measurement less.
          */
+
+         // Add vision measurement to the consumer.
+        if (visionMeasurementConsumer != null) {
+          visionMeasurementConsumer.add(
+              currentEstimatedRobotPose.get().estimatedPose.toPose2d(),
+              currentEstimatedRobotPose.get().timestampSeconds,
+              null);
+        }
 
         // Log estimated robot pose for debugging
         debugRobotPoses.add(currentEstimatedRobotPose.get().estimatedPose.toPose2d());
@@ -210,6 +218,13 @@ public class VisionSubsystem extends SubsystemBase implements Vision {
     return null;
   }
 
+  private PhotonTrackedTarget findAprilTag2(int cameraIdx, int tagId) {
+    for (PhotonTrackedTarget target : cameras.get(cameraIdx).getTargets()) {
+      if (target.getFiducialId() == tagId) return target;
+    }
+    return null;
+  }
+
   @Override
   public Optional<Double> getDistanceToAprilTag(int id) {
     PhotonTrackedTarget target = findAprilTag(id);
@@ -228,9 +243,9 @@ public class VisionSubsystem extends SubsystemBase implements Vision {
 
   @Override
   public double getDistanceToAprilTag2(int cameraIdx, int tagId) {
+    VisionCameraImpl thisCamera = cameras.get(cameraIdx);
     PhotonTrackedTarget target = findAprilTag(tagId);
     // TODO can this method pass in the camera object directly?
-    VisionCameraImpl thisCamera = cameras.get(cameraIdx);
 
     // TODO ensure pitch direction (aka +/-) is correct for camera and target
     return PhotonUtils.calculateDistanceToTargetMeters(

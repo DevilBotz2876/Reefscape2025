@@ -23,6 +23,7 @@ import frc.robot.io.implementations.motor.MotorIOBase.MotorIOBaseSettings;
 import frc.robot.io.implementations.motor.MotorIOElevatorStub;
 import frc.robot.subsystems.controls.arm.ClimberArmControls;
 import frc.robot.subsystems.controls.arm.CoralArmControls;
+import frc.robot.subsystems.controls.combination.DriverAssistControls;
 import frc.robot.subsystems.controls.drive.DriveControls;
 import frc.robot.subsystems.controls.elevator.ElevatorControls;
 import frc.robot.subsystems.implementations.drive.DriveBase;
@@ -210,7 +211,7 @@ public class RobotConfig {
     vision.setVisionMeasurementConsumer(drive::addVisionMeasurement);
 
     DriveControls.setupController(drive, mainController);
-
+    DriverAssistControls.setupController(elevator, coralArm, assistController);
     CoralArmControls.setupController(coralArm, mainController);
     ElevatorControls.setupController(elevator, mainController);
     ClimberArmControls.setupController(climberArm, mainController);

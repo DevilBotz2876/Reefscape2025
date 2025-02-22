@@ -14,26 +14,26 @@ import frc.robot.subsystems.interfaces.Drive;
 import frc.robot.subsystems.interfaces.Elevator;
 
 public class DriverAssistControls {
-  public static void setupController(
-      Drive drive, Elevator elevator, Arm arm, CommandXboxController controller) {
+  public static void setupController(Elevator elevator, Arm arm, CommandXboxController controller) {
+
     SmartDashboard.putData(
-        "Drive " + "/Commands/Prepare For Intake",
+        "Driver " + "/Commands/Prepare For Intake",
         new SequentialCommandGroup(
             new ArmToPosition(arm, () -> -90).withTimeout(0),
             new ElevatorToPosition(elevator, () -> 0.6)));
 
     SmartDashboard.putData(
-        "Drive " + "/Commands/Intake",
+        "Driver " + "/Commands/Intake",
         new SequentialCommandGroup(new ElevatorToPosition(elevator, () -> 0.2)));
 
     SmartDashboard.putData(
-        "Driver Assist" + "/Commands/Prepare To Score L4",
+        "Driver " + "/Commands/Prepare To Score L4",
         new SequentialCommandGroup(
             new ElevatorToPosition(elevator, () -> 1.0),
             new ArmToPosition(arm, () -> 75),
             new ElevatorToPosition(elevator, () -> 1.4)));
     SmartDashboard.putData(
-        "Drive Assist" + "/Commands/Score L4",
+        "Driver " + "/Commands/Score L4",
         new SequentialCommandGroup(new ArmToPosition(arm, () -> -45)));
   }
 }

@@ -46,8 +46,6 @@ public class DriveControls {
   protected static int myCoolPoseKeyIdx = 0;
 
   public static void setupController(Drive drive, CommandXboxController controller) {
-  public static void setupController(
-      Drive drive, CommandXboxController controller) {
     SubsystemBase driveSubsystem = (SubsystemBase) drive;
     driveSubsystem.setDefaultCommand(
         new DriveCommand(
