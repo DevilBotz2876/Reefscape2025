@@ -75,6 +75,8 @@ integration process.
    * [`java/frc/robot`](src/main/java/frc/robot/): This is the root of all of the actual Java code for the robot
       * [`commands/`](src/main/java/frc/robot/commands/): All commands are stored in this folder
          * [`common/`](src/main/java/frc/robot/commands/common/): Common commands are ones that operate on the Subsystem *interface*, so doesn't rely on any game specific implementations/APIs.
+            * `motor`
+               * [`MotorBringUpCommand.java`](src/main/java/frc/robot/commands/common/motor/MotorBringUpCommand.java): _TODO_
             * `gizmo`
                * `GizmoCommand.java`
             * `arm/`
@@ -90,12 +92,29 @@ integration process.
                * ...
       * [`io/`](src/main/java/frc/robot/io): generic *low-level* hardware IO (e.g. Motors, Limit Switches, Sensors, etc)
          * [`interfaces/`](src/main/java/frc/robot/io/interfaces/): *hardware interfaces* that are common for all possible implementations.  E.g. a MotorIO would generally have a way to at least `setVoltage` and get status such as `voltage` applied and actual `amperage` used.
+            * [`MotorIO.java`](src/main/java/frc/robot/io/interfaces/MotorIO.java): Defines the minimum expected interface (settings, control, and status) for a generic motor.
+               * `setVoltage(double volts)`
+               * `setVelocity(double velocityRadPerSec, double ffVolts)`
+               * `setPosition(double positionRad, double ffVolts)`
+               * `getPid()`
             * `GizmoIO.java`
             * `ArmIO.java`
             * `ClimberIO.java`
             * ...
          * [`implementations/`](src/main/java/frc/robot/io/implementations/): Hardware specific implementations of the hardware IO interfaces.  Each interface may have one or more implementations depending on manufacturer, model, etc.  _Each interface must have a simulation stub implementation_
-            *` `gizmo/`
+            * `motor/`
+               * [`MotorIOBase.java`](src/main/java/frc/robot/io/implementations/motor/MotorIOBase.java): The base *abstract* implementation of the [Motor](src/main/java/frc/robot/io/interfaces/MotorIO.java) interface.  All motor implementations should extend this base class.  It implements the following functionality:
+                  * generates status in other units (e.g. from radians to degrees, RPMs, etc)
+                  * implements _software_ based velocity and position PID control
+               * Stub Implementations - for software bring-up in simulation. Each implements the physics of different types of mechanisms
+                  * [`MotorIOStub.java`](src/main/java/frc/robot/io/implementations/motor/MotorIOStub.java): Generic DC Motor based Mechanism (uses DCMotorSim)
+                  * [`MotorIOArmStub.java`](src/main/java/frc/robot/io/implementations/motor/MotorIOArmStub.java): Motor connected to an [Arm](src/main/java/frc/robot/subsystems/interfaces/ArmV2.java) Mechanism (uses SingleJointedArmSim)
+                  * [`MotorIOFlywheelStub.java`](src/main/java/frc/robot/io/implementations/motor/MotorIOFlywheelStub.java): Motor connected to a [Flywheel](src/main/java/frc/robot/subsystems/interfaces/Flywheel.java)/Roller Mechanism (uses FlywheelSim)
+                  * [`MotorIOElevatorStub.java`](src/main/java/frc/robot/io/implementations/motor/MotorIOElevatorStub.java): Motor connected to an [Elevator](src/main/java/frc/robot/subsystems/interfaces/ElevatorV2.java) Mechanism (uses ElevatorSim)
+               * Real Implementations
+                  * [`MotorIOSparkMax.java`](src/main/java/frc/robot/io/implementations/motor/MotorIOSparkMax.java): SparkMax Motor Controller implementation
+                  * [`MotorIOTalonFx.java`](src/main/java/frc/robot/io/implementations/motor/MotorIOTalonFx.java): TalonFx Motor Controller implementation
+            * `gizmo/`
                * `GizmoIOStub.java`: Dummy/Stub implementation of a "Gizmo"
                * `GizmoIOAcme.java`: Implementation of the Acme brand/model of a "Gizmo"
             * `arm/`
@@ -106,6 +125,10 @@ integration process.
             * ...
       * [`subsystems/`](src/main/java/frc/robot/subsystems): subsystems are implemented using one or more Hardware IO instances.  E.g. an Arm may contains an instance of a MotorIO connected to gears (to move the Arm up/down) and an AbsoluteEncoderIO (to measure the actual current angle).
          * [`interfaces/`](src/main/java/frc/robot/subsystems/interfaces/): *subsystem interfaces* that are common for all possible implementations
+            * [`Motor.java`](src/main/java/frc/robot/subsystems/interfaces/Motor.java): _TODO_
+            * [`ArmV2.java`](src/main/java/frc/robot/subsystems/interfaces/ArmV2.java): _TODO_
+            * [`Flywheel.java`](src/main/java/frc/robot/subsystems/interfaces/Flywheel.java): _TODO_
+            * [`ElevatorV2.java`](src/main/java/frc/robot/subsystems/interfaces/ElevatorV2.java): _TODO_
             * `Gizmo.java`
             * `Arm.java`
             * `Climber.java`
@@ -118,6 +141,11 @@ integration process.
             * `vision`
                * `VisionControls.java`
          * [`implementations/`](src/main/java/frc/robot/subsystems/implementations/): Subsystem specific implementations that use one or more hardware IO instances.  May need to be configured differently depending on the Robot Configuration. E.g. for an Arm, the absolute encoder offset will likely be different in different implementations of the Arm.  The subsystem should provide a mechanism to configure it accordingly.
+             * `motor`
+               * [`MotorSubsystem.java`](src/main/java/frc/robot/subsystems/implementations/motor/MotorSubsystem.java): _TODO_
+               * [`ArmMotorSubsystem.java`](src/main/java/frc/robot/subsystems/implementations/motor/ArmMotorSubsystem.java): _TODO_
+               * [`FlywheelMotorSubsystem.java`](src/main/java/frc/robot/subsystems/implementations/motor/FlywheelMotorSubsystem.java): _TODO_
+               * [`ElevatorMotorSubsystem.java`](src/main/java/frc/robot/subsystems/implementations/motor/ElevatorMotorSubsystem.java): _TODO_
             * `gizmo/`
                * `GizmoSubsystem.java`
             * `arm/`
