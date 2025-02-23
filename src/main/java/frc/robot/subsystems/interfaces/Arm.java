@@ -17,7 +17,9 @@ public interface Arm {
     public double targetAngleToleranceInDegrees = 1.0;
 
     // feedforward is in *radian* units
-    public ArmFeedforward feedforward = new ArmFeedforward(0.0, 0, 0);
+    public ArmFeedforward feedforward =
+        new ArmFeedforward(
+            0.0, 0, 0); // These feedforward values assume the native Motor units of *radians*.
 
     // 2D Graphic Params
     public Color8Bit color = new Color8Bit(Color.kWhite);

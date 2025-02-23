@@ -16,7 +16,9 @@ import frc.robot.io.interfaces.MotorIO;
 public abstract class MotorIOBase implements MotorIO {
   public static class MotorIOBaseSettings {
     public MotorIOSettings motor = new MotorIOSettings();
-    public PIDController pid = new PIDController(1.0, 0, 0); // PID values are unit-less.
+    public PIDController pid =
+        new PIDController(
+            1.0, 0, 0); // These PID values assume the native Motor units of *radians*.
 
     public int forwardLimitChannel = -1;
     public boolean forwardLimitNegate = false;
