@@ -1739,20 +1739,6 @@
                 }
               },
               {
-                "title": "D",
-                "x": 0.0,
-                "y": 0.0,
-                "width": 128.0,
-                "height": 128.0,
-                "type": "Text Display",
-                "properties": {
-                  "topic": "/SmartDashboard/Drive[YAGSL]/translationPID/D",
-                  "period": 0.06,
-                  "data_type": "double",
-                  "show_submit_button": true
-                }
-              },
-              {
                 "title": "I",
                 "x": 0.0,
                 "y": 0.0,
@@ -1761,6 +1747,20 @@
                 "type": "Text Display",
                 "properties": {
                   "topic": "/SmartDashboard/Drive[YAGSL]/translationPID/I",
+                  "period": 0.06,
+                  "data_type": "double",
+                  "show_submit_button": true
+                }
+              },
+              {
+                "title": "D",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 128.0,
+                "height": 128.0,
+                "type": "Text Display",
+                "properties": {
+                  "topic": "/SmartDashboard/Drive[YAGSL]/translationPID/D",
                   "period": 0.06,
                   "data_type": "double",
                   "show_submit_button": true
