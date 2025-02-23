@@ -66,9 +66,7 @@ public class ElevatorMotorSubsystem extends MotorSubsystem implements Elevator {
   @Override
   public void periodic() {
     if (motionProfileEnabled) {
-      io.setPosition(
-          nextState.position,
-          settings.feedforward.calculate(io.normalizePositionToRad(nextState.velocity)));
+      io.setPosition(nextState.position, settings.feedforward.calculate(nextState.velocity));
 
       Logger.recordOutput(getName() + "/targetMotionProfiledHeightRad", nextState.position);
       Logger.recordOutput(
