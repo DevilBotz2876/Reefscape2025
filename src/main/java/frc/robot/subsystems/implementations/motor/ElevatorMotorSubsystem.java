@@ -69,10 +69,16 @@ public class ElevatorMotorSubsystem extends MotorSubsystem implements Elevator {
       io.setPosition(
           nextState.position,
           settings.feedforward.calculate(io.normalizePositionToRad(nextState.velocity)));
+
       Logger.recordOutput(getName() + "/targetMotionProfiledHeightRad", nextState.position);
       Logger.recordOutput(
           getName() + "/targetMotionProfiledHeightMeters",
           io.normalizePositionToMeters(nextState.position));
+      Logger.recordOutput(getName() + "/targetMotionProfiledVelocityRadPerSec", nextState.velocity);
+      Logger.recordOutput(
+          getName() + "/targetMotionProfiledVelocityMetersPerSec",
+          io.normalizePositionToMeters(nextState.velocity));
+
       nextState = motionProfile.calculate(0.02, nextState, targetState);
     }
 
