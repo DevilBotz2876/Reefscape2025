@@ -129,7 +129,7 @@ public class RobotConfig {
       elevatorSettings.startingHeightInMeters = elevatorSettings.minHeightInMeters;
       elevatorSettings.targetHeightToleranceInMeters = 0.01;
       elevatorSettings.color = new Color8Bit(Color.kSilver);
-      elevatorSettings.feedforward = new ElevatorFeedforward(0, 0.0351, 0.1, 0.0);
+      elevatorSettings.feedforward = new ElevatorFeedforward(0, 0.0351, 0.17095, 0.0);
       elevatorSettings.carriageMassKg = 2.0;
       elevatorSettings.motor = DCMotor.getKrakenX60(1);
       elevatorSettings.simulateGravity = true;
