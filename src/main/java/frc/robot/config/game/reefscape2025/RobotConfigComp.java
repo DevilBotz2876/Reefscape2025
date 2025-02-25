@@ -35,7 +35,7 @@ public class RobotConfigComp extends RobotConfig {
     {
       MotorIOBaseSettings motorSettings = new MotorIOBaseSettings();
       motorSettings.motor.gearing = 9; /* 2x 3:1 gear boxes */
-      motorSettings.motor.inverted = false;
+      motorSettings.motor.inverted = true;
       // TODO: Get the DIO ports
       // motorSettings.forwardLimitChannel = 7;
       // motorSettings.forwardLimitNegate = true;
@@ -84,8 +84,8 @@ public class RobotConfigComp extends RobotConfig {
       MotorIOBaseSettings motorSettings = new MotorIOBaseSettings();
       // 20:1 gear box, 30 teeth on the arm cog and 15 teeth on the motor cog
       motorSettings.motor.gearing = 40;
-      motorSettings.motor.inverted = false; // false for Sim
-      motorSettings.pid = new PIDController(0.0, 0.0, 0);
+      motorSettings.motor.inverted = true; // false for Sim
+      motorSettings.pid = new PIDController(1.0, 0.0, 0);
       // TODO: Get the DIO ports
       // motorSettings.reverseLimitChannel = 1;
       // motorSettings.reverseLimitNegate = true;
@@ -94,7 +94,7 @@ public class RobotConfigComp extends RobotConfig {
       armSettings.minAngleInDegrees = -90;
       armSettings.maxAngleInDegrees = 60;
       armSettings.startingAngleInDegrees = armSettings.minAngleInDegrees;
-      armSettings.feedforward = new ArmFeedforward(0.0, 0.0, 0.0, 0.0);
+      armSettings.feedforward = new ArmFeedforward(0.0, 0.17, 0.7, 0.0);
       armSettings.color = new Color8Bit(Color.kRed);
       armSettings.armLengthInMeters = 0.5;
       armSettings.armMassInKg = 1.0;
@@ -110,7 +110,7 @@ public class RobotConfigComp extends RobotConfig {
       CoralArmControls.Constants.autoZeroSettings.minResetCurrent = 0.5;
       CoralArmControls.Constants.autoZeroSettings.resetPositionRad =
           Units.degreesToRadians(
-              armSettings.minAngleInDegrees); // We have an offest about 15 degrees
+              armSettings.minAngleInDegrees - 10); // We have an offest about 15 degrees
       CoralArmControls.Constants.autoZeroSettings.initialReverseDuration =
           1.0; // Set the seconds of reverse before zero. Set to zero if there shound be no reverse
 
