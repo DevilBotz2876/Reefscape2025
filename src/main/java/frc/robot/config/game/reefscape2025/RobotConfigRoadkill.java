@@ -2,6 +2,7 @@ package frc.robot.config.game.reefscape2025;
 
 import edu.wpi.first.wpilibj.AddressableLED;
 import edu.wpi.first.wpilibj.AddressableLEDBuffer;
+import edu.wpi.first.wpilibj.AddressableLEDBufferView;
 import edu.wpi.first.wpilibj.LEDPattern;
 import edu.wpi.first.wpilibj.util.Color;
 
@@ -37,9 +38,20 @@ public class RobotConfigRoadkill extends RobotConfig {
     m_led.start();
     // Create an LED pattern that sets the entire strip to solid red
     LEDPattern red = LEDPattern.solid(Color.kRed);
+    LEDPattern blue = LEDPattern.solid(Color.kBlue);
 
+    // Create the view for the section of the strip on the left side of the robot.
+    // This section spans LEDs from index 0 through index 59, inclusive.
+    AddressableLEDBufferView m_left = m_ledBuffer.createView(0, 9);
+
+    // The section of the strip on the right side of the robot.
+    // This section spans LEDs from index 60 through index 119, inclusive.
+    // This view is reversed to cancel out the serpentine arrangement of the
+    // physical LED strip on the robot.
+    AddressableLEDBufferView m_right = m_ledBuffer.createView(25, 33).reversed();
     // Apply the LED pattern to the data buffer
-    red.applyTo(m_ledBuffer);
+    red.applyTo(m_left);
+    blue.applyTo(m_right);
 
     // Write the data to the LED strip
     m_led.setData(m_ledBuffer);
