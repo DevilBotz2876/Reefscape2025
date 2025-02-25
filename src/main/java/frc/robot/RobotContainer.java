@@ -50,6 +50,9 @@ public class RobotContainer {
       case "NEMO":
         robotConfig = new RobotConfigNemo();
         break;
+      case "ROADKILL":
+        robotConfig = new RobotConfigRoadkill();
+        break;
       case "STUB":
         robotConfig = new RobotConfigStub();
         break;
