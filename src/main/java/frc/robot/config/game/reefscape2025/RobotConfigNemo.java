@@ -30,7 +30,7 @@ import frc.robot.subsystems.interfaces.Vision.Camera;
 /* Override Nemo specific constants here */
 public class RobotConfigNemo extends RobotConfig {
   public RobotConfigNemo() {
-    super(false, true, true, false, false, false, false);
+    super(false, true, true, false, false, true, false);
 
     // Nemo has a Swerve drive train
     Drive.Constants.rotatePidKp = 0.025;
@@ -139,7 +139,7 @@ public class RobotConfigNemo extends RobotConfig {
       elevatorSettings.startingHeightInMeters = elevatorSettings.minHeightInMeters;
       elevatorSettings.color = new Color8Bit(Color.kSilver);
       elevatorSettings.feedforward =
-          new ElevatorFeedforward(0, 0.13, 0.0, 0); // TODO: Tune feedforward
+          new ElevatorFeedforward(0, 0.34, 0.2, 0); // TODO: Tune feedforward
       elevatorSettings.carriageMassKg = 5.0;
       elevatorSettings.motor = DCMotor.getKrakenX60(1);
       elevatorSettings.simulateGravity = true;
