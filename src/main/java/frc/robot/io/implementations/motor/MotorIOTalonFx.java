@@ -5,7 +5,6 @@ import com.ctre.phoenix6.configs.TalonFXConfiguration;
 import com.ctre.phoenix6.hardware.TalonFX;
 import com.ctre.phoenix6.signals.InvertedValue;
 import com.ctre.phoenix6.signals.NeutralModeValue;
-import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.units.Units;
 
 public class MotorIOTalonFx extends MotorIOBase {
@@ -60,8 +59,8 @@ public class MotorIOTalonFx extends MotorIOBase {
 
   @Override
   public void setVoltage(double volts) {
-    volts = MathUtil.clamp(volts, -12, 12);
-    motorFx.setVoltage(volts);
+    // Inversion is handled in the Talon FX Controller config, always set it to false
+    motorFx.setVoltage(calculateSafeVoltage(volts, false));
   }
 
   @Override

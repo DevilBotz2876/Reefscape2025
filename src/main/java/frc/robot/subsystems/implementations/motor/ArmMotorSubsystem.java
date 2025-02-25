@@ -29,6 +29,7 @@ public class ArmMotorSubsystem extends MotorSubsystem implements Arm {
     super(io, "Arm[" + name + "]");
     this.settings = settings;
 
+    resetEncoder(Units.degreesToRadians(settings.startingAngleInDegrees));
     setMotionProfileConstraintsDegrees(
         new Constraints(
             settings.maxVelocityInDegreesPerSecond,
@@ -52,12 +53,18 @@ public class ArmMotorSubsystem extends MotorSubsystem implements Arm {
     if (motionProfileEnabled) {
       io.setPosition(
           nextState.position,
-          settings.feedforward.calculate(
-              nextState.position, Units.degreesToRadians(settings.maxVelocityInDegreesPerSecond)));
+          settings.feedforward.calculate(nextState.position, nextState.velocity));
+
       Logger.recordOutput(getName() + "/targetMotionProfiledAngleRad", nextState.position);
       Logger.recordOutput(
           getName() + "/targetMotionProfiledAngleDegrees",
           Units.radiansToDegrees(nextState.position));
+
+      Logger.recordOutput(getName() + "/targetMotionProfiledVelocityRadPerSec", nextState.velocity);
+      Logger.recordOutput(
+          getName() + "/targetMotionProfiledVelocityDegreesPerSec",
+          Units.radiansToDegrees(nextState.velocity));
+
       nextState = motionProfile.calculate(0.02, nextState, targetState);
     }
 

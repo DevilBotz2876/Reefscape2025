@@ -23,6 +23,7 @@ import frc.robot.io.implementations.motor.MotorIOBase.MotorIOBaseSettings;
 import frc.robot.io.implementations.motor.MotorIOElevatorStub;
 import frc.robot.subsystems.controls.arm.ClimberArmControls;
 import frc.robot.subsystems.controls.arm.CoralArmControls;
+import frc.robot.subsystems.controls.combination.DriverAssistControls;
 import frc.robot.subsystems.controls.drive.DriveControls;
 import frc.robot.subsystems.controls.elevator.ElevatorControls;
 import frc.robot.subsystems.implementations.drive.DriveBase;
@@ -82,7 +83,7 @@ public class RobotConfig {
       boolean stubAlgaeSubsystem,
       boolean stubClimberArm) {
     if (stubDrive) {
-      drive = new DriveBase();
+      drive = new DriveBase("Stub");
     }
 
     if (stubAuto) {
@@ -128,7 +129,7 @@ public class RobotConfig {
       elevatorSettings.startingHeightInMeters = elevatorSettings.minHeightInMeters;
       elevatorSettings.targetHeightToleranceInMeters = 0.01;
       elevatorSettings.color = new Color8Bit(Color.kSilver);
-      elevatorSettings.feedforward = new ElevatorFeedforward(0, 0.0351, 0.1, 0.0);
+      elevatorSettings.feedforward = new ElevatorFeedforward(0, 0.0351, 0.17095, 0.0);
       elevatorSettings.carriageMassKg = 2.0;
       elevatorSettings.motor = DCMotor.getKrakenX60(1);
       elevatorSettings.simulateGravity = true;
@@ -210,7 +211,7 @@ public class RobotConfig {
     vision.setVisionMeasurementConsumer(drive::addVisionMeasurement);
 
     DriveControls.setupController(drive, mainController);
-
+    DriverAssistControls.setupController(elevator, coralArm, assistController);
     CoralArmControls.setupController(coralArm, mainController);
     ElevatorControls.setupController(elevator, mainController);
     ClimberArmControls.setupController(climberArm, mainController);

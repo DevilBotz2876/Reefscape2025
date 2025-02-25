@@ -30,6 +30,7 @@ public class ElevatorMotorSubsystem extends MotorSubsystem implements Elevator {
     super(io, "Elevator[" + name + "]");
     this.settings = settings;
 
+    resetEncoder(io.normalizePositionToRad(settings.startingHeightInMeters));
     setMotionProfileConstraintsMeters(
         new Constraints(
             settings.maxVelocityInMetersPerSecond,
@@ -65,14 +66,17 @@ public class ElevatorMotorSubsystem extends MotorSubsystem implements Elevator {
   @Override
   public void periodic() {
     if (motionProfileEnabled) {
-      io.setPosition(
-          nextState.position,
-          settings.feedforward.calculate(
-              io.normalizePositionToRad(settings.maxVelocityInMetersPerSecond)));
+      io.setPosition(nextState.position, settings.feedforward.calculate(nextState.velocity));
+
       Logger.recordOutput(getName() + "/targetMotionProfiledHeightRad", nextState.position);
       Logger.recordOutput(
           getName() + "/targetMotionProfiledHeightMeters",
           io.normalizePositionToMeters(nextState.position));
+      Logger.recordOutput(getName() + "/targetMotionProfiledVelocityRadPerSec", nextState.velocity);
+      Logger.recordOutput(
+          getName() + "/targetMotionProfiledVelocityMetersPerSec",
+          io.normalizePositionToMeters(nextState.velocity));
+
       nextState = motionProfile.calculate(0.02, nextState, targetState);
     }
 

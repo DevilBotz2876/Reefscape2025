@@ -1,6 +1,7 @@
 package frc.robot.subsystems.implementations.drive;
 
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.subsystems.interfaces.Drive;
 
@@ -8,6 +9,11 @@ public class DriveBase extends SubsystemBase implements Drive {
   public static class Constants {
     public static double rotatePidErrorInDegrees = 2.0;
     public static double pidSettlingTimeInSeconds = 0.1;
+  }
+
+  public DriveBase(String name) {
+    setName("Drive[" + name + "]");
+    SmartDashboard.putData(getName(), this);
   }
 
   @Override

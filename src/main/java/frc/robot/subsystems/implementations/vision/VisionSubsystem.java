@@ -1,6 +1,7 @@
 package frc.robot.subsystems.implementations.vision;
 
 import edu.wpi.first.apriltag.AprilTagFieldLayout;
+import edu.wpi.first.math.VecBuilder;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Transform3d;
@@ -72,6 +73,19 @@ public class VisionSubsystem extends SubsystemBase implements Vision {
 
     private PhotonTrackedTarget getBestTarget() {
       return result.getBestTarget();
+    }
+
+    private double getDistanceToBestTarget() {
+      // ASSUME this camera can see a target
+      PhotonTrackedTarget bestTarget = result.getBestTarget();
+      // if (bestTarget == null) return -1.0;
+
+      return PhotonUtils.calculateDistanceToTargetMeters(
+              robotToCamera.getZ(),
+              fieldLayout.getTagPose(bestTarget.getFiducialId()).get().getZ(),
+              robotToCamera.getRotation().getY(),
+              Units.degreesToRadians(bestTarget.getPitch()))
+          + Constants.visionDistanceOffsetInMeters;
     }
 
     private Optional<EstimatedRobotPose> getEstimatedRobotPose() {
@@ -161,29 +175,26 @@ public class VisionSubsystem extends SubsystemBase implements Vision {
 
       Optional<EstimatedRobotPose> currentEstimatedRobotPose = camera.getEstimatedRobotPose();
       if (currentEstimatedRobotPose.isPresent()) {
-        Optional<Double> distanceToBestTarget =
-            getDistanceToAprilTag(camera.getBestTarget().getFiducialId());
-        // TODO remove unnecessary condition: distanceToBestTarget always available if
-        // currentEstimateRobotPose
-        if (distanceToBestTarget.isPresent()) {
-          double distance = distanceToBestTarget.get();
+        double distanceToBestTarget = camera.getDistanceToBestTarget();
 
-          // Add vision measurement to the consumer.
-          if (visionMeasurementConsumer != null) {
-            visionMeasurementConsumer.add(
-                currentEstimatedRobotPose.get().estimatedPose.toPose2d(),
-                currentEstimatedRobotPose.get().timestampSeconds,
-                null);
-          }
+        // Add vision measurement to the consumer.
+        if (visionMeasurementConsumer != null && distanceToBestTarget > 5) {
+          visionMeasurementConsumer.add(
+              currentEstimatedRobotPose.get().estimatedPose.toPose2d(),
+              currentEstimatedRobotPose.get().timestampSeconds,
+              VecBuilder.fill(
+                  distanceToBestTarget / 2, distanceToBestTarget / 2, distanceToBestTarget / 2));
         }
+        /* NOTE standard deviation format:
+         * (x position in meters, y position in meters, and heading in radians)
+         * Increase these numbers to trust the vision pose measurement less.
+         */
 
         // Log estimated robot pose for debugging
         debugRobotPoses.add(currentEstimatedRobotPose.get().estimatedPose.toPose2d());
       } else {
-        // debugRobotPoses.add(new Pose2d());
-
-        // Adding null to this list causes robot program to crash.
-        // debugRobotPoses.add(null);
+        // Display the robot pose "out of the arena" (indicating no pose found)
+        debugRobotPoses.add(new Pose2d(-10.0, -10.0, new Rotation2d(0)));
       }
     }
 

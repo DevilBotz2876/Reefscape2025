@@ -1,6 +1,5 @@
 package frc.robot.subsystems.controls.elevator;
 
-import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -45,19 +44,22 @@ public class ElevatorControls {
         subsystem.getName() + "/Commands/Auto Calibrate Elevator", autoCalibrateCommand);
 
     SmartDashboard.putData(
-        subsystem.getName() + "/Commands/Elevator To 0\"",
-        new ElevatorToPosition(elevator, () -> Units.inchesToMeters(0)));
+        subsystem.getName() + "/Commands/Elevator To 0.3m\"",
+        new ElevatorToPosition(elevator, () -> 0.30));
     SmartDashboard.putData(
-        subsystem.getName() + "/Commands/Elevator To 12\"",
-        new ElevatorToPosition(elevator, () -> Units.inchesToMeters(12)));
+        subsystem.getName() + "/Commands/Elevator To 0.6m\"",
+        new ElevatorToPosition(elevator, () -> 0.60));
     SmartDashboard.putData(
-        subsystem.getName() + "/Commands/Elevator To 24\"",
-        new ElevatorToPosition(elevator, () -> Units.inchesToMeters(24)));
+        subsystem.getName() + "/Commands/Elevator To 0.8m\"",
+        new ElevatorToPosition(elevator, () -> 0.80));
     SmartDashboard.putData(
-        subsystem.getName() + "/Commands/Elevator To 36\"",
-        new ElevatorToPosition(elevator, () -> Units.inchesToMeters(36)));
+        subsystem.getName() + "/Commands/Elevator To 1.0m\"",
+        new ElevatorToPosition(elevator, () -> 1.0));
     SmartDashboard.putData(
-        subsystem.getName() + "/Commands/Elevator To 48\"",
-        new ElevatorToPosition(elevator, () -> Units.inchesToMeters(48)));
+        subsystem.getName() + "/Commands/Elevator To 1.2m\"",
+        new ElevatorToPosition(elevator, () -> 1.2));
+    SmartDashboard.putData(
+        subsystem.getName() + "/Commands/Elevator To 1.4m\"",
+        new ElevatorToPosition(elevator, () -> 1.4));
   }
 }

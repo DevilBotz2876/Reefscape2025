@@ -17,7 +17,9 @@ public interface Elevator {
     public double targetHeightToleranceInMeters = 0.01;
 
     // feedforward is in *meter* units
-    public ElevatorFeedforward feedforward = new ElevatorFeedforward(0, 0, 0);
+    public ElevatorFeedforward feedforward =
+        new ElevatorFeedforward(
+            0, 0, 0); // These feedforward values assume the native Motor units of *radians*.
 
     // 2D Graphic Params
     public Color8Bit color = new Color8Bit(Color.kWhite);
