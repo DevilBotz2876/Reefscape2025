@@ -65,7 +65,7 @@ public class RobotConfigComp extends RobotConfig {
       talonFxSettings.canId = 20;
 
       elevatorSettings.maxVelocityInMetersPerSecond = 0.3;
-      elevatorSettings.maxAccelerationInMetersPerSecondSquared = 8.0;
+      elevatorSettings.maxAccelerationInMetersPerSecondSquared = 0.3;
 
       ElevatorControls.Constants.autoZeroSettings.voltage = 1.5;
       ElevatorControls.Constants.autoZeroSettings.minResetCurrent = 30;
