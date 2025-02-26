@@ -11,25 +11,45 @@
           }
         },
         {
-          "type": "path",
-          "data": {
-            "pathName": "Start to Near G"
-          }
-        },
-        {
           "type": "parallel",
           "data": {
             "commands": [
               {
-                "type": "named",
+                "type": "path",
                 "data": {
-                  "name": "Move Arm High"
+                  "pathName": "Start to Near G"
                 }
               },
               {
-                "type": "named",
+                "type": "sequential",
                 "data": {
-                  "name": "Move Elevator"
+                  "commands": [
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "Move Elevator to 1.0 meter"
+                      }
+                    },
+                    {
+                      "type": "parallel",
+                      "data": {
+                        "commands": [
+                          {
+                            "type": "named",
+                            "data": {
+                              "name": "Move Arm 75 degrees"
+                            }
+                          },
+                          {
+                            "type": "named",
+                            "data": {
+                              "name": "Move Elevator to 1.4 meter"
+                            }
+                          }
+                        ]
+                      }
+                    }
+                  ]
                 }
               }
             ]
@@ -38,13 +58,19 @@
         {
           "type": "named",
           "data": {
-            "name": "Go Straight 0.3 Meter"
+            "name": "Move Arm 0 degrees"
           }
         },
         {
-          "type": "named",
+          "type": "path",
           "data": {
-            "name": "Move Arm Low"
+            "pathName": "Get to G"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Back G"
           }
         }
       ]

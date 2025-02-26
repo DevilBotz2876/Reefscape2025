@@ -14,13 +14,14 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.Properties;
 
+import com.pathplanner.lib.auto.AutoBuilder;
+
 public class RobotContainer {
   public final RobotConfig robotConfig;
   private static final String robotNameKey = "Robot Name";
 
   public RobotContainer() {
     String robotName = "UNKNOWN";
-
     // Load robot name from configuration file
     // Check if the robot is running in simulation
     if (RobotBase.isSimulation()) {

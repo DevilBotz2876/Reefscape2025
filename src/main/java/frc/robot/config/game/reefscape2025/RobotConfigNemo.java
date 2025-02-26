@@ -1,5 +1,8 @@
 package frc.robot.config.game.reefscape2025;
 
+import com.pathplanner.lib.auto.AutoBuilder;
+import com.pathplanner.lib.auto.NamedCommands;
+
 import edu.wpi.first.math.controller.ArmFeedforward;
 import edu.wpi.first.math.controller.ElevatorFeedforward;
 import edu.wpi.first.math.controller.PIDController;
@@ -10,6 +13,8 @@ import edu.wpi.first.math.system.plant.DCMotor;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.util.Color;
 import edu.wpi.first.wpilibj.util.Color8Bit;
+import frc.robot.commands.common.arm.ArmToPosition;
+import frc.robot.commands.common.elevator.ElevatorToPosition;
 import frc.robot.io.implementations.motor.MotorIOBase.MotorIOBaseSettings;
 import frc.robot.io.implementations.motor.MotorIOSparkMax;
 import frc.robot.io.implementations.motor.MotorIOSparkMax.SparkMaxSettings;
@@ -30,7 +35,7 @@ import frc.robot.subsystems.interfaces.Vision.Camera;
 /* Override Nemo specific constants here */
 public class RobotConfigNemo extends RobotConfig {
   public RobotConfigNemo() {
-    super(false, true, true, false, false, true, false);
+    super(false, false, false, false, false, false, false);
 
     // Nemo has a Swerve drive train
     Drive.Constants.rotatePidKp = 0.025;
@@ -126,7 +131,7 @@ public class RobotConfigNemo extends RobotConfig {
       motorSettings.reverseLimitNegate = true;
       motorSettings.motor.drumRadiusMeters =
           Units.inchesToMeters(
-              ((1.75 + 0.75) / 2)
+              ((1.10 + 0.75) / 2)
                   / 2); // 3/4" inner diameter to 1 3/4" outer. Average diameter calculated For now,
       // use the diameter so that
       // we don't reach the limits
@@ -196,5 +201,13 @@ public class RobotConfigNemo extends RobotConfig {
               // new MotorIOArmStub(motorSettings, armSettings), "Coral", armSettings);
               new MotorIOSparkMax(motorSettings, settings), "Climber", armSettings);
     }
+    NamedCommands.registerCommand(
+        "Move Elevator to 0.5 meter", new ElevatorToPosition(elevator, () -> 0.5));
+        NamedCommands.registerCommand(
+        "Move Elevator to 1.4 meter", new ElevatorToPosition(elevator, () -> 1.4));
+    NamedCommands.registerCommand("Move Arm 75 degrees", new ArmToPosition(coralArm, () -> 70).withTimeout(1.5));
+    NamedCommands.registerCommand("Move Arm 0 degrees", new ArmToPosition(coralArm, () -> 0).withTimeout(1.5));
+    autoChooser = AutoBuilder.buildAutoChooser("Sit Still");
+
   }
 }
