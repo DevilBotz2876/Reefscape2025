@@ -5,6 +5,8 @@ import edu.wpi.first.wpilibj.AddressableLEDBuffer;
 import edu.wpi.first.wpilibj.AddressableLEDBufferView;
 import edu.wpi.first.wpilibj.LEDPattern;
 import edu.wpi.first.wpilibj.util.Color;
+import frc.robot.subsystems.controls.led.LEDControls;
+import frc.robot.subsystems.implementations.led.LEDSubsystem;
 
 public class RobotConfigRoadkill extends RobotConfig {
   private final AddressableLED m_led;
@@ -34,26 +36,16 @@ public class RobotConfigRoadkill extends RobotConfig {
     m_led.setLength(m_ledBuffer.getLength());
 
     // Set the data
+    LEDPattern pattern = LEDPattern.solid(Color.kBlack);
+    AddressableLEDBufferView bufferView = m_ledBuffer.createView(0, m_ledBuffer.getLength()-1);
+    pattern.applyTo(bufferView);
     m_led.setData(m_ledBuffer);
     m_led.start();
     // Create an LED pattern that sets the entire strip to solid red
-    LEDPattern red = LEDPattern.solid(Color.kRed);
-    LEDPattern blue = LEDPattern.solid(Color.kBlue);
+    LEDSubsystem led = new LEDSubsystem(m_led, m_ledBuffer, 0, 9);
+    LEDControls.setupController(led, mainController);
 
-    // Create the view for the section of the strip on the left side of the robot.
-    // This section spans LEDs from index 0 through index 59, inclusive.
-    AddressableLEDBufferView m_left = m_ledBuffer.createView(0, 9);
-
-    // The section of the strip on the right side of the robot.
-    // This section spans LEDs from index 60 through index 119, inclusive.
-    // This view is reversed to cancel out the serpentine arrangement of the
-    // physical LED strip on the robot.
-    AddressableLEDBufferView m_right = m_ledBuffer.createView(25, 33).reversed();
-    // Apply the LED pattern to the data buffer
-    red.applyTo(m_left);
-    blue.applyTo(m_right);
-
-    // Write the data to the LED strip
-    m_led.setData(m_ledBuffer);
+    LEDSubsystem led2 = new LEDSubsystem(m_led, m_ledBuffer, 25, 33);
+    LEDControls.setupController2(led2, mainController);
   }
 }
