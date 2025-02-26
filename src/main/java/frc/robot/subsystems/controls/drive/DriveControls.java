@@ -23,7 +23,9 @@ public class DriveControls {
     FEEDER_2(2),
     PROCESSOR(3),
     REEF_A(4),
-    REEF_G(5);
+    REEF_G(5),
+    REEF_C(6),
+    REEF_D(7);
 
     private int index;
 
@@ -78,11 +80,13 @@ public class DriveControls {
         poseReefA = new Pose2d(15, 4.175, Rotation2d.fromDegrees(180)),
         poseReefAClose = new Pose2d(14.5, 4.175, Rotation2d.fromDegrees(180)),
         poseReefG = new Pose2d(11, 4.175, Rotation2d.fromDegrees(0)),
-        poseReefGClose = new Pose2d(11.5, 4.175, Rotation2d.fromDegrees(0));
-    // PathConstraints constraints = new PathConstraints(4.2672, 9.4664784, 2 * Math.PI, 4 *
-    // Math.PI);
+        poseReefGClose = new Pose2d(11.5, 4.175, Rotation2d.fromDegrees(0)),
+        poseReefC = new Pose2d(14.17, 5.25, Rotation2d.fromDegrees(-124)),
+        poseReefD = new Pose2d(13.63, 5.56, Rotation2d.fromDegrees(-124));
+    PathConstraints constraints = new PathConstraints(4.2672, 9.4664784, 2 * Math.PI, 4 *
+    Math.PI);
     // PathConstraints constraints = new PathConstraints(2, 4.5, 2 * Math.PI, 4 * Math.PI);
-    PathConstraints constraints = new PathConstraints(0.5, 4.5, Math.PI / 4, 4 * Math.PI);
+    // PathConstraints constraints = new PathConstraints(0.5, 4.5, Math.PI / 4, 4 * Math.PI);
 
     // Temporary UI to allow user to modify destination on-the-fly
     SendableChooser<TargetPoseOption> chooser = new SendableChooser<>();
@@ -92,6 +96,8 @@ public class DriveControls {
     chooser.addOption("Processor", TargetPoseOption.PROCESSOR);
     chooser.addOption("Reef A", TargetPoseOption.REEF_A);
     chooser.addOption("Reef G", TargetPoseOption.REEF_G);
+    chooser.addOption("Reef C", TargetPoseOption.REEF_C);
+    chooser.addOption("Reef D", TargetPoseOption.REEF_D);
     SmartDashboard.putData("Pose choices", chooser);
 
     // Define behavior for chosing destination of on-the-fly pose
@@ -133,7 +139,15 @@ public class DriveControls {
                 Map.entry(
                     TargetPoseOption.REEF_G.getIndex(),
                     AutoBuilder.pathfindToPose(poseReefG, constraints, 0.5)
-                        .andThen(AutoBuilder.pathfindToPose(poseReefGClose, constraints, 0.0)))),
+                        .andThen(AutoBuilder.pathfindToPose(poseReefGClose, constraints, 0.0))),
+                Map.entry(
+                    TargetPoseOption.REEF_C.getIndex(),
+                    AutoBuilder.pathfindToPose(poseReefC, constraints, 0.5)
+                        .andThen(AutoBuilder.pathfindToPose(poseReefC, constraints, 0.0))),
+                Map.entry(
+                    TargetPoseOption.REEF_D.getIndex(),
+                    AutoBuilder.pathfindToPose(poseReefD, constraints, 0.5)
+                        .andThen(AutoBuilder.pathfindToPose(poseReefD, constraints, 0.0)))),
             () -> {
               return myCoolPoseKeyIdx;
             });
