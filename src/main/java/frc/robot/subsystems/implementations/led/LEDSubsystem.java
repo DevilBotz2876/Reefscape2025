@@ -47,7 +47,6 @@ public class LEDSubsystem extends SubsystemBase implements LED {
       if(animation && animationPattern != null) {
         AddressableLEDBufferView bufferView = buffer.createView(startingPos, endingPos);
         animationPattern.applyTo(bufferView);
-        animationPattern.applyTo(buffer);
         led.setData(buffer);
       }
   }
