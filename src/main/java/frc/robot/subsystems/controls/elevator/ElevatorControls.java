@@ -61,5 +61,16 @@ public class ElevatorControls {
     SmartDashboard.putData(
         subsystem.getName() + "/Commands/Elevator To 1.4m\"",
         new ElevatorToPosition(elevator, () -> 1.4));
+
+    SmartDashboard.putNumber(
+        subsystem.getName() + "/Commands/Move To Position/Target", elevator.getCurrentHeight());
+    SmartDashboard.putData(
+        subsystem.getName() + "/Commands/Move To Position/Move",
+        new ElevatorToPosition(
+            elevator,
+            () ->
+                SmartDashboard.getNumber(
+                    subsystem.getName() + "/Commands/Move To Position/Target",
+                    elevator.getCurrentHeight())));
   }
 }

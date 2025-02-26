@@ -39,11 +39,11 @@ public class MotorIOTalonFx extends MotorIOBase {
         .withStatorCurrentLimit(Units.Amps.of(120)) // Limit stator current to 120 A
         .withStatorCurrentLimitEnable(true); // And enable it
 
-    // // Peak output of 8 V
+    // // Peak output of 12 V
     toConfigure
         .Voltage
-        .withPeakForwardVoltage(Units.Volts.of(8))
-        .withPeakReverseVoltage(Units.Volts.of(-8));
+        .withPeakForwardVoltage(Units.Volts.of(12))
+        .withPeakReverseVoltage(Units.Volts.of(-12));
 
     toConfigure.CurrentLimits = currentLimitsConfigs;
 
