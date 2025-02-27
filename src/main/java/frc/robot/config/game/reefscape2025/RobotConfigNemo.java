@@ -2,7 +2,6 @@ package frc.robot.config.game.reefscape2025;
 
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.auto.NamedCommands;
-
 import edu.wpi.first.math.controller.ArmFeedforward;
 import edu.wpi.first.math.controller.ElevatorFeedforward;
 import edu.wpi.first.math.controller.PIDController;
@@ -203,11 +202,18 @@ public class RobotConfigNemo extends RobotConfig {
     }
     NamedCommands.registerCommand(
         "Move Elevator to 0.5 meter", new ElevatorToPosition(elevator, () -> 0.5));
-        NamedCommands.registerCommand(
+    NamedCommands.registerCommand(
         "Move Elevator to 1.4 meter", new ElevatorToPosition(elevator, () -> 1.4));
-    NamedCommands.registerCommand("Move Arm 75 degrees", new ArmToPosition(coralArm, () -> 70).withTimeout(1.5));
-    NamedCommands.registerCommand("Move Arm 0 degrees", new ArmToPosition(coralArm, () -> 0).withTimeout(1.5));
+    NamedCommands.registerCommand(
+        "Move Arm 75 degrees", new ArmToPosition(coralArm, () -> 70).withTimeout(1.5));
+    NamedCommands.registerCommand(
+        "Move Arm 0 degrees", new ArmToPosition(coralArm, () -> 0).withTimeout(1.5));
+    NamedCommands.registerCommand(
+        "Move Elevator to 0.6 meter", new ElevatorToPosition(elevator, () -> 0.6));
+    NamedCommands.registerCommand(
+        "Move Elevator to 0.2 meter", new ElevatorToPosition(elevator, () -> 0.2));
+    NamedCommands.registerCommand(
+        "Move Arm for Intake", new ArmToPosition(coralArm, () -> -90).withTimeout(0));
     autoChooser = AutoBuilder.buildAutoChooser("Sit Still");
-
   }
 }

@@ -1,7 +1,5 @@
 package frc.robot.config.game.reefscape2025;
 
-import com.pathplanner.lib.auto.AutoBuilder;
-
 import edu.wpi.first.apriltag.AprilTagFieldLayout;
 import edu.wpi.first.apriltag.AprilTagFields;
 import edu.wpi.first.math.controller.ArmFeedforward;
@@ -91,7 +89,6 @@ public class RobotConfig {
     if (stubAuto) {
       autoChooser = new SendableChooser<>();
       autoChooser.setDefaultOption("No Auto Routines Specified", Commands.none());
-     
     }
 
     vision = new VisionSubsystem(AprilTagFieldLayout.loadField(AprilTagFields.k2025Reefscape));

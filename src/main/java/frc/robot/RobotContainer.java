@@ -14,8 +14,6 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.Properties;
 
-import com.pathplanner.lib.auto.AutoBuilder;
-
 public class RobotContainer {
   public final RobotConfig robotConfig;
   private static final String robotNameKey = "Robot Name";
