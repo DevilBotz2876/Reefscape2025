@@ -25,7 +25,9 @@ public class DriveControls {
     REEF_A(4),
     REEF_G(5),
     REEF_C(6),
-    REEF_D(7);
+    REEF_D(7),
+    WOW_Test(8),
+    WOW_Test1(9);
 
     private int index;
 
@@ -82,10 +84,12 @@ public class DriveControls {
         poseReefG = new Pose2d(11, 4.175, Rotation2d.fromDegrees(0)),
         poseReefGClose = new Pose2d(11.5, 4.175, Rotation2d.fromDegrees(0)),
         poseReefC = new Pose2d(14.17, 5.25, Rotation2d.fromDegrees(-124)),
-        poseReefD = new Pose2d(13.63, 5.56, Rotation2d.fromDegrees(-124));
-    PathConstraints constraints = new PathConstraints(4.2672, 9.4664784, 2 * Math.PI, 4 *
-    Math.PI);
-    // PathConstraints constraints = new PathConstraints(2, 4.5, 2 * Math.PI, 4 * Math.PI);
+        poseReefD = new Pose2d(13.63, 5.56, Rotation2d.fromDegrees(-124)),
+        poseTest = new Pose2d(2.50, 5.57, Rotation2d.fromDegrees(-124)),
+        poseTest2 = new Pose2d(2.46, 2.73, Rotation2d.fromDegrees(-124));
+    //  PathConstraints constraints = new PathConstraints(4.9672, 9.3664784, 2 * Math.PI, 4 *
+    //  Math.PI);
+    PathConstraints constraints = new PathConstraints(2, 1.5, 2 * Math.PI, 4 * Math.PI);
     // PathConstraints constraints = new PathConstraints(0.5, 4.5, Math.PI / 4, 4 * Math.PI);
 
     // Temporary UI to allow user to modify destination on-the-fly
@@ -98,6 +102,8 @@ public class DriveControls {
     chooser.addOption("Reef G", TargetPoseOption.REEF_G);
     chooser.addOption("Reef C", TargetPoseOption.REEF_C);
     chooser.addOption("Reef D", TargetPoseOption.REEF_D);
+    chooser.addOption("Test", TargetPoseOption.WOW_Test);
+    chooser.addOption("Test1", TargetPoseOption.WOW_Test1);
     SmartDashboard.putData("Pose choices", chooser);
 
     // Define behavior for chosing destination of on-the-fly pose
@@ -134,20 +140,29 @@ public class DriveControls {
                     AutoBuilder.pathfindToPose(poseProcessor, constraints, 0.0)),
                 Map.entry(
                     TargetPoseOption.REEF_A.getIndex(),
-                    AutoBuilder.pathfindToPose(poseReefA, constraints, 0.5)
+                    AutoBuilder.pathfindToPose(poseReefA, constraints, 0.0)
                         .andThen(AutoBuilder.pathfindToPose(poseReefAClose, constraints, 0.0))),
                 Map.entry(
                     TargetPoseOption.REEF_G.getIndex(),
-                    AutoBuilder.pathfindToPose(poseReefG, constraints, 0.5)
-                        .andThen(AutoBuilder.pathfindToPose(poseReefGClose, constraints, 0.0))),
+                    // AutoBuilder.pathfindToPose(poseReefG, constraints, 0.5)
+                    //     .andThen(AutoBuilder.pathfindToPose(poseReefGClose, constraints, 0.0))),
+                    AutoBuilder.pathfindToPose(poseReefGClose, constraints, 0.0)),
                 Map.entry(
                     TargetPoseOption.REEF_C.getIndex(),
-                    AutoBuilder.pathfindToPose(poseReefC, constraints, 0.5)
+                    AutoBuilder.pathfindToPose(poseReefC, constraints, 0.0)
                         .andThen(AutoBuilder.pathfindToPose(poseReefC, constraints, 0.0))),
                 Map.entry(
                     TargetPoseOption.REEF_D.getIndex(),
-                    AutoBuilder.pathfindToPose(poseReefD, constraints, 0.5)
-                        .andThen(AutoBuilder.pathfindToPose(poseReefD, constraints, 0.0)))),
+                    AutoBuilder.pathfindToPose(poseReefD, constraints, 0.0)
+                        .andThen(AutoBuilder.pathfindToPose(poseReefD, constraints, 0.0))),
+                Map.entry(
+                    TargetPoseOption.WOW_Test.getIndex(),
+                    AutoBuilder.pathfindToPose(poseTest, constraints, 0.0)
+                        .andThen(AutoBuilder.pathfindToPose(poseTest, constraints, 0.0))),
+                Map.entry(
+                    TargetPoseOption.WOW_Test1.getIndex(),
+                    AutoBuilder.pathfindToPose(poseTest2, constraints, 0.0)
+                        .andThen(AutoBuilder.pathfindToPose(poseTest2, constraints, 0.0)))),
             () -> {
               return myCoolPoseKeyIdx;
             });
