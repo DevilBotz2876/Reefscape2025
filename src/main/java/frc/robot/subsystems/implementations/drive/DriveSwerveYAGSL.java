@@ -37,7 +37,7 @@ public class DriveSwerveYAGSL extends DriveBase {
   private SwerveDrive swerveDrive;
   @AutoLogOutput private boolean fieldOrientedDrive = false;
   private PIDConstants translationPIDConstants =
-      new PIDConstants(5.0, 0.0, 0.0); // Translation PID constants
+      new PIDConstants(1.5, 0.0, 0.0); // Translation PID constants
   private PIDConstants rotationPIDConstants =
       new PIDConstants(5.0, 0.0, 0.0); // Rotation PID constants
 
