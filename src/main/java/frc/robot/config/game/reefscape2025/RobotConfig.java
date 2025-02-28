@@ -91,7 +91,8 @@ public class RobotConfig {
       autoChooser.setDefaultOption("No Auto Routines Specified", Commands.none());
     }
 
-    vision = new VisionSubsystem(AprilTagFieldLayout.loadField(AprilTagFields.k2025ReefscapeAndyMark));
+    vision =
+        new VisionSubsystem(AprilTagFieldLayout.loadField(AprilTagFields.k2025ReefscapeAndyMark));
 
     if (stubVision) {
       if (Robot.isSimulation()) {
