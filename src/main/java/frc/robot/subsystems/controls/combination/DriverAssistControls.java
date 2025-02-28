@@ -26,9 +26,39 @@ public class DriverAssistControls {
         new SequentialCommandGroup(
             new ElevatorToPosition(elevator, () -> 1.0),
             new ArmToPosition(arm, () -> 75),
-            new ElevatorToPosition(elevator, () -> 1.4)));
+            new ElevatorToPosition(elevator, () -> 1.3)));
     SmartDashboard.putData(
         "Driver " + "/Commands/Score L4",
-        new SequentialCommandGroup(new ArmToPosition(arm, () -> -45)));
+        new SequentialCommandGroup(new ArmToPosition(arm, () -> 0)));
+
+    SmartDashboard.putData(
+        "Driver " + "/Commands/Prepare To Score L3",
+        new SequentialCommandGroup(
+            new ElevatorToPosition(elevator, () -> 0.8),
+            new ArmToPosition(arm, () -> 75)));
+
+    SmartDashboard.putData(
+        "Driver " + "/Commands/Prepare To Score L2",
+        new SequentialCommandGroup(
+            new ElevatorToPosition(elevator, () -> 0.6),
+            new ArmToPosition(arm, () -> 75)));
+
+    SmartDashboard.putData(
+        "Driver " + "/Commands/Score L3|L2",
+        new SequentialCommandGroup(
+            new ArmToPosition(arm, () -> 0)
+            ));
+
+    SmartDashboard.putData(
+        "Driver " + "/Commands/Prepare To Remove Algae L2",
+        new SequentialCommandGroup(
+            new ElevatorToPosition(elevator, () -> 0.7),
+            new ArmToPosition(arm, () -> 0)));
+
+    SmartDashboard.putData(
+        "Driver " + "/Commands/Prepare To Remove Algae L3",
+        new SequentialCommandGroup(
+            new ElevatorToPosition(elevator, () -> 0.9),
+            new ArmToPosition(arm, () -> 0)));
   }
 }
