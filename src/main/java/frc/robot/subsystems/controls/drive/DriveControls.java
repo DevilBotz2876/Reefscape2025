@@ -76,11 +76,11 @@ public class DriveControls {
 
     // Define destinations for our "dynamic go-to-pose" functionality
     Pose2d poseOrigin = new Pose2d(0, 0, Rotation2d.fromDegrees(0)),
-        poseFeeder1 = new Pose2d(16.02, 6.9, Rotation2d.fromDegrees(50)),
+        poseFeeder1 = new Pose2d(16.44, 7.25, Rotation2d.fromDegrees(230)),
         poseFeeder2 = new Pose2d(16.02, 1, Rotation2d.fromDegrees(-50)),
         poseProcessor = new Pose2d(11.5, 7.3, Rotation2d.fromDegrees(90)),
         poseReefA = new Pose2d(15, 4.175, Rotation2d.fromDegrees(180)),
-        poseReefAClose = new Pose2d(14.5, 4.175, Rotation2d.fromDegrees(180)),
+        poseReefAClose = new Pose2d(14.425, 4.175, Rotation2d.fromDegrees(180)),
         poseReefG = new Pose2d(11, 4.175, Rotation2d.fromDegrees(0)),
         poseReefGClose = new Pose2d(11.5, 4.175, Rotation2d.fromDegrees(0)),
         poseReefC = new Pose2d(14.17, 5.25, Rotation2d.fromDegrees(-124)),
@@ -89,7 +89,8 @@ public class DriveControls {
         poseTest2 = new Pose2d(2.46, 2.73, Rotation2d.fromDegrees(-124));
     //  PathConstraints constraints = new PathConstraints(4.9672, 9.3664784, 2 * Math.PI, 4 *
     //  Math.PI);
-    PathConstraints constraints = new PathConstraints(2, 1.5, 2 * Math.PI, 4 * Math.PI);
+    // PathConstraints constraints = new PathConstraints(2, 1.5, 2 * Math.PI, 4 * Math.PI);
+    PathConstraints constraints = new PathConstraints(2, 1.5, Math.PI / 2, Math.PI / 4);
     // PathConstraints constraints = new PathConstraints(0.5, 4.5, Math.PI / 4, 4 * Math.PI);
 
     // Temporary UI to allow user to modify destination on-the-fly
@@ -140,13 +141,14 @@ public class DriveControls {
                     AutoBuilder.pathfindToPose(poseProcessor, constraints, 0.0)),
                 Map.entry(
                     TargetPoseOption.REEF_A.getIndex(),
-                    AutoBuilder.pathfindToPose(poseReefA, constraints, 0.0)
-                        .andThen(AutoBuilder.pathfindToPose(poseReefAClose, constraints, 0.0))),
+                    AutoBuilder.pathfindToPose(poseReefAClose, constraints, 0.0)),
+                    // AutoBuilder.pathfindToPose(poseReefA, constraints, 0.0)
+                    //     .andThen(AutoBuilder.pathfindToPose(poseReefAClose, constraints, 0.0))),
                 Map.entry(
                     TargetPoseOption.REEF_G.getIndex(),
-                    // AutoBuilder.pathfindToPose(poseReefG, constraints, 0.5)
-                    //     .andThen(AutoBuilder.pathfindToPose(poseReefGClose, constraints, 0.0))),
-                    AutoBuilder.pathfindToPose(poseReefGClose, constraints, 0.0)),
+                     AutoBuilder.pathfindToPose(poseReefG, constraints, 0.5)
+                         .andThen(AutoBuilder.pathfindToPose(poseReefGClose, constraints, 0.0))),
+                    //AutoBuilder.pathfindToPose(poseReefGClose, constraints, 0.0)),
                 Map.entry(
                     TargetPoseOption.REEF_C.getIndex(),
                     AutoBuilder.pathfindToPose(poseReefC, constraints, 0.0)
