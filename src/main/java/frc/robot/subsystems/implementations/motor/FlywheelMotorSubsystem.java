@@ -1,6 +1,5 @@
 package frc.robot.subsystems.implementations.motor;
 
-import edu.wpi.first.math.controller.SimpleMotorFeedforward;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.util.sendable.SendableBuilder;
 import edu.wpi.first.wpilibj.smartdashboard.Mechanism2d;
@@ -110,17 +109,14 @@ public class FlywheelMotorSubsystem extends MotorSubsystem implements Flywheel {
   }
 
   private void setFFKs(double Ks) {
-    settings.feedforward =
-        new SimpleMotorFeedforward(Ks, settings.feedforward.getKv(), settings.feedforward.getKa());
+    settings.feedforward.setKs(Ks);
   }
 
   private void setFFKv(double Kv) {
-    settings.feedforward =
-        new SimpleMotorFeedforward(settings.feedforward.getKs(), Kv, settings.feedforward.getKa());
+    settings.feedforward.setKv(Kv);
   }
 
   private void setFFKa(double Ka) {
-    settings.feedforward =
-        new SimpleMotorFeedforward(settings.feedforward.getKs(), settings.feedforward.getKv(), Ka);
+    settings.feedforward.setKa(Ka);
   }
 }

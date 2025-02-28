@@ -1,6 +1,5 @@
 package frc.robot.subsystems.implementations.motor;
 
-import edu.wpi.first.math.controller.ArmFeedforward;
 import edu.wpi.first.math.trajectory.TrapezoidProfile;
 import edu.wpi.first.math.trajectory.TrapezoidProfile.Constraints;
 import edu.wpi.first.math.trajectory.TrapezoidProfile.State;
@@ -176,38 +175,18 @@ public class ArmMotorSubsystem extends MotorSubsystem implements Arm {
   }
 
   private void setFFKs(double Ks) {
-    settings.feedforward =
-        new ArmFeedforward(
-            Ks,
-            settings.feedforward.getKg(),
-            settings.feedforward.getKv(),
-            settings.feedforward.getKa());
+    settings.feedforward.setKs(Ks);
   }
 
   private void setFFKg(double Kg) {
-    settings.feedforward =
-        new ArmFeedforward(
-            settings.feedforward.getKs(),
-            Kg,
-            settings.feedforward.getKv(),
-            settings.feedforward.getKa());
+    settings.feedforward.setKg(Kg);
   }
 
   private void setFFKv(double Kv) {
-    settings.feedforward =
-        new ArmFeedforward(
-            settings.feedforward.getKs(),
-            settings.feedforward.getKg(),
-            Kv,
-            settings.feedforward.getKa());
+    settings.feedforward.setKv(Kv);
   }
 
   private void setFFKa(double Ka) {
-    settings.feedforward =
-        new ArmFeedforward(
-            settings.feedforward.getKs(),
-            settings.feedforward.getKg(),
-            settings.feedforward.getKv(),
-            Ka);
+    settings.feedforward.setKa(Ka);
   }
 }
