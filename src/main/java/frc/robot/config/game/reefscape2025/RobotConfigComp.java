@@ -47,7 +47,7 @@ public class RobotConfigComp extends RobotConfig {
                   / 2); // 3/4" inner diameter to 1 3/4" outer. Average diameter calculated For now,
       // use the diameter so that
       // we don't reach the limits
-      motorSettings.pid = new PIDController(0.2, 0, 0); // TODO: Tune PID controller
+      motorSettings.pid = new PIDController(0.0, 0, 0); // TODO: Tune PID controller
 
       ElevatorSettings elevatorSettings = new ElevatorSettings();
       elevatorSettings.minHeightInMeters =
@@ -57,7 +57,7 @@ public class RobotConfigComp extends RobotConfig {
       elevatorSettings.startingHeightInMeters = elevatorSettings.minHeightInMeters;
       elevatorSettings.color = new Color8Bit(Color.kSilver);
       elevatorSettings.feedforward =
-          new ElevatorFeedforward(0, 0.27, 0.2, 0); // TODO: Tune feedforward
+          new ElevatorFeedforward(0.010472, 0.17328, 0.16928, 0.010615); // SysID 2025-02-28
       elevatorSettings.carriageMassKg = 5.0;
       elevatorSettings.motor = DCMotor.getKrakenX60(1);
       elevatorSettings.simulateGravity = true;
@@ -65,7 +65,7 @@ public class RobotConfigComp extends RobotConfig {
       TalonFxSettings talonFxSettings = new TalonFxSettings();
       talonFxSettings.canId = 20;
 
-      elevatorSettings.maxVelocityInMetersPerSecond = 2;
+      elevatorSettings.maxVelocityInMetersPerSecond = 1;
       elevatorSettings.maxAccelerationInMetersPerSecondSquared = 8;
 
       ElevatorControls.Constants.autoZeroSettings.voltage = 1.5;
