@@ -183,7 +183,7 @@ public class VisionSubsystem extends SubsystemBase implements Vision {
               currentEstimatedRobotPose.get().estimatedPose.toPose2d(),
               currentEstimatedRobotPose.get().timestampSeconds,
               VecBuilder.fill(
-                debugTargetDistance / 2, debugTargetDistance / 2, debugTargetDistance / 2));
+                  debugTargetDistance / 2, debugTargetDistance / 2, debugTargetDistance / 2));
         }
         /* NOTE standard deviation format:
          * (x position in meters, y position in meters, and heading in radians)

@@ -142,13 +142,13 @@ public class DriveControls {
                 Map.entry(
                     TargetPoseOption.REEF_A.getIndex(),
                     AutoBuilder.pathfindToPose(poseReefAClose, constraints, 0.0)),
-                    // AutoBuilder.pathfindToPose(poseReefA, constraints, 0.0)
-                    //     .andThen(AutoBuilder.pathfindToPose(poseReefAClose, constraints, 0.0))),
+                // AutoBuilder.pathfindToPose(poseReefA, constraints, 0.0)
+                //     .andThen(AutoBuilder.pathfindToPose(poseReefAClose, constraints, 0.0))),
                 Map.entry(
                     TargetPoseOption.REEF_G.getIndex(),
-                     AutoBuilder.pathfindToPose(poseReefG, constraints, 0.5)
-                         .andThen(AutoBuilder.pathfindToPose(poseReefGClose, constraints, 0.0))),
-                    //AutoBuilder.pathfindToPose(poseReefGClose, constraints, 0.0)),
+                    AutoBuilder.pathfindToPose(poseReefG, constraints, 0.5)
+                        .andThen(AutoBuilder.pathfindToPose(poseReefGClose, constraints, 0.0))),
+                // AutoBuilder.pathfindToPose(poseReefGClose, constraints, 0.0)),
                 Map.entry(
                     TargetPoseOption.REEF_C.getIndex(),
                     AutoBuilder.pathfindToPose(poseReefC, constraints, 0.0)
