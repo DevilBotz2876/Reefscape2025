@@ -101,8 +101,8 @@ public class RobotConfigComp extends RobotConfig {
       armSettings.armMassInKg = 1.0;
       armSettings.motor = DCMotor.getKrakenX60(1);
       armSettings.simulateGravity = true;
-      armSettings.maxVelocityInDegreesPerSecond = 360 * 2;
-      armSettings.maxAccelerationInDegreesPerSecondSquared = 360;
+      armSettings.maxVelocityInDegreesPerSecond = 180;
+      armSettings.maxAccelerationInDegreesPerSecondSquared = 720;
 
       TalonFxSettings talonFxSettings = new TalonFxSettings();
       talonFxSettings.canId = 21;
@@ -113,7 +113,7 @@ public class RobotConfigComp extends RobotConfig {
           Units.degreesToRadians(
               armSettings.minAngleInDegrees - 10); // We have an offest about 15 degrees
       CoralArmControls.Constants.autoZeroSettings.initialReverseDuration =
-          1.0; // Set the seconds of reverse before zero. Set to zero if there shound be no reverse
+          0.0; // Set the seconds of reverse before zero. Set to zero if there shound be no reverse
 
       coralArm =
           new ArmMotorSubsystem(
