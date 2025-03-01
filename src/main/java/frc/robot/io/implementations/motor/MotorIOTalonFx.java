@@ -39,11 +39,11 @@ public class MotorIOTalonFx extends MotorIOBase {
         .withStatorCurrentLimit(Units.Amps.of(120)) // Limit stator current to 120 A
         .withStatorCurrentLimitEnable(true); // And enable it
 
-    // // Peak output of 8 V
+    // // Peak output of 12 V
     toConfigure
         .Voltage
-        .withPeakForwardVoltage(Units.Volts.of(8))
-        .withPeakReverseVoltage(Units.Volts.of(-8));
+        .withPeakForwardVoltage(Units.Volts.of(12))
+        .withPeakReverseVoltage(Units.Volts.of(-12));
 
     toConfigure.CurrentLimits = currentLimitsConfigs;
 
@@ -68,11 +68,12 @@ public class MotorIOTalonFx extends MotorIOBase {
     inputs.appliedVolts = motorFx.getMotorVoltage().getValueAsDouble();
     inputs.currentAmps = motorFx.getSupplyCurrent().getValueAsDouble();
     // inputs.currentStatorAmps = motorFx.getStatorCurrent().getValueAsDouble();
+
     inputs.positionRad =
         edu.wpi.first.math.util.Units.rotationsToRadians(
             motorFx.getPosition().getValueAsDouble() / motorSettings.motor.gearing);
     inputs.velocityRadPerSec =
-        edu.wpi.first.math.util.Units.rotationsPerMinuteToRadiansPerSecond(
+        edu.wpi.first.math.util.Units.rotationsToRadians(
             motorFx.getVelocity().getValueAsDouble() / motorSettings.motor.gearing);
 
     super.updateInputs(inputs);

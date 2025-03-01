@@ -89,7 +89,7 @@ public interface MotorIO {
   /**
    * Takes in a position in radians and converts it to meters
    *
-   * @param position in radians
+   * @param positionRad in radians
    * @return position in meters
    */
   public double normalizePositionToMeters(double positionRad);
@@ -97,7 +97,7 @@ public interface MotorIO {
   /**
    * Optional: Run closed loop (using a PID) to reach a specific position
    *
-   * @param position desired position (in radians or meters if drumRadiusMeters != 0)
+   * @param positionRad desired position (in radians)
    * @param ffVolts feedforward voltage which depends on the static friction of what is connected to
    *     the motor
    * @return true if the motor is capable of automatically moving and staying at a specific position
@@ -114,7 +114,7 @@ public interface MotorIO {
   /**
    * Resets the relative encoder to the specified position
    *
-   * @position the current position in radians
+   * @param positionRad the current position in radians
    */
   public void resetEncoder(double positionRad);
 
