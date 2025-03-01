@@ -9,11 +9,18 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SelectCommand;
+import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
+import frc.robot.commands.common.arm.ArmToPosition;
 import frc.robot.commands.common.drive.DriveCommand;
+import frc.robot.commands.common.elevator.ElevatorToPosition;
+import frc.robot.subsystems.interfaces.Arm;
 import frc.robot.subsystems.interfaces.Drive;
+import frc.robot.subsystems.interfaces.Elevator;
+
 import java.util.Map;
 
 public class DriveControls {
@@ -51,7 +58,7 @@ public class DriveControls {
 
   protected static int myCoolPoseKeyIdx = 0;
 
-  public static void setupController(Drive drive, CommandXboxController controller) {
+  public static void setupController(Drive drive, Elevator elevator, Arm arm, CommandXboxController controller) {
     SubsystemBase driveSubsystem = (SubsystemBase) drive;
     driveSubsystem.setDefaultCommand(
         new DriveCommand(
@@ -99,7 +106,8 @@ public class DriveControls {
         poseReefB = new Pose2d(14.59, 4.34, Rotation2d.fromDegrees(180)),
         poseReefE = new Pose2d(12.46, 5.52, Rotation2d.fromDegrees(-60)),
         poseReefF = new Pose2d(12.00, 5.25, Rotation2d.fromDegrees(-60)),
-        poseReefH = new Pose2d(11.76, 3.92, Rotation2d.fromDegrees(-1)),
+        poseReefHStart = new Pose2d(11.00, 3.92, Rotation2d.fromDegrees(-1)),
+        poseReefHEnd = new Pose2d(11.76, 3.92, Rotation2d.fromDegrees(-1)),
         poseReefI = new Pose2d(12.00, 2.75, Rotation2d.fromDegrees(60)),
         poseReefJ = new Pose2d(12.50, 2.50, Rotation2d.fromDegrees(60)),
         poseReefK = new Pose2d(13.65, 2.50, Rotation2d.fromDegrees(120));
@@ -207,7 +215,16 @@ public class DriveControls {
                 AutoBuilder.pathfindToPose(poseReefF, constraints, 0.0)),
                 Map.entry(
                 TargetPoseOption.REEF_H.getIndex(),
-                AutoBuilder.pathfindToPose(poseReefH, constraints, 0.0)),
+                AutoBuilder.pathfindToPose(poseReefHStart, constraints, 0.0)
+                  .andThen(
+                    new SequentialCommandGroup(
+                      new ElevatorToPosition(elevator, () -> 0.6),
+                      new ParallelCommandGroup(
+                          new ArmToPosition(arm, () -> 75).withTimeout(1),
+                          new ElevatorToPosition(elevator, () -> 1.553)
+                    )))
+                  .andThen(AutoBuilder.pathfindToPose(poseReefHEnd, constraints, 0.0 ))
+                  .andThen(new ArmToPosition(arm, () -> 0))),
                 Map.entry(
                 TargetPoseOption.REEF_I.getIndex(),
                 AutoBuilder.pathfindToPose(poseReefI, constraints, 0.0)),
