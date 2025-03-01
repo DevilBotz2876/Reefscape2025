@@ -6,6 +6,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
+import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.commands.common.arm.ArmToPosition;
@@ -14,7 +15,7 @@ import frc.robot.subsystems.interfaces.Arm;
 import frc.robot.subsystems.interfaces.Elevator;
 
 public class DriverAssistControls {
-  public static void setupController(Elevator elevator, Arm arm, CommandXboxController controller) {
+  public static void setupController(Elevator elevator, Arm arm, CommandXboxController controller, SendableChooser<Command> prepareScoreChooser) {
     SmartDashboard.putData(
         "Driver " + "/Commands/Prepare For Intake",
         new SequentialCommandGroup(
@@ -26,22 +27,23 @@ public class DriverAssistControls {
         new SequentialCommandGroup(new ElevatorToPosition(elevator, () -> 0.4)));
 
 
-    SendableChooser<Command> prepareScoreChooser = new SendableChooser<>();
     prepareScoreChooser.setDefaultOption("L2", 
         new SequentialCommandGroup(
                 new ElevatorToPosition(elevator, () -> 0.63),
                 new ArmToPosition(arm, () -> 75)));
 
     prepareScoreChooser.addOption("L3", 
-    new SequentialCommandGroup(
-            new ElevatorToPosition(elevator, () -> 1.0),
-            new ArmToPosition(arm, () -> 75)));
+        new SequentialCommandGroup(
+                new ElevatorToPosition(elevator, () -> 1.0),
+                new ArmToPosition(arm, () -> 75)));
 
     prepareScoreChooser.addOption("L4", 
-    new SequentialCommandGroup(
+        new SequentialCommandGroup(
+        new ElevatorToPosition(elevator, () -> 0.6),
+        new ParallelCommandGroup(
             new ArmToPosition(arm, () -> 75),
-            new ElevatorToPosition(elevator, () -> 1.6)));
-
+            new ElevatorToPosition(elevator, () -> 1.553)
+        )));
             SmartDashboard.putData("Driver " + "/Commands/Prepare To Score Command", prepareScoreChooser.getSelected());
     prepareScoreChooser.onChange((selected) -> {
         SmartDashboard.putData("Driver " + "/Commands/Prepare To Score Command", selected);
