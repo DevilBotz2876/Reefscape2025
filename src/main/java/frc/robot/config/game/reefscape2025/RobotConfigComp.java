@@ -10,6 +10,7 @@ import edu.wpi.first.wpilibj.util.Color8Bit;
 import frc.robot.io.implementations.motor.MotorIOBase.MotorIOBaseSettings;
 import frc.robot.io.implementations.motor.MotorIOTalonFx;
 import frc.robot.io.implementations.motor.MotorIOTalonFx.TalonFxSettings;
+import frc.robot.subsystems.controls.arm.ClimberArmControls;
 import frc.robot.subsystems.controls.arm.CoralArmControls;
 import frc.robot.subsystems.controls.elevator.ElevatorControls;
 import frc.robot.subsystems.implementations.drive.DriveBase;
@@ -122,42 +123,47 @@ public class RobotConfigComp extends RobotConfig {
     }
 
     // climber
-    // {
-    //     MotorIOBaseSettings motorSettings = new MotorIOBaseSettings();
-    //     // 25:1 gear box ratio
-    //     motorSettings.motor.gearing = 25;
-    //     motorSettings.motor.inverted = false; // false for Sim
-    //     motorSettings.pid = new PIDController(0.0, 0, 0);
-    //     // TODO: Get the DIO ports
-    //     // motorSettings.reverseLimitChannel = 1;
-    //     // motorSettings.reverseLimitNegate = true;
+    {
+        MotorIOBaseSettings motorSettings = new MotorIOBaseSettings();
+        // 25:1 gear box ratio
+        motorSettings.motor.gearing = 25;
+        motorSettings.motor.inverted = false; // false for Sim
+        motorSettings.motor.drumRadiusMeters = 
+        Units.inchesToMeters(
+            ((1.25 + 0.875) / 2)
+                / 2);
+        motorSettings.pid = new PIDController(0.0, 0, 0);
+        
+        // TODO: Get the DIO ports
+        // motorSettings.reverseLimitChannel = 1;
+        // motorSettings.reverseLimitNegate = true;
 
-    //     ArmSettings armSettings = new ArmSettings();
-    //     armSettings.minAngleInDegrees = 0;
-    //     armSettings.maxAngleInDegrees = 135;
-    //     armSettings.startingAngleInDegrees = armSettings.minAngleInDegrees;
-    //     armSettings.feedforward = new ArmFeedforward(0.0, 0.0, 0.0, 0.0);
-    //     armSettings.color = new Color8Bit(Color.kRed);
-    //     armSettings.armLengthInMeters = 0.5;
-    //     armSettings.armMassInKg = 1.0;
-    //     armSettings.motor = DCMotor.getNEO(1);
-    //     armSettings.simulateGravity = true;
+        ElevatorSettings elevatorSettings = new ElevatorSettings();
+        elevatorSettings.minHeightInMeters = 0;
+        elevatorSettings.maxHeightInMeters = 0.394;
+        elevatorSettings.startingHeightInMeters = elevatorSettings.maxHeightInMeters;
+        elevatorSettings.color = new Color8Bit(Color.kSilver);
+        elevatorSettings.feedforward =
+            new ElevatorFeedforward(0, 0.0, 0.0, 0); // TODO: Tune feedforward
+        elevatorSettings.carriageMassKg = 5.0;
+        elevatorSettings.motor = DCMotor.getKrakenX60(1);
+        elevatorSettings.simulateGravity = true;
 
-    //     TalonFxSettings settings = new TalonFxSettings();
-    //     settings.canId = 50;
+        TalonFxSettings settings = new TalonFxSettings();
+        settings.canId = 50;
 
-    //     ClimberArmControls.Constants.autoZeroSettings.voltage = -1.0;
-    //     // Set this to something big, we are never going to use stall current to detect if
-    // climber has
-    //     // reached it's end of range of motion.
-    //     ClimberArmControls.Constants.autoZeroSettings.minResetCurrent = 10.0;
-    //     ClimberArmControls.Constants.autoZeroSettings.resetPositionRad =
-    //         Units.degreesToRadians(armSettings.minAngleInDegrees);
+        ClimberArmControls.Constants.autoZeroSettings.voltage = -1.0;
+        // Set this to something big, we are never going to use stall current to detect if
+        // climber has
+        // reached it's end of range of motion.
+        ClimberArmControls.Constants.autoZeroSettings.minResetCurrent = 10.0;
+        ClimberArmControls.Constants.autoZeroSettings.resetPositionRad =
+            Units.degreesToRadians(elevatorSettings.minHeightInMeters);
 
-    //     climberArm =
-    //         new ArmMotorSubsystem(
-    //             // new MotorIOArmStub(motorSettings, armSettings), "Coral", armSettings);
-    //             new MotorIOTalonFx(motorSettings, settings), "Climber", armSettings);
-    // }
+        climberArm =
+            new ElevatorMotorSubsystem(
+                // new MotorIOArmStub(motorSettings, armSettings), "Coral", armSettings);
+                new MotorIOTalonFx(motorSettings, settings), "Climber", elevatorSettings);
+    }
   }
 }

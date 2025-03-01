@@ -41,7 +41,7 @@ public class RobotConfig {
   public static VisionSubsystem vision;
   protected static ElevatorMotorSubsystem elevator;
   public static ArmMotorSubsystem coralArm;
-  public static ArmMotorSubsystem climberArm;
+  public static ElevatorMotorSubsystem climberArm;
 
   // Controls
   public CommandXboxController mainController = new CommandXboxController(0);
@@ -180,25 +180,25 @@ public class RobotConfig {
       motorSettings.reverseLimitChannel = 1;
       motorSettings.reverseLimitNegate = true;
 
-      ArmSettings armSettings = new ArmSettings();
-      armSettings.minAngleInDegrees = 0;
-      armSettings.maxAngleInDegrees = 135;
-      armSettings.startingAngleInDegrees = 90;
-      armSettings.color = new Color8Bit(Color.kRed);
-      armSettings.feedforward = new ArmFeedforward(0, 0, 0, 0);
-      armSettings.armLengthInMeters = 0.5;
-      armSettings.armMassInKg = 0.75;
-      armSettings.motor = DCMotor.getNEO(1);
-      armSettings.simulateGravity = true;
+      ElevatorSettings elevatorSettings = new ElevatorSettings();
+      elevatorSettings.minHeightInMeters= 0;
+      elevatorSettings.maxHeightInMeters = 0.25;
+      elevatorSettings.startingHeightInMeters = elevatorSettings.minHeightInMeters;
+      elevatorSettings.color = new Color8Bit(Color.kSilver);
+      elevatorSettings.feedforward =
+          new ElevatorFeedforward(0, 0.0, 0.0, 0); // TODO: Tune feedforward
+      elevatorSettings.carriageMassKg = 5.0;
+      elevatorSettings.motor = DCMotor.getKrakenX60(1);
+      elevatorSettings.simulateGravity = true;
 
       ClimberArmControls.Constants.autoZeroSettings.voltage = -1.0;
       ClimberArmControls.Constants.autoZeroSettings.minResetCurrent = 40.0;
       ClimberArmControls.Constants.autoZeroSettings.resetPositionRad =
-          Units.degreesToRadians(armSettings.minAngleInDegrees);
+          Units.degreesToRadians(elevatorSettings.minHeightInMeters);
 
       climberArm =
-          new ArmMotorSubsystem(
-              new MotorIOArmStub(motorSettings, armSettings), "Climber", armSettings);
+          new ElevatorMotorSubsystem(
+              new MotorIOElevatorStub(motorSettings, elevatorSettings), "Climber", elevatorSettings);
     }
   }
 

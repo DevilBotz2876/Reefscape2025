@@ -161,40 +161,40 @@ public class RobotConfigNemo extends RobotConfig {
     }
 
     // climber
-    {
-      MotorIOBaseSettings motorSettings = new MotorIOBaseSettings();
-      // 25:1 gear box ratio
-      motorSettings.motor.gearing = 25;
-      motorSettings.motor.inverted = false; // false for Sim
-      motorSettings.pid = new PIDController(0.0, 0, 0);
-      motorSettings.reverseLimitChannel = 1;
-      motorSettings.reverseLimitNegate = true;
+    // {
+    //   MotorIOBaseSettings motorSettings = new MotorIOBaseSettings();
+    //   // 25:1 gear box ratio
+    //   motorSettings.motor.gearing = 25;
+    //   motorSettings.motor.inverted = false; // false for Sim
+    //   motorSettings.pid = new PIDController(0.0, 0, 0);
+    //   motorSettings.reverseLimitChannel = 1;
+    //   motorSettings.reverseLimitNegate = true;
 
-      ArmSettings armSettings = new ArmSettings();
-      armSettings.minAngleInDegrees = 0;
-      armSettings.maxAngleInDegrees = 135;
-      armSettings.startingAngleInDegrees = armSettings.minAngleInDegrees;
-      armSettings.feedforward = new ArmFeedforward(0.0, 0.0, 0.0, 0.0);
-      armSettings.color = new Color8Bit(Color.kRed);
-      armSettings.armLengthInMeters = 0.5;
-      armSettings.armMassInKg = 1.0;
-      armSettings.motor = DCMotor.getNEO(1);
-      armSettings.simulateGravity = true;
+    //   ArmSettings armSettings = new ArmSettings();
+    //   armSettings.minAngleInDegrees = 0;
+    //   armSettings.maxAngleInDegrees = 135;
+    //   armSettings.startingAngleInDegrees = armSettings.minAngleInDegrees;
+    //   armSettings.feedforward = new ArmFeedforward(0.0, 0.0, 0.0, 0.0);
+    //   armSettings.color = new Color8Bit(Color.kRed);
+    //   armSettings.armLengthInMeters = 0.5;
+    //   armSettings.armMassInKg = 1.0;
+    //   armSettings.motor = DCMotor.getNEO(1);
+    //   armSettings.simulateGravity = true;
 
-      SparkMaxSettings settings = new SparkMaxSettings();
-      settings.canId = 50;
+    //   SparkMaxSettings settings = new SparkMaxSettings();
+    //   settings.canId = 50;
 
-      ClimberArmControls.Constants.autoZeroSettings.voltage = -1;
-      // Set this to something big, we are never going to use stall current to detect if climber has
-      // reached it's end of range of motion.
-      ClimberArmControls.Constants.autoZeroSettings.minResetCurrent = 10.0;
-      ClimberArmControls.Constants.autoZeroSettings.resetPositionRad =
-          Units.degreesToRadians(armSettings.minAngleInDegrees);
+    //   ClimberArmControls.Constants.autoZeroSettings.voltage = -1;
+    //   // Set this to something big, we are never going to use stall current to detect if climber has
+    //   // reached it's end of range of motion.
+    //   ClimberArmControls.Constants.autoZeroSettings.minResetCurrent = 10.0;
+    //   ClimberArmControls.Constants.autoZeroSettings.resetPositionRad =
+    //       Units.degreesToRadians(armSettings.minAngleInDegrees);
 
-      climberArm =
-          new ArmMotorSubsystem(
-              // new MotorIOArmStub(motorSettings, armSettings), "Coral", armSettings);
-              new MotorIOSparkMax(motorSettings, settings), "Climber", armSettings);
-    }
+    //   climberArm =
+    //       new ArmMotorSubsystem(
+    //           // new MotorIOArmStub(motorSettings, armSettings), "Coral", armSettings);
+    //           new MotorIOSparkMax(motorSettings, settings), "Climber", armSettings);
+    // }
   }
 }
