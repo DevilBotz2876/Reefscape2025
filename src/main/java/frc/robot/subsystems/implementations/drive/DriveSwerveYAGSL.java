@@ -13,6 +13,7 @@ import edu.wpi.first.math.numbers.N3;
 import edu.wpi.first.util.sendable.SendableBuilder;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Filesystem;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine.Config;
 import frc.robot.io.interfaces.DriveIO;
@@ -76,6 +77,9 @@ public class DriveSwerveYAGSL extends DriveBase {
     swerveDrive.stopOdometryThread();
 
     setupPathPlanner(translationPIDConstants, rotationPIDConstants);
+
+    SmartDashboard.putData(getName() + "/SysId/Drive", sysIdDriveMotorCommand());
+    SmartDashboard.putData(getName() + "/SysId/Angle", sysIdAngleMotorCommand());
   }
 
   private boolean setupPathPlanner(
