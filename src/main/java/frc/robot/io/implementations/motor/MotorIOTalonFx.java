@@ -68,11 +68,12 @@ public class MotorIOTalonFx extends MotorIOBase {
     inputs.appliedVolts = motorFx.getMotorVoltage().getValueAsDouble();
     inputs.currentAmps = motorFx.getSupplyCurrent().getValueAsDouble();
     // inputs.currentStatorAmps = motorFx.getStatorCurrent().getValueAsDouble();
+
     inputs.positionRad =
         edu.wpi.first.math.util.Units.rotationsToRadians(
             motorFx.getPosition().getValueAsDouble() / motorSettings.motor.gearing);
     inputs.velocityRadPerSec =
-        edu.wpi.first.math.util.Units.rotationsPerMinuteToRadiansPerSecond(
+        edu.wpi.first.math.util.Units.rotationsToRadians(
             motorFx.getVelocity().getValueAsDouble() / motorSettings.motor.gearing);
 
     super.updateInputs(inputs);

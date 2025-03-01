@@ -18,7 +18,7 @@ public interface Motor {
   /**
    * Resets the relative encoder to the specified value (in radians)
    *
-   * @param positonRad the current position in radians
+   * @param positionRad the current position in radians
    */
   public void resetEncoder(double positionRad);
 
