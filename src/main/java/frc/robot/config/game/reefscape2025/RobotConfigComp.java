@@ -43,17 +43,11 @@ public class RobotConfigComp extends RobotConfig {
       // motorSettings.reverseLimitNegate = true;
       motorSettings.motor.drumRadiusMeters =
           Units.inchesToMeters(
-              ((1.75 + 0.75) / 2)
-                  / 2); // 3/4" inner diameter to 1 3/4" outer. Average diameter calculated For now,
-      // use the diameter so that
-      // we don't reach the limits
-      motorSettings.pid = new PIDController(0.0, 0, 0); // TODO: Tune PID controller
-
+              ((1.16 + 0.75) / 2) / 2); // 3/4" inner diameter to 1.16" outer when fully spooled.
+      motorSettings.pid = new PIDController(0.2, 0, 0);
       ElevatorSettings elevatorSettings = new ElevatorSettings();
-      elevatorSettings.minHeightInMeters =
-          -0.25; // empircally based on current drumRadiusMeters....need to tune drumRadiusMeters so
-      // that this is 0.
-      elevatorSettings.maxHeightInMeters = Units.inchesToMeters(54); // 54" max extension
+      elevatorSettings.minHeightInMeters = 0.09 + 0.02;
+      elevatorSettings.maxHeightInMeters = 0.02 + 0.85 + 0.76;
       elevatorSettings.startingHeightInMeters = elevatorSettings.minHeightInMeters;
       elevatorSettings.color = new Color8Bit(Color.kSilver);
       elevatorSettings.feedforward =
