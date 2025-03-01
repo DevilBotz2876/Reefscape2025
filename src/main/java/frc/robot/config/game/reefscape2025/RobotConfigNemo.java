@@ -109,7 +109,8 @@ public class RobotConfigNemo extends RobotConfig {
       CoralArmControls.Constants.autoZeroSettings.minResetCurrent = 0.5;
       CoralArmControls.Constants.autoZeroSettings.resetPositionRad =
           Units.degreesToRadians(
-              armSettings.minAngleInDegrees); // We have an offest about 15 degrees
+              armSettings.minAngleInDegrees-10
+              ); // We have an offest about 15 degrees
       CoralArmControls.Constants.autoZeroSettings.initialReverseDuration =
           1.0; // Set the seconds of reverse before zero. Set to zero if there shound be no reverse
 
@@ -137,8 +138,8 @@ public class RobotConfigNemo extends RobotConfig {
       motorSettings.pid = new PIDController(0.1, 0, 0); // TODO: Tune PID controller
 
       ElevatorSettings elevatorSettings = new ElevatorSettings();
-      elevatorSettings.minHeightInMeters = 0.11;
-      elevatorSettings.maxHeightInMeters = 0.02 + 0.85 + 0.76; // highest point:74 lowest point:18
+      elevatorSettings.minHeightInMeters = 0.09 + 0.02;
+      elevatorSettings.maxHeightInMeters = 0.02 + 0.85 + 0.76;
       elevatorSettings.startingHeightInMeters = elevatorSettings.minHeightInMeters;
       elevatorSettings.color = new Color8Bit(Color.kSilver);
       elevatorSettings.feedforward =
