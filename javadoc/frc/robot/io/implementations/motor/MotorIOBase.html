@@ -44,13 +44,13 @@ loadScripts(document, 'script');</script>
 <ul class="sub-nav-list">
 <li>Summary:&nbsp;</li>
 <li><a href="#nested-class-summary">Nested</a>&nbsp;|&nbsp;</li>
-<li>Field&nbsp;|&nbsp;</li>
+<li><a href="#field-summary">Field</a>&nbsp;|&nbsp;</li>
 <li><a href="#constructor-summary">Constr</a>&nbsp;|&nbsp;</li>
 <li><a href="#method-summary">Method</a></li>
 </ul>
 <ul class="sub-nav-list">
 <li>Detail:&nbsp;</li>
-<li>Field&nbsp;|&nbsp;</li>
+<li><a href="#field-detail">Field</a>&nbsp;|&nbsp;</li>
 <li><a href="#constructor-detail">Constr</a>&nbsp;|&nbsp;</li>
 <li><a href="#method-detail">Method</a></li>
 </ul>
@@ -112,6 +112,21 @@ implements <a href="../../interfaces/MotorIO.html" title="interface in frc.robot
 <code><a href="../../interfaces/MotorIO.MotorIOInputs.html" title="class in frc.robot.io.interfaces">MotorIO.MotorIOInputs</a>, <a href="../../interfaces/MotorIO.MotorIOSettings.html" title="class in frc.robot.io.interfaces">MotorIO.MotorIOSettings</a></code></div>
 </section>
 </li>
+<!-- =========== FIELD SUMMARY =========== -->
+<li>
+<section class="field-summary" id="field-summary">
+<h2>Field Summary</h2>
+<div class="caption"><span>Fields</span></div>
+<div class="summary-table three-column-summary">
+<div class="table-header col-first">Modifier and Type</div>
+<div class="table-header col-second">Field</div>
+<div class="table-header col-last">Description</div>
+<div class="col-first even-row-color"><code>protected final <a href="MotorIOBase.MotorIOBaseSettings.html" title="class in frc.robot.io.implementations.motor">MotorIOBase.MotorIOBaseSettings</a></code></div>
+<div class="col-second even-row-color"><code><a href="#settings" class="member-name-link">settings</a></code></div>
+<div class="col-last even-row-color">&nbsp;</div>
+</div>
+</section>
+</li>
 <!-- ======== CONSTRUCTOR SUMMARY ======== -->
 <li>
 <section class="constructor-summary" id="constructor-summary">
@@ -137,14 +152,35 @@ implements <a href="../../interfaces/MotorIO.html" title="interface in frc.robot
 <div class="table-header col-second">Method</div>
 <div class="table-header col-last">Description</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>final double</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#calculateSafeVoltage(double)" class="member-name-link">calculateSafeVoltage</a><wbr>(double&nbsp;volts)</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#calculateSafeVoltage(double,boolean)" class="member-name-link">calculateSafeVoltage</a><wbr>(double&nbsp;volts,
+ boolean&nbsp;inverted)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Normalizes the voltage by clamping and inverting</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>edu.wpi.first.math.controller.PIDController</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getPid()" class="member-name-link">getPid</a>()</code></div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#disablePid()" class="member-name-link">disablePid</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Disables the software PID loop</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>edu.wpi.first.math.controller.PIDController</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getPid()" class="member-name-link">getPid</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Returns the current PID Controller object for this motor</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>final double</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#normalizePositionToMeters(double)" class="member-name-link">normalizePositionToMeters</a><wbr>(double&nbsp;positionRad)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Takes in a position in radians and converts it to meters</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>final double</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#normalizePositionToRad(double)" class="member-name-link">normalizePositionToRad</a><wbr>(double&nbsp;position)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Takes in a position in meters or radians and converts it to radians</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#resetEncoder(double)" class="member-name-link">resetEncoder</a><wbr>(double&nbsp;positionRad)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Resets the relative encoder to the specified position</div>
 </div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setPosition(double,double)" class="member-name-link">setPosition</a><wbr>(double&nbsp;positionRad,
@@ -178,6 +214,20 @@ implements <a href="../../interfaces/MotorIO.html" title="interface in frc.robot
 </section>
 <section class="details">
 <ul class="details-list">
+<!-- ============ FIELD DETAIL =========== -->
+<li>
+<section class="field-details" id="field-detail">
+<h2>Field Details</h2>
+<ul class="member-list">
+<li>
+<section class="detail" id="settings">
+<h3>settings</h3>
+<div class="member-signature"><span class="modifiers">protected final</span>&nbsp;<span class="return-type"><a href="MotorIOBase.MotorIOBaseSettings.html" title="class in frc.robot.io.implementations.motor">MotorIOBase.MotorIOBaseSettings</a></span>&nbsp;<span class="element-name">settings</span></div>
+</section>
+</li>
+</ul>
+</section>
+</li>
 <!-- ========= CONSTRUCTOR DETAIL ======== -->
 <li>
 <section class="constructor-details" id="constructor-detail">
@@ -211,9 +261,10 @@ implements <a href="../../interfaces/MotorIO.html" title="interface in frc.robot
 </section>
 </li>
 <li>
-<section class="detail" id="calculateSafeVoltage(double)">
+<section class="detail" id="calculateSafeVoltage(double,boolean)">
 <h3>calculateSafeVoltage</h3>
-<div class="member-signature"><span class="modifiers">public final</span>&nbsp;<span class="return-type">double</span>&nbsp;<span class="element-name">calculateSafeVoltage</span><wbr><span class="parameters">(double&nbsp;volts)</span></div>
+<div class="member-signature"><span class="modifiers">public final</span>&nbsp;<span class="return-type">double</span>&nbsp;<span class="element-name">calculateSafeVoltage</span><wbr><span class="parameters">(double&nbsp;volts,
+ boolean&nbsp;inverted)</span></div>
 <div class="block">Normalizes the voltage by clamping and inverting</div>
 <dl class="notes">
 <dt>Parameters:</dt>
@@ -243,6 +294,38 @@ implements <a href="../../interfaces/MotorIO.html" title="interface in frc.robot
 </section>
 </li>
 <li>
+<section class="detail" id="normalizePositionToRad(double)">
+<h3>normalizePositionToRad</h3>
+<div class="member-signature"><span class="modifiers">public final</span>&nbsp;<span class="return-type">double</span>&nbsp;<span class="element-name">normalizePositionToRad</span><wbr><span class="parameters">(double&nbsp;position)</span></div>
+<div class="block"><span class="descfrm-type-label">Description copied from interface:&nbsp;<code><a href="../../interfaces/MotorIO.html#normalizePositionToRad(double)">MotorIO</a></code></span></div>
+<div class="block">Takes in a position in meters or radians and converts it to radians</div>
+<dl class="notes">
+<dt>Specified by:</dt>
+<dd><code><a href="../../interfaces/MotorIO.html#normalizePositionToRad(double)">normalizePositionToRad</a></code>&nbsp;in interface&nbsp;<code><a href="../../interfaces/MotorIO.html" title="interface in frc.robot.io.interfaces">MotorIO</a></code></dd>
+<dt>Parameters:</dt>
+<dd><code>position</code> - in radians or meters</dd>
+<dt>Returns:</dt>
+<dd>position in radians</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="normalizePositionToMeters(double)">
+<h3>normalizePositionToMeters</h3>
+<div class="member-signature"><span class="modifiers">public final</span>&nbsp;<span class="return-type">double</span>&nbsp;<span class="element-name">normalizePositionToMeters</span><wbr><span class="parameters">(double&nbsp;positionRad)</span></div>
+<div class="block"><span class="descfrm-type-label">Description copied from interface:&nbsp;<code><a href="../../interfaces/MotorIO.html#normalizePositionToMeters(double)">MotorIO</a></code></span></div>
+<div class="block">Takes in a position in radians and converts it to meters</div>
+<dl class="notes">
+<dt>Specified by:</dt>
+<dd><code><a href="../../interfaces/MotorIO.html#normalizePositionToMeters(double)">normalizePositionToMeters</a></code>&nbsp;in interface&nbsp;<code><a href="../../interfaces/MotorIO.html" title="interface in frc.robot.io.interfaces">MotorIO</a></code></dd>
+<dt>Parameters:</dt>
+<dd><code>positionRad</code> - in radians</dd>
+<dt>Returns:</dt>
+<dd>position in meters</dd>
+</dl>
+</section>
+</li>
+<li>
 <section class="detail" id="setPosition(double,double)">
 <h3>setPosition</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">setPosition</span><wbr><span class="parameters">(double&nbsp;positionRad,
@@ -253,7 +336,7 @@ implements <a href="../../interfaces/MotorIO.html" title="interface in frc.robot
 <dt>Specified by:</dt>
 <dd><code><a href="../../interfaces/MotorIO.html#setPosition(double,double)">setPosition</a></code>&nbsp;in interface&nbsp;<code><a href="../../interfaces/MotorIO.html" title="interface in frc.robot.io.interfaces">MotorIO</a></code></dd>
 <dt>Parameters:</dt>
-<dd><code>positionRad</code> - desired position</dd>
+<dd><code>positionRad</code> - desired position (in radians)</dd>
 <dd><code>ffVolts</code> - feedforward voltage which depends on the static friction of what is connected to
      the motor</dd>
 <dt>Returns:</dt>
@@ -271,6 +354,32 @@ implements <a href="../../interfaces/MotorIO.html" title="interface in frc.robot
 <dt>Specified by:</dt>
 <dd><code><a href="../../interfaces/MotorIO.html#getPid()">getPid</a></code>&nbsp;in interface&nbsp;<code><a href="../../interfaces/MotorIO.html" title="interface in frc.robot.io.interfaces">MotorIO</a></code></dd>
 <dt>Returns:</dt>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="resetEncoder(double)">
+<h3>resetEncoder</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">resetEncoder</span><wbr><span class="parameters">(double&nbsp;positionRad)</span></div>
+<div class="block"><span class="descfrm-type-label">Description copied from interface:&nbsp;<code><a href="../../interfaces/MotorIO.html#resetEncoder(double)">MotorIO</a></code></span></div>
+<div class="block">Resets the relative encoder to the specified position</div>
+<dl class="notes">
+<dt>Specified by:</dt>
+<dd><code><a href="../../interfaces/MotorIO.html#resetEncoder(double)">resetEncoder</a></code>&nbsp;in interface&nbsp;<code><a href="../../interfaces/MotorIO.html" title="interface in frc.robot.io.interfaces">MotorIO</a></code></dd>
+<dt>Parameters:</dt>
+<dd><code>positionRad</code> - the current position in radians</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="disablePid()">
+<h3>disablePid</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">disablePid</span>()</div>
+<div class="block"><span class="descfrm-type-label">Description copied from interface:&nbsp;<code><a href="../../interfaces/MotorIO.html#disablePid()">MotorIO</a></code></span></div>
+<div class="block">Disables the software PID loop</div>
+<dl class="notes">
+<dt>Specified by:</dt>
+<dd><code><a href="../../interfaces/MotorIO.html#disablePid()">disablePid</a></code>&nbsp;in interface&nbsp;<code><a href="../../interfaces/MotorIO.html" title="interface in frc.robot.io.interfaces">MotorIO</a></code></dd>
 </dl>
 </section>
 </li>

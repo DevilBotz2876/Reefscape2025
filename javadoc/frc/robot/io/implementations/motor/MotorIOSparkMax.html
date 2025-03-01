@@ -44,7 +44,7 @@ loadScripts(document, 'script');</script>
 <ul class="sub-nav-list">
 <li>Summary:&nbsp;</li>
 <li><a href="#nested-class-summary">Nested</a>&nbsp;|&nbsp;</li>
-<li>Field&nbsp;|&nbsp;</li>
+<li><a href="#field-summary">Field</a>&nbsp;|&nbsp;</li>
 <li><a href="#constructor-summary">Constr</a>&nbsp;|&nbsp;</li>
 <li><a href="#method-summary">Method</a></li>
 </ul>
@@ -108,6 +108,15 @@ loadScripts(document, 'script');</script>
 <code><a href="../../interfaces/MotorIO.MotorIOInputs.html" title="class in frc.robot.io.interfaces">MotorIO.MotorIOInputs</a>, <a href="../../interfaces/MotorIO.MotorIOSettings.html" title="class in frc.robot.io.interfaces">MotorIO.MotorIOSettings</a></code></div>
 </section>
 </li>
+<!-- =========== FIELD SUMMARY =========== -->
+<li>
+<section class="field-summary" id="field-summary">
+<h2>Field Summary</h2>
+<div class="inherited-list">
+<h3 id="fields-inherited-from-class-frc.robot.io.implementations.motor.MotorIOBase">Fields inherited from class&nbsp;frc.robot.io.implementations.motor.<a href="MotorIOBase.html" title="class in frc.robot.io.implementations.motor">MotorIOBase</a></h3>
+<code><a href="MotorIOBase.html#settings">settings</a></code></div>
+</section>
+</li>
 <!-- ======== CONSTRUCTOR SUMMARY ======== -->
 <li>
 <section class="constructor-summary" id="constructor-summary">
@@ -133,26 +142,19 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-first">Modifier and Type</div>
 <div class="table-header col-second">Method</div>
 <div class="table-header col-last">Description</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setPosition(double,double)" class="member-name-link">setPosition</a><wbr>(double&nbsp;positionRad,
- double&nbsp;ffVolts)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">Optional: Run closed loop (using a PID) to reach a specific position</div>
-</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setVelocity(double,double)" class="member-name-link">setVelocity</a><wbr>(double&nbsp;velocityRadPerSec,
- double&nbsp;ffVolts)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">Optional: Run closed loop (using a PID) at a specific velocity</div>
-</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setVoltage(double)" class="member-name-link">setVoltage</a><wbr>(double&nbsp;volts)</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#resetEncoder(double)" class="member-name-link">resetEncoder</a><wbr>(double&nbsp;positionRad)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">Run open loop at the specified voltage.</div>
+<div class="block">Resets the relative encoder to the specified position</div>
 </div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#updateInputs(frc.robot.io.interfaces.MotorIO.MotorIOInputs)" class="member-name-link">updateInputs</a><wbr>(<a href="../../interfaces/MotorIO.MotorIOInputs.html" title="class in frc.robot.io.interfaces">MotorIO.MotorIOInputs</a>&nbsp;inputs)</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setVoltage(double)" class="member-name-link">setVoltage</a><wbr>(double&nbsp;volts)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Run open loop at the specified voltage.</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#updateInputs(frc.robot.io.interfaces.MotorIO.MotorIOInputs)" class="member-name-link">updateInputs</a><wbr>(<a href="../../interfaces/MotorIO.MotorIOInputs.html" title="class in frc.robot.io.interfaces">MotorIO.MotorIOInputs</a>&nbsp;inputs)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Updates the set of loggable inputs.</div>
 </div>
 </div>
@@ -160,7 +162,7 @@ loadScripts(document, 'script');</script>
 </div>
 <div class="inherited-list">
 <h3 id="methods-inherited-from-class-frc.robot.io.implementations.motor.MotorIOBase">Methods inherited from class&nbsp;frc.robot.io.implementations.motor.<a href="MotorIOBase.html" title="class in frc.robot.io.implementations.motor">MotorIOBase</a></h3>
-<code><a href="MotorIOBase.html#calculateSafeVoltage(double)">calculateSafeVoltage</a>, <a href="MotorIOBase.html#getPid()">getPid</a></code></div>
+<code><a href="MotorIOBase.html#calculateSafeVoltage(double,boolean)">calculateSafeVoltage</a>, <a href="MotorIOBase.html#disablePid()">disablePid</a>, <a href="MotorIOBase.html#getPid()">getPid</a>, <a href="MotorIOBase.html#normalizePositionToMeters(double)">normalizePositionToMeters</a>, <a href="MotorIOBase.html#normalizePositionToRad(double)">normalizePositionToRad</a>, <a href="MotorIOBase.html#setPosition(double,double)">setPosition</a>, <a href="MotorIOBase.html#setVelocity(double,double)">setVelocity</a></code></div>
 <div class="inherited-list">
 <h3 id="methods-inherited-from-class-java.lang.Object">Methods inherited from class&nbsp;java.lang.<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a></h3>
 <code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#clone()" title="class or interface in java.lang" class="external-link">clone</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#equals(java.lang.Object)" title="class or interface in java.lang" class="external-link">equals</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#finalize()" title="class or interface in java.lang" class="external-link">finalize</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#getClass()" title="class or interface in java.lang" class="external-link">getClass</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#hashCode()" title="class or interface in java.lang" class="external-link">hashCode</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#notify()" title="class or interface in java.lang" class="external-link">notify</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#notifyAll()" title="class or interface in java.lang" class="external-link">notifyAll</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#toString()" title="class or interface in java.lang" class="external-link">toString</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#wait()" title="class or interface in java.lang" class="external-link">wait</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#wait(long)" title="class or interface in java.lang" class="external-link">wait</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#wait(long,int)" title="class or interface in java.lang" class="external-link">wait</a></code></div>
@@ -218,44 +220,18 @@ loadScripts(document, 'script');</script>
 </section>
 </li>
 <li>
-<section class="detail" id="setVelocity(double,double)">
-<h3>setVelocity</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">setVelocity</span><wbr><span class="parameters">(double&nbsp;velocityRadPerSec,
- double&nbsp;ffVolts)</span></div>
-<div class="block"><span class="descfrm-type-label">Description copied from interface:&nbsp;<code><a href="../../interfaces/MotorIO.html#setVelocity(double,double)">MotorIO</a></code></span></div>
-<div class="block">Optional: Run closed loop (using a PID) at a specific velocity</div>
+<section class="detail" id="resetEncoder(double)">
+<h3>resetEncoder</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">resetEncoder</span><wbr><span class="parameters">(double&nbsp;positionRad)</span></div>
+<div class="block"><span class="descfrm-type-label">Description copied from interface:&nbsp;<code><a href="../../interfaces/MotorIO.html#resetEncoder(double)">MotorIO</a></code></span></div>
+<div class="block">Resets the relative encoder to the specified position</div>
 <dl class="notes">
 <dt>Specified by:</dt>
-<dd><code><a href="../../interfaces/MotorIO.html#setVelocity(double,double)">setVelocity</a></code>&nbsp;in interface&nbsp;<code><a href="../../interfaces/MotorIO.html" title="interface in frc.robot.io.interfaces">MotorIO</a></code></dd>
+<dd><code><a href="../../interfaces/MotorIO.html#resetEncoder(double)">resetEncoder</a></code>&nbsp;in interface&nbsp;<code><a href="../../interfaces/MotorIO.html" title="interface in frc.robot.io.interfaces">MotorIO</a></code></dd>
 <dt>Overrides:</dt>
-<dd><code><a href="MotorIOBase.html#setVelocity(double,double)">setVelocity</a></code>&nbsp;in class&nbsp;<code><a href="MotorIOBase.html" title="class in frc.robot.io.implementations.motor">MotorIOBase</a></code></dd>
+<dd><code><a href="MotorIOBase.html#resetEncoder(double)">resetEncoder</a></code>&nbsp;in class&nbsp;<code><a href="MotorIOBase.html" title="class in frc.robot.io.implementations.motor">MotorIOBase</a></code></dd>
 <dt>Parameters:</dt>
-<dd><code>velocityRadPerSec</code> - desired velocity</dd>
-<dd><code>ffVolts</code> - feedforward voltage which depends on the static friction of what is connected to
-     the motor</dd>
-<dt>Returns:</dt>
-<dd>true if the motor is capable of automatically maintaining a velocity</dd>
-</dl>
-</section>
-</li>
-<li>
-<section class="detail" id="setPosition(double,double)">
-<h3>setPosition</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">setPosition</span><wbr><span class="parameters">(double&nbsp;positionRad,
- double&nbsp;ffVolts)</span></div>
-<div class="block"><span class="descfrm-type-label">Description copied from interface:&nbsp;<code><a href="../../interfaces/MotorIO.html#setPosition(double,double)">MotorIO</a></code></span></div>
-<div class="block">Optional: Run closed loop (using a PID) to reach a specific position</div>
-<dl class="notes">
-<dt>Specified by:</dt>
-<dd><code><a href="../../interfaces/MotorIO.html#setPosition(double,double)">setPosition</a></code>&nbsp;in interface&nbsp;<code><a href="../../interfaces/MotorIO.html" title="interface in frc.robot.io.interfaces">MotorIO</a></code></dd>
-<dt>Overrides:</dt>
-<dd><code><a href="MotorIOBase.html#setPosition(double,double)">setPosition</a></code>&nbsp;in class&nbsp;<code><a href="MotorIOBase.html" title="class in frc.robot.io.implementations.motor">MotorIOBase</a></code></dd>
-<dt>Parameters:</dt>
-<dd><code>positionRad</code> - desired position</dd>
-<dd><code>ffVolts</code> - feedforward voltage which depends on the static friction of what is connected to
-     the motor</dd>
-<dt>Returns:</dt>
-<dd>true if the motor is capable of automatically moving and staying at a specific position</dd>
+<dd><code>positionRad</code> - the current position in radians</dd>
 </dl>
 </section>
 </li>

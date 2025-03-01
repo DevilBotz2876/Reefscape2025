@@ -111,10 +111,30 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-first">Modifier and Type</div>
 <div class="table-header col-second">Method</div>
 <div class="table-header col-last">Description</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>edu.wpi.first.math.controller.PIDController</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getPid()" class="member-name-link">getPid</a>()</code></div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#disablePid()" class="member-name-link">disablePid</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
+<div class="block">Disables the software PID loop</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>edu.wpi.first.math.controller.PIDController</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getPid()" class="member-name-link">getPid</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
 <div class="block">Returns the current PID Controller object for this motor</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>double</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#normalizePositionToMeters(double)" class="member-name-link">normalizePositionToMeters</a><wbr>(double&nbsp;positionRad)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
+<div class="block">Takes in a position in radians and converts it to meters</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>double</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#normalizePositionToRad(double)" class="member-name-link">normalizePositionToRad</a><wbr>(double&nbsp;position)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
+<div class="block">Takes in a position in meters or radians and converts it to radians</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#resetEncoder(double)" class="member-name-link">resetEncoder</a><wbr>(double&nbsp;positionRad)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
+<div class="block">Resets the relative encoder to the specified position</div>
 </div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>boolean</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#setPosition(double,double)" class="member-name-link">setPosition</a><wbr>(double&nbsp;positionRad,
@@ -188,6 +208,32 @@ loadScripts(document, 'script');</script>
 </section>
 </li>
 <li>
+<section class="detail" id="normalizePositionToRad(double)">
+<h3>normalizePositionToRad</h3>
+<div class="member-signature"><span class="return-type">double</span>&nbsp;<span class="element-name">normalizePositionToRad</span><wbr><span class="parameters">(double&nbsp;position)</span></div>
+<div class="block">Takes in a position in meters or radians and converts it to radians</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>position</code> - in radians or meters</dd>
+<dt>Returns:</dt>
+<dd>position in radians</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="normalizePositionToMeters(double)">
+<h3>normalizePositionToMeters</h3>
+<div class="member-signature"><span class="return-type">double</span>&nbsp;<span class="element-name">normalizePositionToMeters</span><wbr><span class="parameters">(double&nbsp;positionRad)</span></div>
+<div class="block">Takes in a position in radians and converts it to meters</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>positionRad</code> - in radians</dd>
+<dt>Returns:</dt>
+<dd>position in meters</dd>
+</dl>
+</section>
+</li>
+<li>
 <section class="detail" id="setPosition(double,double)">
 <h3>setPosition</h3>
 <div class="member-signature"><span class="return-type">boolean</span>&nbsp;<span class="element-name">setPosition</span><wbr><span class="parameters">(double&nbsp;positionRad,
@@ -195,7 +241,7 @@ loadScripts(document, 'script');</script>
 <div class="block">Optional: Run closed loop (using a PID) to reach a specific position</div>
 <dl class="notes">
 <dt>Parameters:</dt>
-<dd><code>positionRad</code> - desired position</dd>
+<dd><code>positionRad</code> - desired position (in radians)</dd>
 <dd><code>ffVolts</code> - feedforward voltage which depends on the static friction of what is connected to
      the motor</dd>
 <dt>Returns:</dt>
@@ -211,6 +257,24 @@ loadScripts(document, 'script');</script>
 <dl class="notes">
 <dt>Returns:</dt>
 </dl>
+</section>
+</li>
+<li>
+<section class="detail" id="resetEncoder(double)">
+<h3>resetEncoder</h3>
+<div class="member-signature"><span class="return-type">void</span>&nbsp;<span class="element-name">resetEncoder</span><wbr><span class="parameters">(double&nbsp;positionRad)</span></div>
+<div class="block">Resets the relative encoder to the specified position</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>positionRad</code> - the current position in radians</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="disablePid()">
+<h3>disablePid</h3>
+<div class="member-signature"><span class="return-type">void</span>&nbsp;<span class="element-name">disablePid</span>()</div>
+<div class="block">Disables the software PID loop</div>
 </section>
 </li>
 </ul>

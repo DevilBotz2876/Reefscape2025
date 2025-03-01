@@ -76,7 +76,7 @@ loadScripts(document, 'script');</script>
 <section class="class-description" id="class-description">
 <dl class="notes">
 <dt>Direct Known Subclasses:</dt>
-<dd><code><a href="RobotConfigNemo.html" title="class in frc.robot.config.game.reefscape2025">RobotConfigNemo</a></code>, <code><a href="RobotConfigPhoenix.html" title="class in frc.robot.config.game.reefscape2025">RobotConfigPhoenix</a></code>, <code><a href="RobotConfigStub.html" title="class in frc.robot.config.game.reefscape2025">RobotConfigStub</a></code></dd>
+<dd><code><a href="RobotConfigComp.html" title="class in frc.robot.config.game.reefscape2025">RobotConfigComp</a></code>, <code><a href="RobotConfigNemo.html" title="class in frc.robot.config.game.reefscape2025">RobotConfigNemo</a></code>, <code><a href="RobotConfigPhoenix.html" title="class in frc.robot.config.game.reefscape2025">RobotConfigPhoenix</a></code>, <code><a href="RobotConfigStub.html" title="class in frc.robot.config.game.reefscape2025">RobotConfigStub</a></code></dd>
 </dl>
 <hr>
 <div class="type-signature"><span class="modifiers">public class </span><span class="element-name type-name-label">RobotConfig</span>
@@ -93,14 +93,14 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-first">Modifier and Type</div>
 <div class="table-header col-second">Field</div>
 <div class="table-header col-last">Description</div>
-<div class="col-first even-row-color"><code>static <a href="../../../subsystems/implementations/algae/AlgaeSubsystem.html" title="class in frc.robot.subsystems.implementations.algae">AlgaeSubsystem</a></code></div>
-<div class="col-second even-row-color"><code><a href="#algaeSubsystem" class="member-name-link">algaeSubsystem</a></code></div>
+<div class="col-first even-row-color"><code>edu.wpi.first.wpilibj2.command.button.CommandXboxController</code></div>
+<div class="col-second even-row-color"><code><a href="#assistController" class="member-name-link">assistController</a></code></div>
 <div class="col-last even-row-color">&nbsp;</div>
-<div class="col-first odd-row-color"><code>edu.wpi.first.wpilibj2.command.button.CommandXboxController</code></div>
-<div class="col-second odd-row-color"><code><a href="#assistController" class="member-name-link">assistController</a></code></div>
+<div class="col-first odd-row-color"><code>static edu.wpi.first.wpilibj.smartdashboard.SendableChooser&lt;edu.wpi.first.wpilibj2.command.Command&gt;</code></div>
+<div class="col-second odd-row-color"><code><a href="#autoChooser" class="member-name-link">autoChooser</a></code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
-<div class="col-first even-row-color"><code>static edu.wpi.first.wpilibj.smartdashboard.SendableChooser&lt;edu.wpi.first.wpilibj2.command.Command&gt;</code></div>
-<div class="col-second even-row-color"><code><a href="#autoChooser" class="member-name-link">autoChooser</a></code></div>
+<div class="col-first even-row-color"><code>static <a href="../../../subsystems/implementations/motor/ArmMotorSubsystem.html" title="class in frc.robot.subsystems.implementations.motor">ArmMotorSubsystem</a></code></div>
+<div class="col-second even-row-color"><code><a href="#climberArm" class="member-name-link">climberArm</a></code></div>
 <div class="col-last even-row-color">&nbsp;</div>
 <div class="col-first odd-row-color"><code>static <a href="../../../subsystems/implementations/motor/ArmMotorSubsystem.html" title="class in frc.robot.subsystems.implementations.motor">ArmMotorSubsystem</a></code></div>
 <div class="col-second odd-row-color"><code><a href="#coralArm" class="member-name-link">coralArm</a></code></div>
@@ -108,7 +108,7 @@ loadScripts(document, 'script');</script>
 <div class="col-first even-row-color"><code>static <a href="../../../subsystems/implementations/drive/DriveBase.html" title="class in frc.robot.subsystems.implementations.drive">DriveBase</a></code></div>
 <div class="col-second even-row-color"><code><a href="#drive" class="member-name-link">drive</a></code></div>
 <div class="col-last even-row-color">&nbsp;</div>
-<div class="col-first odd-row-color"><code>static <a href="../../../subsystems/implementations/elevator/ElevatorSubsystem.html" title="class in frc.robot.subsystems.implementations.elevator">ElevatorSubsystem</a></code></div>
+<div class="col-first odd-row-color"><code>protected static <a href="../../../subsystems/implementations/motor/ElevatorMotorSubsystem.html" title="class in frc.robot.subsystems.implementations.motor">ElevatorMotorSubsystem</a></code></div>
 <div class="col-second odd-row-color"><code><a href="#elevator" class="member-name-link">elevator</a></code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
 <div class="col-first even-row-color"><code>edu.wpi.first.wpilibj2.command.button.CommandXboxController</code></div>
@@ -147,6 +147,14 @@ loadScripts(document, 'script');</script>
  boolean&nbsp;stubCoralArm,
  boolean&nbsp;stubAlgaeSubsystem)</code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E(boolean,boolean,boolean,boolean,boolean,boolean,boolean)" class="member-name-link">RobotConfig</a><wbr>(boolean&nbsp;stubDrive,
+ boolean&nbsp;stubAuto,
+ boolean&nbsp;stubVision,
+ boolean&nbsp;stubElevator,
+ boolean&nbsp;stubCoralArm,
+ boolean&nbsp;stubAlgaeSubsystem,
+ boolean&nbsp;stubClimberArm)</code></div>
+<div class="col-last even-row-color">&nbsp;</div>
 </div>
 </section>
 </li>
@@ -164,9 +172,6 @@ loadScripts(document, 'script');</script>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#configureBindings()" class="member-name-link">configureBindings</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setupSimGUI()" class="member-name-link">setupSimGUI</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 </div>
 </div>
 </div>
@@ -205,7 +210,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="elevator">
 <h3>elevator</h3>
-<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="../../../subsystems/implementations/elevator/ElevatorSubsystem.html" title="class in frc.robot.subsystems.implementations.elevator">ElevatorSubsystem</a></span>&nbsp;<span class="element-name">elevator</span></div>
+<div class="member-signature"><span class="modifiers">protected static</span>&nbsp;<span class="return-type"><a href="../../../subsystems/implementations/motor/ElevatorMotorSubsystem.html" title="class in frc.robot.subsystems.implementations.motor">ElevatorMotorSubsystem</a></span>&nbsp;<span class="element-name">elevator</span></div>
 </section>
 </li>
 <li>
@@ -215,9 +220,9 @@ loadScripts(document, 'script');</script>
 </section>
 </li>
 <li>
-<section class="detail" id="algaeSubsystem">
-<h3>algaeSubsystem</h3>
-<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="../../../subsystems/implementations/algae/AlgaeSubsystem.html" title="class in frc.robot.subsystems.implementations.algae">AlgaeSubsystem</a></span>&nbsp;<span class="element-name">algaeSubsystem</span></div>
+<section class="detail" id="climberArm">
+<h3>climberArm</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="../../../subsystems/implementations/motor/ArmMotorSubsystem.html" title="class in frc.robot.subsystems.implementations.motor">ArmMotorSubsystem</a></span>&nbsp;<span class="element-name">climberArm</span></div>
 </section>
 </li>
 <li>
@@ -275,6 +280,18 @@ loadScripts(document, 'script');</script>
  boolean&nbsp;stubAlgaeSubsystem)</span></div>
 </section>
 </li>
+<li>
+<section class="detail" id="&lt;init&gt;(boolean,boolean,boolean,boolean,boolean,boolean,boolean)">
+<h3>RobotConfig</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name">RobotConfig</span><wbr><span class="parameters">(boolean&nbsp;stubDrive,
+ boolean&nbsp;stubAuto,
+ boolean&nbsp;stubVision,
+ boolean&nbsp;stubElevator,
+ boolean&nbsp;stubCoralArm,
+ boolean&nbsp;stubAlgaeSubsystem,
+ boolean&nbsp;stubClimberArm)</span></div>
+</section>
+</li>
 </ul>
 </section>
 </li>
@@ -287,12 +304,6 @@ loadScripts(document, 'script');</script>
 <section class="detail" id="configureBindings()">
 <h3>configureBindings</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">configureBindings</span>()</div>
-</section>
-</li>
-<li>
-<section class="detail" id="setupSimGUI()">
-<h3>setupSimGUI</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">setupSimGUI</span>()</div>
 </section>
 </li>
 </ul>

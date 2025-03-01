@@ -72,16 +72,11 @@ loadScripts(document, 'script');</script>
 </div>
 <section class="class-description" id="class-description">
 <dl class="notes">
-<dt>All Superinterfaces:</dt>
-<dd><code>edu.wpi.first.wpilibj2.command.Subsystem</code></dd>
-</dl>
-<dl class="notes">
 <dt>All Known Implementing Classes:</dt>
-<dd><code><a href="../implementations/elevator/ElevatorSubsystem.html" title="class in frc.robot.subsystems.implementations.elevator">ElevatorSubsystem</a></code></dd>
+<dd><code><a href="../implementations/motor/ElevatorMotorSubsystem.html" title="class in frc.robot.subsystems.implementations.motor">ElevatorMotorSubsystem</a></code></dd>
 </dl>
 <hr>
-<div class="type-signature"><span class="modifiers">public interface </span><span class="element-name type-name-label">Elevator</span><span class="extends-implements">
-extends edu.wpi.first.wpilibj2.command.Subsystem</span></div>
+<div class="type-signature"><span class="modifiers">public interface </span><span class="element-name type-name-label">Elevator</span></div>
 </section>
 <section class="summary">
 <ul class="summary-list">
@@ -95,7 +90,7 @@ extends edu.wpi.first.wpilibj2.command.Subsystem</span></div>
 <div class="table-header col-second">Interface</div>
 <div class="table-header col-last">Description</div>
 <div class="col-first even-row-color"><code>static class&nbsp;</code></div>
-<div class="col-second even-row-color"><code><a href="Elevator.Constants.html" class="type-name-link" title="class in frc.robot.subsystems.interfaces">Elevator.Constants</a></code></div>
+<div class="col-second even-row-color"><code><a href="Elevator.ElevatorSettings.html" class="type-name-link" title="class in frc.robot.subsystems.interfaces">Elevator.ElevatorSettings</a></code></div>
 <div class="col-last even-row-color">&nbsp;</div>
 </div>
 </section>
@@ -105,79 +100,44 @@ extends edu.wpi.first.wpilibj2.command.Subsystem</span></div>
 <section class="method-summary" id="method-summary">
 <h2>Method Summary</h2>
 <div id="method-summary-table">
-<div class="table-tabs" role="tablist" aria-orientation="horizontal"><button id="method-summary-table-tab0" role="tab" aria-selected="true" aria-controls="method-summary-table.tabpanel" tabindex="0" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table', 3)" class="active-table-tab">All Methods</button><button id="method-summary-table-tab2" role="tab" aria-selected="false" aria-controls="method-summary-table.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table-tab2', 3)" class="table-tab">Instance Methods</button><button id="method-summary-table-tab3" role="tab" aria-selected="false" aria-controls="method-summary-table.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table-tab3', 3)" class="table-tab">Abstract Methods</button><button id="method-summary-table-tab5" role="tab" aria-selected="false" aria-controls="method-summary-table.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table-tab5', 3)" class="table-tab">Default Methods</button></div>
+<div class="table-tabs" role="tablist" aria-orientation="horizontal"><button id="method-summary-table-tab0" role="tab" aria-selected="true" aria-controls="method-summary-table.tabpanel" tabindex="0" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table', 3)" class="active-table-tab">All Methods</button><button id="method-summary-table-tab2" role="tab" aria-selected="false" aria-controls="method-summary-table.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table-tab2', 3)" class="table-tab">Instance Methods</button><button id="method-summary-table-tab3" role="tab" aria-selected="false" aria-controls="method-summary-table.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table-tab3', 3)" class="table-tab">Abstract Methods</button></div>
 <div id="method-summary-table.tabpanel" role="tabpanel" aria-labelledby="method-summary-table-tab0">
 <div class="summary-table three-column-summary">
 <div class="table-header col-first">Modifier and Type</div>
 <div class="table-header col-second">Method</div>
 <div class="table-header col-last">Description</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5"><code>default edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5"><code><a href="#createSystemIdRoutine(java.lang.String)" class="member-name-link">createSystemIdRoutine</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;subsystemName)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#disableClosedLoop()" class="member-name-link">disableClosedLoop</a>()</code></div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>double</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getCurrentHeight()" class="member-name-link">getCurrentHeight</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
+<div class="block">Returns the current elevator height</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="Elevator.ElevatorSettings.html" title="class in frc.robot.subsystems.interfaces">Elevator.ElevatorSettings</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getSettings()" class="member-name-link">getSettings</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
-<div class="block">Disable any closed loop controls, i.e PID</div>
+<div class="block">Returns the elevator settings</div>
 </div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>double</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getPosition()" class="member-name-link">getPosition</a>()</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getTargetHeight()" class="member-name-link">getTargetHeight</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
-<div class="block">Returns the current postition of the elevator in meters.</div>
-</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>double</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getTargetPosition()" class="member-name-link">getTargetPosition</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
-<div class="block">Returns the target postition of the elevator in meters.</div>
-</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>double</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getVelocityPerSecond()" class="member-name-link">getVelocityPerSecond</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
-<div class="block">Returns velocity in meters per second of the elevator.</div>
+<div class="block">Returns the desired elevator height</div>
 </div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>boolean</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#isAtLowerLimit()" class="member-name-link">isAtLowerLimit</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
-<div class="block">Returns true if the elevator is at the minimum limit.</div>
-</div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#isAtMaxLimit()" class="member-name-link">isAtMaxLimit</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>boolean</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#isAtSetpoint()" class="member-name-link">isAtSetpoint</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
-<div class="block">Returns true if the elevator is at the setpoint.</div>
-</div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#isAtMinLimit()" class="member-name-link">isAtMinLimit</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>boolean</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#isAtUpperLimit()" class="member-name-link">isAtUpperLimit</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
-<div class="block">Returns true if the elevator is at the maximum limit.</div>
-</div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#isAtSetpoint()" class="member-name-link">isAtSetpoint</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#runVoltage(double)" class="member-name-link">runVoltage</a><wbr>(double&nbsp;volts)</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#setTargetHeight(double)" class="member-name-link">setTargetHeight</a><wbr>(double&nbsp;meters)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
-<div class="block">runs the elevator at a voltage.</div>
-</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5"><code>default void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5"><code><a href="#setLigament(edu.wpi.first.wpilibj.smartdashboard.MechanismLigament2d)" class="member-name-link">setLigament</a><wbr>(edu.wpi.first.wpilibj.smartdashboard.MechanismLigament2d&nbsp;ligament2d)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#setPosition(double)" class="member-name-link">setPosition</a><wbr>(double&nbsp;meters)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
-<div class="block">Set the postition of the elevator in meters.</div>
-</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5"><code>default edu.wpi.first.wpilibj2.command.Command</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5"><code><a href="#sysIdDynamic(edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine.Direction)" class="member-name-link">sysIdDynamic</a><wbr>(edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine.Direction&nbsp;direction)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5">
-<div class="block">Returns a command to run a dynamic test in the specified direction.</div>
-</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5"><code>default edu.wpi.first.wpilibj2.command.Command</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5"><code><a href="#sysIdQuasistatic(edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine.Direction)" class="member-name-link">sysIdQuasistatic</a><wbr>(edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine.Direction&nbsp;direction)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5">
-<div class="block">Returns a command to run a quasistatic test in the specified direction.</div>
+<div class="block">Sets the desired target elevator height</div>
 </div>
 </div>
 </div>
 </div>
-<div class="inherited-list">
-<h3 id="methods-inherited-from-class-edu.wpi.first.wpilibj2.command.Subsystem">Methods inherited from interface&nbsp;edu.wpi.first.wpilibj2.command.Subsystem</h3>
-<code>defer, getCurrentCommand, getDefaultCommand, getName, periodic, register, removeDefaultCommand, run, runEnd, runOnce, setDefaultCommand, simulationPeriodic, startEnd, startRun</code></div>
 </section>
 </li>
 </ul>
@@ -190,92 +150,77 @@ extends edu.wpi.first.wpilibj2.command.Subsystem</span></div>
 <h2>Method Details</h2>
 <ul class="member-list">
 <li>
-<section class="detail" id="runVoltage(double)">
-<h3>runVoltage</h3>
-<div class="member-signature"><span class="return-type">void</span>&nbsp;<span class="element-name">runVoltage</span><wbr><span class="parameters">(double&nbsp;volts)</span></div>
-<div class="block">runs the elevator at a voltage.</div>
+<section class="detail" id="getCurrentHeight()">
+<h3>getCurrentHeight</h3>
+<div class="member-signature"><span class="return-type">double</span>&nbsp;<span class="element-name">getCurrentHeight</span>()</div>
+<div class="block">Returns the current elevator height</div>
+<dl class="notes">
+<dt>Returns:</dt>
+<dd>the current elevator height in meters</dd>
+</dl>
 </section>
 </li>
 <li>
-<section class="detail" id="getPosition()">
-<h3>getPosition</h3>
-<div class="member-signature"><span class="return-type">double</span>&nbsp;<span class="element-name">getPosition</span>()</div>
-<div class="block">Returns the current postition of the elevator in meters.</div>
+<section class="detail" id="getTargetHeight()">
+<h3>getTargetHeight</h3>
+<div class="member-signature"><span class="return-type">double</span>&nbsp;<span class="element-name">getTargetHeight</span>()</div>
+<div class="block">Returns the desired elevator height</div>
+<dl class="notes">
+<dt>Returns:</dt>
+<dd>the desired target height in meters</dd>
+</dl>
 </section>
 </li>
 <li>
-<section class="detail" id="getTargetPosition()">
-<h3>getTargetPosition</h3>
-<div class="member-signature"><span class="return-type">double</span>&nbsp;<span class="element-name">getTargetPosition</span>()</div>
-<div class="block">Returns the target postition of the elevator in meters.</div>
+<section class="detail" id="setTargetHeight(double)">
+<h3>setTargetHeight</h3>
+<div class="member-signature"><span class="return-type">void</span>&nbsp;<span class="element-name">setTargetHeight</span><wbr><span class="parameters">(double&nbsp;meters)</span></div>
+<div class="block">Sets the desired target elevator height</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>meters</code> - the desired target height in meters</dd>
+</dl>
 </section>
 </li>
 <li>
-<section class="detail" id="isAtUpperLimit()">
-<h3>isAtUpperLimit</h3>
-<div class="member-signature"><span class="return-type">boolean</span>&nbsp;<span class="element-name">isAtUpperLimit</span>()</div>
-<div class="block">Returns true if the elevator is at the maximum limit.</div>
+<section class="detail" id="isAtMaxLimit()">
+<h3>isAtMaxLimit</h3>
+<div class="member-signature"><span class="return-type">boolean</span>&nbsp;<span class="element-name">isAtMaxLimit</span>()</div>
+<dl class="notes">
+<dt>Returns:</dt>
+<dd>true if elevator height is at (or greater than) the max limit</dd>
+</dl>
 </section>
 </li>
 <li>
-<section class="detail" id="isAtLowerLimit()">
-<h3>isAtLowerLimit</h3>
-<div class="member-signature"><span class="return-type">boolean</span>&nbsp;<span class="element-name">isAtLowerLimit</span>()</div>
-<div class="block">Returns true if the elevator is at the minimum limit.</div>
-</section>
-</li>
-<li>
-<section class="detail" id="getVelocityPerSecond()">
-<h3>getVelocityPerSecond</h3>
-<div class="member-signature"><span class="return-type">double</span>&nbsp;<span class="element-name">getVelocityPerSecond</span>()</div>
-<div class="block">Returns velocity in meters per second of the elevator.</div>
-</section>
-</li>
-<li>
-<section class="detail" id="setPosition(double)">
-<h3>setPosition</h3>
-<div class="member-signature"><span class="return-type">void</span>&nbsp;<span class="element-name">setPosition</span><wbr><span class="parameters">(double&nbsp;meters)</span></div>
-<div class="block">Set the postition of the elevator in meters.</div>
+<section class="detail" id="isAtMinLimit()">
+<h3>isAtMinLimit</h3>
+<div class="member-signature"><span class="return-type">boolean</span>&nbsp;<span class="element-name">isAtMinLimit</span>()</div>
+<dl class="notes">
+<dt>Returns:</dt>
+<dd>true if elevator height is at (or less than) the min limit</dd>
+</dl>
 </section>
 </li>
 <li>
 <section class="detail" id="isAtSetpoint()">
 <h3>isAtSetpoint</h3>
 <div class="member-signature"><span class="return-type">boolean</span>&nbsp;<span class="element-name">isAtSetpoint</span>()</div>
-<div class="block">Returns true if the elevator is at the setpoint.</div>
+<dl class="notes">
+<dt>Returns:</dt>
+<dd>true if the current elevator height is at the desired target height</dd>
+</dl>
 </section>
 </li>
 <li>
-<section class="detail" id="disableClosedLoop()">
-<h3>disableClosedLoop</h3>
-<div class="member-signature"><span class="return-type">void</span>&nbsp;<span class="element-name">disableClosedLoop</span>()</div>
-<div class="block">Disable any closed loop controls, i.e PID</div>
-</section>
-</li>
-<li>
-<section class="detail" id="setLigament(edu.wpi.first.wpilibj.smartdashboard.MechanismLigament2d)">
-<h3>setLigament</h3>
-<div class="member-signature"><span class="modifiers">default</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">setLigament</span><wbr><span class="parameters">(edu.wpi.first.wpilibj.smartdashboard.MechanismLigament2d&nbsp;ligament2d)</span></div>
-</section>
-</li>
-<li>
-<section class="detail" id="createSystemIdRoutine(java.lang.String)">
-<h3>createSystemIdRoutine</h3>
-<div class="member-signature"><span class="modifiers">default</span>&nbsp;<span class="return-type">edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine</span>&nbsp;<span class="element-name">createSystemIdRoutine</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;subsystemName)</span></div>
-</section>
-</li>
-<li>
-<section class="detail" id="sysIdQuasistatic(edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine.Direction)">
-<h3>sysIdQuasistatic</h3>
-<div class="member-signature"><span class="modifiers">default</span>&nbsp;<span class="return-type">edu.wpi.first.wpilibj2.command.Command</span>&nbsp;<span class="element-name">sysIdQuasistatic</span><wbr><span class="parameters">(edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine.Direction&nbsp;direction)</span></div>
-<div class="block">Returns a command to run a quasistatic test in the specified direction.</div>
-</section>
-</li>
-<li>
-<section class="detail" id="sysIdDynamic(edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine.Direction)">
-<h3>sysIdDynamic</h3>
-<div class="member-signature"><span class="modifiers">default</span>&nbsp;<span class="return-type">edu.wpi.first.wpilibj2.command.Command</span>&nbsp;<span class="element-name">sysIdDynamic</span><wbr><span class="parameters">(edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine.Direction&nbsp;direction)</span></div>
-<div class="block">Returns a command to run a dynamic test in the specified direction.</div>
+<section class="detail" id="getSettings()">
+<h3>getSettings</h3>
+<div class="member-signature"><span class="return-type"><a href="Elevator.ElevatorSettings.html" title="class in frc.robot.subsystems.interfaces">Elevator.ElevatorSettings</a></span>&nbsp;<span class="element-name">getSettings</span>()</div>
+<div class="block">Returns the elevator settings</div>
+<dl class="notes">
+<dt>Returns:</dt>
+<dd>the current elevator settings</dd>
+</dl>
 </section>
 </li>
 </ul>

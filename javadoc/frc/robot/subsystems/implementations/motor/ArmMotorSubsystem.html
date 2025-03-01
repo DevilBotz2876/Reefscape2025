@@ -80,12 +80,12 @@ loadScripts(document, 'script');</script>
 <section class="class-description" id="class-description">
 <dl class="notes">
 <dt>All Implemented Interfaces:</dt>
-<dd><code>edu.wpi.first.util.sendable.Sendable</code>, <code>edu.wpi.first.wpilibj2.command.Subsystem</code>, <code><a href="../../interfaces/ArmV2.html" title="interface in frc.robot.subsystems.interfaces">ArmV2</a></code>, <code><a href="../../interfaces/Motor.html" title="interface in frc.robot.subsystems.interfaces">Motor</a></code></dd>
+<dd><code>edu.wpi.first.util.sendable.Sendable</code>, <code>edu.wpi.first.wpilibj2.command.Subsystem</code>, <code><a href="../../interfaces/Arm.html" title="interface in frc.robot.subsystems.interfaces">Arm</a></code>, <code><a href="../../interfaces/Motor.html" title="interface in frc.robot.subsystems.interfaces">Motor</a></code></dd>
 </dl>
 <hr>
 <div class="type-signature"><span class="modifiers">public class </span><span class="element-name type-name-label">ArmMotorSubsystem</span>
 <span class="extends-implements">extends <a href="MotorSubsystem.html" title="class in frc.robot.subsystems.implementations.motor">MotorSubsystem</a>
-implements <a href="../../interfaces/ArmV2.html" title="interface in frc.robot.subsystems.interfaces">ArmV2</a></span></div>
+implements <a href="../../interfaces/Arm.html" title="interface in frc.robot.subsystems.interfaces">Arm</a></span></div>
 </section>
 <section class="summary">
 <ul class="summary-list">
@@ -94,8 +94,8 @@ implements <a href="../../interfaces/ArmV2.html" title="interface in frc.robot.s
 <section class="nested-class-summary" id="nested-class-summary">
 <h2>Nested Class Summary</h2>
 <div class="inherited-list">
-<h2 id="nested-classes-inherited-from-class-frc.robot.subsystems.interfaces.ArmV2">Nested classes/interfaces inherited from interface&nbsp;frc.robot.subsystems.interfaces.<a href="../../interfaces/ArmV2.html" title="interface in frc.robot.subsystems.interfaces">ArmV2</a></h2>
-<code><a href="../../interfaces/ArmV2.ArmSettings.html" title="class in frc.robot.subsystems.interfaces">ArmV2.ArmSettings</a></code></div>
+<h2 id="nested-classes-inherited-from-class-frc.robot.subsystems.interfaces.Arm">Nested classes/interfaces inherited from interface&nbsp;frc.robot.subsystems.interfaces.<a href="../../interfaces/Arm.html" title="interface in frc.robot.subsystems.interfaces">Arm</a></h2>
+<code><a href="../../interfaces/Arm.ArmSettings.html" title="class in frc.robot.subsystems.interfaces">Arm.ArmSettings</a></code></div>
 </section>
 </li>
 <!-- =========== FIELD SUMMARY =========== -->
@@ -104,7 +104,7 @@ implements <a href="../../interfaces/ArmV2.html" title="interface in frc.robot.s
 <h2>Field Summary</h2>
 <div class="inherited-list">
 <h3 id="fields-inherited-from-class-frc.robot.subsystems.implementations.motor.MotorSubsystem">Fields inherited from class&nbsp;frc.robot.subsystems.implementations.motor.<a href="MotorSubsystem.html" title="class in frc.robot.subsystems.implementations.motor">MotorSubsystem</a></h3>
-<code><a href="MotorSubsystem.html#inputs">inputs</a>, <a href="MotorSubsystem.html#io">io</a></code></div>
+<code><a href="MotorSubsystem.html#inputs">inputs</a>, <a href="MotorSubsystem.html#io">io</a>, <a href="MotorSubsystem.html#motionProfile">motionProfile</a>, <a href="MotorSubsystem.html#motionProfileEnabled">motionProfileEnabled</a>, <a href="MotorSubsystem.html#nextState">nextState</a>, <a href="MotorSubsystem.html#targetState">targetState</a></code></div>
 </section>
 </li>
 <!-- ======== CONSTRUCTOR SUMMARY ======== -->
@@ -115,9 +115,9 @@ implements <a href="../../interfaces/ArmV2.html" title="interface in frc.robot.s
 <div class="summary-table two-column-summary">
 <div class="table-header col-first">Constructor</div>
 <div class="table-header col-last">Description</div>
-<div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E(frc.robot.io.interfaces.MotorIO,java.lang.String,frc.robot.subsystems.interfaces.ArmV2.ArmSettings)" class="member-name-link">ArmMotorSubsystem</a><wbr>(<a href="../../../io/interfaces/MotorIO.html" title="interface in frc.robot.io.interfaces">MotorIO</a>&nbsp;io,
+<div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E(frc.robot.io.interfaces.MotorIO,java.lang.String,frc.robot.subsystems.interfaces.Arm.ArmSettings)" class="member-name-link">ArmMotorSubsystem</a><wbr>(<a href="../../../io/interfaces/MotorIO.html" title="interface in frc.robot.io.interfaces">MotorIO</a>&nbsp;io,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name,
- <a href="../../interfaces/ArmV2.ArmSettings.html" title="class in frc.robot.subsystems.interfaces">ArmV2.ArmSettings</a>&nbsp;settings)</code></div>
+ <a href="../../interfaces/Arm.ArmSettings.html" title="class in frc.robot.subsystems.interfaces">Arm.ArmSettings</a>&nbsp;settings)</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
 </div>
 </section>
@@ -138,7 +138,7 @@ implements <a href="../../interfaces/ArmV2.html" title="interface in frc.robot.s
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Returns the current arm angle</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="../../interfaces/ArmV2.ArmSettings.html" title="class in frc.robot.subsystems.interfaces">ArmV2.ArmSettings</a></code></div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="../../interfaces/Arm.ArmSettings.html" title="class in frc.robot.subsystems.interfaces">Arm.ArmSettings</a></code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getSettings()" class="member-name-link">getSettings</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Returns the arm settings</div>
@@ -148,21 +148,24 @@ implements <a href="../../interfaces/ArmV2.html" title="interface in frc.robot.s
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Returns the desired arm angle</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#isAtMaxLimit()" class="member-name-link">isAtMaxLimit</a>()</code></div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#initSendable(edu.wpi.first.util.sendable.SendableBuilder)" class="member-name-link">initSendable</a><wbr>(edu.wpi.first.util.sendable.SendableBuilder&nbsp;builder)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#isAtMinLimit()" class="member-name-link">isAtMinLimit</a>()</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#isAtMaxLimit()" class="member-name-link">isAtMaxLimit</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#isAtSetpoint()" class="member-name-link">isAtSetpoint</a>()</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#isAtMinLimit()" class="member-name-link">isAtMinLimit</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#periodic()" class="member-name-link">periodic</a>()</code></div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#isAtSetpoint()" class="member-name-link">isAtSetpoint</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setTargetAngle(double)" class="member-name-link">setTargetAngle</a><wbr>(double&nbsp;degrees)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#periodic()" class="member-name-link">periodic</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setTargetAngle(double)" class="member-name-link">setTargetAngle</a><wbr>(double&nbsp;degrees)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Sets the desired target arm angle</div>
 </div>
 </div>
@@ -170,10 +173,10 @@ implements <a href="../../interfaces/ArmV2.html" title="interface in frc.robot.s
 </div>
 <div class="inherited-list">
 <h3 id="methods-inherited-from-class-frc.robot.subsystems.implementations.motor.MotorSubsystem">Methods inherited from class&nbsp;frc.robot.subsystems.implementations.motor.<a href="MotorSubsystem.html" title="class in frc.robot.subsystems.implementations.motor">MotorSubsystem</a></h3>
-<code><a href="MotorSubsystem.html#runVoltage(double)">runVoltage</a></code></div>
+<code><a href="MotorSubsystem.html#getCurrent()">getCurrent</a>, <a href="MotorSubsystem.html#getForwardLimit()">getForwardLimit</a>, <a href="MotorSubsystem.html#getReverseLimit()">getReverseLimit</a>, <a href="MotorSubsystem.html#resetEncoder(double)">resetEncoder</a>, <a href="MotorSubsystem.html#runVoltage(double)">runVoltage</a>, <a href="MotorSubsystem.html#setMotionProfileConstraintsRad(edu.wpi.first.math.trajectory.TrapezoidProfile.Constraints)">setMotionProfileConstraintsRad</a></code></div>
 <div class="inherited-list">
 <h3 id="methods-inherited-from-class-edu.wpi.first.wpilibj2.command.SubsystemBase">Methods inherited from class&nbsp;edu.wpi.first.wpilibj2.command.SubsystemBase</h3>
-<code>addChild, getName, getSubsystem, initSendable, setName, setSubsystem</code></div>
+<code>addChild, getName, getSubsystem, setName, setSubsystem</code></div>
 <div class="inherited-list">
 <h3 id="methods-inherited-from-class-java.lang.Object">Methods inherited from class&nbsp;java.lang.<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a></h3>
 <code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#clone()" title="class or interface in java.lang" class="external-link">clone</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#equals(java.lang.Object)" title="class or interface in java.lang" class="external-link">equals</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#finalize()" title="class or interface in java.lang" class="external-link">finalize</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#getClass()" title="class or interface in java.lang" class="external-link">getClass</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#hashCode()" title="class or interface in java.lang" class="external-link">hashCode</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#notify()" title="class or interface in java.lang" class="external-link">notify</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#notifyAll()" title="class or interface in java.lang" class="external-link">notifyAll</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#toString()" title="class or interface in java.lang" class="external-link">toString</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#wait()" title="class or interface in java.lang" class="external-link">wait</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#wait(long)" title="class or interface in java.lang" class="external-link">wait</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#wait(long,int)" title="class or interface in java.lang" class="external-link">wait</a></code></div>
@@ -192,11 +195,11 @@ implements <a href="../../interfaces/ArmV2.html" title="interface in frc.robot.s
 <h2>Constructor Details</h2>
 <ul class="member-list">
 <li>
-<section class="detail" id="&lt;init&gt;(frc.robot.io.interfaces.MotorIO,java.lang.String,frc.robot.subsystems.interfaces.ArmV2.ArmSettings)">
+<section class="detail" id="&lt;init&gt;(frc.robot.io.interfaces.MotorIO,java.lang.String,frc.robot.subsystems.interfaces.Arm.ArmSettings)">
 <h3>ArmMotorSubsystem</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name">ArmMotorSubsystem</span><wbr><span class="parameters">(<a href="../../../io/interfaces/MotorIO.html" title="interface in frc.robot.io.interfaces">MotorIO</a>&nbsp;io,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name,
- <a href="../../interfaces/ArmV2.ArmSettings.html" title="class in frc.robot.subsystems.interfaces">ArmV2.ArmSettings</a>&nbsp;settings)</span></div>
+ <a href="../../interfaces/Arm.ArmSettings.html" title="class in frc.robot.subsystems.interfaces">Arm.ArmSettings</a>&nbsp;settings)</span></div>
 </section>
 </li>
 </ul>
@@ -222,12 +225,12 @@ implements <a href="../../interfaces/ArmV2.html" title="interface in frc.robot.s
 <li>
 <section class="detail" id="getSettings()">
 <h3>getSettings</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="../../interfaces/ArmV2.ArmSettings.html" title="class in frc.robot.subsystems.interfaces">ArmV2.ArmSettings</a></span>&nbsp;<span class="element-name">getSettings</span>()</div>
-<div class="block"><span class="descfrm-type-label">Description copied from interface:&nbsp;<code><a href="../../interfaces/ArmV2.html#getSettings()">ArmV2</a></code></span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="../../interfaces/Arm.ArmSettings.html" title="class in frc.robot.subsystems.interfaces">Arm.ArmSettings</a></span>&nbsp;<span class="element-name">getSettings</span>()</div>
+<div class="block"><span class="descfrm-type-label">Description copied from interface:&nbsp;<code><a href="../../interfaces/Arm.html#getSettings()">Arm</a></code></span></div>
 <div class="block">Returns the arm settings</div>
 <dl class="notes">
 <dt>Specified by:</dt>
-<dd><code><a href="../../interfaces/ArmV2.html#getSettings()">getSettings</a></code>&nbsp;in interface&nbsp;<code><a href="../../interfaces/ArmV2.html" title="interface in frc.robot.subsystems.interfaces">ArmV2</a></code></dd>
+<dd><code><a href="../../interfaces/Arm.html#getSettings()">getSettings</a></code>&nbsp;in interface&nbsp;<code><a href="../../interfaces/Arm.html" title="interface in frc.robot.subsystems.interfaces">Arm</a></code></dd>
 <dt>Returns:</dt>
 <dd>the current arm settings</dd>
 </dl>
@@ -237,11 +240,11 @@ implements <a href="../../interfaces/ArmV2.html" title="interface in frc.robot.s
 <section class="detail" id="getCurrentAngle()">
 <h3>getCurrentAngle</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">double</span>&nbsp;<span class="element-name">getCurrentAngle</span>()</div>
-<div class="block"><span class="descfrm-type-label">Description copied from interface:&nbsp;<code><a href="../../interfaces/ArmV2.html#getCurrentAngle()">ArmV2</a></code></span></div>
+<div class="block"><span class="descfrm-type-label">Description copied from interface:&nbsp;<code><a href="../../interfaces/Arm.html#getCurrentAngle()">Arm</a></code></span></div>
 <div class="block">Returns the current arm angle</div>
 <dl class="notes">
 <dt>Specified by:</dt>
-<dd><code><a href="../../interfaces/ArmV2.html#getCurrentAngle()">getCurrentAngle</a></code>&nbsp;in interface&nbsp;<code><a href="../../interfaces/ArmV2.html" title="interface in frc.robot.subsystems.interfaces">ArmV2</a></code></dd>
+<dd><code><a href="../../interfaces/Arm.html#getCurrentAngle()">getCurrentAngle</a></code>&nbsp;in interface&nbsp;<code><a href="../../interfaces/Arm.html" title="interface in frc.robot.subsystems.interfaces">Arm</a></code></dd>
 <dt>Returns:</dt>
 <dd>the current angle in degrees</dd>
 </dl>
@@ -251,11 +254,11 @@ implements <a href="../../interfaces/ArmV2.html" title="interface in frc.robot.s
 <section class="detail" id="setTargetAngle(double)">
 <h3>setTargetAngle</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">setTargetAngle</span><wbr><span class="parameters">(double&nbsp;degrees)</span></div>
-<div class="block"><span class="descfrm-type-label">Description copied from interface:&nbsp;<code><a href="../../interfaces/ArmV2.html#setTargetAngle(double)">ArmV2</a></code></span></div>
+<div class="block"><span class="descfrm-type-label">Description copied from interface:&nbsp;<code><a href="../../interfaces/Arm.html#setTargetAngle(double)">Arm</a></code></span></div>
 <div class="block">Sets the desired target arm angle</div>
 <dl class="notes">
 <dt>Specified by:</dt>
-<dd><code><a href="../../interfaces/ArmV2.html#setTargetAngle(double)">setTargetAngle</a></code>&nbsp;in interface&nbsp;<code><a href="../../interfaces/ArmV2.html" title="interface in frc.robot.subsystems.interfaces">ArmV2</a></code></dd>
+<dd><code><a href="../../interfaces/Arm.html#setTargetAngle(double)">setTargetAngle</a></code>&nbsp;in interface&nbsp;<code><a href="../../interfaces/Arm.html" title="interface in frc.robot.subsystems.interfaces">Arm</a></code></dd>
 <dt>Parameters:</dt>
 <dd><code>degrees</code> - the desired target angle in degrees</dd>
 </dl>
@@ -265,11 +268,11 @@ implements <a href="../../interfaces/ArmV2.html" title="interface in frc.robot.s
 <section class="detail" id="getTargetAngle()">
 <h3>getTargetAngle</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">double</span>&nbsp;<span class="element-name">getTargetAngle</span>()</div>
-<div class="block"><span class="descfrm-type-label">Description copied from interface:&nbsp;<code><a href="../../interfaces/ArmV2.html#getTargetAngle()">ArmV2</a></code></span></div>
+<div class="block"><span class="descfrm-type-label">Description copied from interface:&nbsp;<code><a href="../../interfaces/Arm.html#getTargetAngle()">Arm</a></code></span></div>
 <div class="block">Returns the desired arm angle</div>
 <dl class="notes">
 <dt>Specified by:</dt>
-<dd><code><a href="../../interfaces/ArmV2.html#getTargetAngle()">getTargetAngle</a></code>&nbsp;in interface&nbsp;<code><a href="../../interfaces/ArmV2.html" title="interface in frc.robot.subsystems.interfaces">ArmV2</a></code></dd>
+<dd><code><a href="../../interfaces/Arm.html#getTargetAngle()">getTargetAngle</a></code>&nbsp;in interface&nbsp;<code><a href="../../interfaces/Arm.html" title="interface in frc.robot.subsystems.interfaces">Arm</a></code></dd>
 <dt>Returns:</dt>
 <dd>the desired target angle in degrees</dd>
 </dl>
@@ -281,7 +284,7 @@ implements <a href="../../interfaces/ArmV2.html" title="interface in frc.robot.s
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">isAtMaxLimit</span>()</div>
 <dl class="notes">
 <dt>Specified by:</dt>
-<dd><code><a href="../../interfaces/ArmV2.html#isAtMaxLimit()">isAtMaxLimit</a></code>&nbsp;in interface&nbsp;<code><a href="../../interfaces/ArmV2.html" title="interface in frc.robot.subsystems.interfaces">ArmV2</a></code></dd>
+<dd><code><a href="../../interfaces/Arm.html#isAtMaxLimit()">isAtMaxLimit</a></code>&nbsp;in interface&nbsp;<code><a href="../../interfaces/Arm.html" title="interface in frc.robot.subsystems.interfaces">Arm</a></code></dd>
 <dt>Returns:</dt>
 <dd>true if arm angle is at (or greater than) the max limit</dd>
 </dl>
@@ -293,7 +296,7 @@ implements <a href="../../interfaces/ArmV2.html" title="interface in frc.robot.s
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">isAtMinLimit</span>()</div>
 <dl class="notes">
 <dt>Specified by:</dt>
-<dd><code><a href="../../interfaces/ArmV2.html#isAtMinLimit()">isAtMinLimit</a></code>&nbsp;in interface&nbsp;<code><a href="../../interfaces/ArmV2.html" title="interface in frc.robot.subsystems.interfaces">ArmV2</a></code></dd>
+<dd><code><a href="../../interfaces/Arm.html#isAtMinLimit()">isAtMinLimit</a></code>&nbsp;in interface&nbsp;<code><a href="../../interfaces/Arm.html" title="interface in frc.robot.subsystems.interfaces">Arm</a></code></dd>
 <dt>Returns:</dt>
 <dd>true if arm angle is at (or less than) the min limit</dd>
 </dl>
@@ -305,9 +308,21 @@ implements <a href="../../interfaces/ArmV2.html" title="interface in frc.robot.s
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">isAtSetpoint</span>()</div>
 <dl class="notes">
 <dt>Specified by:</dt>
-<dd><code><a href="../../interfaces/ArmV2.html#isAtSetpoint()">isAtSetpoint</a></code>&nbsp;in interface&nbsp;<code><a href="../../interfaces/ArmV2.html" title="interface in frc.robot.subsystems.interfaces">ArmV2</a></code></dd>
+<dd><code><a href="../../interfaces/Arm.html#isAtSetpoint()">isAtSetpoint</a></code>&nbsp;in interface&nbsp;<code><a href="../../interfaces/Arm.html" title="interface in frc.robot.subsystems.interfaces">Arm</a></code></dd>
 <dt>Returns:</dt>
 <dd>true if the current arm angle is at the desired target angle</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="initSendable(edu.wpi.first.util.sendable.SendableBuilder)">
+<h3>initSendable</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">initSendable</span><wbr><span class="parameters">(edu.wpi.first.util.sendable.SendableBuilder&nbsp;builder)</span></div>
+<dl class="notes">
+<dt>Specified by:</dt>
+<dd><code>initSendable</code>&nbsp;in interface&nbsp;<code>edu.wpi.first.util.sendable.Sendable</code></dd>
+<dt>Overrides:</dt>
+<dd><code>initSendable</code>&nbsp;in class&nbsp;<code>edu.wpi.first.wpilibj2.command.SubsystemBase</code></dd>
 </dl>
 </section>
 </li>

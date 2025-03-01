@@ -108,6 +108,18 @@ implements <a href="../../interfaces/Motor.html" title="interface in frc.robot.s
 <div class="col-first odd-row-color"><code>protected final <a href="../../../io/interfaces/MotorIO.html" title="interface in frc.robot.io.interfaces">MotorIO</a></code></div>
 <div class="col-second odd-row-color"><code><a href="#io" class="member-name-link">io</a></code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-first even-row-color"><code>protected edu.wpi.first.math.trajectory.TrapezoidProfile</code></div>
+<div class="col-second even-row-color"><code><a href="#motionProfile" class="member-name-link">motionProfile</a></code></div>
+<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-first odd-row-color"><code>protected boolean</code></div>
+<div class="col-second odd-row-color"><code><a href="#motionProfileEnabled" class="member-name-link">motionProfileEnabled</a></code></div>
+<div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-first even-row-color"><code>protected edu.wpi.first.math.trajectory.TrapezoidProfile.State</code></div>
+<div class="col-second even-row-color"><code><a href="#nextState" class="member-name-link">nextState</a></code></div>
+<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-first odd-row-color"><code>protected edu.wpi.first.math.trajectory.TrapezoidProfile.State</code></div>
+<div class="col-second odd-row-color"><code><a href="#targetState" class="member-name-link">targetState</a></code></div>
+<div class="col-last odd-row-color">&nbsp;</div>
 </div>
 </section>
 </li>
@@ -136,14 +148,37 @@ implements <a href="../../interfaces/Motor.html" title="interface in frc.robot.s
 <div class="table-header col-first">Modifier and Type</div>
 <div class="table-header col-second">Method</div>
 <div class="table-header col-last">Description</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>double</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getCurrent()" class="member-name-link">getCurrent</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Returns the current used by the motor</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getForwardLimit()" class="member-name-link">getForwardLimit</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Returns status of the forward limit switch</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getReverseLimit()" class="member-name-link">getReverseLimit</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Returns status of the reverse limit switch</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#periodic()" class="member-name-link">periodic</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#periodic()" class="member-name-link">periodic</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#resetEncoder(double)" class="member-name-link">resetEncoder</a><wbr>(double&nbsp;positionRad)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Resets the relative encoder to the specified value (in radians)</div>
+</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#runVoltage(double)" class="member-name-link">runVoltage</a><wbr>(double&nbsp;volts)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Runs the motor at the specified voltage.</div>
 </div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setMotionProfileConstraintsRad(edu.wpi.first.math.trajectory.TrapezoidProfile.Constraints)" class="member-name-link">setMotionProfileConstraintsRad</a><wbr>(edu.wpi.first.math.trajectory.TrapezoidProfile.Constraints&nbsp;motionProfileConstraintsRad)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 </div>
 </div>
 </div>
@@ -177,6 +212,30 @@ implements <a href="../../interfaces/Motor.html" title="interface in frc.robot.s
 <section class="detail" id="inputs">
 <h3>inputs</h3>
 <div class="member-signature"><span class="modifiers">protected final</span>&nbsp;<span class="return-type">frc.robot.io.interfaces.MotorIOInputsAutoLogged</span>&nbsp;<span class="element-name">inputs</span></div>
+</section>
+</li>
+<li>
+<section class="detail" id="motionProfile">
+<h3>motionProfile</h3>
+<div class="member-signature"><span class="modifiers">protected</span>&nbsp;<span class="return-type">edu.wpi.first.math.trajectory.TrapezoidProfile</span>&nbsp;<span class="element-name">motionProfile</span></div>
+</section>
+</li>
+<li>
+<section class="detail" id="targetState">
+<h3>targetState</h3>
+<div class="member-signature"><span class="modifiers">protected</span>&nbsp;<span class="return-type">edu.wpi.first.math.trajectory.TrapezoidProfile.State</span>&nbsp;<span class="element-name">targetState</span></div>
+</section>
+</li>
+<li>
+<section class="detail" id="nextState">
+<h3>nextState</h3>
+<div class="member-signature"><span class="modifiers">protected</span>&nbsp;<span class="return-type">edu.wpi.first.math.trajectory.TrapezoidProfile.State</span>&nbsp;<span class="element-name">nextState</span></div>
+</section>
+</li>
+<li>
+<section class="detail" id="motionProfileEnabled">
+<h3>motionProfileEnabled</h3>
+<div class="member-signature"><span class="modifiers">protected</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">motionProfileEnabled</span></div>
 </section>
 </li>
 </ul>
@@ -222,6 +281,68 @@ implements <a href="../../interfaces/Motor.html" title="interface in frc.robot.s
 <dt>Specified by:</dt>
 <dd><code><a href="../../interfaces/Motor.html#runVoltage(double)">runVoltage</a></code>&nbsp;in interface&nbsp;<code><a href="../../interfaces/Motor.html" title="interface in frc.robot.subsystems.interfaces">Motor</a></code></dd>
 </dl>
+</section>
+</li>
+<li>
+<section class="detail" id="getCurrent()">
+<h3>getCurrent</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">double</span>&nbsp;<span class="element-name">getCurrent</span>()</div>
+<div class="block"><span class="descfrm-type-label">Description copied from interface:&nbsp;<code><a href="../../interfaces/Motor.html#getCurrent()">Motor</a></code></span></div>
+<div class="block">Returns the current used by the motor</div>
+<dl class="notes">
+<dt>Specified by:</dt>
+<dd><code><a href="../../interfaces/Motor.html#getCurrent()">getCurrent</a></code>&nbsp;in interface&nbsp;<code><a href="../../interfaces/Motor.html" title="interface in frc.robot.subsystems.interfaces">Motor</a></code></dd>
+<dt>Returns:</dt>
+<dd>returns the instantaneous current usage in amps</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="getForwardLimit()">
+<h3>getForwardLimit</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">getForwardLimit</span>()</div>
+<div class="block"><span class="descfrm-type-label">Description copied from interface:&nbsp;<code><a href="../../interfaces/Motor.html#getForwardLimit()">Motor</a></code></span></div>
+<div class="block">Returns status of the forward limit switch</div>
+<dl class="notes">
+<dt>Specified by:</dt>
+<dd><code><a href="../../interfaces/Motor.html#getForwardLimit()">getForwardLimit</a></code>&nbsp;in interface&nbsp;<code><a href="../../interfaces/Motor.html" title="interface in frc.robot.subsystems.interfaces">Motor</a></code></dd>
+<dt>Returns:</dt>
+<dd>returns true if limit switch is triggered, otherwise false.</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="getReverseLimit()">
+<h3>getReverseLimit</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">getReverseLimit</span>()</div>
+<div class="block"><span class="descfrm-type-label">Description copied from interface:&nbsp;<code><a href="../../interfaces/Motor.html#getReverseLimit()">Motor</a></code></span></div>
+<div class="block">Returns status of the reverse limit switch</div>
+<dl class="notes">
+<dt>Specified by:</dt>
+<dd><code><a href="../../interfaces/Motor.html#getReverseLimit()">getReverseLimit</a></code>&nbsp;in interface&nbsp;<code><a href="../../interfaces/Motor.html" title="interface in frc.robot.subsystems.interfaces">Motor</a></code></dd>
+<dt>Returns:</dt>
+<dd>returns true if limit switch is triggered, otherwise false.</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="resetEncoder(double)">
+<h3>resetEncoder</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">resetEncoder</span><wbr><span class="parameters">(double&nbsp;positionRad)</span></div>
+<div class="block"><span class="descfrm-type-label">Description copied from interface:&nbsp;<code><a href="../../interfaces/Motor.html#resetEncoder(double)">Motor</a></code></span></div>
+<div class="block">Resets the relative encoder to the specified value (in radians)</div>
+<dl class="notes">
+<dt>Specified by:</dt>
+<dd><code><a href="../../interfaces/Motor.html#resetEncoder(double)">resetEncoder</a></code>&nbsp;in interface&nbsp;<code><a href="../../interfaces/Motor.html" title="interface in frc.robot.subsystems.interfaces">Motor</a></code></dd>
+<dt>Parameters:</dt>
+<dd><code>positionRad</code> - the current position in radians</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="setMotionProfileConstraintsRad(edu.wpi.first.math.trajectory.TrapezoidProfile.Constraints)">
+<h3>setMotionProfileConstraintsRad</h3>
+<div class="member-signature"><span class="modifiers">protected</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">setMotionProfileConstraintsRad</span><wbr><span class="parameters">(edu.wpi.first.math.trajectory.TrapezoidProfile.Constraints&nbsp;motionProfileConstraintsRad)</span></div>
 </section>
 </li>
 </ul>

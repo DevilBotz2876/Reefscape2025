@@ -113,7 +113,7 @@ implements <a href="../../interfaces/Flywheel.html" title="interface in frc.robo
 </div>
 <div class="inherited-list">
 <h3 id="fields-inherited-from-class-frc.robot.subsystems.implementations.motor.MotorSubsystem">Fields inherited from class&nbsp;frc.robot.subsystems.implementations.motor.<a href="MotorSubsystem.html" title="class in frc.robot.subsystems.implementations.motor">MotorSubsystem</a></h3>
-<code><a href="MotorSubsystem.html#inputs">inputs</a>, <a href="MotorSubsystem.html#io">io</a></code></div>
+<code><a href="MotorSubsystem.html#inputs">inputs</a>, <a href="MotorSubsystem.html#io">io</a>, <a href="MotorSubsystem.html#motionProfile">motionProfile</a>, <a href="MotorSubsystem.html#motionProfileEnabled">motionProfileEnabled</a>, <a href="MotorSubsystem.html#nextState">nextState</a>, <a href="MotorSubsystem.html#targetState">targetState</a></code></div>
 </section>
 </li>
 <!-- ======== CONSTRUCTOR SUMMARY ======== -->
@@ -157,15 +157,18 @@ implements <a href="../../interfaces/Flywheel.html" title="interface in frc.robo
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Returns the desired flywheel velocity</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#isAtSetpoint()" class="member-name-link">isAtSetpoint</a>()</code></div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#initSendable(edu.wpi.first.util.sendable.SendableBuilder)" class="member-name-link">initSendable</a><wbr>(edu.wpi.first.util.sendable.SendableBuilder&nbsp;builder)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#periodic()" class="member-name-link">periodic</a>()</code></div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#isAtSetpoint()" class="member-name-link">isAtSetpoint</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setTargetVelocity(double)" class="member-name-link">setTargetVelocity</a><wbr>(double&nbsp;velocityRPMs)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#periodic()" class="member-name-link">periodic</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setTargetVelocity(double)" class="member-name-link">setTargetVelocity</a><wbr>(double&nbsp;velocityRPMs)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Sets the desired target flywheel velocity</div>
 </div>
 </div>
@@ -173,10 +176,10 @@ implements <a href="../../interfaces/Flywheel.html" title="interface in frc.robo
 </div>
 <div class="inherited-list">
 <h3 id="methods-inherited-from-class-frc.robot.subsystems.implementations.motor.MotorSubsystem">Methods inherited from class&nbsp;frc.robot.subsystems.implementations.motor.<a href="MotorSubsystem.html" title="class in frc.robot.subsystems.implementations.motor">MotorSubsystem</a></h3>
-<code><a href="MotorSubsystem.html#runVoltage(double)">runVoltage</a></code></div>
+<code><a href="MotorSubsystem.html#getCurrent()">getCurrent</a>, <a href="MotorSubsystem.html#getForwardLimit()">getForwardLimit</a>, <a href="MotorSubsystem.html#getReverseLimit()">getReverseLimit</a>, <a href="MotorSubsystem.html#resetEncoder(double)">resetEncoder</a>, <a href="MotorSubsystem.html#runVoltage(double)">runVoltage</a>, <a href="MotorSubsystem.html#setMotionProfileConstraintsRad(edu.wpi.first.math.trajectory.TrapezoidProfile.Constraints)">setMotionProfileConstraintsRad</a></code></div>
 <div class="inherited-list">
 <h3 id="methods-inherited-from-class-edu.wpi.first.wpilibj2.command.SubsystemBase">Methods inherited from class&nbsp;edu.wpi.first.wpilibj2.command.SubsystemBase</h3>
-<code>addChild, getName, getSubsystem, initSendable, setName, setSubsystem</code></div>
+<code>addChild, getName, getSubsystem, setName, setSubsystem</code></div>
 <div class="inherited-list">
 <h3 id="methods-inherited-from-class-java.lang.Object">Methods inherited from class&nbsp;java.lang.<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a></h3>
 <code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#clone()" title="class or interface in java.lang" class="external-link">clone</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#equals(java.lang.Object)" title="class or interface in java.lang" class="external-link">equals</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#finalize()" title="class or interface in java.lang" class="external-link">finalize</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#getClass()" title="class or interface in java.lang" class="external-link">getClass</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#hashCode()" title="class or interface in java.lang" class="external-link">hashCode</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#notify()" title="class or interface in java.lang" class="external-link">notify</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#notifyAll()" title="class or interface in java.lang" class="external-link">notifyAll</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#toString()" title="class or interface in java.lang" class="external-link">toString</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#wait()" title="class or interface in java.lang" class="external-link">wait</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#wait(long)" title="class or interface in java.lang" class="external-link">wait</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#wait(long,int)" title="class or interface in java.lang" class="external-link">wait</a></code></div>
@@ -301,6 +304,18 @@ implements <a href="../../interfaces/Flywheel.html" title="interface in frc.robo
 <dd><code><a href="../../interfaces/Flywheel.html#isAtSetpoint()">isAtSetpoint</a></code>&nbsp;in interface&nbsp;<code><a href="../../interfaces/Flywheel.html" title="interface in frc.robot.subsystems.interfaces">Flywheel</a></code></dd>
 <dt>Returns:</dt>
 <dd>true if the current flywheel velocity is at the desired target velocity</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="initSendable(edu.wpi.first.util.sendable.SendableBuilder)">
+<h3>initSendable</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">initSendable</span><wbr><span class="parameters">(edu.wpi.first.util.sendable.SendableBuilder&nbsp;builder)</span></div>
+<dl class="notes">
+<dt>Specified by:</dt>
+<dd><code>initSendable</code>&nbsp;in interface&nbsp;<code>edu.wpi.first.util.sendable.Sendable</code></dd>
+<dt>Overrides:</dt>
+<dd><code>initSendable</code>&nbsp;in class&nbsp;<code>edu.wpi.first.wpilibj2.command.SubsystemBase</code></dd>
 </dl>
 </section>
 </li>

@@ -91,6 +91,26 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-first">Modifier and Type</div>
 <div class="table-header col-second">Method</div>
 <div class="table-header col-last">Description</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>double</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getCurrent()" class="member-name-link">getCurrent</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
+<div class="block">Returns the current used by the motor</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>boolean</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getForwardLimit()" class="member-name-link">getForwardLimit</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
+<div class="block">Returns status of the forward limit switch</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>boolean</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getReverseLimit()" class="member-name-link">getReverseLimit</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
+<div class="block">Returns status of the reverse limit switch</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#resetEncoder(double)" class="member-name-link">resetEncoder</a><wbr>(double&nbsp;positionRad)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
+<div class="block">Resets the relative encoder to the specified value (in radians)</div>
+</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>void</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#runVoltage(double)" class="member-name-link">runVoltage</a><wbr>(double&nbsp;volts)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
@@ -118,6 +138,50 @@ loadScripts(document, 'script');</script>
 <dl class="notes">
 <dt>Parameters:</dt>
 <dd><code>volts</code> - </dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="getCurrent()">
+<h3>getCurrent</h3>
+<div class="member-signature"><span class="return-type">double</span>&nbsp;<span class="element-name">getCurrent</span>()</div>
+<div class="block">Returns the current used by the motor</div>
+<dl class="notes">
+<dt>Returns:</dt>
+<dd>returns the instantaneous current usage in amps</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="resetEncoder(double)">
+<h3>resetEncoder</h3>
+<div class="member-signature"><span class="return-type">void</span>&nbsp;<span class="element-name">resetEncoder</span><wbr><span class="parameters">(double&nbsp;positionRad)</span></div>
+<div class="block">Resets the relative encoder to the specified value (in radians)</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>positionRad</code> - the current position in radians</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="getForwardLimit()">
+<h3>getForwardLimit</h3>
+<div class="member-signature"><span class="return-type">boolean</span>&nbsp;<span class="element-name">getForwardLimit</span>()</div>
+<div class="block">Returns status of the forward limit switch</div>
+<dl class="notes">
+<dt>Returns:</dt>
+<dd>returns true if limit switch is triggered, otherwise false.</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="getReverseLimit()">
+<h3>getReverseLimit</h3>
+<div class="member-signature"><span class="return-type">boolean</span>&nbsp;<span class="element-name">getReverseLimit</span>()</div>
+<div class="block">Returns status of the reverse limit switch</div>
+<dl class="notes">
+<dt>Returns:</dt>
+<dd>returns true if limit switch is triggered, otherwise false.</dd>
 </dl>
 </section>
 </li>
