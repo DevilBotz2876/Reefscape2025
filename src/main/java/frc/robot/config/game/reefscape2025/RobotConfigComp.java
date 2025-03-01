@@ -43,21 +43,15 @@ public class RobotConfigComp extends RobotConfig {
       // motorSettings.reverseLimitNegate = true;
       motorSettings.motor.drumRadiusMeters =
           Units.inchesToMeters(
-              ((1.75 + 0.75) / 2)
-                  / 2); // 3/4" inner diameter to 1 3/4" outer. Average diameter calculated For now,
-      // use the diameter so that
-      // we don't reach the limits
-      motorSettings.pid = new PIDController(0.2, 0, 0); // TODO: Tune PID controller
-
+              ((1.16 + 0.75) / 2) / 2); // 3/4" inner diameter to 1.16" outer when fully spooled.
+      motorSettings.pid = new PIDController(0.2, 0, 0);
       ElevatorSettings elevatorSettings = new ElevatorSettings();
-      elevatorSettings.minHeightInMeters =
-          -0.25; // empircally based on current drumRadiusMeters....need to tune drumRadiusMeters so
-      // that this is 0.
-      elevatorSettings.maxHeightInMeters = Units.inchesToMeters(54); // 54" max extension
+      elevatorSettings.minHeightInMeters = 0.09 + 0.02;
+      elevatorSettings.maxHeightInMeters = 0.02 + 0.85 + 0.76;
       elevatorSettings.startingHeightInMeters = elevatorSettings.minHeightInMeters;
       elevatorSettings.color = new Color8Bit(Color.kSilver);
       elevatorSettings.feedforward =
-          new ElevatorFeedforward(0, 0.27, 0.2, 0); // TODO: Tune feedforward
+          new ElevatorFeedforward(0.010472, 0.17328, 0.16928, 0.010615); // SysID 2025-02-28
       elevatorSettings.carriageMassKg = 5.0;
       elevatorSettings.motor = DCMotor.getKrakenX60(1);
       elevatorSettings.simulateGravity = true;
@@ -65,7 +59,7 @@ public class RobotConfigComp extends RobotConfig {
       TalonFxSettings talonFxSettings = new TalonFxSettings();
       talonFxSettings.canId = 20;
 
-      elevatorSettings.maxVelocityInMetersPerSecond = 2;
+      elevatorSettings.maxVelocityInMetersPerSecond = 1;
       elevatorSettings.maxAccelerationInMetersPerSecondSquared = 8;
 
       ElevatorControls.Constants.autoZeroSettings.voltage = 1.5;
@@ -101,8 +95,8 @@ public class RobotConfigComp extends RobotConfig {
       armSettings.armMassInKg = 1.0;
       armSettings.motor = DCMotor.getKrakenX60(1);
       armSettings.simulateGravity = true;
-      armSettings.maxVelocityInDegreesPerSecond = 360 * 2;
-      armSettings.maxAccelerationInDegreesPerSecondSquared = 360;
+      armSettings.maxVelocityInDegreesPerSecond = 180;
+      armSettings.maxAccelerationInDegreesPerSecondSquared = 720;
 
       TalonFxSettings talonFxSettings = new TalonFxSettings();
       talonFxSettings.canId = 21;
@@ -113,7 +107,7 @@ public class RobotConfigComp extends RobotConfig {
           Units.degreesToRadians(
               armSettings.minAngleInDegrees - 10); // We have an offest about 15 degrees
       CoralArmControls.Constants.autoZeroSettings.initialReverseDuration =
-          1.0; // Set the seconds of reverse before zero. Set to zero if there shound be no reverse
+          0.0; // Set the seconds of reverse before zero. Set to zero if there shound be no reverse
 
       coralArm =
           new ArmMotorSubsystem(
