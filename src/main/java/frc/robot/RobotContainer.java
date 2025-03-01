@@ -52,6 +52,9 @@ public class RobotContainer {
       case "STUB":
         robotConfig = new RobotConfigStub();
         break;
+      case "COMP":
+        robotConfig = new RobotConfigComp();
+        break;
       default:
         DriverStation.reportError("failed to determine robot name.  Default to NEMO", true);
         robotConfig = new RobotConfigNemo();
