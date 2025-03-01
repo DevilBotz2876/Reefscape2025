@@ -99,7 +99,7 @@ public class DriveControls {
         poseReefB = new Pose2d(14.59, 4.34, Rotation2d.fromDegrees(180)),
         poseReefE = new Pose2d(12.46, 5.52, Rotation2d.fromDegrees(-60)),
         poseReefF = new Pose2d(12.00, 5.25, Rotation2d.fromDegrees(-60)),
-        poseReefH = new Pose2d(11.81, 3.92, Rotation2d.fromDegrees(-1)),
+        poseReefH = new Pose2d(11.76, 3.92, Rotation2d.fromDegrees(-1)),
         poseReefI = new Pose2d(12.00, 2.75, Rotation2d.fromDegrees(60)),
         poseReefJ = new Pose2d(12.50, 2.50, Rotation2d.fromDegrees(60)),
         poseReefK = new Pose2d(13.65, 2.50, Rotation2d.fromDegrees(120));
