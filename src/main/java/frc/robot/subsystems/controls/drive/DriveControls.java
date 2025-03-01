@@ -26,8 +26,9 @@ public class DriveControls {
     REEF_G(5),
     REEF_C(6),
     REEF_D(7),
-    WOW_Test(8),
-    WOW_Test1(9);
+    REEF_L(8),
+    WOW_Test(9),
+    WOW_Test1(10);
 
     private int index;
 
@@ -77,7 +78,7 @@ public class DriveControls {
     // Define destinations for our "dynamic go-to-pose" functionality
     Pose2d poseOrigin = new Pose2d(0, 0, Rotation2d.fromDegrees(0)),
         poseFeeder1 = new Pose2d(16.44, 7.25, Rotation2d.fromDegrees(230)),
-        poseFeeder2 = new Pose2d(16.02, 1, Rotation2d.fromDegrees(-50)),
+        poseFeeder2 = new Pose2d(16.02, 1, Rotation2d.fromDegrees(-230)),
         poseProcessor = new Pose2d(11.5, 7.3, Rotation2d.fromDegrees(90)),
         poseReefA = new Pose2d(15, 4.175, Rotation2d.fromDegrees(180)),
         poseReefAClose = new Pose2d(14.425, 4.175, Rotation2d.fromDegrees(180)),
@@ -85,6 +86,7 @@ public class DriveControls {
         poseReefGClose = new Pose2d(11.5, 4.175, Rotation2d.fromDegrees(0)),
         poseReefC = new Pose2d(14.17, 5.25, Rotation2d.fromDegrees(-124)),
         poseReefD = new Pose2d(13.63, 5.56, Rotation2d.fromDegrees(-124)),
+        poseReefL = new Pose2d(14.04, 2.82, Rotation2d.fromDegrees(124)),
         poseTest = new Pose2d(2.50, 5.57, Rotation2d.fromDegrees(-124)),
         poseTest2 = new Pose2d(2.46, 2.73, Rotation2d.fromDegrees(-124));
     //  PathConstraints constraints = new PathConstraints(4.9672, 9.3664784, 2 * Math.PI, 4 *
@@ -103,6 +105,7 @@ public class DriveControls {
     chooser.addOption("Reef G", TargetPoseOption.REEF_G);
     chooser.addOption("Reef C", TargetPoseOption.REEF_C);
     chooser.addOption("Reef D", TargetPoseOption.REEF_D);
+    chooser.addOption("Reef L", TargetPoseOption.REEF_L);
     chooser.addOption("Test", TargetPoseOption.WOW_Test);
     chooser.addOption("Test1", TargetPoseOption.WOW_Test1);
     SmartDashboard.putData("Pose choices", chooser);
@@ -119,7 +122,10 @@ public class DriveControls {
         .onTrue(
             new InstantCommand(
                 () -> {
-                  if (++myCoolPoseKeyIdx == TargetPoseOption.values().length) myCoolPoseKeyIdx = 1;
+                  if (myCoolPoseKeyIdx == 8) myCoolPoseKeyIdx = 2;
+                  else myCoolPoseKeyIdx = 8;
+                  //   if (++myCoolPoseKeyIdx == TargetPoseOption.values().length) myCoolPoseKeyIdx
+                  // = 1;
                   SmartDashboard.putNumber("Chosen Pose Index", myCoolPoseKeyIdx);
                 }));
 
@@ -151,12 +157,13 @@ public class DriveControls {
                 // AutoBuilder.pathfindToPose(poseReefGClose, constraints, 0.0)),
                 Map.entry(
                     TargetPoseOption.REEF_C.getIndex(),
-                    AutoBuilder.pathfindToPose(poseReefC, constraints, 0.0)
-                        .andThen(AutoBuilder.pathfindToPose(poseReefC, constraints, 0.0))),
+                    AutoBuilder.pathfindToPose(poseReefC, constraints, 0.0)),
                 Map.entry(
                     TargetPoseOption.REEF_D.getIndex(),
-                    AutoBuilder.pathfindToPose(poseReefD, constraints, 0.0)
-                        .andThen(AutoBuilder.pathfindToPose(poseReefD, constraints, 0.0))),
+                    AutoBuilder.pathfindToPose(poseReefD, constraints, 0.0)),
+                Map.entry(
+                    TargetPoseOption.REEF_L.getIndex(),
+                    AutoBuilder.pathfindToPose(poseReefL, constraints, 0.0)),
                 Map.entry(
                     TargetPoseOption.WOW_Test.getIndex(),
                     AutoBuilder.pathfindToPose(poseTest, constraints, 0.0)
