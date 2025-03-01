@@ -43,7 +43,7 @@
                           {
                             "type": "named",
                             "data": {
-                              "name": "Move Elevator to 1.4 meter"
+                              "name": "Move Elevator to 1.553 meter"
                             }
                           }
                         ]
@@ -80,13 +80,13 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "G to Source"
+                  "pathName": "G to Source Y"
                 }
               },
               {
                 "type": "named",
                 "data": {
-                  "name": "Move Elevator to 0.6 meter"
+                  "name": "Move Elevator to 0.8 meter"
                 }
               },
               {
@@ -107,7 +107,7 @@
         {
           "type": "named",
           "data": {
-            "name": "Move Elevator to 0.2 meter"
+            "name": "Move Elevator to 0.4 meter"
           }
         },
         {
@@ -117,7 +117,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "Source to temp"
+                  "pathName": "Source Y to L"
                 }
               },
               {
@@ -159,6 +159,12 @@
           "type": "named",
           "data": {
             "name": "Move Arm 0 degrees"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Back L"
           }
         }
       ]

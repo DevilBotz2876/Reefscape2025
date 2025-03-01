@@ -137,9 +137,8 @@ public class RobotConfigNemo extends RobotConfig {
       motorSettings.pid = new PIDController(0.1, 0, 0); // TODO: Tune PID controller
 
       ElevatorSettings elevatorSettings = new ElevatorSettings();
-      elevatorSettings.minHeightInMeters = 0.3;
-      elevatorSettings.maxHeightInMeters =
-          Units.inchesToMeters(74 - 18); // highest point:74 lowest point:18
+      elevatorSettings.minHeightInMeters = 0.11;
+      elevatorSettings.maxHeightInMeters = 0.02 + 0.85 + 0.76; // highest point:74 lowest point:18
       elevatorSettings.startingHeightInMeters = elevatorSettings.minHeightInMeters;
       elevatorSettings.color = new Color8Bit(Color.kSilver);
       elevatorSettings.feedforward =
@@ -203,15 +202,15 @@ public class RobotConfigNemo extends RobotConfig {
     NamedCommands.registerCommand(
         "Move Elevator to 0.5 meter", new ElevatorToPosition(elevator, () -> 0.5));
     NamedCommands.registerCommand(
-        "Move Elevator to 1.4 meter", new ElevatorToPosition(elevator, () -> 1.4));
+        "Move Elevator to 1.553 meter", new ElevatorToPosition(elevator, () -> 1.553));
     NamedCommands.registerCommand(
         "Move Arm 75 degrees", new ArmToPosition(coralArm, () -> 70).withTimeout(1.5));
     NamedCommands.registerCommand(
         "Move Arm 0 degrees", new ArmToPosition(coralArm, () -> 0).withTimeout(1.5));
     NamedCommands.registerCommand(
-        "Move Elevator to 0.6 meter", new ElevatorToPosition(elevator, () -> 0.6));
+        "Move Elevator to 0.8 meter", new ElevatorToPosition(elevator, () -> 0.8));
     NamedCommands.registerCommand(
-        "Move Elevator to 0.2 meter", new ElevatorToPosition(elevator, () -> 0.2));
+        "Move Elevator to 0.4 meter", new ElevatorToPosition(elevator, () -> 0.4));
     NamedCommands.registerCommand(
         "Move Arm for Intake", new ArmToPosition(coralArm, () -> -90).withTimeout(0));
     autoChooser = AutoBuilder.buildAutoChooser("Sit Still");

@@ -8,24 +8,24 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 6.997,
-        "y": 3.99
+        "x": 6.970945292591921,
+        "y": 3.8734607488009942
       },
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "Center Start"
     },
     {
       "anchor": {
         "x": 6.2,
-        "y": 3.85
+        "y": 3.815
       },
       "prevControl": {
-        "x": 7.115994318181788,
-        "y": 3.784559659090909
+        "x": 7.006960298309069,
+        "y": 3.901866007953897
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "Near G"
     }
   ],
   "rotationTargets": [],
@@ -33,9 +33,9 @@
   "pointTowardsZones": [],
   "eventMarkers": [],
   "globalConstraints": {
-    "maxVelocity": 1.5,
-    "maxAcceleration": 1.5,
-    "maxAngularVelocity": 1.5,
+    "maxVelocity": 2.5,
+    "maxAcceleration": 2.5,
+    "maxAngularVelocity": 90.0,
     "maxAngularAcceleration": 720.0,
     "nominalVoltage": 12.0,
     "unlimited": false

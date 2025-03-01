@@ -15,20 +15,20 @@ public class DriverAssistControls {
         "Driver " + "/Commands/Prepare For Intake",
         new SequentialCommandGroup(
             new ArmToPosition(arm, () -> -90).withTimeout(0),
-            new ElevatorToPosition(elevator, () -> 0.6)));
+            new ElevatorToPosition(elevator, () -> 0.8)));
 
     SmartDashboard.putData(
         "Driver " + "/Commands/Intake",
-        new SequentialCommandGroup(new ElevatorToPosition(elevator, () -> 0.2)));
+        new SequentialCommandGroup(new ElevatorToPosition(elevator, () -> 0.4)));
 
     SmartDashboard.putData(
         "Driver " + "/Commands/Prepare To Score L4",
         new SequentialCommandGroup(
             new ElevatorToPosition(elevator, () -> 1.0),
             new ArmToPosition(arm, () -> 75),
-            new ElevatorToPosition(elevator, () -> 1.4)));
+            new ElevatorToPosition(elevator, () -> 1.553)));
     SmartDashboard.putData(
         "Driver " + "/Commands/Score L4",
-        new SequentialCommandGroup(new ArmToPosition(arm, () -> -45)));
+        new SequentialCommandGroup(new ArmToPosition(arm, () -> 0)));
   }
 }
