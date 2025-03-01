@@ -27,6 +27,7 @@ import frc.robot.subsystems.controls.combination.DriverAssistControls;
 import frc.robot.subsystems.controls.drive.DriveControls;
 import frc.robot.subsystems.controls.elevator.ElevatorControls;
 import frc.robot.subsystems.implementations.drive.DriveBase;
+import frc.robot.subsystems.implementations.led.LEDSubsystem;
 import frc.robot.subsystems.implementations.motor.ArmMotorSubsystem;
 import frc.robot.subsystems.implementations.motor.ElevatorMotorSubsystem;
 import frc.robot.subsystems.implementations.vision.VisionSubsystem;
@@ -42,6 +43,7 @@ public class RobotConfig {
   protected static ElevatorMotorSubsystem elevator;
   public static ArmMotorSubsystem coralArm;
   public static ArmMotorSubsystem climberArm;
+  public static LEDSubsystem leds;
 
   // Controls
   public CommandXboxController mainController = new CommandXboxController(0);
@@ -82,6 +84,9 @@ public class RobotConfig {
       boolean stubCoralArm,
       boolean stubAlgaeSubsystem,
       boolean stubClimberArm) {
+
+    leds = new LEDSubsystem();
+
     if (stubDrive) {
       drive = new DriveBase("Stub");
     }
