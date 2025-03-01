@@ -23,12 +23,19 @@ public class DriveControls {
     FEEDER_2(2),
     PROCESSOR(3),
     REEF_A(4),
-    REEF_G(5),
+    REEF_G(10),
     REEF_C(6),
     REEF_D(7),
-    REEF_L(8),
-    WOW_Test(9),
-    WOW_Test1(10);
+    REEF_L(15),
+    // WOW_Test(9),
+    // WOW_Test1(10),
+    REEF_B(5),
+    REEF_E(8),
+    REEF_F(9),
+    REEF_H(11),
+    REEF_I(12),
+    REEF_J(13),
+    REEF_K(14);
 
     private int index;
 
@@ -82,17 +89,26 @@ public class DriveControls {
         poseProcessor = new Pose2d(11.5, 7.3, Rotation2d.fromDegrees(90)),
         poseReefA = new Pose2d(15, 4.175, Rotation2d.fromDegrees(180)),
         poseReefAClose = new Pose2d(14.425, 4.175, Rotation2d.fromDegrees(180)),
-        poseReefG = new Pose2d(11, 4.175, Rotation2d.fromDegrees(0)),
+        poseReefG = new Pose2d(11.57, 4.17, Rotation2d.fromDegrees(0)),
         poseReefGClose = new Pose2d(11.5, 4.175, Rotation2d.fromDegrees(0)),
         poseReefC = new Pose2d(14.17, 5.25, Rotation2d.fromDegrees(-124)),
         poseReefD = new Pose2d(13.63, 5.56, Rotation2d.fromDegrees(-124)),
-        poseReefL = new Pose2d(14.04, 2.82, Rotation2d.fromDegrees(124)),
-        poseTest = new Pose2d(2.50, 5.57, Rotation2d.fromDegrees(-124)),
-        poseTest2 = new Pose2d(2.46, 2.73, Rotation2d.fromDegrees(-124));
+        poseReefL = new Pose2d(14.14, 2.80, Rotation2d.fromDegrees(124)),
+        // poseTest = new Pose2d(2.50, 5.57, Rotation2d.fromDegrees(-124)),
+        // poseTest2 = new Pose2d(2.46, 2.73, Rotation2d.fromDegrees(-124)),
+        poseReefB = new Pose2d(14.59, 4.34, Rotation2d.fromDegrees(180)),
+        poseReefE = new Pose2d(12.46, 5.52, Rotation2d.fromDegrees(-60)),
+        poseReefF = new Pose2d(12.00, 5.25, Rotation2d.fromDegrees(-60)),
+        poseReefH = new Pose2d(11.81, 3.92, Rotation2d.fromDegrees(-1)),
+        poseReefI = new Pose2d(12.00, 2.75, Rotation2d.fromDegrees(60)),
+        poseReefJ = new Pose2d(12.50, 2.50, Rotation2d.fromDegrees(60)),
+        poseReefK = new Pose2d(13.65, 2.50, Rotation2d.fromDegrees(120));
     //  PathConstraints constraints = new PathConstraints(4.9672, 9.3664784, 2 * Math.PI, 4 *
     //  Math.PI);
     // PathConstraints constraints = new PathConstraints(2, 1.5, 2 * Math.PI, 4 * Math.PI);
-    PathConstraints constraints = new PathConstraints(2, 1.5, Math.PI / 2, Math.PI / 4);
+    // PathConstraints constraints = new PathConstraints(4.5, 1.5, 2 * Math.PI, Math.PI / 4);
+    PathConstraints constraints = new PathConstraints(drive.getMaxLinearSpeed(), 1.5, drive.getMaxAngularSpeed(), Math.PI / 4);
+
     // PathConstraints constraints = new PathConstraints(0.5, 4.5, Math.PI / 4, 4 * Math.PI);
 
     // Temporary UI to allow user to modify destination on-the-fly
@@ -105,9 +121,16 @@ public class DriveControls {
     chooser.addOption("Reef G", TargetPoseOption.REEF_G);
     chooser.addOption("Reef C", TargetPoseOption.REEF_C);
     chooser.addOption("Reef D", TargetPoseOption.REEF_D);
-    chooser.addOption("Reef L", TargetPoseOption.REEF_L);
-    chooser.addOption("Test", TargetPoseOption.WOW_Test);
-    chooser.addOption("Test1", TargetPoseOption.WOW_Test1);
+    //chooser.addOption("Reef L", TargetPoseOption.REEF_L);
+    // chooser.addOption("Test", TargetPoseOption.WOW_Test);
+    // chooser.addOption("Test1", TargetPoseOption.WOW_Test1);
+    chooser.addOption("Reef B", TargetPoseOption.REEF_B);
+    chooser.addOption("Reef E", TargetPoseOption.REEF_E);
+    chooser.addOption("Reef F", TargetPoseOption.REEF_F);
+    chooser.addOption("Reef H", TargetPoseOption.REEF_H);
+    chooser.addOption("Reef I", TargetPoseOption.REEF_I);
+    chooser.addOption("Reef J", TargetPoseOption.REEF_J);
+    chooser.addOption("Reef K", TargetPoseOption.REEF_K);
     SmartDashboard.putData("Pose choices", chooser);
 
     // Define behavior for chosing destination of on-the-fly pose
@@ -122,8 +145,8 @@ public class DriveControls {
         .onTrue(
             new InstantCommand(
                 () -> {
-                  if (myCoolPoseKeyIdx == 8) myCoolPoseKeyIdx = 2;
-                  else myCoolPoseKeyIdx = 8;
+                  if (myCoolPoseKeyIdx == 11) myCoolPoseKeyIdx = 2;
+                  else myCoolPoseKeyIdx = 11;
                   //   if (++myCoolPoseKeyIdx == TargetPoseOption.values().length) myCoolPoseKeyIdx
                   // = 1;
                   SmartDashboard.putNumber("Chosen Pose Index", myCoolPoseKeyIdx);
@@ -164,14 +187,38 @@ public class DriveControls {
                 Map.entry(
                     TargetPoseOption.REEF_L.getIndex(),
                     AutoBuilder.pathfindToPose(poseReefL, constraints, 0.0)),
+                // Map.entry(
+                //     TargetPoseOption.WOW_Test.getIndex(),
+                //     AutoBuilder.pathfindToPose(poseTest, constraints, 0.0)
+                //         .andThen(AutoBuilder.pathfindToPose(poseTest, constraints, 0.0))),
+                // Map.entry(
+                //     TargetPoseOption.WOW_Test1.getIndex(),
+                //     AutoBuilder.pathfindToPose(poseTest2, constraints, 0.0)
+                //         .andThen(AutoBuilder.pathfindToPose(poseTest2, constraints, 0.0))),
                 Map.entry(
-                    TargetPoseOption.WOW_Test.getIndex(),
-                    AutoBuilder.pathfindToPose(poseTest, constraints, 0.0)
-                        .andThen(AutoBuilder.pathfindToPose(poseTest, constraints, 0.0))),
+                    TargetPoseOption.REEF_B.getIndex(),
+                    AutoBuilder.pathfindToPose(poseReefB, constraints, 0.0))
+                    ,
                 Map.entry(
-                    TargetPoseOption.WOW_Test1.getIndex(),
-                    AutoBuilder.pathfindToPose(poseTest2, constraints, 0.0)
-                        .andThen(AutoBuilder.pathfindToPose(poseTest2, constraints, 0.0)))),
+                  TargetPoseOption.REEF_E.getIndex(),
+                  AutoBuilder.pathfindToPose(poseReefE, constraints, 0.0)),
+                Map.entry(
+                TargetPoseOption.REEF_F.getIndex(),
+                AutoBuilder.pathfindToPose(poseReefF, constraints, 0.0)),
+                Map.entry(
+                TargetPoseOption.REEF_H.getIndex(),
+                AutoBuilder.pathfindToPose(poseReefH, constraints, 0.0)),
+                Map.entry(
+                TargetPoseOption.REEF_I.getIndex(),
+                AutoBuilder.pathfindToPose(poseReefI, constraints, 0.0)),
+                Map.entry(
+                TargetPoseOption.REEF_J.getIndex(),
+                AutoBuilder.pathfindToPose(poseReefJ, constraints, 0.0)),
+                Map.entry(
+                TargetPoseOption.REEF_K.getIndex(),
+                AutoBuilder.pathfindToPose(poseReefK, constraints, 0.0))),
+  
+
             () -> {
               return myCoolPoseKeyIdx;
             });
