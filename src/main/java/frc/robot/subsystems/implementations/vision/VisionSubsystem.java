@@ -40,7 +40,7 @@ public class VisionSubsystem extends SubsystemBase implements Vision {
     private final int index;
     private PhotonCameraSim simCamera;
     private PhotonPipelineResult result;
-    private Optional<EstimatedRobotPose> estimatedRobotPose;
+    private Optional<EstimatedRobotPose> estimatedRobotPose = Optional.empty();
 
     private VisionCameraImpl(Camera camera, AprilTagFieldLayout fieldLayout) {
       this.camera = new PhotonCamera(camera.getName());
