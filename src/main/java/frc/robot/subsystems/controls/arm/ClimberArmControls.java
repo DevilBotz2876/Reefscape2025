@@ -7,7 +7,6 @@ import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.commands.common.arm.ArmToPosition;
 import frc.robot.commands.common.motor.MotorAutoResetEncoderCommand;
 import frc.robot.commands.common.motor.MotorAutoResetEncoderCommand.MotorAutoResetEncoderSettings;
-import frc.robot.commands.common.motor.MotorBringUpCommand;
 import frc.robot.subsystems.interfaces.Arm;
 import frc.robot.subsystems.interfaces.Motor;
 import java.util.function.DoubleSupplier;
@@ -23,17 +22,17 @@ public class ClimberArmControls {
   public static void setupController(Arm arm, CommandXboxController controller) {
 
     SubsystemBase armSubsystem = (SubsystemBase) arm;
-    armSubsystem.setDefaultCommand(
-        new MotorBringUpCommand(
-            (Motor) arm,
-            () -> {
-              if (controller.y().getAsBoolean()) {
-                return 0.2;
-              } else if (controller.a().getAsBoolean()) {
-                return -0.2;
-              }
-              return 0.0;
-            }));
+    // armSubsystem.setDefaultCommand(
+    //     new MotorBringUpCommand(
+    //         (Motor) arm,
+    //         () -> {
+    //           if (controller.y().getAsBoolean()) {
+    //             return 0.2;
+    //           } else if (controller.a().getAsBoolean()) {
+    //             return -0.2;
+    //           }
+    //           return 0.0;
+    //         }));
 
     Command autoCalibrateCommand =
         new MotorAutoResetEncoderCommand((Motor) arm, Constants.autoZeroSettings);

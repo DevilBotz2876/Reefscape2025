@@ -1,12 +1,8 @@
 package frc.robot.subsystems.controls.combination;
 
-import java.util.function.BooleanSupplier;
-import java.util.function.Consumer;
-
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
@@ -17,25 +13,56 @@ import frc.robot.subsystems.interfaces.Arm;
 import frc.robot.subsystems.interfaces.Elevator;
 
 public class DriverControls {
-  public static void setupController(Elevator elevator, Arm arm, CommandXboxController controller, SendableChooser<Command> prepareScoreChooser) {
-    Trigger ableToIntake =  new Trigger(() -> {
-        if(elevator.getCurrentHeight() > 0.5) {
-            return true;
-        }
-        return false;
-    });
-    controller.a().and(ableToIntake).onTrue(new SequentialCommandGroup(
-        new ArmToPosition(arm, () -> -90).withTimeout(0),
-        new ElevatorToPosition(elevator, () -> 0.8)));
+  public static void setupController(Elevator elevator, Arm arm, CommandXboxController controller) {
+    Trigger ableToIntake =
+        new Trigger(
+            () -> {
+              if (elevator.getCurrentHeight() > 0.5) {
+                return true;
+              }
+              return false;
+            });
 
-    controller. leftTrigger().onTrue(new SequentialCommandGroup(new ElevatorToPosition(elevator, () -> 0.3)));
+    Command prepareIntakeCoralCommand =
+        new SequentialCommandGroup(
+            new ArmToPosition(arm, () -> -90).withTimeout(0),
+            new ElevatorToPosition(elevator, () -> 0.8));
+    controller.a().and(ableToIntake).onTrue(prepareIntakeCoralCommand);
 
-    controller.rightTrigger().onTrue(new SequentialCommandGroup(new ArmToPosition(arm, () -> 0)));
+    Command intakeCoralCommand = new ElevatorToPosition(elevator, () -> 0.4);
+    controller.leftTrigger().onTrue(intakeCoralCommand);
+
+    Command score = new ArmToPosition(arm, () -> 0);
+    controller.rightTrigger().onTrue(score);
+
+    SendableChooser<Command> prepareScoreChooser = new SendableChooser<>();
+    prepareScoreChooser.setDefaultOption(
+        "L2",
+        new SequentialCommandGroup(
+            new ElevatorToPosition(elevator, () -> 0.63), new ArmToPosition(arm, () -> 75)));
+
+    prepareScoreChooser.addOption(
+        "L3",
+        new SequentialCommandGroup(
+            new ElevatorToPosition(elevator, () -> 1.0), new ArmToPosition(arm, () -> 75)));
+
+    prepareScoreChooser.addOption(
+        "L4",
+        new SequentialCommandGroup(
+            new ElevatorToPosition(elevator, () -> 0.6),
+            new ParallelCommandGroup(
+                new ArmToPosition(arm, () -> 75), new ElevatorToPosition(elevator, () -> 1.553))));
+
+    SmartDashboard.putData(
+        "Driver " + "/Commands/Prepare To Score Command", prepareScoreChooser.getSelected());
+
+    SmartDashboard.putData("Driver " + "/Commands/Prepare To Score Chooser", prepareScoreChooser);
 
     controller.y().onTrue(prepareScoreChooser.getSelected());
-    prepareScoreChooser.onChange((selected) -> {
-        controller.y().onTrue(prepareScoreChooser.getSelected());
-    });
+    prepareScoreChooser.onChange(
+        (selected) -> {
+          SmartDashboard.putData("Driver " + "/Commands/Prepare To Score Command", selected);
+          controller.y().onTrue(prepareScoreChooser.getSelected());
+        });
   }
-  
 }
