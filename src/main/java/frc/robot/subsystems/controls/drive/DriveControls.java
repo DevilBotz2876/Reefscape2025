@@ -20,7 +20,6 @@ import frc.robot.commands.common.elevator.ElevatorToPosition;
 import frc.robot.subsystems.interfaces.Arm;
 import frc.robot.subsystems.interfaces.Drive;
 import frc.robot.subsystems.interfaces.Elevator;
-
 import java.util.Map;
 
 public class DriveControls {
@@ -56,9 +55,10 @@ public class DriveControls {
     }
   }
 
-  protected static int myCoolPoseKeyIdx = 0;
+  protected static int myCoolPoseKeyIdx = 11;
 
-  public static void setupController(Drive drive, Elevator elevator, Arm arm, CommandXboxController controller) {
+  public static void setupController(
+      Drive drive, Elevator elevator, Arm arm, CommandXboxController controller) {
     SubsystemBase driveSubsystem = (SubsystemBase) drive;
     driveSubsystem.setDefaultCommand(
         new DriveCommand(
@@ -115,7 +115,9 @@ public class DriveControls {
     //  Math.PI);
     // PathConstraints constraints = new PathConstraints(2, 1.5, 2 * Math.PI, 4 * Math.PI);
     // PathConstraints constraints = new PathConstraints(4.5, 1.5, 2 * Math.PI, Math.PI / 4);
-    PathConstraints constraints = new PathConstraints(drive.getMaxLinearSpeed(), 1.5, drive.getMaxAngularSpeed(), Math.PI / 4);
+    PathConstraints constraints =
+        new PathConstraints(
+            drive.getMaxLinearSpeed(), 1.5, drive.getMaxAngularSpeed(), Math.PI / 4);
 
     // PathConstraints constraints = new PathConstraints(0.5, 4.5, Math.PI / 4, 4 * Math.PI);
 
@@ -129,7 +131,7 @@ public class DriveControls {
     chooser.addOption("Reef G", TargetPoseOption.REEF_G);
     chooser.addOption("Reef C", TargetPoseOption.REEF_C);
     chooser.addOption("Reef D", TargetPoseOption.REEF_D);
-    //chooser.addOption("Reef L", TargetPoseOption.REEF_L);
+    // chooser.addOption("Reef L", TargetPoseOption.REEF_L);
     // chooser.addOption("Test", TargetPoseOption.WOW_Test);
     // chooser.addOption("Test1", TargetPoseOption.WOW_Test1);
     chooser.addOption("Reef B", TargetPoseOption.REEF_B);
@@ -205,41 +207,48 @@ public class DriveControls {
                 //         .andThen(AutoBuilder.pathfindToPose(poseTest2, constraints, 0.0))),
                 Map.entry(
                     TargetPoseOption.REEF_B.getIndex(),
-                    AutoBuilder.pathfindToPose(poseReefB, constraints, 0.0))
-                    ,
+                    AutoBuilder.pathfindToPose(poseReefB, constraints, 0.0)),
                 Map.entry(
-                  TargetPoseOption.REEF_E.getIndex(),
-                  AutoBuilder.pathfindToPose(poseReefE, constraints, 0.0)),
+                    TargetPoseOption.REEF_E.getIndex(),
+                    AutoBuilder.pathfindToPose(poseReefE, constraints, 0.0)),
                 Map.entry(
-                TargetPoseOption.REEF_F.getIndex(),
-                AutoBuilder.pathfindToPose(poseReefF, constraints, 0.0)),
+                    TargetPoseOption.REEF_F.getIndex(),
+                    AutoBuilder.pathfindToPose(poseReefF, constraints, 0.0)),
                 Map.entry(
-                TargetPoseOption.REEF_H.getIndex(),
-                AutoBuilder.pathfindToPose(poseReefHStart, constraints, 0.0)
-                  .andThen(
-                    new SequentialCommandGroup(
-                      new ElevatorToPosition(elevator, () -> 0.6),
-                      new ParallelCommandGroup(
-                          new ArmToPosition(arm, () -> 75).withTimeout(1),
-                          new ElevatorToPosition(elevator, () -> 1.553)
-                    )))
-                  .andThen(AutoBuilder.pathfindToPose(poseReefHEnd, constraints, 0.0 ))
-                  .andThen(new ArmToPosition(arm, () -> 0))),
+                    TargetPoseOption.REEF_H.getIndex(),
+                    AutoBuilder.pathfindToPose(poseReefHStart, constraints, 0.0)
+                        .andThen(
+                            new SequentialCommandGroup(
+                                new ElevatorToPosition(elevator, () -> 0.6),
+                                new ParallelCommandGroup(
+                                    new ArmToPosition(arm, () -> 75).withTimeout(1),
+                                    new ElevatorToPosition(elevator, () -> 1.553))))
+                        .andThen(AutoBuilder.pathfindToPose(poseReefHEnd, constraints, 0.0))
+                        .andThen(new ArmToPosition(arm, () -> 0))),
                 Map.entry(
-                TargetPoseOption.REEF_I.getIndex(),
-                AutoBuilder.pathfindToPose(poseReefI, constraints, 0.0)),
+                    TargetPoseOption.REEF_I.getIndex(),
+                    AutoBuilder.pathfindToPose(poseReefI, constraints, 0.0)),
                 Map.entry(
-                TargetPoseOption.REEF_J.getIndex(),
-                AutoBuilder.pathfindToPose(poseReefJ, constraints, 0.0)),
+                    TargetPoseOption.REEF_J.getIndex(),
+                    AutoBuilder.pathfindToPose(poseReefJ, constraints, 0.0)),
                 Map.entry(
-                TargetPoseOption.REEF_K.getIndex(),
-                AutoBuilder.pathfindToPose(poseReefK, constraints, 0.0))),
-  
-
+                    TargetPoseOption.REEF_K.getIndex(),
+                    AutoBuilder.pathfindToPose(poseReefK, constraints, 0.0))),
             () -> {
               return myCoolPoseKeyIdx;
             });
     // ), () -> { return chooser.getSelected(); });
+
+    // TODO: new dynamic path planning command creation
+    // 1. SelectCommand ONE: go to initial location (based on user-chosen option X)
+    // 2. SelectCommand TWO: determine next action (based on option X and potentially pre-decided
+    // reef elevation value)
+    // 2a. if (1) was a reef position, assume we are scoring --> get reef elevation to score on -->
+    // set elevator/arm
+    // 2b. if not, choose an empty command and short-circuit (exit) the sequence
+    // 3. SelectCommand THREE: go to scoring position (which maps directly from initial chosen
+    // location)
+    // 4. Execute <arm down command>
 
     // dynamically go to destination
     controller.b().whileTrue(coolGoToPose);

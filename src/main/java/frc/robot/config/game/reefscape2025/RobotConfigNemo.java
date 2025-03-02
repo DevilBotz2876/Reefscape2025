@@ -105,8 +105,7 @@ public class RobotConfigNemo extends RobotConfig {
       CoralArmControls.Constants.autoZeroSettings.minResetCurrent = 0.5;
       CoralArmControls.Constants.autoZeroSettings.resetPositionRad =
           Units.degreesToRadians(
-              armSettings.minAngleInDegrees-10
-              ); // We have an offest about 15 degrees
+              armSettings.minAngleInDegrees - 10); // We have an offest about 15 degrees
       CoralArmControls.Constants.autoZeroSettings.initialReverseDuration =
           1.0; // Set the seconds of reverse before zero. Set to zero if there shound be no reverse
 
