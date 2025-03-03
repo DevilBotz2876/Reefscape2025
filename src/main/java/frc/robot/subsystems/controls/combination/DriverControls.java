@@ -13,6 +13,10 @@ import frc.robot.subsystems.interfaces.Arm;
 import frc.robot.subsystems.interfaces.Elevator;
 
 public class DriverControls {
+  public static class Choosers {
+    public static SendableChooser<Command> prepareScoreChooser = new SendableChooser<>();
+  }
+
   public static void setupController(Elevator elevator, Arm arm, CommandXboxController controller) {
     Trigger ableToIntake =
         new Trigger(
@@ -35,18 +39,17 @@ public class DriverControls {
     Command score = new ArmToPosition(arm, () -> 0);
     controller.rightTrigger().onTrue(score);
 
-    SendableChooser<Command> prepareScoreChooser = new SendableChooser<>();
-    prepareScoreChooser.setDefaultOption(
+    DriverControls.Choosers.prepareScoreChooser.setDefaultOption(
         "L2",
         new SequentialCommandGroup(
-            new ElevatorToPosition(elevator, () -> 0.63), new ArmToPosition(arm, () -> 75)));
+            new ElevatorToPosition(elevator, () -> 0.53), new ArmToPosition(arm, () -> 75)));
 
-    prepareScoreChooser.addOption(
+    DriverControls.Choosers.prepareScoreChooser.addOption(
         "L3",
         new SequentialCommandGroup(
             new ElevatorToPosition(elevator, () -> 1.0), new ArmToPosition(arm, () -> 75)));
 
-    prepareScoreChooser.addOption(
+    DriverControls.Choosers.prepareScoreChooser.addOption(
         "L4",
         new SequentialCommandGroup(
             new ElevatorToPosition(elevator, () -> 0.6),
@@ -54,15 +57,15 @@ public class DriverControls {
                 new ArmToPosition(arm, () -> 75), new ElevatorToPosition(elevator, () -> 1.553))));
 
     SmartDashboard.putData(
-        "Driver " + "/Commands/Prepare To Score Command", prepareScoreChooser.getSelected());
+        "Driver " + "/Commands/Prepare To Score Command", DriverControls.Choosers.prepareScoreChooser.getSelected());
 
-    SmartDashboard.putData("Driver " + "/Commands/Prepare To Score Chooser", prepareScoreChooser);
+    SmartDashboard.putData("Driver " + "/Commands/Prepare To Score Chooser", DriverControls.Choosers.prepareScoreChooser);
 
-    controller.y().onTrue(prepareScoreChooser.getSelected());
-    prepareScoreChooser.onChange(
+    controller.y().onTrue(DriverControls.Choosers.prepareScoreChooser.getSelected());
+    DriverControls.Choosers.prepareScoreChooser.onChange(
         (selected) -> {
           SmartDashboard.putData("Driver " + "/Commands/Prepare To Score Command", selected);
-          controller.y().onTrue(prepareScoreChooser.getSelected());
+          controller.y().onTrue(selected);
         });
   }
 }
