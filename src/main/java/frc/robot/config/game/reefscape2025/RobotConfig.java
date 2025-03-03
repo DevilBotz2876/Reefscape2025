@@ -127,7 +127,7 @@ public class RobotConfig {
 
       ElevatorSettings elevatorSettings = new ElevatorSettings();
       elevatorSettings.minHeightInMeters = 0.0;
-      elevatorSettings.maxHeightInMeters = 0.02 + 0.85 + 0.76;;
+      elevatorSettings.maxHeightInMeters = 0.02 + 0.85 + 0.76;
       elevatorSettings.startingHeightInMeters = elevatorSettings.minHeightInMeters;
       elevatorSettings.targetHeightToleranceInMeters = 0.01;
       elevatorSettings.color = new Color8Bit(Color.kSilver);
@@ -212,6 +212,9 @@ public class RobotConfig {
     // Send vision-based odometry measurements to drive's odometry calculations
     vision.setVisionMeasurementConsumer(drive::addVisionMeasurement);
 
+    DriveControls.setupController(drive, mainController);
+    DriverAssistControls.setupController(elevator, coralArm, assistController);
+    DriverControls.setupController(elevator, coralArm, mainController);
     SendableChooser<Command> prepareScoreChooser = new SendableChooser<>();
     DriveControls.setupController(drive, elevator, coralArm, mainController);
     DriverAssistControls.setupController(elevator, coralArm, assistController, prepareScoreChooser);
