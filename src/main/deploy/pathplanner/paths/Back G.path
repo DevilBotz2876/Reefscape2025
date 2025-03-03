@@ -3,13 +3,13 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 5.86,
-        "y": 3.815
+        "x": 5.87,
+        "y": 3.85
       },
       "prevControl": null,
       "nextControl": {
-        "x": 6.131921436275931,
-        "y": 3.805199234078392
+        "x": 6.141921436275931,
+        "y": 3.840199234078392
       },
       "isLocked": false,
       "linkedName": "G Reef"
@@ -17,11 +17,11 @@
     {
       "anchor": {
         "x": 6.2,
-        "y": 3.815
+        "y": 3.85
       },
       "prevControl": {
         "x": 5.950621361185062,
-        "y": 3.8326151781940614
+        "y": 3.8676151781940615
       },
       "nextControl": null,
       "isLocked": false,

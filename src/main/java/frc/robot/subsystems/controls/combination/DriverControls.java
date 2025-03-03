@@ -57,9 +57,12 @@ public class DriverControls {
                 new ArmToPosition(arm, () -> 75), new ElevatorToPosition(elevator, () -> 1.553))));
 
     SmartDashboard.putData(
-        "Driver " + "/Commands/Prepare To Score Command", DriverControls.Choosers.prepareScoreChooser.getSelected());
+        "Driver " + "/Commands/Prepare To Score Command",
+        DriverControls.Choosers.prepareScoreChooser.getSelected());
 
-    SmartDashboard.putData("Driver " + "/Commands/Prepare To Score Chooser", DriverControls.Choosers.prepareScoreChooser);
+    SmartDashboard.putData(
+        "Driver " + "/Commands/Prepare To Score Chooser",
+        DriverControls.Choosers.prepareScoreChooser);
 
     controller.y().onTrue(DriverControls.Choosers.prepareScoreChooser.getSelected());
     DriverControls.Choosers.prepareScoreChooser.onChange(
