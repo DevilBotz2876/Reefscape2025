@@ -40,7 +40,26 @@ public class RobotConfigComp extends RobotConfig {
                     Units.inchesToMeters(14.25),
                     Units.inchesToMeters(2.5),
                     Units.inchesToMeters(7.125)),
-                new Rotation3d(0.0, 0.0, 0.0))));
+                new Rotation3d(0.0, 5.0, 0.0))));
+    vision.addCamera(
+        new Camera(
+            "left_cam",
+            new Transform3d(
+                new Translation3d(
+                    Units.inchesToMeters(3.25),
+                    Units.inchesToMeters(13.5),
+                    Units.inchesToMeters(7.125)),
+                new Rotation3d(0.0, 5.0, 0.0))));
+
+    vision.addCamera(
+        new Camera(
+            "right_cam",
+            new Transform3d(
+                new Translation3d(
+                    Units.inchesToMeters(3.25),
+                    Units.inchesToMeters(-13.5),
+                    Units.inchesToMeters(7.0)),
+                new Rotation3d(0.0, 5.0, 0.0))));
     // Comp has a Swerve drive train
     Drive.Constants.rotatePidKp = 0.025;
     Drive.Constants.rotatePidKi = 0.0;

@@ -17,7 +17,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "Start to Near G"
+                  "pathName": "Start to I"
                 }
               },
               {
@@ -56,12 +56,6 @@
           }
         },
         {
-          "type": "path",
-          "data": {
-            "pathName": "Get to G"
-          }
-        },
-        {
           "type": "named",
           "data": {
             "name": "Move Arm 0 degrees"
@@ -70,7 +64,7 @@
         {
           "type": "path",
           "data": {
-            "pathName": "Back G"
+            "pathName": "Back I"
           }
         },
         {
@@ -80,7 +74,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "G to Source Y"
+                  "pathName": "I to Source Y"
                 }
               },
               {
