@@ -36,7 +36,7 @@ public class MotorIOSparkMax extends MotorIOBase {
 
     motorConfig
         .inverted(motorSettings.motor.inverted)
-        .smartCurrentLimit(60, 40)
+        .smartCurrentLimit(45, 30)
         .secondaryCurrentLimit(0)
         .idleMode(SparkBaseConfig.IdleMode.kBrake);
 
