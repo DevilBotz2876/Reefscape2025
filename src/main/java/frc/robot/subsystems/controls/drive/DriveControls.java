@@ -9,15 +9,13 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
-import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
-import edu.wpi.first.wpilibj2.command.ProxyCommand;
+import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.SelectCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.commands.common.arm.ArmToPosition;
 import frc.robot.commands.common.drive.DriveCommand;
-import frc.robot.commands.common.elevator.ElevatorToPosition;
 import frc.robot.subsystems.controls.combination.DriverControls;
 import frc.robot.subsystems.interfaces.Arm;
 import frc.robot.subsystems.interfaces.Drive;
@@ -59,6 +57,12 @@ public class DriveControls {
   }
 
   protected static int myCoolPoseKeyIdx = 11;
+
+  protected static int coolestNumberEver = 0;
+
+  protected static final String[] orderedReefPositions = {
+    "E", "F", "G", "H", "I", "J", "K", "L", "A", "B", "C", "D"
+  };
 
   public static void setupController(
       Drive drive, Elevator elevator, Arm arm, CommandXboxController controller) {
@@ -218,13 +222,12 @@ public class DriveControls {
                     TargetPoseOption.REEF_F.getIndex(),
                     AutoBuilder.pathfindToPose(poseReefF, constraints, 0.0)),
                 createDynamicPathScoringCommand(
-                  TargetPoseOption.REEF_H.getIndex(),
-                  poseReefHStart,
-                  poseReefHEnd,
-                  constraints,
-                  DriverControls.Constants.prepareScoreCommand,
-                  new ArmToPosition(arm, () -> 0)
-                ),
+                    TargetPoseOption.REEF_H.getIndex(),
+                    poseReefHStart,
+                    poseReefHEnd,
+                    constraints,
+                    DriverControls.Constants.prepareScoreCommand,
+                    new ArmToPosition(arm, () -> 0)),
                 // Map.entry(
                 //     TargetPoseOption.REEF_H.getIndex(),
                 //     AutoBuilder.pathfindToPose(poseReefHStart, constraints, 0.0)
@@ -263,28 +266,65 @@ public class DriveControls {
 
     // dynamically go to destination
     controller.b().whileTrue(coolGoToPose);
+
+    /*  Angles -> Reef positions
+     * 0    30  : E
+     * 30   60  : F
+     * 60   90  : G
+     * 90   120 : H
+     * 120  150 : I
+     * 150  180 : J
+     * 180  210 : K
+     * 210  240 : L
+     * 240  270 : A
+     * 270  300 : B
+     * 300  330 : C
+     * 330  360 : D
+     */
+    controller
+        .x()
+        .whileTrue(
+            new RunCommand(
+                () -> {
+                  double myX = controller.getLeftX();
+                  double myY = -controller.getLeftY();
+
+                  // TODO maybe keep calculation in radians?
+                  double myNumber = Math.atan2(myY, myX) * (180 / Math.PI);
+                  if (myNumber < 0) myNumber += 360; // obtain this angle as a positive number
+
+                  // This number can be used to index into the ordered reef positions array!
+                  coolestNumberEver = (int) myNumber / 30;
+
+                  // TODO remove Smartdashboard number; only display reef position
+                  SmartDashboard.putNumber("AAAAAA", coolestNumberEver);
+                  SmartDashboard.putString(
+                      "AAAAAA Reef Position", orderedReefPositions[coolestNumberEver]);
+                }));
   }
 
-  private static Entry<Integer, Command> createDynamicPathCommand(int index, Pose2d endingPose, PathConstraints constraints) {
-    Entry<Integer, Command> entry = 
-      Map.entry(
-        index,
-          AutoBuilder.pathfindToPose(endingPose, constraints, 0.0)
-      );
+  private static Entry<Integer, Command> createDynamicPathCommand(
+      int index, Pose2d endingPose, PathConstraints constraints) {
+    Entry<Integer, Command> entry =
+        Map.entry(index, AutoBuilder.pathfindToPose(endingPose, constraints, 0.0));
     return null;
   }
-  private static Entry<Integer, Command> createDynamicPathScoringCommand(int index, Pose2d initialPose, Pose2d scoringPose, PathConstraints constraints, Command prepareToScoreCommand, Command scoreCommand) {
-    Entry<Integer, Command> entry = 
-      Map.entry(
-        index,
-        new SequentialCommandGroup(
-          AutoBuilder.pathfindToPose(initialPose, constraints, 0.0),
-          prepareToScoreCommand,
-          AutoBuilder.pathfindToPose(scoringPose, constraints, 0.0),
-          scoreCommand
-        )
-      );
-      return entry;
-    
+
+  private static Entry<Integer, Command> createDynamicPathScoringCommand(
+      int index,
+      Pose2d initialPose,
+      Pose2d scoringPose,
+      PathConstraints constraints,
+      Command prepareToScoreCommand,
+      Command scoreCommand) {
+    Entry<Integer, Command> entry =
+        Map.entry(
+            index,
+            new SequentialCommandGroup(
+                AutoBuilder.pathfindToPose(initialPose, constraints, 0.0),
+                prepareToScoreCommand,
+                AutoBuilder.pathfindToPose(scoringPose, constraints, 0.0),
+                scoreCommand));
+    return entry;
   }
 }
