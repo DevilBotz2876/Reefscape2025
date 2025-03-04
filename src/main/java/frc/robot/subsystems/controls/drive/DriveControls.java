@@ -10,6 +10,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
+import edu.wpi.first.wpilibj2.command.ProxyCommand;
 import edu.wpi.first.wpilibj2.command.SelectCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -17,10 +18,12 @@ import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.commands.common.arm.ArmToPosition;
 import frc.robot.commands.common.drive.DriveCommand;
 import frc.robot.commands.common.elevator.ElevatorToPosition;
+import frc.robot.subsystems.controls.combination.DriverControls;
 import frc.robot.subsystems.interfaces.Arm;
 import frc.robot.subsystems.interfaces.Drive;
 import frc.robot.subsystems.interfaces.Elevator;
 import java.util.Map;
+import java.util.Map.Entry;
 
 public class DriveControls {
   private enum TargetPoseOption {
@@ -214,17 +217,25 @@ public class DriveControls {
                 Map.entry(
                     TargetPoseOption.REEF_F.getIndex(),
                     AutoBuilder.pathfindToPose(poseReefF, constraints, 0.0)),
-                Map.entry(
-                    TargetPoseOption.REEF_H.getIndex(),
-                    AutoBuilder.pathfindToPose(poseReefHStart, constraints, 0.0)
-                        .andThen(
-                            new SequentialCommandGroup(
-                                new ElevatorToPosition(elevator, () -> 0.6),
-                                new ParallelCommandGroup(
-                                    new ArmToPosition(arm, () -> 75).withTimeout(1),
-                                    new ElevatorToPosition(elevator, () -> 1.553))))
-                        .andThen(AutoBuilder.pathfindToPose(poseReefHEnd, constraints, 0.0))
-                        .andThen(new ArmToPosition(arm, () -> 0))),
+                createDynamicPathScoringCommand(
+                  TargetPoseOption.REEF_H.getIndex(),
+                  poseReefHStart,
+                  poseReefHEnd,
+                  constraints,
+                  DriverControls.Constants.prepareScoreCommand,
+                  new ArmToPosition(arm, () -> 0)
+                ),
+                // Map.entry(
+                //     TargetPoseOption.REEF_H.getIndex(),
+                //     AutoBuilder.pathfindToPose(poseReefHStart, constraints, 0.0)
+                //         .andThen(
+                //             new SequentialCommandGroup(
+                //                 new ElevatorToPosition(elevator, () -> 0.6),
+                //                 new ParallelCommandGroup(
+                //                     new ArmToPosition(arm, () -> 75).withTimeout(1),
+                //                     new ElevatorToPosition(elevator, () -> 1.553))))
+                //         .andThen(AutoBuilder.pathfindToPose(poseReefHEnd, constraints, 0.0))
+                //         .andThen(new ArmToPosition(arm, () -> 0))),
                 Map.entry(
                     TargetPoseOption.REEF_I.getIndex(),
                     AutoBuilder.pathfindToPose(poseReefI, constraints, 0.0)),
@@ -252,5 +263,28 @@ public class DriveControls {
 
     // dynamically go to destination
     controller.b().whileTrue(coolGoToPose);
+  }
+
+  private static Entry<Integer, Command> createDynamicPathCommand(int index, Pose2d endingPose, PathConstraints constraints) {
+    Entry<Integer, Command> entry = 
+      Map.entry(
+        index,
+          AutoBuilder.pathfindToPose(endingPose, constraints, 0.0)
+      );
+    return null;
+  }
+  private static Entry<Integer, Command> createDynamicPathScoringCommand(int index, Pose2d initialPose, Pose2d scoringPose, PathConstraints constraints, Command prepareToScoreCommand, Command scoreCommand) {
+    Entry<Integer, Command> entry = 
+      Map.entry(
+        index,
+        new SequentialCommandGroup(
+          AutoBuilder.pathfindToPose(initialPose, constraints, 0.0),
+          prepareToScoreCommand,
+          AutoBuilder.pathfindToPose(scoringPose, constraints, 0.0),
+          scoreCommand
+        )
+      );
+      return entry;
+    
   }
 }
