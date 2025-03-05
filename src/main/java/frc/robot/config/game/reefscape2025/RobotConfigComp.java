@@ -1,8 +1,12 @@
 package frc.robot.config.game.reefscape2025;
 
+import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.math.controller.ArmFeedforward;
 import edu.wpi.first.math.controller.ElevatorFeedforward;
 import edu.wpi.first.math.controller.PIDController;
+import edu.wpi.first.math.geometry.Rotation3d;
+import edu.wpi.first.math.geometry.Transform3d;
+import edu.wpi.first.math.geometry.Translation3d;
 import edu.wpi.first.math.system.plant.DCMotor;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.util.Color;
@@ -19,11 +23,49 @@ import frc.robot.subsystems.implementations.motor.ElevatorMotorSubsystem;
 import frc.robot.subsystems.interfaces.Arm.ArmSettings;
 import frc.robot.subsystems.interfaces.Drive;
 import frc.robot.subsystems.interfaces.Elevator.ElevatorSettings;
+import frc.robot.subsystems.interfaces.Vision.Camera;
 
 public class RobotConfigComp extends RobotConfig {
   public RobotConfigComp() {
-    super(false, true, true, false, false, true, true);
+    super(false, false, false, false, false, true, true);
+    CameraServer.startAutomaticCapture();
+    vision.addCamera(
+        new Camera(
+            "front_cam", // front
+            new Transform3d(
+                new Translation3d(
+                    Units.inchesToMeters(13.592),
+                    Units.inchesToMeters(2.75),
+                    Units.inchesToMeters(7.201)),
+                new Rotation3d(0.0, Units.degreesToRadians(5.00), 0.0))));
+    vision.addCamera(
+        new Camera(
+            "left_cam", // left
+            new Transform3d(
+                new Translation3d(
+                    Units.inchesToMeters(3.250),
+                    Units.inchesToMeters(13.592),
+                    Units.inchesToMeters(7.201)),
+                new Rotation3d(0.0, Units.degreesToRadians(5.0), Units.degreesToRadians(90.0)))));
 
+    vision.addCamera(
+        new Camera(
+            "right_cam", // right
+            new Transform3d(
+                new Translation3d(
+                    Units.inchesToMeters(3.250),
+                    Units.inchesToMeters(-13.592),
+                    Units.inchesToMeters(7.201)),
+                new Rotation3d(0.0, Units.degreesToRadians(5.0), Units.degreesToRadians(270.0)))));
+    vision.addCamera(
+        new Camera(
+            "back_cam", // back
+            new Transform3d(
+                new Translation3d(
+                    Units.inchesToMeters(0.295),
+                    Units.inchesToMeters(-11.443),
+                    Units.inchesToMeters(39.663)),
+                new Rotation3d(Units.degreesToRadians(180.0), Units.degreesToRadians(33.0), Units.degreesToRadians(190)))));
     // Comp has a Swerve drive train
     Drive.Constants.rotatePidKp = 0.025;
     Drive.Constants.rotatePidKi = 0.0;
