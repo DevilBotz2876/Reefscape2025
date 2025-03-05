@@ -251,7 +251,6 @@ public class DriveControls {
             () -> {
               return myCoolPoseKeyIdx;
             });
-    // ), () -> { return chooser.getSelected(); });
 
     // TODO: new dynamic path planning command creation
     // 1. SelectCommand ONE: go to initial location (based on user-chosen option X)
@@ -266,6 +265,13 @@ public class DriveControls {
 
     // dynamically go to destination
     controller.b().whileTrue(coolGoToPose);
+
+    // TEMP FUNCTION TO TEST FIELD FLIPPING
+    // controller.b().whileTrue(new SequentialCommandGroup(
+    //     AutoBuilder.pathfindToPoseFlipped(TargetPose.REEF_A.getMyPrepPose(), constraints, 0.0),
+    //     // DriverControls.Constants.prepareScoreCommand,
+    //     AutoBuilder.pathfindToPoseFlipped(TargetPose.REEF_A.getMyPose(), constraints, 0.0),
+    //     new ArmToPosition(arm, () -> 0)));
 
     /*  Angles -> Reef positions
      * 0    30  : E
@@ -303,13 +309,6 @@ public class DriveControls {
                 }));
   }
 
-  private static Entry<Integer, Command> createDynamicPathCommand(
-      int index, Pose2d endingPose, PathConstraints constraints) {
-    Entry<Integer, Command> entry =
-        Map.entry(index, AutoBuilder.pathfindToPose(endingPose, constraints, 0.0));
-    return null;
-  }
-
   private static Entry<Integer, Command> createDynamicPathScoringCommand(
       int index,
       Pose2d initialPose,
@@ -324,6 +323,24 @@ public class DriveControls {
                 AutoBuilder.pathfindToPose(initialPose, constraints, 0.0),
                 prepareToScoreCommand,
                 AutoBuilder.pathfindToPose(scoringPose, constraints, 0.0),
+                scoreCommand));
+    return entry;
+  }
+
+  private static Entry<Integer, Command> coolDynamicPathScoringCommand(
+      TargetPose target,
+      PathConstraints constraints,
+      Command prepareToScoreCommand,
+      Command scoreCommand) {
+    // FIXME initialize a fresh instance of the prepareToScoreCommand each time!!
+    // OTHERWISE CODE WILL CRASH
+    Entry<Integer, Command> entry =
+        Map.entry(
+            target.getIndex(),
+            new SequentialCommandGroup(
+                AutoBuilder.pathfindToPoseFlipped(target.getPrepPose(), constraints, 0.0),
+                prepareToScoreCommand,
+                AutoBuilder.pathfindToPoseFlipped(target.getPose(), constraints, 0.0),
                 scoreCommand));
     return entry;
   }
