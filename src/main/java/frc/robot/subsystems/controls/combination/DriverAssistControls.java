@@ -1,11 +1,14 @@
 package frc.robot.subsystems.controls.combination;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.commands.common.arm.ArmToPosition;
 import frc.robot.commands.common.elevator.ElevatorToPosition;
+import frc.robot.subsystems.controls.arm.CoralArmControls;
 import frc.robot.subsystems.interfaces.Arm;
 import frc.robot.subsystems.interfaces.Elevator;
 
@@ -19,7 +22,7 @@ public class DriverAssistControls {
 
     SmartDashboard.putData(
         "Driver " + "/Commands/Intake",
-        new SequentialCommandGroup(new ElevatorToPosition(elevator, () -> 0.4)));
+        new SequentialCommandGroup(new ElevatorToPosition(elevator, () -> 0.3)));
 
     SmartDashboard.putData(
         "Driver " + "/Commands/Score", new SequentialCommandGroup(new ArmToPosition(arm, () -> 0)));
@@ -81,5 +84,7 @@ public class DriverAssistControls {
           DriverControls.Constants.prepareScoreSelctedIndex = index;
           SmartDashboard.putNumber("Driver " + "/Commands/Prepare To Score Selection", index);
         });
+
+    // controller.rightBumper().onTrue(CoralArmControls.Constants.autoCalibrateCommand.unless(() -> (CoralArmControls.Constants.autoCalibrateCommand == null)));
   }
 }
