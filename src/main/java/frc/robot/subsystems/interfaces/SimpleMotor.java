@@ -5,11 +5,12 @@ import edu.wpi.first.math.system.plant.DCMotor;
 import edu.wpi.first.wpilibj.util.Color;
 import edu.wpi.first.wpilibj.util.Color8Bit;
 
-public interface Position {
-  public static class PositionSettings {
+public interface SimpleMotor {
+  public static class SimpleMotorSettings {
     public double minPositionInRads = 0;
     public double maxPositionInRads = 10 * 2 * Math.PI; // 10 rotations
     public double startingPositionInRads = 0;
+    public double targetHeightToleranceInRad = Math.PI;
 
     public double maxVelocityInRadiansPerSecond = 0.3;
     public double maxAccelerationInRadiansPerSecondSquared = 0.3;
@@ -49,6 +50,16 @@ public interface Position {
   public void setTargetPosition(double positionRad);
 
   /**
+   * @return true if position is at (or greater than) the max limit
+   */
+  public boolean isAtMaxLimit();
+
+  /**
+   * @return true if position is at (or less than) the min limit
+   */
+  public boolean isAtMinLimit();
+
+  /**
    * @return true if the current winch position is at the desired target position
    */
   public boolean isAtSetpoint();
@@ -58,5 +69,5 @@ public interface Position {
    *
    * @return the current winch settings
    */
-  public WinchSettings getSettings();
+  public SimpleMotorSettings getSettings();
 }

@@ -3,6 +3,7 @@ package frc.robot.config.game.reefscape2025;
 import edu.wpi.first.math.controller.ArmFeedforward;
 import edu.wpi.first.math.controller.ElevatorFeedforward;
 import edu.wpi.first.math.controller.PIDController;
+import edu.wpi.first.math.controller.SimpleMotorFeedforward;
 import edu.wpi.first.math.geometry.Rotation3d;
 import edu.wpi.first.math.geometry.Transform3d;
 import edu.wpi.first.math.geometry.Translation3d;
@@ -22,9 +23,11 @@ import frc.robot.subsystems.implementations.drive.DriveBase;
 import frc.robot.subsystems.implementations.drive.DriveSwerveYAGSL;
 import frc.robot.subsystems.implementations.motor.ArmMotorSubsystem;
 import frc.robot.subsystems.implementations.motor.ElevatorMotorSubsystem;
+import frc.robot.subsystems.implementations.motor.SimpleMotorSubsystem;
 import frc.robot.subsystems.interfaces.Arm.ArmSettings;
 import frc.robot.subsystems.interfaces.Drive;
 import frc.robot.subsystems.interfaces.Elevator.ElevatorSettings;
+import frc.robot.subsystems.interfaces.SimpleMotor.SimpleMotorSettings;
 import frc.robot.subsystems.interfaces.Vision.Camera;
 
 /* Override Nemo specific constants here */
@@ -165,21 +168,19 @@ public class RobotConfigNemo extends RobotConfig {
       MotorIOBaseSettings motorSettings = new MotorIOBaseSettings();
       // 25:1 gear box ratio
       motorSettings.motor.gearing = 25;
-      motorSettings.motor.inverted = false; // false for Sim
+      motorSettings.motor.inverted = false;
       motorSettings.pid = new PIDController(0.0, 0, 0);
       motorSettings.reverseLimitChannel = 1;
       motorSettings.reverseLimitNegate = true;
 
-      ArmSettings armSettings = new ArmSettings();
-      armSettings.minAngleInDegrees = 0;
-      armSettings.maxAngleInDegrees = 135;
-      armSettings.startingAngleInDegrees = armSettings.minAngleInDegrees;
-      armSettings.feedforward = new ArmFeedforward(0.0, 0.0, 0.0, 0.0);
-      armSettings.color = new Color8Bit(Color.kRed);
-      armSettings.armLengthInMeters = 0.5;
-      armSettings.armMassInKg = 1.0;
-      armSettings.motor = DCMotor.getNEO(1);
-      armSettings.simulateGravity = true;
+      SimpleMotorSettings simpleMotorSettings = new SimpleMotorSettings();
+      simpleMotorSettings.minPositionInRads = 0;
+      simpleMotorSettings.maxPositionInRads = 100 * 2 * Math.PI; // TODO: determine this empirically
+      simpleMotorSettings.startingPositionInRads =
+          simpleMotorSettings.maxPositionInRads / 2; // TODO: determine this empirically
+      simpleMotorSettings.color = new Color8Bit(Color.kRed);
+      simpleMotorSettings.feedforward = new SimpleMotorFeedforward(0, 0, 0);
+      simpleMotorSettings.motor = DCMotor.getNEO(1);
 
       SparkMaxSettings settings = new SparkMaxSettings();
       settings.canId = 50;
@@ -189,12 +190,11 @@ public class RobotConfigNemo extends RobotConfig {
       // reached it's end of range of motion.
       ClimberArmControls.Constants.autoZeroSettings.minResetCurrent = 10.0;
       ClimberArmControls.Constants.autoZeroSettings.resetPositionRad =
-          Units.degreesToRadians(armSettings.minAngleInDegrees);
+          simpleMotorSettings.minPositionInRads;
 
       climberArm =
-          new ArmMotorSubsystem(
-              // new MotorIOArmStub(motorSettings, armSettings), "Coral", armSettings);
-              new MotorIOSparkMax(motorSettings, settings), "Climber", armSettings);
+          new SimpleMotorSubsystem(
+              new MotorIOSparkMax(motorSettings, settings), "Climber", simpleMotorSettings);
     }
   }
 }
