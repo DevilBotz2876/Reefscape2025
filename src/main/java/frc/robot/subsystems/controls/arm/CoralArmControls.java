@@ -40,7 +40,8 @@ public class CoralArmControls {
     Constants.autoCalibrateCommand =
         new MotorAutoResetEncoderCommand((Motor) arm, Constants.autoZeroSettings);
     SmartDashboard.putData(
-        motorSubsystem.getName() + "/Commands/Auto Calibrate Coral Arm", Constants.autoCalibrateCommand);
+        motorSubsystem.getName() + "/Commands/Auto Calibrate Coral Arm",
+        Constants.autoCalibrateCommand);
 
     SmartDashboard.putData(
         motorSubsystem.getName() + "/Commands/Arm To -90", new ArmToPosition(arm, () -> -90));
