@@ -17,7 +17,7 @@ import java.util.Map;
 public class DriverControls {
   public static class Constants {
     public static SendableChooser<Integer> prepareScoreChooser = new SendableChooser<>();
-
+    public static Integer prepareScoreSelctedIndex = 2;
     public static Command prepareScoreCommand = null;
   }
 
@@ -49,7 +49,7 @@ public class DriverControls {
 
     Constants.prepareScoreChooser.addOption("L4", 4);
 
-    SelectCommand prepareScoreControllerCommand =
+    Command prepareScoreControllerCommand =
         new SelectCommand<>(
             Map.ofEntries(
                 Map.entry(
@@ -73,7 +73,7 @@ public class DriverControls {
                                 new ElevatorToPosition(elevator, () -> 1.553)))
                         .withTimeout(5.0))),
             () -> {
-              return Constants.prepareScoreChooser.getSelected();
+              return Constants.prepareScoreSelctedIndex;
             });
 
     Constants.prepareScoreCommand =
@@ -100,8 +100,13 @@ public class DriverControls {
                                 new ElevatorToPosition(elevator, () -> 1.553)))
                         .withTimeout(5.0))),
             () -> {
-              return Constants.prepareScoreChooser.getSelected();
+              return Constants.prepareScoreSelctedIndex;
             });
+
+    SmartDashboard.putNumber(
+        "Driver " + "/Commands/Prepare To Score Selection",
+        Constants.prepareScoreChooser.getSelected());
+
     SmartDashboard.putData(
         "Driver " + "/Commands/Prepare To Score Command", prepareScoreControllerCommand);
 

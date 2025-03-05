@@ -217,6 +217,8 @@ public class RobotConfig {
     DriveControls.setupController(drive, elevator, coralArm, mainController);
     CoralArmControls.setupController(coralArm, mainController);
     ElevatorControls.setupController(elevator, mainController);
+    CoralArmControls.setupController(coralArm, assistController);
+    ElevatorControls.setupController(elevator, assistController);
     ClimberArmControls.setupController(climberArm, mainController);
 
     if (null != RobotConfig.autoChooser) {
