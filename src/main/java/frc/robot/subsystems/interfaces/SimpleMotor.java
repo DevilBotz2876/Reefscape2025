@@ -10,10 +10,10 @@ public interface SimpleMotor {
     public double minPositionInRads = 0;
     public double maxPositionInRads = 10 * 2 * Math.PI; // 10 rotations
     public double startingPositionInRads = 0;
-    public double targetHeightToleranceInRad = Math.PI;
+    public double targetPositionToleranceInRad = Math.PI;
 
-    public double maxVelocityInRadiansPerSecond = 0.3;
-    public double maxAccelerationInRadiansPerSecondSquared = 0.3;
+    public double maxVelocityInRadiansPerSecond = 2 * Math.PI;
+    public double maxAccelerationInRadiansPerSecondSquared = 8 * Math.PI;
 
     // feedforward is in *radian* units
     public SimpleMotorFeedforward feedforward =

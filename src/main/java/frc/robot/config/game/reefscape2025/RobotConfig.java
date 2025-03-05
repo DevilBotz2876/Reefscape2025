@@ -189,11 +189,13 @@ public class RobotConfig {
       simpleMotorSettings.minPositionInRads = 0;
       simpleMotorSettings.maxPositionInRads = 100 * 2 * Math.PI;
       simpleMotorSettings.startingPositionInRads = simpleMotorSettings.maxPositionInRads / 2;
+      simpleMotorSettings.maxVelocityInRadiansPerSecond = 16 * 2 * Math.PI;
+      simpleMotorSettings.maxAccelerationInRadiansPerSecondSquared = 64 * 2 * Math.PI;
       simpleMotorSettings.color = new Color8Bit(Color.kRed);
       simpleMotorSettings.feedforward = new SimpleMotorFeedforward(0, 0, 0);
       simpleMotorSettings.motor = DCMotor.getNEO(1);
 
-      ClimberArmControls.Constants.autoZeroSettings.voltage = -1.0;
+      ClimberArmControls.Constants.autoZeroSettings.voltage = -6.0;
       ClimberArmControls.Constants.autoZeroSettings.minResetCurrent = 40.0;
       ClimberArmControls.Constants.autoZeroSettings.resetPositionRad =
           simpleMotorSettings.minPositionInRads;

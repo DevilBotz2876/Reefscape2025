@@ -15,7 +15,7 @@ public class SimpleMotorSubsystem extends MotorSubsystem implements SimpleMotor 
   private TrapezoidProfile.Constraints motionProfileConstraintsRadians = new Constraints(0, 0);
 
   public SimpleMotorSubsystem(MotorIO io, String name, SimpleMotorSettings settings) {
-    super(io, "Position[" + name + "]");
+    super(io, "Simple[" + name + "]");
     this.settings = settings;
 
     resetEncoder(settings.startingPositionInRads);
@@ -79,7 +79,7 @@ public class SimpleMotorSubsystem extends MotorSubsystem implements SimpleMotor 
   @Override
   public boolean isAtSetpoint() {
     return (Math.abs(getCurrentPosition() - this.targetPositionRad)
-        <= settings.targetHeightToleranceInRad);
+        <= settings.targetPositionToleranceInRad);
   }
 
   @Override
