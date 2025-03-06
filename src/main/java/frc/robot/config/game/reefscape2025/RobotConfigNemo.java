@@ -185,10 +185,10 @@ public class RobotConfigNemo extends RobotConfig {
       SparkMaxSettings settings = new SparkMaxSettings();
       settings.canId = 50;
 
-      ClimberArmControls.Constants.autoZeroSettings.voltage = -1;
+      ClimberArmControls.Constants.autoZeroSettings.voltage = 1;
       // Set this to something big, we are never going to use stall current to detect if climber has
       // reached it's end of range of motion.
-      ClimberArmControls.Constants.autoZeroSettings.minResetCurrent = 10.0;
+      ClimberArmControls.Constants.autoZeroSettings.minResetCurrent = 20.0;
       ClimberArmControls.Constants.autoZeroSettings.resetPositionRad =
           simpleMotorSettings.minPositionInRads;
 
