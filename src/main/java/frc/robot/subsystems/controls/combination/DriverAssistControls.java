@@ -104,22 +104,22 @@ public class DriverAssistControls {
     //         new MotorAutoResetEncoderCommand(
     //             (Motor) coralArm, CoralArmControls.Constants.autoZeroSettings));
 
-    // // climber
-    // SubsystemBase climberSubsystem = (SubsystemBase) climber;
-    // // prepare to climb
-    // controller
-    //     .leftBumper()
-    //     .onTrue(
-    //         new InstantCommand(
-    //             () -> climber.setTargetPosition(climber.getSettings().maxPositionInRads),
-    //             climberSubsystem));
+    // climber
+    SubsystemBase climberSubsystem = (SubsystemBase) climber;
+    // prepare to climb
+    controller
+        .leftBumper()
+        .onTrue(
+            new InstantCommand(
+                () -> climber.setTargetPosition(climber.getSettings().maxPositionInRads),
+                climberSubsystem));
 
-    // // climb
-    // controller
-    //     .rightBumper()
-    //     .onTrue(
-    //         new InstantCommand(
-    //             () -> climber.setTargetPosition(climber.getSettings().minPositionInRads),
-    //             climberSubsystem));
+    // climb
+    controller
+        .rightBumper()
+        .onTrue(
+            new InstantCommand(
+                () -> climber.setTargetPosition(climber.getSettings().minPositionInRads),
+                climberSubsystem));
   }
 }
