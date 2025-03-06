@@ -136,7 +136,7 @@ public class RobotConfigNemo extends RobotConfig {
       elevatorSettings.minHeightInMeters = 0.3;
       elevatorSettings.maxHeightInMeters =
           Units.inchesToMeters(74 - 18); // highest point:74 lowest point:18
-      elevatorSettings.startingHeightInMeters = elevatorSettings.minHeightInMeters;
+      elevatorSettings.startingHeightInMeters = 0.3; // The elevator height when piece is in intake
       elevatorSettings.color = new Color8Bit(Color.kSilver);
       elevatorSettings.feedforward =
           new ElevatorFeedforward(0, 0.34, 0.2, 0); // TODO: Tune feedforward
