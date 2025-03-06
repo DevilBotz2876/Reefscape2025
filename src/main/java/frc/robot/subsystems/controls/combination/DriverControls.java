@@ -3,6 +3,7 @@ package frc.robot.subsystems.controls.combination;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SelectCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
@@ -18,7 +19,7 @@ public class DriverControls {
   public static class Constants {
     public static SendableChooser<Integer> prepareScoreChooser = new SendableChooser<>();
     public static Integer prepareScoreSelctedIndex = 2;
-    public static Command prepareScoreCommand = null;
+    public static Command prepareScoreCommand = new InstantCommand();
   }
 
   public static void setupController(Elevator elevator, Arm arm, CommandXboxController controller) {
@@ -114,5 +115,34 @@ public class DriverControls {
         "Driver " + "/Commands/Prepare To Score Chooser", Constants.prepareScoreChooser);
 
     controller.y().onTrue(prepareScoreControllerCommand);
+  }
+  
+
+  public static Command getPrepareToScoreCommand(Elevator elevator, Arm arm) {
+    return new SelectCommand<>(
+        Map.ofEntries(
+            Map.entry(
+                2,
+                new SequentialCommandGroup(
+                        new ElevatorToPosition(elevator, () -> 0.63),
+                        new ArmToPosition(arm, () -> 75))
+                    .withTimeout(5.0)),
+            Map.entry(
+                3,
+                new SequentialCommandGroup(
+                        new ElevatorToPosition(elevator, () -> 1.0),
+                        new ArmToPosition(arm, () -> 75))
+                    .withTimeout(5.0)),
+            Map.entry(
+                4,
+                new SequentialCommandGroup(
+                        new ElevatorToPosition(elevator, () -> 0.6),
+                        new ParallelCommandGroup(
+                            new ArmToPosition(arm, () -> 75).withTimeout(1.0),
+                            new ElevatorToPosition(elevator, () -> 1.553)))
+                    .withTimeout(5.0))),
+        () -> {
+          return Constants.prepareScoreSelctedIndex;
+        });
   }
 }

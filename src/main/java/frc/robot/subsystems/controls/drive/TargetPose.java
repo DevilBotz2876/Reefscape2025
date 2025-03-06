@@ -13,7 +13,8 @@ public enum TargetPose {
   ORIGIN(0, "O", "Origin", new Pose2d(0.0, 0.0, new Rotation2d(0)), 0),
   FEEDER_R(1, "FR", "Feeder Right", new Pose2d(1.05, 1, new Rotation2d(50)), 0),
   FEEDER_L(2, "FL", "Feeder Left", new Pose2d(1.05, 7, Rotation2d.fromDegrees(-50)), 0),
-  REEF_A(3, "A", "Reef A", new Pose2d(3.25, 4.05, Rotation2d.fromDegrees(0)), -1),
+  REEF_A(3, "A", "Reef A", new Pose2d(3.15, 4.28, Rotation2d.fromDegrees(0)), 
+  -1),
   REEF_G(9, "G", "Reef G", new Pose2d(5.5, 3.95, Rotation2d.fromDegrees(180)), -1),
   PROCESSOR(15, "P", "Processor", new Pose2d(6, 0.75, new Rotation2d(270)), 0);
 
@@ -64,11 +65,11 @@ public enum TargetPose {
       this.prepPose = null;
       this.endPose = null;
     } else {
-      double distance = (reefPosition < 0) ? -0.5 : 0.5;
+      double distance = (reefPosition < 0) ? -0.7 : 0.7;
       this.prepPose =
           targetPose.transformBy(new Transform2d(new Translation2d(0, distance), new Rotation2d()));
       this.endPose =
-          targetPose.transformBy(new Transform2d(new Translation2d(-0.5, 0), new Rotation2d()));
+          targetPose.transformBy(new Transform2d(new Translation2d(0, 0), new Rotation2d()));
     }
   }
 }

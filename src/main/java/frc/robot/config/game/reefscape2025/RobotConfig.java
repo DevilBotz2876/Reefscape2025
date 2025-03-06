@@ -215,6 +215,7 @@ public class RobotConfig {
     DriverAssistControls.setupController(elevator, coralArm, assistController);
     DriverControls.setupController(elevator, coralArm, mainController);
     DriveControls.setupController(drive, elevator, coralArm, mainController);
+    DriveControls.setupAssistantController(drive, assistController);
     CoralArmControls.setupController(coralArm, mainController);
     ElevatorControls.setupController(elevator, mainController);
     CoralArmControls.setupController(coralArm, assistController);
