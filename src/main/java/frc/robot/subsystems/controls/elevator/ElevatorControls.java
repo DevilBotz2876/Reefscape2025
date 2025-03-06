@@ -6,8 +6,8 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.commands.common.elevator.ElevatorCommand;
 import frc.robot.commands.common.elevator.ElevatorToPosition;
-import frc.robot.commands.common.motor.MotorAutoResetEncoderCommand;
-import frc.robot.commands.common.motor.MotorAutoResetEncoderCommand.MotorAutoResetEncoderSettings;
+import frc.robot.commands.common.motor.ElevatorPitCalibrationCommand;
+import frc.robot.commands.common.motor.ElevatorPitCalibrationCommand.MotorAutoResetEncoderSettings;
 import frc.robot.subsystems.interfaces.Elevator;
 import frc.robot.subsystems.interfaces.Motor;
 
@@ -39,7 +39,7 @@ public class ElevatorControls {
 
     /* Add Auto Zero */
     Command autoCalibrateCommand =
-        new MotorAutoResetEncoderCommand((Motor) elevator, Constants.autoZeroSettings);
+        new ElevatorPitCalibrationCommand((Motor) elevator, Constants.autoZeroSettings);
     SmartDashboard.putData(
         subsystem.getName() + "/Commands/Auto Calibrate Elevator", autoCalibrateCommand);
 

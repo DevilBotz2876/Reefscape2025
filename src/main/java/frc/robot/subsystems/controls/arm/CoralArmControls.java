@@ -6,8 +6,8 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.commands.common.arm.ArmCommand;
 import frc.robot.commands.common.arm.ArmToPosition;
-import frc.robot.commands.common.motor.MotorAutoResetEncoderCommand;
-import frc.robot.commands.common.motor.MotorAutoResetEncoderCommand.MotorAutoResetEncoderSettings;
+import frc.robot.commands.common.motor.ElevatorPitCalibrationCommand;
+import frc.robot.commands.common.motor.ElevatorPitCalibrationCommand.MotorAutoResetEncoderSettings;
 import frc.robot.commands.common.motor.MotorBringUpCommand;
 import frc.robot.subsystems.interfaces.Arm;
 import frc.robot.subsystems.interfaces.Motor;
@@ -37,7 +37,7 @@ public class CoralArmControls {
 
     /* Add Auto Zero */
     Command autoCalibrateCommand =
-        new MotorAutoResetEncoderCommand((Motor) arm, Constants.autoZeroSettings);
+        new ElevatorPitCalibrationCommand((Motor) arm, Constants.autoZeroSettings);
     SmartDashboard.putData(
         motorSubsystem.getName() + "/Commands/Auto Calibrate Coral Arm", autoCalibrateCommand);
 
