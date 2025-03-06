@@ -53,17 +53,16 @@ public class ElevatorPitCalibrationCommand extends Command {
      * - Stops motor and returns done
      * Default: Happens if an error occurs
      */
-    switch(state)
-    {
+    switch (state) {
       case 1: // Wait for reverse limit switch to trigger
         motor.runVoltage(-settings.voltage);
-        if (motor.getReverseLimit()){
+        if (motor.getReverseLimit()) {
           state = 2;
         }
         break;
       case 2: // Limit has been triggered, now reverse direction and wait for current to spike
         motor.runVoltage(settings.voltage);
-        if (motor.getCurrent() > settings.minResetCurrent){
+        if (motor.getCurrent() > settings.minResetCurrent) {
           state = 3;
         }
         break;
@@ -73,8 +72,8 @@ public class ElevatorPitCalibrationCommand extends Command {
         done = true;
         break;
       default:
-      System.out.println("Elevator calibration failed");
-      state = 0;
+        System.out.println("Elevator calibration failed");
+        state = 0;
         break;
     }
   }
