@@ -24,6 +24,7 @@ public class CoralArmControls {
   public static void setupController(Arm arm, CommandXboxController controller) {
     SubsystemBase motorSubsystem = (SubsystemBase) arm;
 
+    // Override controller if new setupController. need to be fixed
     motorSubsystem.setDefaultCommand(
         new ArmCommand(
             arm,

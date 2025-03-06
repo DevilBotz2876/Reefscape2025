@@ -234,7 +234,7 @@ public class DriveControls {
                     poseReefHStart,
                     poseReefHEnd,
                     constraints,
-                    DriverControls.Constants.prepareScoreCommand,
+                    DriverControls.getPrepareToScoreCommand(elevator, arm),
                     new ArmToPosition(arm, () -> 0)),
                 // Map.entry(
                 //     TargetPoseOption.REEF_H.getIndex(),
@@ -272,7 +272,7 @@ public class DriveControls {
     // 4. Execute <arm down command>
 
     // dynamically go to destination
-    controller.b().whileTrue(coolGoToPose);
+    controller.rightTrigger().whileTrue(coolGoToPose);
 
     // TEMP FUNCTION TO TEST FIELD FLIPPING
     // controller.b().whileTrue(new SequentialCommandGroup(
