@@ -45,7 +45,7 @@ public class RobotConfigNemo extends RobotConfig {
     // Camera placement at WPI practice field (2/21/2025)
     vision.addCamera(
         new Camera(
-            "my-first-photonvision", // back
+            "rear_cam", // back
             new Transform3d(
                 new Translation3d(
                     Units.inchesToMeters(-14.5),
@@ -54,7 +54,7 @@ public class RobotConfigNemo extends RobotConfig {
                 new Rotation3d(0.0, Units.degreesToRadians(-5), Units.degreesToRadians(180)))));
     vision.addCamera(
         new Camera(
-            "left_camera",
+            "left_cam",
             new Transform3d(
                 new Translation3d(
                     Units.inchesToMeters(-4.4),
@@ -63,7 +63,7 @@ public class RobotConfigNemo extends RobotConfig {
                 new Rotation3d(0.0, Units.degreesToRadians(-5), Units.degreesToRadians(90)))));
     vision.addCamera(
         new Camera(
-            "right_camera",
+            "right_cam",
             new Transform3d(
                 new Translation3d(
                     Units.inchesToMeters(-4.4),
@@ -72,7 +72,7 @@ public class RobotConfigNemo extends RobotConfig {
                 new Rotation3d(0.0, Units.degreesToRadians(-5), Units.degreesToRadians(270)))));
     vision.addCamera(
         new Camera(
-            "front_camera",
+            "front_cam",
             new Transform3d(
                 new Translation3d(
                     Units.inchesToMeters(3),
