@@ -169,7 +169,7 @@ public class RobotConfigNemo extends RobotConfig {
       // 25:1 gear box ratio
       motorSettings.motor.gearing = 25;
       motorSettings.motor.inverted = true;
-      motorSettings.pid = new PIDController(0.0, 0, 0);
+      motorSettings.pid = new PIDController(1.0, 0, 0);
       motorSettings.reverseLimitChannel = 1;
       motorSettings.reverseLimitNegate = true;
 
@@ -187,7 +187,7 @@ public class RobotConfigNemo extends RobotConfig {
       ClimberArmControls.Constants.autoZeroSettings.voltage = -1;
       // Set this to something big, we are never going to use stall current to detect if climber has
       // reached it's end of range of motion.
-      ClimberArmControls.Constants.autoZeroSettings.minResetCurrent = 20.0;
+      ClimberArmControls.Constants.autoZeroSettings.minResetCurrent = 10.0;
       ClimberArmControls.Constants.autoZeroSettings.resetPositionRad =
           simpleMotorSettings.minPositionInRads;
       ClimberArmControls.Constants.autoZeroSettings.initialReverseDuration = 0;
