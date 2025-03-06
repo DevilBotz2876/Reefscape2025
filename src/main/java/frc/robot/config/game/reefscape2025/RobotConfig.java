@@ -217,8 +217,8 @@ public class RobotConfig {
     vision.setVisionMeasurementConsumer(drive::addVisionMeasurement);
 
     DriveControls.setupController(drive, mainController);
-    DriverAssistControls.setupController(elevator, coralArm, assistController);
-    DriverControls.setupController(elevator, coralArm, mainController);
+    DriverAssistControls.setupController(elevator, coralArm, climberArm, assistController);
+    DriverControls.setupController(elevator, coralArm, climberArm, mainController);
     PitControls.setupPitControls(elevator, coralArm, climberArm);
     CoralArmControls.setupController(coralArm, mainController);
     ElevatorControls.setupController(elevator, mainController);

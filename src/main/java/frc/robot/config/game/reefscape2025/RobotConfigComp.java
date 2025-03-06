@@ -1,6 +1,5 @@
 package frc.robot.config.game.reefscape2025;
 
-import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.math.controller.ArmFeedforward;
 import edu.wpi.first.math.controller.ElevatorFeedforward;
 import edu.wpi.first.math.controller.PIDController;
