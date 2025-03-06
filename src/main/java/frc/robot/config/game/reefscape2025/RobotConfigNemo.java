@@ -168,16 +168,15 @@ public class RobotConfigNemo extends RobotConfig {
       MotorIOBaseSettings motorSettings = new MotorIOBaseSettings();
       // 25:1 gear box ratio
       motorSettings.motor.gearing = 25;
-      motorSettings.motor.inverted = false;
+      motorSettings.motor.inverted = true;
       motorSettings.pid = new PIDController(0.0, 0, 0);
       motorSettings.reverseLimitChannel = 1;
       motorSettings.reverseLimitNegate = true;
 
       SimpleMotorSettings simpleMotorSettings = new SimpleMotorSettings();
       simpleMotorSettings.minPositionInRads = 0;
-      simpleMotorSettings.maxPositionInRads = 100 * 2 * Math.PI; // TODO: determine this empirically
-      simpleMotorSettings.startingPositionInRads =
-          simpleMotorSettings.maxPositionInRads / 2; // TODO: determine this empirically
+      simpleMotorSettings.maxPositionInRads = 14.5;
+      simpleMotorSettings.startingPositionInRads = 9;
       simpleMotorSettings.color = new Color8Bit(Color.kRed);
       simpleMotorSettings.feedforward = new SimpleMotorFeedforward(0, 0, 0);
       simpleMotorSettings.motor = DCMotor.getNEO(1);
@@ -185,12 +184,13 @@ public class RobotConfigNemo extends RobotConfig {
       SparkMaxSettings settings = new SparkMaxSettings();
       settings.canId = 50;
 
-      ClimberArmControls.Constants.autoZeroSettings.voltage = 1;
+      ClimberArmControls.Constants.autoZeroSettings.voltage = -1;
       // Set this to something big, we are never going to use stall current to detect if climber has
       // reached it's end of range of motion.
       ClimberArmControls.Constants.autoZeroSettings.minResetCurrent = 20.0;
       ClimberArmControls.Constants.autoZeroSettings.resetPositionRad =
           simpleMotorSettings.minPositionInRads;
+      ClimberArmControls.Constants.autoZeroSettings.initialReverseDuration = 0;
 
       climberArm =
           new SimpleMotorSubsystem(
