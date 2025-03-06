@@ -1,6 +1,5 @@
 package frc.robot.subsystems.implementations.motor;
 
-import edu.wpi.first.math.controller.ElevatorFeedforward;
 import edu.wpi.first.math.trajectory.TrapezoidProfile;
 import edu.wpi.first.math.trajectory.TrapezoidProfile.Constraints;
 import edu.wpi.first.math.trajectory.TrapezoidProfile.State;
@@ -188,38 +187,18 @@ public class ElevatorMotorSubsystem extends MotorSubsystem implements Elevator {
   }
 
   private void setFFKs(double Ks) {
-    settings.feedforward =
-        new ElevatorFeedforward(
-            Ks,
-            settings.feedforward.getKg(),
-            settings.feedforward.getKv(),
-            settings.feedforward.getKa());
+    settings.feedforward.setKs(Ks);
   }
 
   private void setFFKg(double Kg) {
-    settings.feedforward =
-        new ElevatorFeedforward(
-            settings.feedforward.getKs(),
-            Kg,
-            settings.feedforward.getKv(),
-            settings.feedforward.getKa());
+    settings.feedforward.setKg(Kg);
   }
 
   private void setFFKv(double Kv) {
-    settings.feedforward =
-        new ElevatorFeedforward(
-            settings.feedforward.getKs(),
-            settings.feedforward.getKg(),
-            Kv,
-            settings.feedforward.getKa());
+    settings.feedforward.setKv(Kv);
   }
 
   private void setFFKa(double Ka) {
-    settings.feedforward =
-        new ElevatorFeedforward(
-            settings.feedforward.getKs(),
-            settings.feedforward.getKg(),
-            settings.feedforward.getKv(),
-            Ka);
+    settings.feedforward.setKa(Ka);
   }
 }

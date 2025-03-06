@@ -29,7 +29,7 @@ public class DriveStraightPID extends Command {
   /**
    * The constructor for the Drive Straight PID command.
    *
-   * @param drivetrain The drive train subsystem.
+   * @param drive The drive interface implementation.
    * @param distance The distance (in meters) the robot needs to cover.
    */
   public DriveStraightPID(Drive drive, double distance) {
