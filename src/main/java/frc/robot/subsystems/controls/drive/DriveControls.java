@@ -56,7 +56,7 @@ public class DriveControls {
     }
   }
 
-  protected static int myCoolPoseKeyIdx = 3;
+  protected static int myCoolPoseKeyIdx = TargetPose.REEF_A.getIndex();
 
   protected static int coolestNumberEver = 0;
 
@@ -157,17 +157,18 @@ public class DriveControls {
           myCoolPoseKeyIdx = chosenPose.getIndex();
           SmartDashboard.putNumber("Chosen Pose Index", myCoolPoseKeyIdx);
         });
-    controller
-        .x()
-        .onTrue(
-            new InstantCommand(
-                () -> {
-                  if (myCoolPoseKeyIdx == 11) myCoolPoseKeyIdx = 2;
-                  else myCoolPoseKeyIdx = 11;
-                    if (++myCoolPoseKeyIdx == TargetPoseOption.values().length) myCoolPoseKeyIdx
-                  = 1;
-                  SmartDashboard.putNumber("Chosen Pose Index", myCoolPoseKeyIdx);
-                }));
+    // controller
+    //     .x()
+    //     .onTrue(
+    //         new InstantCommand(
+    //             () -> {
+    //               if (myCoolPoseKeyIdx == 11) myCoolPoseKeyIdx = 2;
+    //               else myCoolPoseKeyIdx = 11;
+    //               //   if (++myCoolPoseKeyIdx == TargetPoseOption.values().length)
+    // myCoolPoseKeyIdx
+    //               // = 1;
+    //               SmartDashboard.putNumber("Chosen Pose Index", myCoolPoseKeyIdx);
+    //             }));
 
     // Define command to go to specific pose
     Command coolGoToPose =
@@ -185,14 +186,22 @@ public class DriveControls {
                 Map.entry(
                     4, // processor
                     AutoBuilder.pathfindToPose(poseProcessor, constraints, 0.0)),
-                coolDynamicPathScoringCommand(TargetPose.REEF_A, constraints, DriverControls.getPrepareToScoreCommand(elevator, arm), new ArmToPosition(arm, () -> 0)),
-                    // AutoBuilder.pathfindToPose(poseReefA, constraints, 0.0)
+                coolDynamicPathScoringCommand(
+                    TargetPose.REEF_A,
+                    constraints,
+                    DriverControls.getPrepareToScoreCommand(elevator, arm),
+                    new ArmToPosition(arm, () -> 0)),
+                // AutoBuilder.pathfindToPose(poseReefA, constraints, 0.0)
                 //     .andThen(AutoBuilder.pathfindToPose(poseReefAClose, constraints, 0.0))),
                 // Map.entry(
                 //     TargetPoseOption.REEF_G.getIndex(),
                 //     AutoBuilder.pathfindToPose(poseReefG, constraints, 0.5)
                 //         .andThen(AutoBuilder.pathfindToPose(poseReefGClose, constraints, 0.0))),
-                coolDynamicPathScoringCommand(TargetPose.REEF_G, constraints, DriverControls.getPrepareToScoreCommand(elevator, arm), new ArmToPosition(arm, () -> 0)),
+                coolDynamicPathScoringCommand(
+                    TargetPose.REEF_G,
+                    constraints,
+                    DriverControls.getPrepareToScoreCommand(elevator, arm),
+                    new ArmToPosition(arm, () -> 0)),
                 // AutoBuilder.pathfindToPose(poseReefGClose, constraints, 0.0)),
                 Map.entry(
                     TargetPoseOption.REEF_C.getIndex(),
@@ -288,29 +297,28 @@ public class DriveControls {
      */
   }
 
-  public static void setupAssistantController(
-      Drive drive, CommandXboxController controller) {
+  public static void setupAssistantController(Drive drive, CommandXboxController controller) {
     controller
-            .x()
-            .whileTrue(
-                new RunCommand(
-                    () -> {
-                    double myX = controller.getLeftX();
-                    double myY = -controller.getLeftY();
+        .x()
+        .whileTrue(
+            new RunCommand(
+                () -> {
+                  double myX = controller.getLeftX();
+                  double myY = -controller.getLeftY();
 
-                    // TODO maybe keep calculation in radians?
-                    double myNumber = Math.atan2(myY, myX) * (180 / Math.PI);
-                    if (myNumber < 0) myNumber += 360; // obtain this angle as a positive number
+                  // TODO maybe keep calculation in radians?
+                  double myNumber = Math.atan2(myY, myX) * (180 / Math.PI);
+                  if (myNumber < 0) myNumber += 360; // obtain this angle as a positive number
 
-                    // This number can be used to index into the ordered reef positions array!
-                    coolestNumberEver = (int) myNumber / 30;
-                    
-                    // TODO remove Smartdashboard number; only display reef position
-                    SmartDashboard.putNumber("AAAAAA", coolestNumberEver);
-                    SmartDashboard.putString(
-                        "AAAAAA Reef Position", orderedReefPositions[coolestNumberEver]);
-                    }));
-            }
+                  // This number can be used to index into the ordered reef positions array!
+                  coolestNumberEver = (int) myNumber / 30;
+
+                  // TODO remove Smartdashboard number; only display reef position
+                  SmartDashboard.putNumber("AAAAAA", coolestNumberEver);
+                  SmartDashboard.putString(
+                      "AAAAAA Reef Position", orderedReefPositions[coolestNumberEver]);
+                }));
+  }
 
   private static Entry<Integer, Command> createDynamicPathScoringCommand(
       int index,
@@ -344,8 +352,7 @@ public class DriveControls {
                 AutoBuilder.pathfindToPoseFlipped(target.getPrepPose(), constraints, 0.0),
                 prepareToScoreCommand,
                 AutoBuilder.pathfindToPoseFlipped(target.getPose(), constraints, 0.0),
-                scoreCommand
-                ));
+                scoreCommand));
     return entry;
   }
 }
