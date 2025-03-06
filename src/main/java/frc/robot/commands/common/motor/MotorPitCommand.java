@@ -19,13 +19,13 @@ public class MotorPitCommand extends Command {
   }
 
   @Override
-  public void initialize() {
-    
-  }
-
-  @Override
   public void execute() {
     voltage = SmartDashboard.getNumber(key, 0);
     motor.runVoltage(voltage);
+  }
+
+  @Override
+  public void end(boolean interrupted) {
+    motor.runVoltage(0);
   }
 }
