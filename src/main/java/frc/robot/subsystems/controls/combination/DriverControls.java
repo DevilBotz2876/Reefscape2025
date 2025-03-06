@@ -20,10 +20,11 @@ import frc.robot.subsystems.interfaces.SimpleMotor;
 import java.util.Map;
 
 public class DriverControls {
-  public static class Constants {
-    public static SendableChooser<Integer> prepareScoreChooser = new SendableChooser<>();
-    public static Integer prepareScoreSelctedIndex = 2;
-  }
+    //prob wrong name not constants
+    public static class Constants {
+        public static SendableChooser<Integer> prepareChooser = new SendableChooser<>();
+        public static Integer prepareScoreSelctedIndex = 2;
+      }
 
   public static void setupController(
       Elevator elevator, Arm coralArm, SimpleMotor climber, CommandXboxController controller) {
@@ -40,50 +41,101 @@ public class DriverControls {
         new SequentialCommandGroup(
             new ArmToPosition(coralArm, () -> -90).withTimeout(0),
             new ElevatorToPosition(elevator, () -> 0.8));
-    controller.a().and(ableToIntake).onTrue(prepareIntakeCoralCommand);
+    controller.b().onTrue(prepareIntakeCoralCommand.andThen(
+        new InstantCommand(
+        () -> {
+          
+          DriverControls.Constants.prepareScoreSelctedIndex = 1;
+          SmartDashboard.putNumber(
+              "Driver " + "/Misc/Prepare Selection",
+              DriverControls.Constants.prepareScoreSelctedIndex);
+        })));
 
     Command intakeCoralCommand = new ElevatorToPosition(elevator, () -> 0.35);
-    controller.leftTrigger().onTrue(intakeCoralCommand);
+    Trigger scoreMode = new Trigger(() -> Constants.prepareScoreSelctedIndex >= 2);
+    controller.leftTrigger().and(scoreMode.negate()).and(ableToIntake).onTrue(intakeCoralCommand);
 
     Command score = new ArmToPosition(coralArm, () -> 0);
-    controller.rightTrigger().onTrue(score);
+    controller.rightBumper().onTrue(score);
 
-    Constants.prepareScoreChooser.setDefaultOption("L2", 2);
+    Constants.prepareChooser.setDefaultOption("L2", 2);
 
-    Constants.prepareScoreChooser.addOption("L3", 3);
+    Constants.prepareChooser.addOption("L3", 3);
 
-    Constants.prepareScoreChooser.addOption("L4", 4);
+    Constants.prepareChooser.addOption("L4", 4);
+
+    controller.leftTrigger().and(scoreMode).onTrue(getPrepareToScoreCommand(elevator, coralArm));
+
+    controller
+        .y()
+        .onTrue(
+            new InstantCommand(
+                () -> {
+                  DriverControls.Constants.prepareScoreSelctedIndex = 4;
+                  SmartDashboard.putNumber(
+                      "Driver " + "/Misc/Prepare Selection",
+                      DriverControls.Constants.prepareScoreSelctedIndex);
+                }));
+
+    controller
+        .x()
+        .onTrue(
+            new InstantCommand(
+                () -> {
+                  
+                  DriverControls.Constants.prepareScoreSelctedIndex = 3;
+                  SmartDashboard.putNumber(
+                      "Driver " + "/Misc/Prepare Selection",
+                      DriverControls.Constants.prepareScoreSelctedIndex);
+                }));
+
+    controller
+        .a()
+        .onTrue(
+            new InstantCommand(
+                () -> {
+                  
+                  DriverControls.Constants.prepareScoreSelctedIndex = 2;
+                  SmartDashboard.putNumber(
+                      "Driver " + "/Misc/Prepare Selection",
+                      DriverControls.Constants.prepareScoreSelctedIndex);
+                }));
+
+    DriverControls.Constants.prepareChooser.onChange(
+        (index) -> {
+          DriverControls.Constants.prepareScoreSelctedIndex = index;
+          SmartDashboard.putNumber("Driver " + "/Misc/Prepare To Score Selection", index);
+        });
+
 
     SmartDashboard.putNumber(
         "Driver " + "/Misc/Prepare To Score Selection",
-        Constants.prepareScoreChooser.getSelected());
+        Constants.prepareChooser.getSelected());
 
     SmartDashboard.putData(
         "Driver " + "/Commands/Prepare To Score Command",
         getPrepareToScoreCommand(elevator, coralArm));
 
     SmartDashboard.putData(
-        "Driver " + "/Misc/Prepare To Score Chooser", Constants.prepareScoreChooser);
-
-    controller.y().onTrue(getPrepareToScoreCommand(elevator, coralArm));
+        "Driver " + "/Misc/Prepare To Score Chooser", Constants.prepareChooser);
 
     // climber
-    SubsystemBase climberSubsystem = (SubsystemBase) climber;
-    // prepare to climb
-    controller
-        .leftBumper()
-        .onTrue(
-            new InstantCommand(
-                () -> climber.setTargetPosition(climber.getSettings().maxPositionInRads),
-                climberSubsystem));
+    // SubsystemBase climberSubsystem = (SubsystemBase) climber;
+    // // prepare to climb
+    // controller
+    //     .leftBumper()
+    //     .onTrue(
+    //         new InstantCommand(
+    //             () -> climber.setTargetPosition(climber.getSettings().maxPositionInRads),
+    //             climberSubsystem));
 
-    // climb
-    controller
-        .rightBumper()
-        .onTrue(
-            new InstantCommand(
-                () -> climber.setTargetPosition(climber.getSettings().minPositionInRads),
-                climberSubsystem));
+    // // climb
+    // controller
+    //     .rightBumper()
+    //     .onTrue(
+    //         new InstantCommand(
+    //             () -> climber.setTargetPosition(climber.getSettings().minPositionInRads),
+    //             climberSubsystem));
 
     // multi controll not workking in each subsystem inde
     controller.povUp().whileTrue(new ElevatorCommand(elevator, () -> 0.5));
@@ -98,6 +150,9 @@ public class DriverControls {
   public static Command getPrepareToScoreCommand(Elevator elevator, Arm coralArm) {
     return new SelectCommand<>(
         Map.ofEntries(
+            Map.entry(
+                1,
+                new InstantCommand(() -> System.out.println("Not scoring mode selected"))),
             Map.entry(
                 2,
                 new SequentialCommandGroup(

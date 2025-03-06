@@ -1,6 +1,7 @@
 package frc.robot.subsystems.controls.combination;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -47,69 +48,78 @@ public class DriverAssistControls {
             new ArmToPosition(coralArm, () -> 0),
             new ElevatorToPosition(elevator, () -> 1.3)));
 
-    controller
-        .y()
-        .onTrue(
-            new InstantCommand(
-                () -> {
-                  DriverControls.Constants.prepareScoreSelctedIndex = 4;
-                  SmartDashboard.putNumber(
-                      "Driver " + "/Misc/Prepare To Score Selection",
-                      DriverControls.Constants.prepareScoreSelctedIndex);
-                }));
+        Command prepareIntakeCoralCommand =
+        new SequentialCommandGroup(
+            new ArmToPosition(coralArm, () -> -90).withTimeout(0),
+            new ElevatorToPosition(elevator, () -> 0.8));
+    controller.b().onTrue(prepareIntakeCoralCommand.andThen(
+        new InstantCommand(
+        () -> {
+          
+          DriverControls.Constants.prepareScoreSelctedIndex = 1;
+          SmartDashboard.putNumber(
+              "Driver " + "/Misc/Prepare Selection",
+              DriverControls.Constants.prepareScoreSelctedIndex);
+        })));
 
-    controller
-        .x()
-        .onTrue(
-            new InstantCommand(
-                () -> {
-                  // DriverControls.Constants.prepareScoreChooser.close();
-                  DriverControls.Constants.prepareScoreSelctedIndex = 3;
-                  SmartDashboard.putNumber(
-                      "Driver " + "/Commands/Prepare To Score Selection",
-                      DriverControls.Constants.prepareScoreSelctedIndex);
-                }));
+        controller
+            .y()
+            .onTrue(
+                new InstantCommand(
+                    () -> {
+                      DriverControls.Constants.prepareScoreSelctedIndex = 4;
+                      SmartDashboard.putNumber(
+                          "Driver " + "/Misc/Prepare Selection",
+                          DriverControls.Constants.prepareScoreSelctedIndex);
+                    }));
+    
+        controller
+            .x()
+            .onTrue(
+                new InstantCommand(
+                    () -> {
+                      
+                      DriverControls.Constants.prepareScoreSelctedIndex = 3;
+                      SmartDashboard.putNumber(
+                          "Driver " + "/Misc/Prepare Selection",
+                          DriverControls.Constants.prepareScoreSelctedIndex);
+                    }));
+    
+        controller
+            .a()
+            .onTrue(
+                new InstantCommand(
+                    () -> {
+                      
+                      DriverControls.Constants.prepareScoreSelctedIndex = 2;
+                      SmartDashboard.putNumber(
+                          "Driver " + "/Misc/Prepare Selection",
+                          DriverControls.Constants.prepareScoreSelctedIndex);
+                    }));
+    
 
-    controller
-        .a()
-        .onTrue(
-            new InstantCommand(
-                () -> {
-                  // DriverControls.Constants.prepareScoreChooser.close();
-                  DriverControls.Constants.prepareScoreSelctedIndex = 2;
-                  SmartDashboard.putNumber(
-                      "Driver " + "/Misc/Prepare To Score Selection",
-                      DriverControls.Constants.prepareScoreSelctedIndex);
-                }));
+    // controller
+    //     .rightTrigger()
+    //     .onTrue(
+    //         new MotorAutoResetEncoderCommand(
+    //             (Motor) coralArm, CoralArmControls.Constants.autoZeroSettings));
 
-    DriverControls.Constants.prepareScoreChooser.onChange(
-        (index) -> {
-          DriverControls.Constants.prepareScoreSelctedIndex = index;
-          SmartDashboard.putNumber("Driver " + "/Misc/Prepare To Score Selection", index);
-        });
+    // // climber
+    // SubsystemBase climberSubsystem = (SubsystemBase) climber;
+    // // prepare to climb
+    // controller
+    //     .leftBumper()
+    //     .onTrue(
+    //         new InstantCommand(
+    //             () -> climber.setTargetPosition(climber.getSettings().maxPositionInRads),
+    //             climberSubsystem));
 
-    controller
-        .rightTrigger()
-        .onTrue(
-            new MotorAutoResetEncoderCommand(
-                (Motor) coralArm, CoralArmControls.Constants.autoZeroSettings));
-
-    // climber
-    SubsystemBase climberSubsystem = (SubsystemBase) climber;
-    // prepare to climb
-    controller
-        .leftBumper()
-        .onTrue(
-            new InstantCommand(
-                () -> climber.setTargetPosition(climber.getSettings().maxPositionInRads),
-                climberSubsystem));
-
-    // climb
-    controller
-        .rightBumper()
-        .onTrue(
-            new InstantCommand(
-                () -> climber.setTargetPosition(climber.getSettings().minPositionInRads),
-                climberSubsystem));
+    // // climb
+    // controller
+    //     .rightBumper()
+    //     .onTrue(
+    //         new InstantCommand(
+    //             () -> climber.setTargetPosition(climber.getSettings().minPositionInRads),
+    //             climberSubsystem));
   }
 }

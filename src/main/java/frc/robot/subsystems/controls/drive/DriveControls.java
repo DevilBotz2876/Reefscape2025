@@ -101,14 +101,14 @@ public class DriveControls {
           myCoolPoseKeyIdx = chosenPose.getIndex();
           SmartDashboard.putNumber("Chosen Pose Index", myCoolPoseKeyIdx);
         });
-    controller
-        .x()
-        .onTrue(
-            new InstantCommand(
-                () -> {
-                  if (++myCoolPoseKeyIdx == TargetPoseOption.values().length) myCoolPoseKeyIdx = 1;
-                  SmartDashboard.putNumber("Chosen Pose Index", myCoolPoseKeyIdx);
-                }));
+    // controller
+    //     .x()
+    //     .onTrue(
+    //         new InstantCommand(
+    //             () -> {
+    //               if (++myCoolPoseKeyIdx == TargetPoseOption.values().length) myCoolPoseKeyIdx = 1;
+    //               SmartDashboard.putNumber("Chosen Pose Index", myCoolPoseKeyIdx);
+    //             }));
 
     // Define command to go to specific pose
     Command coolGoToPose =
