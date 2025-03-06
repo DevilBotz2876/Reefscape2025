@@ -5,6 +5,7 @@ import com.pathplanner.lib.auto.NamedCommands;
 import edu.wpi.first.math.controller.ArmFeedforward;
 import edu.wpi.first.math.controller.ElevatorFeedforward;
 import edu.wpi.first.math.controller.PIDController;
+import edu.wpi.first.math.controller.SimpleMotorFeedforward;
 import edu.wpi.first.math.geometry.Rotation3d;
 import edu.wpi.first.math.geometry.Transform3d;
 import edu.wpi.first.math.geometry.Translation3d;
@@ -26,9 +27,11 @@ import frc.robot.subsystems.implementations.drive.DriveBase;
 import frc.robot.subsystems.implementations.drive.DriveSwerveYAGSL;
 import frc.robot.subsystems.implementations.motor.ArmMotorSubsystem;
 import frc.robot.subsystems.implementations.motor.ElevatorMotorSubsystem;
+import frc.robot.subsystems.implementations.motor.SimpleMotorSubsystem;
 import frc.robot.subsystems.interfaces.Arm.ArmSettings;
 import frc.robot.subsystems.interfaces.Drive;
 import frc.robot.subsystems.interfaces.Elevator.ElevatorSettings;
+import frc.robot.subsystems.interfaces.SimpleMotor.SimpleMotorSettings;
 import frc.robot.subsystems.interfaces.Vision.Camera;
 
 /* Override Nemo specific constants here */
@@ -168,21 +171,18 @@ public class RobotConfigNemo extends RobotConfig {
       MotorIOBaseSettings motorSettings = new MotorIOBaseSettings();
       // 25:1 gear box ratio
       motorSettings.motor.gearing = 25;
-      motorSettings.motor.inverted = false; // false for Sim
-      motorSettings.pid = new PIDController(0.0, 0, 0);
+      motorSettings.motor.inverted = true;
+      motorSettings.pid = new PIDController(1.0, 0, 0);
       motorSettings.reverseLimitChannel = 1;
       motorSettings.reverseLimitNegate = true;
 
-      ArmSettings armSettings = new ArmSettings();
-      armSettings.minAngleInDegrees = 0;
-      armSettings.maxAngleInDegrees = 135;
-      armSettings.startingAngleInDegrees = armSettings.minAngleInDegrees;
-      armSettings.feedforward = new ArmFeedforward(0.0, 0.0, 0.0, 0.0);
-      armSettings.color = new Color8Bit(Color.kRed);
-      armSettings.armLengthInMeters = 0.5;
-      armSettings.armMassInKg = 1.0;
-      armSettings.motor = DCMotor.getNEO(1);
-      armSettings.simulateGravity = true;
+      SimpleMotorSettings simpleMotorSettings = new SimpleMotorSettings();
+      simpleMotorSettings.minPositionInRads = 0;
+      simpleMotorSettings.maxPositionInRads = 14.5;
+      simpleMotorSettings.startingPositionInRads = 9;
+      simpleMotorSettings.color = new Color8Bit(Color.kRed);
+      simpleMotorSettings.feedforward = new SimpleMotorFeedforward(0, 0, 0);
+      simpleMotorSettings.motor = DCMotor.getNEO(1);
 
       SparkMaxSettings settings = new SparkMaxSettings();
       settings.canId = 50;
@@ -192,27 +192,12 @@ public class RobotConfigNemo extends RobotConfig {
       // reached it's end of range of motion.
       ClimberArmControls.Constants.autoZeroSettings.minResetCurrent = 10.0;
       ClimberArmControls.Constants.autoZeroSettings.resetPositionRad =
-          Units.degreesToRadians(armSettings.minAngleInDegrees);
+          simpleMotorSettings.minPositionInRads;
+      ClimberArmControls.Constants.autoZeroSettings.initialReverseDuration = 0;
 
       climberArm =
-          new ArmMotorSubsystem(
-              // new MotorIOArmStub(motorSettings, armSettings), "Coral", armSettings);
-              new MotorIOSparkMax(motorSettings, settings), "Climber", armSettings);
+          new SimpleMotorSubsystem(
+              new MotorIOSparkMax(motorSettings, settings), "Climber", simpleMotorSettings);
     }
-    NamedCommands.registerCommand(
-        "Move Elevator to 0.5 meter", new ElevatorToPosition(elevator, () -> 0.5));
-    NamedCommands.registerCommand(
-        "Move Elevator to 1.553 meter", new ElevatorToPosition(elevator, () -> 1.553));
-    NamedCommands.registerCommand(
-        "Move Arm 75 degrees", new ArmToPosition(coralArm, () -> 70).withTimeout(1.5));
-    NamedCommands.registerCommand(
-        "Move Arm 0 degrees", new ArmToPosition(coralArm, () -> 0).withTimeout(1.5));
-    NamedCommands.registerCommand(
-        "Move Elevator to 0.8 meter", new ElevatorToPosition(elevator, () -> 0.8));
-    NamedCommands.registerCommand(
-        "Move Elevator to 0.4 meter", new ElevatorToPosition(elevator, () -> 0.4));
-    NamedCommands.registerCommand(
-        "Move Arm for Intake", new ArmToPosition(coralArm, () -> -90).withTimeout(0));
-    autoChooser = AutoBuilder.buildAutoChooser("Sit Still");
   }
 }

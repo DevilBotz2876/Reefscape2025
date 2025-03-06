@@ -5,6 +5,7 @@ import edu.wpi.first.apriltag.AprilTagFields;
 import edu.wpi.first.math.controller.ArmFeedforward;
 import edu.wpi.first.math.controller.ElevatorFeedforward;
 import edu.wpi.first.math.controller.PIDController;
+import edu.wpi.first.math.controller.SimpleMotorFeedforward;
 import edu.wpi.first.math.geometry.Rotation3d;
 import edu.wpi.first.math.geometry.Transform3d;
 import edu.wpi.first.math.geometry.Translation3d;
@@ -21,18 +22,22 @@ import frc.robot.Robot;
 import frc.robot.io.implementations.motor.MotorIOArmStub;
 import frc.robot.io.implementations.motor.MotorIOBase.MotorIOBaseSettings;
 import frc.robot.io.implementations.motor.MotorIOElevatorStub;
+import frc.robot.io.implementations.motor.MotorIOStub;
 import frc.robot.subsystems.controls.arm.ClimberArmControls;
 import frc.robot.subsystems.controls.arm.CoralArmControls;
 import frc.robot.subsystems.controls.combination.DriverAssistControls;
+import frc.robot.subsystems.controls.combination.PitControls;
 import frc.robot.subsystems.controls.combination.DriverControls;
 import frc.robot.subsystems.controls.drive.DriveControls;
 import frc.robot.subsystems.controls.elevator.ElevatorControls;
 import frc.robot.subsystems.implementations.drive.DriveBase;
 import frc.robot.subsystems.implementations.motor.ArmMotorSubsystem;
 import frc.robot.subsystems.implementations.motor.ElevatorMotorSubsystem;
+import frc.robot.subsystems.implementations.motor.SimpleMotorSubsystem;
 import frc.robot.subsystems.implementations.vision.VisionSubsystem;
 import frc.robot.subsystems.interfaces.Arm.ArmSettings;
 import frc.robot.subsystems.interfaces.Elevator.ElevatorSettings;
+import frc.robot.subsystems.interfaces.SimpleMotor.SimpleMotorSettings;
 import frc.robot.subsystems.interfaces.Vision.Camera;
 
 /* Put all constants here with reasonable defaults */
@@ -42,7 +47,7 @@ public class RobotConfig {
   public static VisionSubsystem vision;
   protected static ElevatorMotorSubsystem elevator;
   public static ArmMotorSubsystem coralArm;
-  public static ArmMotorSubsystem climberArm;
+  public static SimpleMotorSubsystem climberArm;
 
   // Controls
   public CommandXboxController mainController = new CommandXboxController(0);
@@ -99,22 +104,16 @@ public class RobotConfig {
       if (Robot.isSimulation()) {
         vision.addCamera(
             new Camera(
-                "photonvision",
+                "rear_cam",
                 new Transform3d(
-                    new Translation3d(-0.221, 0, .164),
-                    new Rotation3d(0, Units.degreesToRadians(-20), Units.degreesToRadians(180)))));
-        vision.addCamera(
-            new Camera(
-                "left",
-                new Transform3d(
-                    new Translation3d(0, 0.221, .164),
-                    new Rotation3d(0, Units.degreesToRadians(-20), Units.degreesToRadians(90)))));
-        vision.addCamera(
-            new Camera(
-                "right",
-                new Transform3d(
-                    new Translation3d(0, -0.221, .164),
-                    new Rotation3d(0, Units.degreesToRadians(-20), Units.degreesToRadians(-90)))));
+                    new Translation3d(
+                        Units.inchesToMeters(0.295),
+                        Units.inchesToMeters(-11.443),
+                        Units.inchesToMeters(39.663)),
+                    new Rotation3d(
+                        Units.degreesToRadians(12),
+                        Units.degreesToRadians(-33),
+                        Units.degreesToRadians(170)))));
       }
     }
 
@@ -182,25 +181,24 @@ public class RobotConfig {
       motorSettings.reverseLimitChannel = 1;
       motorSettings.reverseLimitNegate = true;
 
-      ArmSettings armSettings = new ArmSettings();
-      armSettings.minAngleInDegrees = 0;
-      armSettings.maxAngleInDegrees = 135;
-      armSettings.startingAngleInDegrees = 90;
-      armSettings.color = new Color8Bit(Color.kRed);
-      armSettings.feedforward = new ArmFeedforward(0, 0, 0, 0);
-      armSettings.armLengthInMeters = 0.5;
-      armSettings.armMassInKg = 0.75;
-      armSettings.motor = DCMotor.getNEO(1);
-      armSettings.simulateGravity = true;
+      SimpleMotorSettings simpleMotorSettings = new SimpleMotorSettings();
+      simpleMotorSettings.minPositionInRads = 0;
+      simpleMotorSettings.maxPositionInRads = 100 * 2 * Math.PI;
+      simpleMotorSettings.startingPositionInRads = simpleMotorSettings.maxPositionInRads / 2;
+      simpleMotorSettings.maxVelocityInRadiansPerSecond = 16 * 2 * Math.PI;
+      simpleMotorSettings.maxAccelerationInRadiansPerSecondSquared = 64 * 2 * Math.PI;
+      simpleMotorSettings.color = new Color8Bit(Color.kRed);
+      simpleMotorSettings.feedforward = new SimpleMotorFeedforward(0, 0, 0);
+      simpleMotorSettings.motor = DCMotor.getNEO(1);
 
-      ClimberArmControls.Constants.autoZeroSettings.voltage = -1.0;
+      ClimberArmControls.Constants.autoZeroSettings.voltage = -6.0;
       ClimberArmControls.Constants.autoZeroSettings.minResetCurrent = 40.0;
       ClimberArmControls.Constants.autoZeroSettings.resetPositionRad =
-          Units.degreesToRadians(armSettings.minAngleInDegrees);
+          simpleMotorSettings.minPositionInRads;
 
       climberArm =
-          new ArmMotorSubsystem(
-              new MotorIOArmStub(motorSettings, armSettings), "Climber", armSettings);
+          new SimpleMotorSubsystem(
+              new MotorIOStub(motorSettings, simpleMotorSettings), "Climber", simpleMotorSettings);
     }
   }
 
@@ -213,6 +211,7 @@ public class RobotConfig {
     vision.setVisionMeasurementConsumer(drive::addVisionMeasurement);
 
     DriverAssistControls.setupController(elevator, coralArm, assistController);
+    PitControls.setupPitControls(elevator, coralArm, climberArm);
     DriverControls.setupController(elevator, coralArm, mainController);
     DriveControls.setupController(drive, elevator, coralArm, mainController);
     DriveControls.setupAssistantController(drive, assistController);
