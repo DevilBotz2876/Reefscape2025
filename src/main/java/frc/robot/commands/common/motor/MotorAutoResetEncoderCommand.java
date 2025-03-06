@@ -74,5 +74,6 @@ public class MotorAutoResetEncoderCommand extends Command {
     if (false == interrupted) {
       motor.resetEncoder(settings.resetPositionRad);
     }
+    motor.runVoltage(0);
   }
 }
