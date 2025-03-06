@@ -116,7 +116,6 @@ public class DriverControls {
 
     controller.y().onTrue(prepareScoreControllerCommand);
   }
-  
 
   public static Command getPrepareToScoreCommand(Elevator elevator, Arm arm) {
     return new SelectCommand<>(
