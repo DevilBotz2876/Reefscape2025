@@ -6,7 +6,6 @@ import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Transform3d;
 import edu.wpi.first.math.util.Units;
-import edu.wpi.first.wpilibj.RobotState;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.subsystems.interfaces.Vision;
 import java.util.ArrayList;
@@ -177,14 +176,9 @@ public class VisionSubsystem extends SubsystemBase implements Vision {
       Optional<EstimatedRobotPose> currentEstimatedRobotPose = camera.getEstimatedRobotPose();
       if (currentEstimatedRobotPose.isPresent()) {
         debugTargetDistance = camera.getDistanceToBestTarget();
-        double targetDistance;
-        if (RobotState.isAutonomous()) {
-          targetDistance = 5.0;
-        } else {
-          targetDistance = 0.8;
-        }
+
         // Add vision measurement to the consumer.
-        if (visionMeasurementConsumer != null && debugTargetDistance < targetDistance) {
+        if (visionMeasurementConsumer != null && debugTargetDistance < 1.5) {
           visionMeasurementConsumer.add(
               currentEstimatedRobotPose.get().estimatedPose.toPose2d(),
               currentEstimatedRobotPose.get().timestampSeconds,

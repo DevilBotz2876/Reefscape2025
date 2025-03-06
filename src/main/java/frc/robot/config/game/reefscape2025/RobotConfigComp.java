@@ -71,8 +71,8 @@ public class RobotConfigComp extends RobotConfig {
                     Units.inchesToMeters(39.663)),
                 new Rotation3d(
                     Units.degreesToRadians(180.0),
-                    Units.degreesToRadians(33.0),
-                    Units.degreesToRadians(190.0)))));
+                    Units.degreesToRadians(-33.0),
+                    Units.degreesToRadians(170.0)))));
     // Comp has a Swerve drive train
     Drive.Constants.rotatePidKp = 0.025;
     Drive.Constants.rotatePidKi = 0.0;

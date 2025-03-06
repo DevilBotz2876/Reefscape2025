@@ -17,7 +17,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "Start to I"
+                  "pathName": "Start to Near I"
                 }
               },
               {
@@ -53,6 +53,12 @@
                 }
               }
             ]
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Get to I"
           }
         },
         {
