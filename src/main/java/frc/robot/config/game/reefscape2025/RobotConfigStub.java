@@ -27,7 +27,7 @@ public class RobotConfigStub extends RobotConfig {
   private final FlywheelMotorSubsystem algaeIntake;
 
   public RobotConfigStub() {
-    super(false, true, false);
+    super(false, true, true);
 
     drive = new DriveSwerveYAGSL("yagsl/stub");
     if (Robot.isSimulation()) {
