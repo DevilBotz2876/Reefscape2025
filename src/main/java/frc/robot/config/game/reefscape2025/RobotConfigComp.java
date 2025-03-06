@@ -1,13 +1,19 @@
 package frc.robot.config.game.reefscape2025;
 
-import edu.wpi.first.cameraserver.CameraServer;
+import com.pathplanner.lib.auto.AutoBuilder;
+import com.pathplanner.lib.auto.NamedCommands;
 import edu.wpi.first.math.controller.ArmFeedforward;
 import edu.wpi.first.math.controller.ElevatorFeedforward;
 import edu.wpi.first.math.controller.PIDController;
+import edu.wpi.first.math.geometry.Rotation3d;
+import edu.wpi.first.math.geometry.Transform3d;
+import edu.wpi.first.math.geometry.Translation3d;
 import edu.wpi.first.math.system.plant.DCMotor;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.util.Color;
 import edu.wpi.first.wpilibj.util.Color8Bit;
+import frc.robot.commands.common.arm.ArmToPosition;
+import frc.robot.commands.common.elevator.ElevatorToPosition;
 import frc.robot.io.implementations.motor.MotorIOBase.MotorIOBaseSettings;
 import frc.robot.io.implementations.motor.MotorIOTalonFx;
 import frc.robot.io.implementations.motor.MotorIOTalonFx.TalonFxSettings;
@@ -20,11 +26,40 @@ import frc.robot.subsystems.implementations.motor.ElevatorMotorSubsystem;
 import frc.robot.subsystems.interfaces.Arm.ArmSettings;
 import frc.robot.subsystems.interfaces.Drive;
 import frc.robot.subsystems.interfaces.Elevator.ElevatorSettings;
+import frc.robot.subsystems.interfaces.Vision.Camera;
 
 public class RobotConfigComp extends RobotConfig {
   public RobotConfigComp() {
-    super(false, true, true, false, false, true, true);
+    super(false, false, false, false, false, true, true);
 
+    vision.addCamera(
+        new Camera(
+            "front_cam", // back
+            new Transform3d(
+                new Translation3d(
+                    Units.inchesToMeters(14.25),
+                    Units.inchesToMeters(2.5),
+                    Units.inchesToMeters(7.125)),
+                new Rotation3d(0.0, 5.0, 0.0))));
+    vision.addCamera(
+        new Camera(
+            "left_cam",
+            new Transform3d(
+                new Translation3d(
+                    Units.inchesToMeters(3.25),
+                    Units.inchesToMeters(13.5),
+                    Units.inchesToMeters(7.125)),
+                new Rotation3d(0.0, 5.0, 0.0))));
+
+    vision.addCamera(
+        new Camera(
+            "right_cam",
+            new Transform3d(
+                new Translation3d(
+                    Units.inchesToMeters(3.25),
+                    Units.inchesToMeters(-13.5),
+                    Units.inchesToMeters(7.0)),
+                new Rotation3d(0.0, 5.0, 0.0))));
     // Comp has a Swerve drive train
     Drive.Constants.rotatePidKp = 0.025;
     Drive.Constants.rotatePidKi = 0.0;
@@ -154,7 +189,20 @@ public class RobotConfigComp extends RobotConfig {
     //             // new MotorIOArmStub(motorSettings, armSettings), "Coral", armSettings);
     //             new MotorIOTalonFx(motorSettings, settings), "Climber", armSettings);
     // }
-
-    CameraServer.startAutomaticCapture();
+    NamedCommands.registerCommand(
+        "Move Elevator to 0.5 meter", new ElevatorToPosition(elevator, () -> 0.5));
+    NamedCommands.registerCommand(
+        "Move Elevator to 1.553 meter", new ElevatorToPosition(elevator, () -> 1.553));
+    NamedCommands.registerCommand(
+        "Move Arm 75 degrees", new ArmToPosition(coralArm, () -> 70).withTimeout(1.5));
+    NamedCommands.registerCommand(
+        "Move Arm 0 degrees", new ArmToPosition(coralArm, () -> 0).withTimeout(1.5));
+    NamedCommands.registerCommand(
+        "Move Elevator to 0.8 meter", new ElevatorToPosition(elevator, () -> 0.8));
+    NamedCommands.registerCommand(
+        "Move Elevator to 0.4 meter", new ElevatorToPosition(elevator, () -> 0.4));
+    NamedCommands.registerCommand(
+        "Move Arm for Intake", new ArmToPosition(coralArm, () -> -90).withTimeout(0));
+    autoChooser = AutoBuilder.buildAutoChooser("Sit Still");
   }
 }
