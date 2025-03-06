@@ -48,7 +48,7 @@ public class RobotConfigComp extends RobotConfig {
       ElevatorSettings elevatorSettings = new ElevatorSettings();
       elevatorSettings.minHeightInMeters = 0.09 + 0.02;
       elevatorSettings.maxHeightInMeters = 0.02 + 0.85 + 0.76;
-      elevatorSettings.startingHeightInMeters = elevatorSettings.minHeightInMeters;
+      elevatorSettings.startingHeightInMeters = 0.3; // The elevator height when piece is in intake
       elevatorSettings.color = new Color8Bit(Color.kSilver);
       elevatorSettings.feedforward =
           new ElevatorFeedforward(0.010472, 0.17328, 0.16928, 0.010615); // SysID 2025-02-28
