@@ -8,7 +8,7 @@
         "layouts": [
           {
             "title": "Arm[Coral] Commands",
-            "x": 256.0,
+            "x": 0.0,
             "y": 0.0,
             "width": 256.0,
             "height": 544.0,
@@ -95,82 +95,8 @@
             ]
           },
           {
-            "title": "Arm[Climber] Commands",
-            "x": 0.0,
-            "y": 0.0,
-            "width": 256.0,
-            "height": 544.0,
-            "type": "List Layout",
-            "properties": {
-              "label_position": "TOP"
-            },
-            "children": [
-              {
-                "title": "Climber Auto Calibrate ",
-                "x": 0.0,
-                "y": 64.0,
-                "width": 256.0,
-                "height": 128.0,
-                "type": "Command",
-                "properties": {
-                  "topic": "/SmartDashboard/Arm[Climber]/Commands/Climber Auto Calibrate ",
-                  "period": 0.06,
-                  "show_type": false
-                }
-              },
-              {
-                "title": "Run Voltage Command",
-                "x": 64.0,
-                "y": 256.0,
-                "width": 256.0,
-                "height": 128.0,
-                "type": "Command",
-                "properties": {
-                  "topic": "/SmartDashboard/Pit/Arm[Climber]/Commands/Run Voltage/Command",
-                  "period": 0.06,
-                  "show_type": false
-                }
-              },
-              {
-                "title": "Volts Amount",
-                "x": 128.0,
-                "y": 192.0,
-                "width": 128.0,
-                "height": 128.0,
-                "type": "Number Slider",
-                "properties": {
-                  "topic": "/SmartDashboard/Pit/Arm[Climber]/Commands/Run Voltage/Volts Amount",
-                  "period": 0.06,
-                  "data_type": "double",
-                  "min_value": -1.0,
-                  "max_value": 1.0,
-                  "divisions": 5,
-                  "update_continuously": true
-                }
-              },
-              {
-                "title": "AppliedVolts",
-                "x": 512.0,
-                "y": 384.0,
-                "width": 256.0,
-                "height": 256.0,
-                "type": "Voltage View",
-                "properties": {
-                  "topic": "/AdvantageKit/Arm[Climber]/AppliedVolts",
-                  "period": 0.033,
-                  "data_type": "double",
-                  "min_value": 4.0,
-                  "max_value": 13.0,
-                  "divisions": 5,
-                  "inverted": false,
-                  "orientation": "horizontal"
-                }
-              }
-            ]
-          },
-          {
             "title": "Elevator[Coral] Commands",
-            "x": 512.0,
+            "x": 256.0,
             "y": 0.0,
             "width": 256.0,
             "height": 544.0,
@@ -261,7 +187,7 @@
             "x": 768.0,
             "y": 384.0,
             "width": 256.0,
-            "height": 256.0,
+            "height": 352.0,
             "type": "List Layout",
             "properties": {
               "label_position": "TOP"
@@ -291,6 +217,150 @@
                   "topic": "/SmartDashboard/Driver /Commands/Intake",
                   "period": 0.06,
                   "show_type": false
+                }
+              },
+              {
+                "title": "Climber to Start Position",
+                "x": 768.0,
+                "y": 576.0,
+                "width": 256.0,
+                "height": 128.0,
+                "type": "Command",
+                "properties": {
+                  "topic": "/SmartDashboard/Simple[Climber]/Commands/Climber to Start Position",
+                  "period": 0.06,
+                  "show_type": false
+                }
+              }
+            ]
+          },
+          {
+            "title": "Move To Position",
+            "x": 256.0,
+            "y": 544.0,
+            "width": 256.0,
+            "height": 256.0,
+            "type": "List Layout",
+            "properties": {
+              "label_position": "TOP"
+            },
+            "children": [
+              {
+                "title": "Move",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 256.0,
+                "height": 128.0,
+                "type": "Command",
+                "properties": {
+                  "topic": "/SmartDashboard/Elevator[Coral]/Commands/Move To Position/Move",
+                  "period": 0.06,
+                  "show_type": false
+                }
+              },
+              {
+                "title": "Target",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 128.0,
+                "height": 128.0,
+                "type": "Number Slider",
+                "properties": {
+                  "topic": "/SmartDashboard/Elevator[Coral]/Commands/Move To Position/Target",
+                  "period": 0.06,
+                  "data_type": "double",
+                  "min_value": -1.0,
+                  "max_value": 1.0,
+                  "divisions": 5,
+                  "update_continuously": false
+                }
+              }
+            ]
+          },
+          {
+            "title": "Simple[Climber]",
+            "x": 512.0,
+            "y": 0.0,
+            "width": 256.0,
+            "height": 544.0,
+            "type": "List Layout",
+            "properties": {
+              "label_position": "TOP"
+            },
+            "children": [
+              {
+                "title": "Climber Auto Calibrate ",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 256.0,
+                "height": 128.0,
+                "type": "Command",
+                "properties": {
+                  "topic": "/SmartDashboard/Simple[Climber]/Commands/Climber Auto Calibrate ",
+                  "period": 0.06,
+                  "show_type": true
+                }
+              },
+              {
+                "title": "Run Voltage Command",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 256.0,
+                "height": 128.0,
+                "type": "Command",
+                "properties": {
+                  "topic": "/SmartDashboard/Pit/Simple[Climber]/Commands/Run Voltage/Command",
+                  "period": 0.06,
+                  "show_type": false
+                }
+              },
+              {
+                "title": "Volts Amount",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 128.0,
+                "height": 128.0,
+                "type": "Number Slider",
+                "properties": {
+                  "topic": "/SmartDashboard/Pit/Simple[Climber]/Commands/Run Voltage/Volts Amount",
+                  "period": 0.06,
+                  "data_type": "double",
+                  "min_value": -1.0,
+                  "max_value": 1.0,
+                  "divisions": 5,
+                  "update_continuously": false
+                }
+              },
+              {
+                "title": "AppliedVolts",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 128.0,
+                "height": 128.0,
+                "type": "Voltage View",
+                "properties": {
+                  "topic": "/AdvantageKit/Simple[Climber]/AppliedVolts",
+                  "period": 0.06,
+                  "data_type": "double",
+                  "min_value": 4.0,
+                  "max_value": 13.0,
+                  "divisions": 5,
+                  "inverted": false,
+                  "orientation": "horizontal"
+                }
+              },
+              {
+                "title": "PositionRad",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 128.0,
+                "height": 128.0,
+                "type": "Text Display",
+                "properties": {
+                  "topic": "/AdvantageKit/Simple[Climber]/PositionRad",
+                  "period": 0.06,
+                  "data_type": "double",
+                  "show_submit_button": false
                 }
               }
             ]
@@ -1214,6 +1284,321 @@
               "topic": "/SmartDashboard/Elevator[Coral]/Commands/Auto Calibrate Elevator",
               "period": 0.06,
               "show_type": false
+            }
+          },
+          {
+            "title": "targetPositionRad",
+            "x": 1344.0,
+            "y": 224.0,
+            "width": 128.0,
+            "height": 128.0,
+            "type": "Text Display",
+            "properties": {
+              "topic": "/AdvantageKit/RealOutputs/Simple[Climber]/targetPositionRad",
+              "period": 0.06,
+              "data_type": "double",
+              "show_submit_button": false
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "Simple[Climber]",
+      "grid_layout": {
+        "layouts": [
+          {
+            "title": "Run Voltage",
+            "x": 256.0,
+            "y": 480.0,
+            "width": 256.0,
+            "height": 256.0,
+            "type": "List Layout",
+            "properties": {
+              "label_position": "TOP"
+            },
+            "children": [
+              {
+                "title": "Command",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 256.0,
+                "height": 128.0,
+                "type": "Command",
+                "properties": {
+                  "topic": "/SmartDashboard/Pit/Simple[Climber]/Commands/Run Voltage/Command",
+                  "period": 0.06,
+                  "show_type": true
+                }
+              },
+              {
+                "title": "Volts Amount",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 128.0,
+                "height": 128.0,
+                "type": "Number Slider",
+                "properties": {
+                  "topic": "/SmartDashboard/Pit/Simple[Climber]/Commands/Run Voltage/Volts Amount",
+                  "period": 0.06,
+                  "data_type": "double",
+                  "min_value": -1.0,
+                  "max_value": 1.0,
+                  "divisions": 5,
+                  "update_continuously": false
+                }
+              }
+            ]
+          },
+          {
+            "title": "motionProfile",
+            "x": 512.0,
+            "y": 0.0,
+            "width": 256.0,
+            "height": 256.0,
+            "type": "List Layout",
+            "properties": {
+              "label_position": "TOP"
+            },
+            "children": [
+              {
+                "title": "maxAcceleration (radians per sec^2)",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 128.0,
+                "height": 128.0,
+                "type": "Text Display",
+                "properties": {
+                  "topic": "/SmartDashboard/Simple[Climber]/motionProfile/maxAcceleration (radians per sec^2)",
+                  "period": 0.06,
+                  "data_type": "double",
+                  "show_submit_button": false
+                }
+              },
+              {
+                "title": "maxVelocity (radians per sec)",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 128.0,
+                "height": 128.0,
+                "type": "Text Display",
+                "properties": {
+                  "topic": "/SmartDashboard/Simple[Climber]/motionProfile/maxVelocity (radians per sec)",
+                  "period": 0.06,
+                  "data_type": "double",
+                  "show_submit_button": false
+                }
+              }
+            ]
+          },
+          {
+            "title": "Commands",
+            "x": 256.0,
+            "y": 0.0,
+            "width": 256.0,
+            "height": 480.0,
+            "type": "List Layout",
+            "properties": {
+              "label_position": "TOP"
+            },
+            "children": [
+              {
+                "title": "Climb",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 256.0,
+                "height": 128.0,
+                "type": "Command",
+                "properties": {
+                  "topic": "/SmartDashboard/Simple[Climber]/Commands/Climb",
+                  "period": 0.06,
+                  "show_type": true
+                }
+              },
+              {
+                "title": "Climber to Start Position",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 256.0,
+                "height": 128.0,
+                "type": "Command",
+                "properties": {
+                  "topic": "/SmartDashboard/Simple[Climber]/Commands/Climber to Start Position",
+                  "period": 0.06,
+                  "show_type": true
+                }
+              },
+              {
+                "title": "Prepare to Climb",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 256.0,
+                "height": 128.0,
+                "type": "Command",
+                "properties": {
+                  "topic": "/SmartDashboard/Simple[Climber]/Commands/Prepare to Climb",
+                  "period": 0.06,
+                  "show_type": true
+                }
+              }
+            ]
+          },
+          {
+            "title": "Simple[Climber]",
+            "x": 0.0,
+            "y": 0.0,
+            "width": 256.0,
+            "height": 576.0,
+            "type": "List Layout",
+            "properties": {
+              "label_position": "TOP"
+            },
+            "children": [
+              {
+                "title": "AppliedVolts",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 128.0,
+                "height": 128.0,
+                "type": "Text Display",
+                "properties": {
+                  "topic": "/AdvantageKit/Simple[Climber]/AppliedVolts",
+                  "period": 0.06,
+                  "data_type": "double",
+                  "show_submit_button": false
+                }
+              },
+              {
+                "title": "CurrentAmps",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 128.0,
+                "height": 128.0,
+                "type": "Text Display",
+                "properties": {
+                  "topic": "/AdvantageKit/Simple[Climber]/CurrentAmps",
+                  "period": 0.06,
+                  "data_type": "double",
+                  "show_submit_button": false
+                }
+              },
+              {
+                "title": "PositionRad",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 128.0,
+                "height": 128.0,
+                "type": "Text Display",
+                "properties": {
+                  "topic": "/AdvantageKit/Simple[Climber]/PositionRad",
+                  "period": 0.06,
+                  "data_type": "double",
+                  "show_submit_button": false
+                }
+              },
+              {
+                "title": "targetMotionProfiledPositionRad",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 128.0,
+                "height": 128.0,
+                "type": "Text Display",
+                "properties": {
+                  "topic": "/AdvantageKit/RealOutputs/Simple[Climber]/targetMotionProfiledPositionRad",
+                  "period": 0.06,
+                  "data_type": "double",
+                  "show_submit_button": false
+                }
+              },
+              {
+                "title": "targetPositionRad",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 128.0,
+                "height": 128.0,
+                "type": "Text Display",
+                "properties": {
+                  "topic": "/AdvantageKit/RealOutputs/Simple[Climber]/targetPositionRad",
+                  "period": 0.06,
+                  "data_type": "double",
+                  "show_submit_button": false
+                }
+              },
+              {
+                "title": "ForwardLimit",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 128.0,
+                "height": 128.0,
+                "type": "Boolean Box",
+                "properties": {
+                  "topic": "/AdvantageKit/Simple[Climber]/ForwardLimit",
+                  "period": 0.06,
+                  "data_type": "boolean",
+                  "true_color": 4283215696,
+                  "false_color": 4294198070,
+                  "true_icon": "None",
+                  "false_icon": "None"
+                }
+              },
+              {
+                "title": "ReverseLimit",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 128.0,
+                "height": 128.0,
+                "type": "Boolean Box",
+                "properties": {
+                  "topic": "/AdvantageKit/Simple[Climber]/ReverseLimit",
+                  "period": 0.06,
+                  "data_type": "boolean",
+                  "true_color": 4283215696,
+                  "false_color": 4294198070,
+                  "true_icon": "None",
+                  "false_icon": "None"
+                }
+              }
+            ]
+          }
+        ],
+        "containers": [
+          {
+            "title": "targetPositionRad",
+            "x": 0.0,
+            "y": 800.0,
+            "width": 256.0,
+            "height": 128.0,
+            "type": "Text Display",
+            "properties": {
+              "topic": "/AdvantageKit/RealOutputs/Simple[Climber]/targetPositionRad",
+              "period": 0.06,
+              "data_type": "double",
+              "show_submit_button": false
+            }
+          },
+          {
+            "title": "PID",
+            "x": 512.0,
+            "y": 256.0,
+            "width": 256.0,
+            "height": 384.0,
+            "type": "PIDController",
+            "properties": {
+              "topic": "/SmartDashboard/Simple[Climber]/PID",
+              "period": 0.06
+            }
+          },
+          {
+            "title": "Climber Auto Calibrate ",
+            "x": 0.0,
+            "y": 576.0,
+            "width": 256.0,
+            "height": 128.0,
+            "type": "Command",
+            "properties": {
+              "topic": "/SmartDashboard/Simple[Climber]/Commands/Climber Auto Calibrate ",
+              "period": 0.06,
+              "show_type": true
             }
           }
         ]
