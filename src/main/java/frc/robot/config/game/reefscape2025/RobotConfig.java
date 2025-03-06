@@ -103,22 +103,16 @@ public class RobotConfig {
       if (Robot.isSimulation()) {
         vision.addCamera(
             new Camera(
-                "photonvision",
+                "rear_cam",
                 new Transform3d(
-                    new Translation3d(-0.221, 0, .164),
-                    new Rotation3d(0, Units.degreesToRadians(-20), Units.degreesToRadians(180)))));
-        vision.addCamera(
-            new Camera(
-                "left",
-                new Transform3d(
-                    new Translation3d(0, 0.221, .164),
-                    new Rotation3d(0, Units.degreesToRadians(-20), Units.degreesToRadians(90)))));
-        vision.addCamera(
-            new Camera(
-                "right",
-                new Transform3d(
-                    new Translation3d(0, -0.221, .164),
-                    new Rotation3d(0, Units.degreesToRadians(-20), Units.degreesToRadians(-90)))));
+                    new Translation3d(
+                        Units.inchesToMeters(0.295),
+                        Units.inchesToMeters(-11.443),
+                        Units.inchesToMeters(39.663)),
+                    new Rotation3d(
+                        Units.degreesToRadians(12),
+                        Units.degreesToRadians(-33),
+                        Units.degreesToRadians(170)))));
       }
     }
 
