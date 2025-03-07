@@ -151,20 +151,20 @@ public class DriverControls {
                 2,
                 new SequentialCommandGroup(
                         new ElevatorToPosition(elevator, () -> 0.63),
-                        new ArmToPosition(coralArm, () -> 75))
+                        new ArmToPosition(coralArm, () -> 47))
                     .withTimeout(5.0)),
             Map.entry(
                 3,
                 new SequentialCommandGroup(
                         new ElevatorToPosition(elevator, () -> 1.0),
-                        new ArmToPosition(coralArm, () -> 75))
+                        new ArmToPosition(coralArm, () -> 47))
                     .withTimeout(5.0)),
             Map.entry(
                 4,
                 new SequentialCommandGroup(
                         new ElevatorToPosition(elevator, () -> 0.6),
                         new ParallelCommandGroup(
-                            new ArmToPosition(coralArm, () -> 75).withTimeout(1.0),
+                            new ArmToPosition(coralArm, () -> 48).withTimeout(1.0),
                             new ElevatorToPosition(elevator, () -> 1.553)))
                     .withTimeout(5.0))),
         () -> {
