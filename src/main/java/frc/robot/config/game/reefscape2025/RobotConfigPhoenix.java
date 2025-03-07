@@ -1,15 +1,11 @@
 package frc.robot.config.game.reefscape2025;
 
-import com.pathplanner.lib.auto.AutoBuilder;
-import com.pathplanner.lib.auto.NamedCommands;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Rotation3d;
 import edu.wpi.first.math.geometry.Transform2d;
 import edu.wpi.first.math.geometry.Transform3d;
 import edu.wpi.first.math.geometry.Translation3d;
 import edu.wpi.first.math.util.Units;
-import frc.robot.commands.common.arm.ArmToPosition;
-import frc.robot.commands.common.elevator.ElevatorToPosition;
 import frc.robot.subsystems.implementations.drive.DriveBase;
 import frc.robot.subsystems.implementations.drive.DriveSwerveYAGSL;
 import frc.robot.subsystems.interfaces.Drive;
@@ -34,13 +30,5 @@ public class RobotConfigPhoenix extends RobotConfig {
             new Transform3d(
                 new Translation3d(Units.inchesToMeters(13.25), 0, Units.inchesToMeters(6.25)),
                 new Rotation3d(0, -Units.degreesToRadians(15), 0))));
-
-    NamedCommands.registerCommand(
-        "Move Elevator", new ElevatorToPosition(RobotConfig.elevator, () -> 1.8288));
-    NamedCommands.registerCommand(
-        "Move Arm High", new ArmToPosition(RobotConfig.coralArm, () -> 135.0));
-    NamedCommands.registerCommand(
-        "Move Arm Low", new ArmToPosition(RobotConfig.coralArm, () -> 90.0));
-    autoChooser = AutoBuilder.buildAutoChooser("Sit Still");
   }
 }
