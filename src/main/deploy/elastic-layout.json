@@ -160,7 +160,7 @@
             "height": 128.0,
             "type": "Split Button Chooser",
             "properties": {
-              "topic": "/SmartDashboard/Driver /Commands/Prepare To Score Chooser",
+              "topic": "/SmartDashboard/Driver /Misc/Prepare To Score Chooser",
               "period": 0.06
             }
           },
@@ -211,7 +211,7 @@
             "height": 128.0,
             "type": "Large Text Display",
             "properties": {
-              "topic": "/SmartDashboard/Driver /Commands/Prepare To Score Selection",
+              "topic": "/SmartDashboard/Driver /Misc/Prepare To Score Selection",
               "period": 0.06,
               "data_type": "double"
             }
