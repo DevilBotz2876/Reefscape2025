@@ -3,7 +3,6 @@ package frc.robot.config.game.reefscape2025;
 import edu.wpi.first.math.controller.ArmFeedforward;
 import edu.wpi.first.math.controller.ElevatorFeedforward;
 import edu.wpi.first.math.controller.PIDController;
-import edu.wpi.first.math.controller.SimpleMotorFeedforward;
 import edu.wpi.first.math.geometry.Rotation3d;
 import edu.wpi.first.math.geometry.Transform3d;
 import edu.wpi.first.math.geometry.Translation3d;
@@ -16,24 +15,21 @@ import frc.robot.io.implementations.motor.MotorIOSparkMax;
 import frc.robot.io.implementations.motor.MotorIOSparkMax.SparkMaxSettings;
 import frc.robot.io.implementations.motor.MotorIOTalonFx;
 import frc.robot.io.implementations.motor.MotorIOTalonFx.TalonFxSettings;
-import frc.robot.subsystems.controls.arm.ClimberArmControls;
 import frc.robot.subsystems.controls.arm.CoralArmControls;
 import frc.robot.subsystems.controls.elevator.ElevatorControls;
 import frc.robot.subsystems.implementations.drive.DriveBase;
 import frc.robot.subsystems.implementations.drive.DriveSwerveYAGSL;
 import frc.robot.subsystems.implementations.motor.ArmMotorSubsystem;
 import frc.robot.subsystems.implementations.motor.ElevatorMotorSubsystem;
-import frc.robot.subsystems.implementations.motor.SimpleMotorSubsystem;
 import frc.robot.subsystems.interfaces.Arm.ArmSettings;
 import frc.robot.subsystems.interfaces.Drive;
 import frc.robot.subsystems.interfaces.Elevator.ElevatorSettings;
-import frc.robot.subsystems.interfaces.SimpleMotor.SimpleMotorSettings;
 import frc.robot.subsystems.interfaces.Vision.Camera;
 
 /* Override Nemo specific constants here */
 public class RobotConfigNemo extends RobotConfig {
   public RobotConfigNemo() {
-    super(false, true, true, false, false, true, false);
+    super(false, true, true, false, false, true, true);
 
     // Nemo has a Swerve drive train
     Drive.Constants.rotatePidKp = 0.025;
@@ -129,17 +125,16 @@ public class RobotConfigNemo extends RobotConfig {
       motorSettings.reverseLimitNegate = true;
       motorSettings.motor.drumRadiusMeters =
           Units.inchesToMeters(
-              ((1.75 + 0.75) / 2)
+              ((1.10 + 0.75) / 2)
                   / 2); // 3/4" inner diameter to 1 3/4" outer. Average diameter calculated For now,
       // use the diameter so that
       // we don't reach the limits
       motorSettings.pid = new PIDController(0.1, 0, 0); // TODO: Tune PID controller
 
       ElevatorSettings elevatorSettings = new ElevatorSettings();
-      elevatorSettings.minHeightInMeters = 0.3;
-      elevatorSettings.maxHeightInMeters =
-          Units.inchesToMeters(74 - 18); // highest point:74 lowest point:18
-      elevatorSettings.startingHeightInMeters = 0.3; // The elevator height when piece is in intake
+      elevatorSettings.minHeightInMeters = 0.09 + 0.02;
+      elevatorSettings.maxHeightInMeters = 0.02 + 0.85 + 0.76;
+      elevatorSettings.startingHeightInMeters = elevatorSettings.minHeightInMeters;
       elevatorSettings.color = new Color8Bit(Color.kSilver);
       elevatorSettings.feedforward =
           new ElevatorFeedforward(0, 0.34, 0.2, 0); // TODO: Tune feedforward
@@ -164,37 +159,38 @@ public class RobotConfigNemo extends RobotConfig {
     }
 
     // climber
-    {
-      MotorIOBaseSettings motorSettings = new MotorIOBaseSettings();
-      // 25:1 gear box ratio
-      motorSettings.motor.gearing = 25;
-      motorSettings.motor.inverted = true;
-      motorSettings.pid = new PIDController(1.0, 0, 0);
-      motorSettings.reverseLimitChannel = 1;
-      motorSettings.reverseLimitNegate = true;
+    // {
+    //   MotorIOBaseSettings motorSettings = new MotorIOBaseSettings();
+    //   // 25:1 gear box ratio
+    //   motorSettings.motor.gearing = 25;
+    //   motorSettings.motor.inverted = true;
+    //   motorSettings.pid = new PIDController(1.0, 0, 0);
+    //   motorSettings.reverseLimitChannel = 1;
+    //   motorSettings.reverseLimitNegate = true;
 
-      SimpleMotorSettings simpleMotorSettings = new SimpleMotorSettings();
-      simpleMotorSettings.minPositionInRads = 0;
-      simpleMotorSettings.maxPositionInRads = 14.5;
-      simpleMotorSettings.startingPositionInRads = 9;
-      simpleMotorSettings.color = new Color8Bit(Color.kRed);
-      simpleMotorSettings.feedforward = new SimpleMotorFeedforward(0, 0, 0);
-      simpleMotorSettings.motor = DCMotor.getNEO(1);
+    //   SimpleMotorSettings simpleMotorSettings = new SimpleMotorSettings();
+    //   simpleMotorSettings.minPositionInRads = 0;
+    //   simpleMotorSettings.maxPositionInRads = 14.5;
+    //   simpleMotorSettings.startingPositionInRads = 9;
+    //   simpleMotorSettings.color = new Color8Bit(Color.kRed);
+    //   simpleMotorSettings.feedforward = new SimpleMotorFeedforward(0, 0, 0);
+    //   simpleMotorSettings.motor = DCMotor.getNEO(1);
 
-      SparkMaxSettings settings = new SparkMaxSettings();
-      settings.canId = 50;
+    //   SparkMaxSettings settings = new SparkMaxSettings();
+    //   settings.canId = 50;
 
-      ClimberArmControls.Constants.autoZeroSettings.voltage = -1;
-      // Set this to something big, we are never going to use stall current to detect if climber has
-      // reached it's end of range of motion.
-      ClimberArmControls.Constants.autoZeroSettings.minResetCurrent = 10.0;
-      ClimberArmControls.Constants.autoZeroSettings.resetPositionRad =
-          simpleMotorSettings.minPositionInRads;
-      ClimberArmControls.Constants.autoZeroSettings.initialReverseDuration = 0;
+    //   ClimberArmControls.Constants.autoZeroSettings.voltage = -1;
+    //   // Set this to something big, we are never going to use stall current to detect if climber
+    // has
+    //   // reached it's end of range of motion.
+    //   ClimberArmControls.Constants.autoZeroSettings.minResetCurrent = 10.0;
+    //   ClimberArmControls.Constants.autoZeroSettings.resetPositionRad =
+    //       simpleMotorSettings.minPositionInRads;
+    //   ClimberArmControls.Constants.autoZeroSettings.initialReverseDuration = 0;
 
-      climberArm =
-          new SimpleMotorSubsystem(
-              new MotorIOSparkMax(motorSettings, settings), "Climber", simpleMotorSettings);
-    }
+    //   climberArm =
+    //       new SimpleMotorSubsystem(
+    //           new MotorIOSparkMax(motorSettings, settings), "Climber", simpleMotorSettings);
+    // }
   }
 }

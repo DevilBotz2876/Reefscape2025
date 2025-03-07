@@ -22,8 +22,7 @@ public class ElevatorControls {
   public static void setupController(Elevator elevator, CommandXboxController controller) {
     SubsystemBase subsystem = (SubsystemBase) elevator;
     subsystem.setDefaultCommand(
-        // TODO: Change this to use the elevator command (see commented lines below) after initial
-        // bringup and Feedforward/PID tuning
+        // Override controller if new setupController. need to be fixed
         // new MotorBringUpCommand(
         // (Motor) elevator,
         new ElevatorCommand(

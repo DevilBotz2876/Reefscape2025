@@ -26,6 +26,7 @@ import frc.robot.io.implementations.motor.MotorIOStub;
 import frc.robot.subsystems.controls.arm.ClimberArmControls;
 import frc.robot.subsystems.controls.arm.CoralArmControls;
 import frc.robot.subsystems.controls.combination.DriverAssistControls;
+import frc.robot.subsystems.controls.combination.DriverControls;
 import frc.robot.subsystems.controls.combination.PitControls;
 import frc.robot.subsystems.controls.drive.DriveControls;
 import frc.robot.subsystems.controls.elevator.ElevatorControls;
@@ -125,7 +126,7 @@ public class RobotConfig {
 
       ElevatorSettings elevatorSettings = new ElevatorSettings();
       elevatorSettings.minHeightInMeters = 0.0;
-      elevatorSettings.maxHeightInMeters = 1.5;
+      elevatorSettings.maxHeightInMeters = 0.02 + 0.85 + 0.76;
       elevatorSettings.startingHeightInMeters = elevatorSettings.minHeightInMeters;
       elevatorSettings.targetHeightToleranceInMeters = 0.01;
       elevatorSettings.color = new Color8Bit(Color.kSilver);
@@ -210,10 +211,13 @@ public class RobotConfig {
     vision.setVisionMeasurementConsumer(drive::addVisionMeasurement);
 
     DriveControls.setupController(drive, mainController);
-    DriverAssistControls.setupController(elevator, coralArm, assistController);
+    DriverAssistControls.setupController(elevator, coralArm, climberArm, assistController);
+    DriverControls.setupController(elevator, coralArm, climberArm, mainController);
     PitControls.setupPitControls(elevator, coralArm, climberArm);
     CoralArmControls.setupController(coralArm, mainController);
     ElevatorControls.setupController(elevator, mainController);
+    CoralArmControls.setupController(coralArm, assistController);
+    ElevatorControls.setupController(elevator, assistController);
     ClimberArmControls.setupController(climberArm, mainController);
 
     if (null != RobotConfig.autoChooser) {
