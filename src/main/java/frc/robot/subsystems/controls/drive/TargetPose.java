@@ -3,7 +3,6 @@ package frc.robot.subsystems.controls.drive;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Transform2d;
-import edu.wpi.first.math.geometry.Translation2d;
 
 public enum TargetPose {
   // NOTE: WE ARE IDENTIFYING THESE POSITIONS ON THE BLUE SIDE OF THE FIELD!!!
@@ -75,10 +74,8 @@ public enum TargetPose {
       this.endPose = null;
     } else {
       double distance = (reefPosition < 0) ? -0.7 : 0.7;
-      this.prepPose =
-          targetPose.transformBy(new Transform2d(new Translation2d(0, distance), new Rotation2d()));
-      this.endPose =
-          targetPose.transformBy(new Transform2d(new Translation2d(0, 0), new Rotation2d()));
+      this.prepPose = targetPose.transformBy(new Transform2d(0, distance, new Rotation2d()));
+      this.endPose = targetPose.transformBy(new Transform2d(-0.7, 0, new Rotation2d()));
     }
   }
 }
