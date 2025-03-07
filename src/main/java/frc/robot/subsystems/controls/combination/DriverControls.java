@@ -134,9 +134,9 @@ public class DriverControls {
     //             climberSubsystem));
 
     // multi controll not workking in each subsystem inde
-    controller.povUp().whileTrue(new ElevatorCommand(elevator, () -> 0.5));
+    controller.povUp().whileTrue(new ElevatorCommand(elevator, () -> 0.2));
 
-    controller.povDown().whileTrue(new ElevatorCommand(elevator, () -> -0.5));
+    controller.povDown().whileTrue(new ElevatorCommand(elevator, () -> -0.2));
 
     controller.povRight().whileTrue(new ArmCommand(coralArm, () -> 0.1));
 
