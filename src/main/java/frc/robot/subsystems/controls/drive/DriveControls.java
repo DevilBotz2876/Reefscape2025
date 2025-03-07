@@ -162,11 +162,8 @@ public class DriveControls {
     //     .onTrue(
     //         new InstantCommand(
     //             () -> {
-    //               if (myCoolPoseKeyIdx == 11) myCoolPoseKeyIdx = 2;
-    //               else myCoolPoseKeyIdx = 11;
-    //               //   if (++myCoolPoseKeyIdx == TargetPoseOption.values().length)
-    // myCoolPoseKeyIdx
-    //               // = 1;
+    //               if (++myCoolPoseKeyIdx == TargetPoseOption.values().length) myCoolPoseKeyIdx =
+    // 1;
     //               SmartDashboard.putNumber("Chosen Pose Index", myCoolPoseKeyIdx);
     //             }));
 

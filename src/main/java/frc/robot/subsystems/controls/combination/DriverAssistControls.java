@@ -8,11 +8,8 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.commands.common.arm.ArmToPosition;
 import frc.robot.commands.common.elevator.ElevatorToPosition;
-import frc.robot.commands.common.motor.MotorAutoResetEncoderCommand;
-import frc.robot.subsystems.controls.arm.CoralArmControls;
 import frc.robot.subsystems.interfaces.Arm;
 import frc.robot.subsystems.interfaces.Elevator;
-import frc.robot.subsystems.interfaces.Motor;
 import frc.robot.subsystems.interfaces.SimpleMotor;
 
 public class DriverAssistControls {
@@ -48,55 +45,54 @@ public class DriverAssistControls {
             new ArmToPosition(coralArm, () -> 0),
             new ElevatorToPosition(elevator, () -> 1.3)));
 
-        Command prepareIntakeCoralCommand =
+    Command prepareIntakeCoralCommand =
         new SequentialCommandGroup(
             new ArmToPosition(coralArm, () -> -90).withTimeout(0),
             new ElevatorToPosition(elevator, () -> 0.8));
-    controller.b().onTrue(prepareIntakeCoralCommand.andThen(
-        new InstantCommand(
-        () -> {
-          
-          DriverControls.Constants.prepareScoreSelctedIndex = 1;
-          SmartDashboard.putNumber(
-              "Driver " + "/Misc/Prepare Selection",
-              DriverControls.Constants.prepareScoreSelctedIndex);
-        })));
+    controller
+        .b()
+        .onTrue(
+            prepareIntakeCoralCommand.andThen(
+                new InstantCommand(
+                    () -> {
+                      DriverControls.Constants.prepareScoreSelctedIndex = 1;
+                      SmartDashboard.putNumber(
+                          "Driver " + "/Misc/Prepare Selection",
+                          DriverControls.Constants.prepareScoreSelctedIndex);
+                    })));
 
-        controller
-            .y()
-            .onTrue(
-                new InstantCommand(
-                    () -> {
-                      DriverControls.Constants.prepareScoreSelctedIndex = 4;
-                      SmartDashboard.putNumber(
-                          "Driver " + "/Misc/Prepare Selection",
-                          DriverControls.Constants.prepareScoreSelctedIndex);
-                    }));
-    
-        controller
-            .x()
-            .onTrue(
-                new InstantCommand(
-                    () -> {
-                      
-                      DriverControls.Constants.prepareScoreSelctedIndex = 3;
-                      SmartDashboard.putNumber(
-                          "Driver " + "/Misc/Prepare Selection",
-                          DriverControls.Constants.prepareScoreSelctedIndex);
-                    }));
-    
-        controller
-            .a()
-            .onTrue(
-                new InstantCommand(
-                    () -> {
-                      
-                      DriverControls.Constants.prepareScoreSelctedIndex = 2;
-                      SmartDashboard.putNumber(
-                          "Driver " + "/Misc/Prepare Selection",
-                          DriverControls.Constants.prepareScoreSelctedIndex);
-                    }));
-    
+    controller
+        .y()
+        .onTrue(
+            new InstantCommand(
+                () -> {
+                  DriverControls.Constants.prepareScoreSelctedIndex = 4;
+                  SmartDashboard.putNumber(
+                      "Driver " + "/Misc/Prepare Selection",
+                      DriverControls.Constants.prepareScoreSelctedIndex);
+                }));
+
+    controller
+        .x()
+        .onTrue(
+            new InstantCommand(
+                () -> {
+                  DriverControls.Constants.prepareScoreSelctedIndex = 3;
+                  SmartDashboard.putNumber(
+                      "Driver " + "/Misc/Prepare Selection",
+                      DriverControls.Constants.prepareScoreSelctedIndex);
+                }));
+
+    controller
+        .a()
+        .onTrue(
+            new InstantCommand(
+                () -> {
+                  DriverControls.Constants.prepareScoreSelctedIndex = 2;
+                  SmartDashboard.putNumber(
+                      "Driver " + "/Misc/Prepare Selection",
+                      DriverControls.Constants.prepareScoreSelctedIndex);
+                }));
 
     // controller
     //     .rightTrigger()

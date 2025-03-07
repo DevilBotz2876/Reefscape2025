@@ -298,7 +298,7 @@
                 "properties": {
                   "topic": "/SmartDashboard/Simple[Climber]/Commands/Climber Auto Calibrate ",
                   "period": 0.06,
-                  "show_type": true
+                  "show_type": false
                 }
               },
               {
