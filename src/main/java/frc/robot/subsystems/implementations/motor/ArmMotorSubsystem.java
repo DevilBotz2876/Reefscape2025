@@ -91,9 +91,7 @@ public class ArmMotorSubsystem extends MotorSubsystem implements Arm {
     this.targetAngleRad = Units.degreesToRadians(targetAngleDegrees);
 
     targetState = new State(this.targetAngleRad, 0);
-    nextState =
-        motionProfile.calculate(
-            0.02, new State(inputs.positionRad, inputs.velocityDegreesPerSec), targetState);
+    nextState = motionProfile.calculate(0.02, new State(inputs.positionRad, 0), targetState);
     motionProfileEnabled = true;
   }
 
