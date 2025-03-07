@@ -3,6 +3,9 @@ package frc.robot.config.game.reefscape2025;
 import edu.wpi.first.math.controller.ArmFeedforward;
 import edu.wpi.first.math.controller.ElevatorFeedforward;
 import edu.wpi.first.math.controller.PIDController;
+import edu.wpi.first.math.geometry.Rotation3d;
+import edu.wpi.first.math.geometry.Transform3d;
+import edu.wpi.first.math.geometry.Translation3d;
 import edu.wpi.first.math.system.plant.DCMotor;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.util.Color;
@@ -19,6 +22,7 @@ import frc.robot.subsystems.implementations.motor.ElevatorMotorSubsystem;
 import frc.robot.subsystems.interfaces.Arm.ArmSettings;
 import frc.robot.subsystems.interfaces.Drive;
 import frc.robot.subsystems.interfaces.Elevator.ElevatorSettings;
+import frc.robot.subsystems.interfaces.Vision.Camera;
 
 public class RobotConfigComp extends RobotConfig {
   public RobotConfigComp() {
