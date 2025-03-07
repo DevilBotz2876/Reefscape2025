@@ -24,8 +24,8 @@ public class MotorSubsystem extends SubsystemBase implements Motor {
   protected final MotorIOInputsAutoLogged inputs = new MotorIOInputsAutoLogged();
   private final SysIdRoutine sysId;
   protected TrapezoidProfile motionProfile;
-  protected State targetState;
-  protected State nextState;
+  protected State targetState = new State(0, 0);
+  protected State nextState = new State(0, 0);
   protected boolean motionProfileEnabled = false;
 
   public MotorSubsystem(MotorIO io, String name) {

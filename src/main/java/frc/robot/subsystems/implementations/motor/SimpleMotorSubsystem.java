@@ -55,7 +55,9 @@ public class SimpleMotorSubsystem extends MotorSubsystem implements SimpleMotor 
     this.targetPositionRad = positionRad;
 
     targetState = new State(this.targetPositionRad, 0);
-    nextState = motionProfile.calculate(0.02, new State(inputs.positionRad, 0), targetState);
+    if (0 == nextState.velocity) {
+      nextState = motionProfile.calculate(0.02, new State(inputs.positionRad, 0), targetState);
+    }
     motionProfileEnabled = true;
   }
 
