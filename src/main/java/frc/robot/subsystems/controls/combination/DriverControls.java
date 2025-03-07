@@ -7,6 +7,7 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SelectCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.commands.common.arm.ArmCommand;
@@ -116,22 +117,22 @@ public class DriverControls {
     SmartDashboard.putData("Driver " + "/Misc/Prepare To Score Chooser", Constants.prepareChooser);
 
     // climber
-    // SubsystemBase climberSubsystem = (SubsystemBase) climber;
-    // // prepare to climb
-    // controller
-    //     .leftBumper()
-    //     .onTrue(
-    //         new InstantCommand(
-    //             () -> climber.setTargetPosition(climber.getSettings().maxPositionInRads),
-    //             climberSubsystem));
+    SubsystemBase climberSubsystem = (SubsystemBase) climber;
+    // prepare to climb
+    controller
+        .leftBumper()
+        .onTrue(
+            new InstantCommand(
+                () -> climber.setTargetPosition(climber.getSettings().maxPositionInRads),
+                climberSubsystem));
 
-    // // climb
-    // controller
-    //     .rightBumper()
-    //     .onTrue(
-    //         new InstantCommand(
-    //             () -> climber.setTargetPosition(climber.getSettings().minPositionInRads),
-    //             climberSubsystem));
+    // climb
+    controller
+        .rightBumper()
+        .onTrue(
+            new InstantCommand(
+                () -> climber.setTargetPosition(climber.getSettings().minPositionInRads),
+                climberSubsystem));
 
     // multi controll not workking in each subsystem inde
     controller.povUp().whileTrue(new ElevatorCommand(elevator, () -> 0.2));

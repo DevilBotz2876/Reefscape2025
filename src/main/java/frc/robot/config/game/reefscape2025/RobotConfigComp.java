@@ -3,30 +3,40 @@ package frc.robot.config.game.reefscape2025;
 import edu.wpi.first.math.controller.ArmFeedforward;
 import edu.wpi.first.math.controller.ElevatorFeedforward;
 import edu.wpi.first.math.controller.PIDController;
+import edu.wpi.first.math.controller.SimpleMotorFeedforward;
 import edu.wpi.first.math.geometry.Rotation3d;
 import edu.wpi.first.math.geometry.Transform3d;
 import edu.wpi.first.math.geometry.Translation3d;
 import edu.wpi.first.math.system.plant.DCMotor;
 import edu.wpi.first.math.util.Units;
+import edu.wpi.first.wpilibj.AddressableLED;
+import edu.wpi.first.wpilibj.AddressableLEDBuffer;
+import edu.wpi.first.wpilibj.LEDPattern;
 import edu.wpi.first.wpilibj.util.Color;
 import edu.wpi.first.wpilibj.util.Color8Bit;
 import frc.robot.io.implementations.motor.MotorIOBase.MotorIOBaseSettings;
 import frc.robot.io.implementations.motor.MotorIOTalonFx;
 import frc.robot.io.implementations.motor.MotorIOTalonFx.TalonFxSettings;
+import frc.robot.subsystems.controls.arm.ClimberArmControls;
 import frc.robot.subsystems.controls.arm.CoralArmControls;
 import frc.robot.subsystems.controls.elevator.ElevatorControls;
 import frc.robot.subsystems.implementations.drive.DriveBase;
 import frc.robot.subsystems.implementations.drive.DriveSwerveYAGSL;
 import frc.robot.subsystems.implementations.motor.ArmMotorSubsystem;
 import frc.robot.subsystems.implementations.motor.ElevatorMotorSubsystem;
+import frc.robot.subsystems.implementations.motor.SimpleMotorSubsystem;
 import frc.robot.subsystems.interfaces.Arm.ArmSettings;
 import frc.robot.subsystems.interfaces.Drive;
 import frc.robot.subsystems.interfaces.Elevator.ElevatorSettings;
+import frc.robot.subsystems.interfaces.SimpleMotor.SimpleMotorSettings;
 import frc.robot.subsystems.interfaces.Vision.Camera;
 
 public class RobotConfigComp extends RobotConfig {
+  private final AddressableLED led;
+  private final AddressableLEDBuffer ledBuffer;
+
   public RobotConfigComp() {
-    super(false, true, false, false, false, true, true);
+    super(false, true, false, false, false, true, false);
 
     // Comp has a Swerve drive train
     Drive.Constants.rotatePidKp = 0.025;
@@ -162,38 +172,52 @@ public class RobotConfigComp extends RobotConfig {
     }
 
     // climber
-    // {
-    //   MotorIOBaseSettings motorSettings = new MotorIOBaseSettings();
-    //   // 25:1 gear box ratio
-    //   motorSettings.motor.gearing = 25;
-    //   motorSettings.motor.inverted = false;
-    //   motorSettings.pid = new PIDController(1.0, 0, 0);
-    //   motorSettings.reverseLimitChannel = 1;
-    //   motorSettings.reverseLimitNegate = true;
+    {
+      MotorIOBaseSettings motorSettings = new MotorIOBaseSettings();
+      // 25:1 gear box ratio
+      motorSettings.motor.gearing = 25;
+      motorSettings.motor.inverted = false;
+      motorSettings.pid = new PIDController(1.0, 0, 0);
+      motorSettings.reverseLimitChannel = 1;
+      motorSettings.reverseLimitNegate = true;
 
-    //   SimpleMotorSettings simpleMotorSettings = new SimpleMotorSettings();
-    //   simpleMotorSettings.minPositionInRads = 0;
-    //   simpleMotorSettings.maxPositionInRads = 33.4;
-    //   simpleMotorSettings.startingPositionInRads = simpleMotorSettings.minPositionInRads;
-    //   simpleMotorSettings.color = new Color8Bit(Color.kRed);
-    //   simpleMotorSettings.feedforward = new SimpleMotorFeedforward(0, 0, 0);
-    //   simpleMotorSettings.motor = DCMotor.getNEO(1);
+      SimpleMotorSettings simpleMotorSettings = new SimpleMotorSettings();
+      simpleMotorSettings.minPositionInRads = 0;
+      simpleMotorSettings.maxPositionInRads = 36.1;
+      simpleMotorSettings.startingPositionInRads = simpleMotorSettings.minPositionInRads;
+      simpleMotorSettings.color = new Color8Bit(Color.kRed);
+      simpleMotorSettings.feedforward = new SimpleMotorFeedforward(0, 0, 0);
+      simpleMotorSettings.motor = DCMotor.getNEO(1);
 
-    //   TalonFxSettings settings = new TalonFxSettings();
-    //   settings.canId = 50;
+      TalonFxSettings settings = new TalonFxSettings();
+      settings.canId = 50;
 
-    //   ClimberArmControls.Constants.autoZeroSettings.voltage = -1;
-    //   // Set this to something big, we are never going to use stall current to detect if climber
-    // has
-    //   // reached it's end of range of motion.
-    //   ClimberArmControls.Constants.autoZeroSettings.minResetCurrent = 0.2;
-    //   ClimberArmControls.Constants.autoZeroSettings.resetPositionRad =
-    //       simpleMotorSettings.minPositionInRads;
-    //   ClimberArmControls.Constants.autoZeroSettings.initialReverseDuration = 0;
+      ClimberArmControls.Constants.autoZeroSettings.voltage = -1;
+      // Set this to something big, we are never going to use stall current to detect if climber has
+      // reached it's end of range of motion.
+      ClimberArmControls.Constants.autoZeroSettings.minResetCurrent = 0.5;
+      ClimberArmControls.Constants.autoZeroSettings.resetPositionRad =
+          simpleMotorSettings.minPositionInRads;
+      ClimberArmControls.Constants.autoZeroSettings.initialReverseDuration = 0;
 
-    //   climberArm =
-    //       new SimpleMotorSubsystem(
-    //           new MotorIOTalonFx(motorSettings, settings), "Climber", simpleMotorSettings);
-    // }
+      climberArm =
+          new SimpleMotorSubsystem(
+              new MotorIOTalonFx(motorSettings, settings), "Climber", simpleMotorSettings);
+    }
+
+    // LED
+    {
+      led = new AddressableLED(0);
+      ledBuffer = new AddressableLEDBuffer(120);
+
+      LEDPattern purple = LEDPattern.solid(Color.kPurple);
+
+      // Apply the LED pattern to the data buffer
+      purple.applyTo(ledBuffer);
+
+      led.setLength(ledBuffer.getLength());
+      led.setData(ledBuffer);
+      led.start();
+    }
   }
 }
