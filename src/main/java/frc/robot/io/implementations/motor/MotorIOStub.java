@@ -1,9 +1,8 @@
 package frc.robot.io.implementations.motor;
 
-import edu.wpi.first.math.system.plant.DCMotor;
 import edu.wpi.first.math.system.plant.LinearSystemId;
-import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.simulation.DCMotorSim;
+import frc.robot.subsystems.interfaces.SimpleMotor.SimpleMotorSettings;
 
 /**
  * A "Stub" implementation of a MotorIO that can be used for initial software bring-up/testing in
@@ -12,32 +11,20 @@ import edu.wpi.first.wpilibj.simulation.DCMotorSim;
 public class MotorIOStub extends MotorIOBase {
   private final DCMotorSim motorSim;
   private double appliedVolts = 0;
-  private MotorSimulationSettings simSettings;
+  private SimpleMotorSettings simpleMotorSettings;
 
-  public static class MotorSimulationSettings {
-    // DC Motor Simulation Settings
-    public DCMotor motor = DCMotor.getNEO(1);
-    public double moiKgMetersSquared = 1.0;
-
-    // TODO: should not hard-code these values.  Need to be set/passed in from
-    // RobotConfigStub.java somehow.
-    public double forwardLimitPositionRads = Units.degreesToRadians(85.0);
-    public double reverseLimitPositionRads = Units.degreesToRadians(5.0);
-  }
-
-  public MotorIOStub(
-      MotorIOBaseSettings motorSettings, MotorSimulationSettings simulationSettings) {
+  public MotorIOStub(MotorIOBaseSettings motorSettings, SimpleMotorSettings simpleMotorSettings) {
     super(motorSettings);
 
-    simSettings = simulationSettings;
+    this.simpleMotorSettings = simpleMotorSettings;
 
     motorSim =
         new DCMotorSim(
             LinearSystemId.createDCMotorSystem(
-                simulationSettings.motor,
-                simulationSettings.moiKgMetersSquared,
+                simpleMotorSettings.motor,
+                simpleMotorSettings.moiKgMetersSquared,
                 motorSettings.motor.gearing),
-            simulationSettings.motor);
+            simpleMotorSettings.motor);
   }
 
   @Override
@@ -57,13 +44,13 @@ public class MotorIOStub extends MotorIOBase {
     inputs.accelerationRadPerSecSq = motorSim.getAngularAccelerationRadPerSecSq();
 
     // Simulate limit switch behavior
-    if (motorSim.getAngularPositionRad() <= simSettings.reverseLimitPositionRads) {
+    if (motorSim.getAngularPositionRad() <= simpleMotorSettings.minPositionInRads) {
       inputs.reverseLimit = true;
     } else {
       inputs.reverseLimit = false;
     }
 
-    if (motorSim.getAngularPositionRad() >= simSettings.forwardLimitPositionRads) {
+    if (motorSim.getAngularPositionRad() >= simpleMotorSettings.maxPositionInRads) {
       inputs.forwardLimit = true;
     } else {
       inputs.forwardLimit = false;

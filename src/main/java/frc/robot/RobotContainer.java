@@ -57,7 +57,7 @@ public class RobotContainer {
         break;
       default:
         DriverStation.reportError("failed to determine robot name.  Default to NEMO", true);
-        robotConfig = new RobotConfigNemo();
+        robotConfig = new RobotConfigComp();
     }
 
     robotConfig.configureBindings();

@@ -20,7 +20,6 @@ public class MotorIOTalonFx extends MotorIOBase {
     super(motorSettings);
     this.motorSettings = motorSettings;
     motorFx = new TalonFX(talonFxSettings.canId);
-    motorFx.setNeutralMode(NeutralModeValue.Brake);
 
     TalonFXConfiguration toConfigure = new TalonFXConfiguration();
     CurrentLimitsConfigs currentLimitsConfigs = new CurrentLimitsConfigs();
@@ -51,10 +50,9 @@ public class MotorIOTalonFx extends MotorIOBase {
     if (motorSettings.motor.inverted) {
       toConfigure.MotorOutput.Inverted = InvertedValue.Clockwise_Positive;
     }
+    toConfigure.MotorOutput.NeutralMode = NeutralModeValue.Brake;
 
     motorFx.getConfigurator().apply(toConfigure);
-    // motorFx.setpo(0);
-    // motorFx.setPosition(null)
   }
 
   @Override

@@ -16,6 +16,7 @@ public class CoralArmControls {
   public static class Constants {
     public static MotorAutoResetEncoderSettings autoZeroSettings =
         new MotorAutoResetEncoderSettings();
+    public static Command autoCalibrateCommand;
   }
 
   // RIGHT POV = up arm
@@ -23,6 +24,7 @@ public class CoralArmControls {
   public static void setupController(Arm arm, CommandXboxController controller) {
     SubsystemBase motorSubsystem = (SubsystemBase) arm;
 
+    // Override controller if new setupController. need to be fixed
     motorSubsystem.setDefaultCommand(
         new ArmCommand(
             arm,
@@ -36,10 +38,11 @@ public class CoralArmControls {
             }));
 
     /* Add Auto Zero */
-    Command autoCalibrateCommand =
+    Constants.autoCalibrateCommand =
         new MotorAutoResetEncoderCommand((Motor) arm, Constants.autoZeroSettings);
     SmartDashboard.putData(
-        motorSubsystem.getName() + "/Commands/Auto Calibrate Coral Arm", autoCalibrateCommand);
+        motorSubsystem.getName() + "/Commands/Auto Calibrate Coral Arm",
+        Constants.autoCalibrateCommand);
 
     SmartDashboard.putData(
         motorSubsystem.getName() + "/Commands/Arm To -90", new ArmToPosition(arm, () -> -90));

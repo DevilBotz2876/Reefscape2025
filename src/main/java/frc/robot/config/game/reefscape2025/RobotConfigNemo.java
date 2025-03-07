@@ -1,7 +1,5 @@
 package frc.robot.config.game.reefscape2025;
 
-import com.pathplanner.lib.auto.AutoBuilder;
-import com.pathplanner.lib.auto.NamedCommands;
 import edu.wpi.first.math.controller.ArmFeedforward;
 import edu.wpi.first.math.controller.ElevatorFeedforward;
 import edu.wpi.first.math.controller.PIDController;
@@ -12,14 +10,11 @@ import edu.wpi.first.math.system.plant.DCMotor;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.util.Color;
 import edu.wpi.first.wpilibj.util.Color8Bit;
-import frc.robot.commands.common.arm.ArmToPosition;
-import frc.robot.commands.common.elevator.ElevatorToPosition;
 import frc.robot.io.implementations.motor.MotorIOBase.MotorIOBaseSettings;
 import frc.robot.io.implementations.motor.MotorIOSparkMax;
 import frc.robot.io.implementations.motor.MotorIOSparkMax.SparkMaxSettings;
 import frc.robot.io.implementations.motor.MotorIOTalonFx;
 import frc.robot.io.implementations.motor.MotorIOTalonFx.TalonFxSettings;
-import frc.robot.subsystems.controls.arm.ClimberArmControls;
 import frc.robot.subsystems.controls.arm.CoralArmControls;
 import frc.robot.subsystems.controls.elevator.ElevatorControls;
 import frc.robot.subsystems.implementations.drive.DriveBase;
@@ -34,7 +29,7 @@ import frc.robot.subsystems.interfaces.Vision.Camera;
 /* Override Nemo specific constants here */
 public class RobotConfigNemo extends RobotConfig {
   public RobotConfigNemo() {
-    super(false, false, false, false, false, false, false);
+    super(false, false, false, false, false, true, true);
 
     // Nemo has a Swerve drive train
     Drive.Constants.rotatePidKp = 0.025;
@@ -46,7 +41,7 @@ public class RobotConfigNemo extends RobotConfig {
     // Camera placement at WPI practice field (2/21/2025)
     vision.addCamera(
         new Camera(
-            "my-first-photonvision", // back
+            "rear_cam", // back
             new Transform3d(
                 new Translation3d(
                     Units.inchesToMeters(-14.5),
@@ -55,7 +50,7 @@ public class RobotConfigNemo extends RobotConfig {
                 new Rotation3d(0.0, Units.degreesToRadians(-5), Units.degreesToRadians(180)))));
     vision.addCamera(
         new Camera(
-            "left_camera",
+            "left_cam",
             new Transform3d(
                 new Translation3d(
                     Units.inchesToMeters(-4.4),
@@ -64,7 +59,7 @@ public class RobotConfigNemo extends RobotConfig {
                 new Rotation3d(0.0, Units.degreesToRadians(-5), Units.degreesToRadians(90)))));
     vision.addCamera(
         new Camera(
-            "right_camera",
+            "right_cam",
             new Transform3d(
                 new Translation3d(
                     Units.inchesToMeters(-4.4),
@@ -73,7 +68,7 @@ public class RobotConfigNemo extends RobotConfig {
                 new Rotation3d(0.0, Units.degreesToRadians(-5), Units.degreesToRadians(270)))));
     vision.addCamera(
         new Camera(
-            "front_camera",
+            "front_cam",
             new Transform3d(
                 new Translation3d(
                     Units.inchesToMeters(3),
@@ -164,55 +159,38 @@ public class RobotConfigNemo extends RobotConfig {
     }
 
     // climber
-    {
-      MotorIOBaseSettings motorSettings = new MotorIOBaseSettings();
-      // 25:1 gear box ratio
-      motorSettings.motor.gearing = 25;
-      motorSettings.motor.inverted = false; // false for Sim
-      motorSettings.pid = new PIDController(0.0, 0, 0);
-      motorSettings.reverseLimitChannel = 1;
-      motorSettings.reverseLimitNegate = true;
+    // {
+    //   MotorIOBaseSettings motorSettings = new MotorIOBaseSettings();
+    //   // 25:1 gear box ratio
+    //   motorSettings.motor.gearing = 25;
+    //   motorSettings.motor.inverted = true;
+    //   motorSettings.pid = new PIDController(1.0, 0, 0);
+    //   motorSettings.reverseLimitChannel = 1;
+    //   motorSettings.reverseLimitNegate = true;
 
-      ArmSettings armSettings = new ArmSettings();
-      armSettings.minAngleInDegrees = 0;
-      armSettings.maxAngleInDegrees = 135;
-      armSettings.startingAngleInDegrees = armSettings.minAngleInDegrees;
-      armSettings.feedforward = new ArmFeedforward(0.0, 0.0, 0.0, 0.0);
-      armSettings.color = new Color8Bit(Color.kRed);
-      armSettings.armLengthInMeters = 0.5;
-      armSettings.armMassInKg = 1.0;
-      armSettings.motor = DCMotor.getNEO(1);
-      armSettings.simulateGravity = true;
+    //   SimpleMotorSettings simpleMotorSettings = new SimpleMotorSettings();
+    //   simpleMotorSettings.minPositionInRads = 0;
+    //   simpleMotorSettings.maxPositionInRads = 14.5;
+    //   simpleMotorSettings.startingPositionInRads = 9;
+    //   simpleMotorSettings.color = new Color8Bit(Color.kRed);
+    //   simpleMotorSettings.feedforward = new SimpleMotorFeedforward(0, 0, 0);
+    //   simpleMotorSettings.motor = DCMotor.getNEO(1);
 
-      SparkMaxSettings settings = new SparkMaxSettings();
-      settings.canId = 50;
+    //   SparkMaxSettings settings = new SparkMaxSettings();
+    //   settings.canId = 50;
 
-      ClimberArmControls.Constants.autoZeroSettings.voltage = -1;
-      // Set this to something big, we are never going to use stall current to detect if climber has
-      // reached it's end of range of motion.
-      ClimberArmControls.Constants.autoZeroSettings.minResetCurrent = 10.0;
-      ClimberArmControls.Constants.autoZeroSettings.resetPositionRad =
-          Units.degreesToRadians(armSettings.minAngleInDegrees);
+    //   ClimberArmControls.Constants.autoZeroSettings.voltage = -1;
+    //   // Set this to something big, we are never going to use stall current to detect if climber
+    // has
+    //   // reached it's end of range of motion.
+    //   ClimberArmControls.Constants.autoZeroSettings.minResetCurrent = 10.0;
+    //   ClimberArmControls.Constants.autoZeroSettings.resetPositionRad =
+    //       simpleMotorSettings.minPositionInRads;
+    //   ClimberArmControls.Constants.autoZeroSettings.initialReverseDuration = 0;
 
-      climberArm =
-          new ArmMotorSubsystem(
-              // new MotorIOArmStub(motorSettings, armSettings), "Coral", armSettings);
-              new MotorIOSparkMax(motorSettings, settings), "Climber", armSettings);
-    }
-    NamedCommands.registerCommand(
-        "Move Elevator to 0.5 meter", new ElevatorToPosition(elevator, () -> 0.5));
-    NamedCommands.registerCommand(
-        "Move Elevator to 1.553 meter", new ElevatorToPosition(elevator, () -> 1.553));
-    NamedCommands.registerCommand(
-        "Move Arm 75 degrees", new ArmToPosition(coralArm, () -> 70).withTimeout(1.5));
-    NamedCommands.registerCommand(
-        "Move Arm 0 degrees", new ArmToPosition(coralArm, () -> 0).withTimeout(1.5));
-    NamedCommands.registerCommand(
-        "Move Elevator to 0.8 meter", new ElevatorToPosition(elevator, () -> 0.8));
-    NamedCommands.registerCommand(
-        "Move Elevator to 0.4 meter", new ElevatorToPosition(elevator, () -> 0.4));
-    NamedCommands.registerCommand(
-        "Move Arm for Intake", new ArmToPosition(coralArm, () -> -90).withTimeout(0));
-    autoChooser = AutoBuilder.buildAutoChooser("Sit Still");
+    //   climberArm =
+    //       new SimpleMotorSubsystem(
+    //           new MotorIOSparkMax(motorSettings, settings), "Climber", simpleMotorSettings);
+    // }
   }
 }
