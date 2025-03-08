@@ -229,7 +229,7 @@ public class DriveControls {
 
   public static void setupAssistantController(Drive drive, CommandXboxController controller) {
     controller
-        .x()
+        .rightTrigger()
         .whileTrue(
             new RunCommand(
                 () -> {
@@ -247,6 +247,15 @@ public class DriveControls {
                   SmartDashboard.putNumber("AAAAAA", coolestNumberEver);
                   SmartDashboard.putString(
                       "AAAAAA Reef Position", orderedReefPositions[coolestNumberEver]);
+                }))
+        .onFalse(
+            new InstantCommand(
+                () -> {
+                  myCoolPoseKeyIdx = coolestNumberEver + 7;
+                  if (myCoolPoseKeyIdx > 14) {
+                    myCoolPoseKeyIdx -= 12;
+                  }
+                  SmartDashboard.putNumber("Chosen Pose Index", myCoolPoseKeyIdx);
                 }));
   }
 
@@ -271,7 +280,12 @@ public class DriveControls {
   private static Command getPrepareToScoreCommand(Elevator elevator, Arm coralArm) {
     return new SelectCommand<>(
         Map.ofEntries(
-            Map.entry(1, new InstantCommand(() -> System.out.println("Not scoring mode selected"))),
+            Map.entry(
+                1,
+                new SequentialCommandGroup(
+                        new ElevatorToPosition(elevator, () -> 0.63),
+                        new ArmToPosition(coralArm, () -> 47))
+                    .withTimeout(5.0)),
             Map.entry(
                 2,
                 new SequentialCommandGroup(
