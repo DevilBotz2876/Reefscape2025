@@ -35,11 +35,11 @@ public class DriveSwerveYAGSL extends DriveBase {
 
   private final File swerveJsonDirectory;
   private SwerveDrive swerveDrive;
-  @AutoLogOutput private boolean fieldOrientedDrive = false;
+  @AutoLogOutput private boolean fieldOrientedDrive = true;
   private PIDConstants translationPIDConstants =
       new PIDConstants(7.5, 0.0, 0.0); // Translation PID constants
   private PIDConstants rotationPIDConstants =
-      new PIDConstants(5.0, 0.0, 0.0); // Rotation PID constants
+      new PIDConstants(6.0, 0.0, 0.0); // Rotation PID constants
 
   // @AutoLogOutput
   DriveIO io = new DriveIO();
