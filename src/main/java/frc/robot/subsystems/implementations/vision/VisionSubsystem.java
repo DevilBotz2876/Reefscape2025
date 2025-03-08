@@ -9,11 +9,9 @@ import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.subsystems.interfaces.Vision;
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
 import java.util.function.Supplier;
-import org.littletonrobotics.junction.AutoLogOutput;
 import org.littletonrobotics.junction.Logger;
 import org.photonvision.EstimatedRobotPose;
 import org.photonvision.PhotonCamera;
@@ -40,7 +38,7 @@ public class VisionSubsystem extends SubsystemBase implements Vision {
     private final int index;
     private PhotonCameraSim simCamera;
     private PhotonPipelineResult result;
-    private Optional<EstimatedRobotPose> estimatedRobotPose;
+    private Optional<EstimatedRobotPose> estimatedRobotPose = Optional.empty();
 
     private VisionCameraImpl(Camera camera, AprilTagFieldLayout fieldLayout) {
       this.camera = new PhotonCamera(camera.getName());
@@ -53,6 +51,7 @@ public class VisionSubsystem extends SubsystemBase implements Vision {
     }
 
     private void update() {
+      // This methods is invoked "periodically"
       for (PhotonPipelineResult photonPipelineResult : camera.getAllUnreadResults()) {
         estimatedRobotPose = poseEstimator.update(photonPipelineResult);
         result = photonPipelineResult;
@@ -99,23 +98,12 @@ public class VisionSubsystem extends SubsystemBase implements Vision {
     private String getName() {
       return camera.getName();
     }
-
-    private Transform3d getRobotToCamera() {
-      return robotToCamera;
-    }
   }
 
   private final List<VisionCameraImpl> cameras = new ArrayList<VisionCameraImpl>();
-  private VisionCameraImpl primaryCamera = null;
   private final AprilTagFieldLayout fieldLayout;
   private VisionMeasurementConsumer visionMeasurementConsumer = null;
   List<Camera> visionCameras = new ArrayList<Camera>();
-
-  /* Debug Info */
-  @AutoLogOutput private int debugTargetsVisible;
-
-  @AutoLogOutput private double debugTargetDistance = 0;
-  @AutoLogOutput private double debugTargetYaw = 0;
 
   /* Simulation Support*/
   private boolean simEnabled = false;
@@ -130,10 +118,6 @@ public class VisionSubsystem extends SubsystemBase implements Vision {
   public void addCamera(Camera camera) {
     cameras.add(new VisionCameraImpl(camera, fieldLayout));
     visionCameras.add(camera);
-
-    if (1 == cameras.size()) {
-      primaryCamera = this.cameras.get(0);
-    }
   }
 
   @Override
@@ -163,8 +147,6 @@ public class VisionSubsystem extends SubsystemBase implements Vision {
   }
 
   public void updatePoseEstimation() {
-    // Initialize new list of robot poses (for debugging)
-    List<Pose2d> debugRobotPoses = new LinkedList<>();
 
     if (simEnabled) {
       simVision.update(simPoseSupplier.get());
@@ -173,118 +155,41 @@ public class VisionSubsystem extends SubsystemBase implements Vision {
     for (VisionCameraImpl camera : cameras) {
       camera.update();
 
+      // Default values: in case no targets are seen
+      double distanceToTarget = -1;
+      Pose2d estimatedRobotPoseFromCamera = new Pose2d(-10.0, -10.0, new Rotation2d(0));
+
       Optional<EstimatedRobotPose> currentEstimatedRobotPose = camera.getEstimatedRobotPose();
       if (currentEstimatedRobotPose.isPresent()) {
-        debugTargetDistance = camera.getDistanceToBestTarget();
+
+        estimatedRobotPoseFromCamera = currentEstimatedRobotPose.get().estimatedPose.toPose2d();
+        distanceToTarget = camera.getDistanceToBestTarget();
 
         // Add vision measurement to the consumer.
-        if (visionMeasurementConsumer != null && debugTargetDistance < 1.5) {
+        if (visionMeasurementConsumer != null && distanceToTarget < 2) {
           visionMeasurementConsumer.add(
-              currentEstimatedRobotPose.get().estimatedPose.toPose2d(),
+              estimatedRobotPoseFromCamera,
               currentEstimatedRobotPose.get().timestampSeconds,
-              VecBuilder.fill(
-                  debugTargetDistance / 2, debugTargetDistance / 2, debugTargetDistance / 2));
+              VecBuilder.fill(distanceToTarget / 2, distanceToTarget / 2, distanceToTarget / 2));
         }
         /* NOTE standard deviation format:
          * (x position in meters, y position in meters, and heading in radians)
          * Increase these numbers to trust the vision pose measurement less.
          */
-
-        // Log estimated robot pose for debugging
-        debugRobotPoses.add(currentEstimatedRobotPose.get().estimatedPose.toPose2d());
-      } else {
-        // Display the robot pose "out of the arena" (indicating no pose found)
-        debugRobotPoses.add(new Pose2d(-10.0, -10.0, new Rotation2d(0)));
       }
-    }
 
-    // Record estimated robot pose to AdvantageKit networktables
-    if (debugRobotPoses.size() > 0) {
+      // Log information for debugging
       Logger.recordOutput(
-          "VisionSubsystem/DEBUGestimatedCameraPoses",
-          debugRobotPoses.toArray(new Pose2d[debugRobotPoses.size()]));
+          "VisionSubsystem/Distances To Target/" + camera.getName(), distanceToTarget);
+      Logger.recordOutput(
+          "VisionSubsystem/Estimated Robot Poses/" + camera.getName(),
+          estimatedRobotPoseFromCamera);
     }
   }
 
   @Override
   public void periodic() {
     updatePoseEstimation();
-  }
-
-  private PhotonTrackedTarget findAprilTag(int id) {
-    if (primaryCamera != null) {
-      for (PhotonTrackedTarget target : primaryCamera.getTargets()) {
-        if (target.getFiducialId() == id) {
-          return target;
-        }
-      }
-    }
-    return null;
-  }
-
-  @Override
-  public Optional<Double> getDistanceToAprilTag(int id) {
-    PhotonTrackedTarget target = findAprilTag(id);
-
-    if ((target != null) && (primaryCamera != null)) {
-      return Optional.of(
-          PhotonUtils.calculateDistanceToTargetMeters(
-                  primaryCamera.getRobotToCamera().getZ(),
-                  fieldLayout.getTagPose(target.getFiducialId()).get().getZ(),
-                  -primaryCamera.getRobotToCamera().getRotation().getY(),
-                  Units.degreesToRadians(target.getPitch()))
-              + Constants.visionDistanceOffsetInMeters);
-    }
-    return Optional.empty();
-  }
-
-  @Override
-  public Optional<Integer> getBestTargetId() {
-    if ((primaryCamera != null) && (primaryCamera.hasTargets())) {
-      return Optional.of(primaryCamera.getBestTarget().getFiducialId());
-    }
-    return Optional.empty();
-  }
-
-  @Override
-  public Optional<Double> getYawToBestTarget() {
-    if ((primaryCamera != null) && (primaryCamera.hasTargets())) {
-      return Optional.of(primaryCamera.getBestTarget().getYaw());
-    }
-    return Optional.empty();
-  }
-
-  @Override
-  public Optional<Double> getDistanceToBestTarget() {
-    if ((primaryCamera != null) && (primaryCamera.hasTargets())) {
-      return getDistanceToAprilTag(primaryCamera.getBestTarget().getFiducialId());
-    }
-    return Optional.empty();
-  }
-
-  @Override
-  public Optional<Double> getYawToAprilTag(int id) {
-    PhotonTrackedTarget target = findAprilTag(id);
-
-    if (target != null) {
-      return Optional.of(target.getYaw());
-    }
-
-    return Optional.empty();
-  }
-
-  @Override
-  public boolean setPrimaryCamera(String name) {
-    boolean foundCamera = false;
-
-    for (VisionCameraImpl camera : cameras) {
-      if (camera.getName().equals(name)) {
-        primaryCamera = camera;
-        foundCamera = true;
-        break;
-      }
-    }
-    return foundCamera;
   }
 
   @Override
