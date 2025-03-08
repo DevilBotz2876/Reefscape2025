@@ -1,5 +1,6 @@
 package frc.robot.config.game.reefscape2025;
 
+import com.pathplanner.lib.auto.AutoBuilder;
 import edu.wpi.first.apriltag.AprilTagFieldLayout;
 import edu.wpi.first.apriltag.AprilTagFields;
 import edu.wpi.first.math.controller.ArmFeedforward;
@@ -205,6 +206,9 @@ public class RobotConfig {
   public void configureBindings() {
     if (Robot.isSimulation()) {
       vision.enableSimulation(() -> RobotConfig.drive.getPose(), true);
+
+      // HACK just to verify autos are visible without connecting to robot
+      RobotConfig.autoChooser = AutoBuilder.buildAutoChooser("Sit Still");
     }
 
     // Send vision-based odometry measurements to drive's odometry calculations

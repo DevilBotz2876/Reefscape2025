@@ -1,5 +1,6 @@
 package frc.robot.config.game.reefscape2025;
 
+import com.pathplanner.lib.auto.AutoBuilder;
 import edu.wpi.first.math.controller.ArmFeedforward;
 import edu.wpi.first.math.controller.ElevatorFeedforward;
 import edu.wpi.first.math.controller.PIDController;
@@ -216,5 +217,8 @@ public class RobotConfigComp extends RobotConfig {
       led.setData(ledBuffer);
       led.start();
     }
+
+    // Auto(s)
+    autoChooser = AutoBuilder.buildAutoChooser("Sit Still");
   }
 }

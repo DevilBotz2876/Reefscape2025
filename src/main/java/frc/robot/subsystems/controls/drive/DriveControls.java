@@ -20,7 +20,6 @@ import frc.robot.subsystems.controls.combination.DriverControls;
 import frc.robot.subsystems.interfaces.Arm;
 import frc.robot.subsystems.interfaces.Drive;
 import frc.robot.subsystems.interfaces.Elevator;
-
 import java.util.Map;
 import java.util.Map.Entry;
 
@@ -34,7 +33,8 @@ public class DriveControls {
     "E", "F", "G", "H", "I", "J", "K", "L", "A", "B", "C", "D"
   };
 
-  public static void setupController(Drive drive, Elevator elevator, Arm arm, CommandXboxController controller) {
+  public static void setupController(
+      Drive drive, Elevator elevator, Arm arm, CommandXboxController controller) {
     SubsystemBase driveSubsystem = (SubsystemBase) drive;
     driveSubsystem.setDefaultCommand(
         new DriveCommand(
@@ -124,19 +124,66 @@ public class DriveControls {
     Command coolGoToPose =
         new SelectCommand<>(
             Map.ofEntries(
-                coolDynamicPathScoringCommand(TargetPose.REEF_A, constraints, DriverControls.getPrepareToScoreCommand(elevator, arm), new ArmToPosition(arm, () -> 0)),
-                coolDynamicPathScoringCommand(TargetPose.REEF_B, constraints, DriverControls.getPrepareToScoreCommand(elevator, arm), new ArmToPosition(arm, () -> 0)),
-                coolDynamicPathScoringCommand(TargetPose.REEF_C, constraints, DriverControls.getPrepareToScoreCommand(elevator, arm), new ArmToPosition(arm, () -> 0)),
-                coolDynamicPathScoringCommand(TargetPose.REEF_D, constraints, DriverControls.getPrepareToScoreCommand(elevator, arm), new ArmToPosition(arm, () -> 0)),
-                coolDynamicPathScoringCommand(TargetPose.REEF_E, constraints, DriverControls.getPrepareToScoreCommand(elevator, arm), new ArmToPosition(arm, () -> 0)),
-                coolDynamicPathScoringCommand(TargetPose.REEF_F, constraints, DriverControls.getPrepareToScoreCommand(elevator, arm), new ArmToPosition(arm, () -> 0)),
-                coolDynamicPathScoringCommand(TargetPose.REEF_G, constraints, DriverControls.getPrepareToScoreCommand(elevator, arm), new ArmToPosition(arm, () -> 0)),
-                coolDynamicPathScoringCommand(TargetPose.REEF_H, constraints, DriverControls.getPrepareToScoreCommand(elevator, arm), new ArmToPosition(arm, () -> 0)),
-                coolDynamicPathScoringCommand(TargetPose.REEF_I, constraints, DriverControls.getPrepareToScoreCommand(elevator, arm), new ArmToPosition(arm, () -> 0)),
-                coolDynamicPathScoringCommand(TargetPose.REEF_J, constraints, DriverControls.getPrepareToScoreCommand(elevator, arm), new ArmToPosition(arm, () -> 0)),
-                coolDynamicPathScoringCommand(TargetPose.REEF_K, constraints, DriverControls.getPrepareToScoreCommand(elevator, arm), new ArmToPosition(arm, () -> 0)),
-                coolDynamicPathScoringCommand(TargetPose.REEF_L, constraints, DriverControls.getPrepareToScoreCommand(elevator, arm), new ArmToPosition(arm, () -> 0))
-            ),
+                coolDynamicPathScoringCommand(
+                    TargetPose.REEF_A,
+                    constraints,
+                    DriverControls.getPrepareToScoreCommand(elevator, arm),
+                    new ArmToPosition(arm, () -> 0)),
+                coolDynamicPathScoringCommand(
+                    TargetPose.REEF_B,
+                    constraints,
+                    DriverControls.getPrepareToScoreCommand(elevator, arm),
+                    new ArmToPosition(arm, () -> 0)),
+                coolDynamicPathScoringCommand(
+                    TargetPose.REEF_C,
+                    constraints,
+                    DriverControls.getPrepareToScoreCommand(elevator, arm),
+                    new ArmToPosition(arm, () -> 0)),
+                coolDynamicPathScoringCommand(
+                    TargetPose.REEF_D,
+                    constraints,
+                    DriverControls.getPrepareToScoreCommand(elevator, arm),
+                    new ArmToPosition(arm, () -> 0)),
+                coolDynamicPathScoringCommand(
+                    TargetPose.REEF_E,
+                    constraints,
+                    DriverControls.getPrepareToScoreCommand(elevator, arm),
+                    new ArmToPosition(arm, () -> 0)),
+                coolDynamicPathScoringCommand(
+                    TargetPose.REEF_F,
+                    constraints,
+                    DriverControls.getPrepareToScoreCommand(elevator, arm),
+                    new ArmToPosition(arm, () -> 0)),
+                coolDynamicPathScoringCommand(
+                    TargetPose.REEF_G,
+                    constraints,
+                    DriverControls.getPrepareToScoreCommand(elevator, arm),
+                    new ArmToPosition(arm, () -> 0)),
+                coolDynamicPathScoringCommand(
+                    TargetPose.REEF_H,
+                    constraints,
+                    DriverControls.getPrepareToScoreCommand(elevator, arm),
+                    new ArmToPosition(arm, () -> 0)),
+                coolDynamicPathScoringCommand(
+                    TargetPose.REEF_I,
+                    constraints,
+                    DriverControls.getPrepareToScoreCommand(elevator, arm),
+                    new ArmToPosition(arm, () -> 0)),
+                coolDynamicPathScoringCommand(
+                    TargetPose.REEF_J,
+                    constraints,
+                    DriverControls.getPrepareToScoreCommand(elevator, arm),
+                    new ArmToPosition(arm, () -> 0)),
+                coolDynamicPathScoringCommand(
+                    TargetPose.REEF_K,
+                    constraints,
+                    DriverControls.getPrepareToScoreCommand(elevator, arm),
+                    new ArmToPosition(arm, () -> 0)),
+                coolDynamicPathScoringCommand(
+                    TargetPose.REEF_L,
+                    constraints,
+                    DriverControls.getPrepareToScoreCommand(elevator, arm),
+                    new ArmToPosition(arm, () -> 0))),
             () -> {
               return myCoolPoseKeyIdx;
             });
