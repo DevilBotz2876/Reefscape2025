@@ -32,7 +32,7 @@ public class RobotConfigComp extends RobotConfig {
   private final AddressableLEDBuffer ledBuffer;
 
   public RobotConfigComp() {
-    super(false, true, false, false, false, true, true);
+    super(false, false, false, false, false, true, true);
 
     // Comp has a Swerve drive train
     Drive.Constants.rotatePidKp = 0.025;

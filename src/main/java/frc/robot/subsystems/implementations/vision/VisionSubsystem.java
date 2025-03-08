@@ -83,7 +83,7 @@ public class VisionSubsystem extends SubsystemBase implements Vision {
       return PhotonUtils.calculateDistanceToTargetMeters(
               robotToCamera.getZ(),
               fieldLayout.getTagPose(bestTarget.getFiducialId()).get().getZ(),
-              robotToCamera.getRotation().getY(),
+              -robotToCamera.getRotation().getY(),
               Units.degreesToRadians(bestTarget.getPitch()))
           + Constants.visionDistanceOffsetInMeters;
     }
@@ -175,15 +175,15 @@ public class VisionSubsystem extends SubsystemBase implements Vision {
 
       Optional<EstimatedRobotPose> currentEstimatedRobotPose = camera.getEstimatedRobotPose();
       if (currentEstimatedRobotPose.isPresent()) {
-        double distanceToBestTarget = camera.getDistanceToBestTarget();
+        debugTargetDistance = camera.getDistanceToBestTarget();
 
         // Add vision measurement to the consumer.
-        if (visionMeasurementConsumer != null && distanceToBestTarget > 5) {
+        if (visionMeasurementConsumer != null && debugTargetDistance < 1.5) {
           visionMeasurementConsumer.add(
               currentEstimatedRobotPose.get().estimatedPose.toPose2d(),
               currentEstimatedRobotPose.get().timestampSeconds,
               VecBuilder.fill(
-                  distanceToBestTarget / 2, distanceToBestTarget / 2, distanceToBestTarget / 2));
+                  debugTargetDistance / 2, debugTargetDistance / 2, debugTargetDistance / 2));
         }
         /* NOTE standard deviation format:
          * (x position in meters, y position in meters, and heading in radians)
