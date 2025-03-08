@@ -9,6 +9,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.SelectCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
@@ -16,6 +17,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.commands.common.arm.ArmToPosition;
 import frc.robot.commands.common.drive.DriveCommand;
+import frc.robot.commands.common.elevator.ElevatorToPosition;
 import frc.robot.subsystems.controls.combination.DriverControls;
 import frc.robot.subsystems.interfaces.Arm;
 import frc.robot.subsystems.interfaces.Drive;
@@ -127,142 +129,171 @@ public class DriveControls {
                 coolDynamicPathScoringCommand(
                     TargetPose.REEF_A,
                     constraints,
-                    DriverControls.getPrepareToScoreCommand(elevator, arm),
+                    getPrepareToScoreCommand(elevator, arm),
                     new ArmToPosition(arm, () -> 0)),
                 coolDynamicPathScoringCommand(
                     TargetPose.REEF_B,
                     constraints,
-                    DriverControls.getPrepareToScoreCommand(elevator, arm),
+                    getPrepareToScoreCommand(elevator, arm),
                     new ArmToPosition(arm, () -> 0)),
                 coolDynamicPathScoringCommand(
                     TargetPose.REEF_C,
                     constraints,
-                    DriverControls.getPrepareToScoreCommand(elevator, arm),
+                    getPrepareToScoreCommand(elevator, arm),
                     new ArmToPosition(arm, () -> 0)),
                 coolDynamicPathScoringCommand(
                     TargetPose.REEF_D,
                     constraints,
-                    DriverControls.getPrepareToScoreCommand(elevator, arm),
+                    getPrepareToScoreCommand(elevator, arm),
                     new ArmToPosition(arm, () -> 0)),
                 coolDynamicPathScoringCommand(
                     TargetPose.REEF_E,
                     constraints,
-                    DriverControls.getPrepareToScoreCommand(elevator, arm),
+                    getPrepareToScoreCommand(elevator, arm),
                     new ArmToPosition(arm, () -> 0)),
                 coolDynamicPathScoringCommand(
                     TargetPose.REEF_F,
                     constraints,
-                    DriverControls.getPrepareToScoreCommand(elevator, arm),
+                    getPrepareToScoreCommand(elevator, arm),
                     new ArmToPosition(arm, () -> 0)),
                 coolDynamicPathScoringCommand(
                     TargetPose.REEF_G,
                     constraints,
-                    DriverControls.getPrepareToScoreCommand(elevator, arm),
+                    getPrepareToScoreCommand(elevator, arm),
                     new ArmToPosition(arm, () -> 0)),
                 coolDynamicPathScoringCommand(
                     TargetPose.REEF_H,
                     constraints,
-                    DriverControls.getPrepareToScoreCommand(elevator, arm),
+                    getPrepareToScoreCommand(elevator, arm),
                     new ArmToPosition(arm, () -> 0)),
                 coolDynamicPathScoringCommand(
                     TargetPose.REEF_I,
                     constraints,
-                    DriverControls.getPrepareToScoreCommand(elevator, arm),
+                    getPrepareToScoreCommand(elevator, arm),
                     new ArmToPosition(arm, () -> 0)),
                 coolDynamicPathScoringCommand(
                     TargetPose.REEF_J,
                     constraints,
-                    DriverControls.getPrepareToScoreCommand(elevator, arm),
+                    getPrepareToScoreCommand(elevator, arm),
                     new ArmToPosition(arm, () -> 0)),
                 coolDynamicPathScoringCommand(
                     TargetPose.REEF_K,
                     constraints,
-                    DriverControls.getPrepareToScoreCommand(elevator, arm),
+                    getPrepareToScoreCommand(elevator, arm),
                     new ArmToPosition(arm, () -> 0)),
                 coolDynamicPathScoringCommand(
                     TargetPose.REEF_L,
                     constraints,
-                    DriverControls.getPrepareToScoreCommand(elevator, arm),
+                    getPrepareToScoreCommand(elevator, arm),
                     new ArmToPosition(arm, () -> 0))),
-            () -> {
-              return myCoolPoseKeyIdx;
-            });
-
-    // TODO: new dynamic path planning command creation
-    // 1. SelectCommand ONE: go to initial location (based on user-chosen option X)
-    // 2. SelectCommand TWO: determine next action (based on option X and potentially pre-decided
-    // reef elevation value)
-    // 2a. if (1) was a reef position, assume we are scoring --> get reef elevation to score on -->
-    // set elevator/arm
-    // 2b. if not, choose an empty command and short-circuit (exit) the sequence
-    // 3. SelectCommand THREE: go to scoring position (which maps directly from initial chosen
-    // location)
-    // 4. Execute <arm down command>
-
-    // dynamically go to destination
-    controller.rightTrigger().whileTrue(coolGoToPose);
-
-    // TEMP FUNCTION TO TEST FIELD FLIPPING
-    // controller.b().whileTrue(new SequentialCommandGroup(
-    //     AutoBuilder.pathfindToPoseFlipped(TargetPose.REEF_A.getMyPrepPose(), constraints, 0.0),
-    //     // DriverControls.Constants.prepareScoreCommand,
-    //     AutoBuilder.pathfindToPoseFlipped(TargetPose.REEF_A.getMyPose(), constraints, 0.0),
-    //     new ArmToPosition(arm, () -> 0)));
-
-    /*  Angles -> Reef positions
-     * 0    30  : E
-     * 30   60  : F
-     * 60   90  : G
-     * 90   120 : H
-     * 120  150 : I
-     * 150  180 : J
-     * 180  210 : K
-     * 210  240 : L
-     * 240  270 : A
-     * 270  300 : B
-     * 300  330 : C
-     * 330  360 : D
-     */
-  }
-
-  public static void setupAssistantController(Drive drive, CommandXboxController controller) {
-    controller
-        .x()
-        .whileTrue(
-            new RunCommand(
-                () -> {
-                  double myX = controller.getLeftX();
-                  double myY = -controller.getLeftY();
-
-                  // TODO maybe keep calculation in radians?
-                  double myNumber = Math.atan2(myY, myX) * (180 / Math.PI);
-                  if (myNumber < 0) myNumber += 360; // obtain this angle as a positive number
-
-                  // This number can be used to index into the ordered reef positions array!
-                  coolestNumberEver = (int) myNumber / 30;
-
-                  // TODO remove Smartdashboard number; only display reef position
-                  SmartDashboard.putNumber("AAAAAA", coolestNumberEver);
-                  SmartDashboard.putString(
-                      "AAAAAA Reef Position", orderedReefPositions[coolestNumberEver]);
-                }));
-  }
-
-  private static Entry<Integer, Command> coolDynamicPathScoringCommand(
-      TargetPose target,
-      PathConstraints constraints,
-      Command prepareToScoreCommand,
-      Command scoreCommand) {
-    // FIXME initialize a fresh instance of the prepareToScoreCommand each time!!
-    // OTHERWISE CODE WILL CRASH
-    Entry<Integer, Command> entry =
-        Map.entry(
-            target.getIndex(),
-            new SequentialCommandGroup(
-                AutoBuilder.pathfindToPoseFlipped(target.getPrepPose(), constraints, 0.0),
-                prepareToScoreCommand,
-                AutoBuilder.pathfindToPoseFlipped(target.getPose(), constraints, 0.0),
-                scoreCommand));
-    return entry;
+                                () -> {
+                                  return myCoolPoseKeyIdx;
+                                });
+                    
+                        // TODO: new dynamic path planning command creation
+                        // 1. SelectCommand ONE: go to initial location (based on user-chosen option X)
+                        // 2. SelectCommand TWO: determine next action (based on option X and potentially pre-decided
+                        // reef elevation value)
+                        // 2a. if (1) was a reef position, assume we are scoring --> get reef elevation to score on -->
+                        // set elevator/arm
+                        // 2b. if not, choose an empty command and short-circuit (exit) the sequence
+                        // 3. SelectCommand THREE: go to scoring position (which maps directly from initial chosen
+                        // location)
+                        // 4. Execute <arm down command>
+                    
+                        // dynamically go to destination
+                        controller.rightTrigger().whileTrue(coolGoToPose);
+                    
+                        // TEMP FUNCTION TO TEST FIELD FLIPPING
+                        // controller.b().whileTrue(new SequentialCommandGroup(
+                        //     AutoBuilder.pathfindToPoseFlipped(TargetPose.REEF_A.getMyPrepPose(), constraints, 0.0),
+                        //     // DriverControls.Constants.prepareScoreCommand,
+                        //     AutoBuilder.pathfindToPoseFlipped(TargetPose.REEF_A.getMyPose(), constraints, 0.0),
+                        //     new ArmToPosition(arm, () -> 0)));
+                    
+                        /*  Angles -> Reef positions
+                         * 0    30  : E
+                         * 30   60  : F
+                         * 60   90  : G
+                         * 90   120 : H
+                         * 120  150 : I
+                         * 150  180 : J
+                         * 180  210 : K
+                         * 210  240 : L
+                         * 240  270 : A
+                         * 270  300 : B
+                         * 300  330 : C
+                         * 330  360 : D
+                         */
+                      }
+                    
+                      public static void setupAssistantController(Drive drive, CommandXboxController controller) {
+                        controller
+                            .x()
+                            .whileTrue(
+                                new RunCommand(
+                                    () -> {
+                                      double myX = controller.getLeftX();
+                                      double myY = -controller.getLeftY();
+                    
+                                      // TODO maybe keep calculation in radians?
+                                      double myNumber = Math.atan2(myY, myX) * (180 / Math.PI);
+                                      if (myNumber < 0) myNumber += 360; // obtain this angle as a positive number
+                    
+                                      // This number can be used to index into the ordered reef positions array!
+                                      coolestNumberEver = (int) myNumber / 30;
+                    
+                                      // TODO remove Smartdashboard number; only display reef position
+                                      SmartDashboard.putNumber("AAAAAA", coolestNumberEver);
+                                      SmartDashboard.putString(
+                                          "AAAAAA Reef Position", orderedReefPositions[coolestNumberEver]);
+                                    }));
+                      }
+                    
+                      private static Entry<Integer, Command> coolDynamicPathScoringCommand(
+                          TargetPose target,
+                          PathConstraints constraints,
+                          Command prepareToScoreCommand,
+                          Command scoreCommand) {
+                        // FIXME initialize a fresh instance of the prepareToScoreCommand each time!!
+                        // OTHERWISE CODE WILL CRASH
+                        Entry<Integer, Command> entry =
+                            Map.entry(
+                                target.getIndex(),
+                                new SequentialCommandGroup(
+                                    AutoBuilder.pathfindToPoseFlipped(target.getPrepPose(), constraints, 0.0),
+                                    prepareToScoreCommand,
+                                    AutoBuilder.pathfindToPoseFlipped(target.getPose(), constraints, 0.0),
+                                    scoreCommand));
+                        return entry;
+                      }
+                    
+    private static Command getPrepareToScoreCommand(Elevator elevator, Arm coralArm) {
+    return new SelectCommand<>(
+        Map.ofEntries(
+            Map.entry(1, new InstantCommand(() -> System.out.println("Not scoring mode selected"))),
+            Map.entry(
+                2,
+                new SequentialCommandGroup(
+                        new ElevatorToPosition(elevator, () -> 0.63),
+                        new ArmToPosition(coralArm, () -> 47))
+                    .withTimeout(5.0)),
+            Map.entry(
+                3,
+                new SequentialCommandGroup(
+                        new ElevatorToPosition(elevator, () -> 1.0),
+                        new ArmToPosition(coralArm, () -> 47))
+                    .withTimeout(5.0)),
+            Map.entry(
+                4,
+                new SequentialCommandGroup(
+                        new ElevatorToPosition(elevator, () -> 0.6),
+                        new ParallelCommandGroup(
+                            new ArmToPosition(coralArm, () -> 48).withTimeout(1.0),
+                            new ElevatorToPosition(elevator, () -> 1.553)))
+                    .withTimeout(5.0))),
+        () -> {
+          return DriverControls.Constants.prepareScoreSelctedIndex;
+        });
   }
 }
