@@ -280,7 +280,12 @@ public class DriveControls {
   private static Command getPrepareToScoreCommand(Elevator elevator, Arm coralArm) {
     return new SelectCommand<>(
         Map.ofEntries(
-            Map.entry(1, new InstantCommand(() -> System.out.println("Not scoring mode selected"))),
+            Map.entry(
+                1,
+                new SequentialCommandGroup(
+                        new ElevatorToPosition(elevator, () -> 0.63),
+                        new ArmToPosition(coralArm, () -> 47))
+                    .withTimeout(5.0)),
             Map.entry(
                 2,
                 new SequentialCommandGroup(
