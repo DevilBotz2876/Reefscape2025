@@ -1,6 +1,8 @@
 package frc.robot.config.game.reefscape2025;
 
 import com.pathplanner.lib.auto.AutoBuilder;
+import com.pathplanner.lib.auto.NamedCommands;
+
 import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.math.controller.ArmFeedforward;
 import edu.wpi.first.math.controller.ElevatorFeedforward;
@@ -16,6 +18,8 @@ import edu.wpi.first.wpilibj.AddressableLEDBuffer;
 import edu.wpi.first.wpilibj.LEDPattern;
 import edu.wpi.first.wpilibj.util.Color;
 import edu.wpi.first.wpilibj.util.Color8Bit;
+import frc.robot.commands.common.arm.ArmToPosition;
+import frc.robot.commands.common.elevator.ElevatorToPosition;
 import frc.robot.io.implementations.motor.MotorIOBase.MotorIOBaseSettings;
 import frc.robot.io.implementations.motor.MotorIOTalonFx;
 import frc.robot.io.implementations.motor.MotorIOTalonFx.TalonFxSettings;
@@ -223,6 +227,20 @@ public class RobotConfigComp extends RobotConfig {
     }
 
     // Auto(s)
+    NamedCommands.registerCommand(
+        "Move Elevator to 0.5 meter", new ElevatorToPosition(elevator, () -> 0.5));
+    NamedCommands.registerCommand(
+        "Move Elevator to 1.553 meter", new ElevatorToPosition(elevator, () -> 1.553));
+    NamedCommands.registerCommand(
+        "Move Arm 75 degrees", new ArmToPosition(coralArm, () -> 70).withTimeout(1.5));
+    NamedCommands.registerCommand(
+        "Move Arm 0 degrees", new ArmToPosition(coralArm, () -> 0).withTimeout(1.5));
+    NamedCommands.registerCommand(
+        "Move Elevator to 0.8 meter", new ElevatorToPosition(elevator, () -> 0.8));
+    NamedCommands.registerCommand(
+        "Move Elevator to 0.4 meter", new ElevatorToPosition(elevator, () -> 0.4));
+    NamedCommands.registerCommand(
+        "Move Arm for Intake", new ArmToPosition(coralArm, () -> -90).withTimeout(0));
     autoChooser = AutoBuilder.buildAutoChooser("Sit Still");
 
     // Start webcam
