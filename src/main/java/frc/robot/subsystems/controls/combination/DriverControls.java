@@ -53,7 +53,7 @@ public class DriverControls {
                           DriverControls.Constants.prepareScoreSelctedIndex);
                     })));
 
-    Command intakeCoralCommand = new ElevatorToPosition(elevator, () -> 0.35);
+    Command intakeCoralCommand = new ElevatorToPosition(elevator, () -> 0.3                                                                                                                                                                                                 );
     Trigger scoreMode = new Trigger(() -> Constants.prepareScoreSelctedIndex >= 2);
     controller.leftTrigger().and(scoreMode.negate()).and(ableToIntake).onTrue(intakeCoralCommand);
 
