@@ -26,8 +26,6 @@ public enum TargetPose {
   REEF_L(14, "L", "Reef L", new Pose2d(3.69, 5.04, Rotation2d.fromDegrees(-60)), 1),
   PROCESSOR(15, "P", "Processor", new Pose2d(6, 0.75, new Rotation2d(270)), 0);
 
-  
-
   /*
    *  Practice field testing
    * A: 3.13 4.18 0           14.36 3.88 180
@@ -37,19 +35,19 @@ public enum TargetPose {
    * E: 5.00 2.83 120.0       12.55 5.23 -60
    * F: 5.36 3.00 122.5~      12.19 5.06 -57.7    ** this one potentially uncentered
    * G: 5.71 4.00 -177.23     11.84 4.07 2.77
-   * H: 
+   * H:
    * I: 5.28 5.06 -119.74     12.26 3.00 60.26
    * J: 4.97 5.28 -119.62     12.57 2.78 60.38
    * K: 3.95 5.18 -59         13.59 2.87 121
-   * L: 3.69 5.04 -58.6~      13.86 3.01 121.3         
+   * L: 3.69 5.04 -58.6~      13.86 3.01 121.3
    */
 
   /*
    *  During practice matches
    * A:
-   * B: 
-   * C: 
-   * D: 
+   * B:
+   * C:
+   * D:
    * E:
    * F:
    * G: 5.55 3.83 178.7       11.99 4.22 -1.30
