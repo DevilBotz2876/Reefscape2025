@@ -229,7 +229,7 @@ public class DriveControls {
                     
                       public static void setupAssistantController(Drive drive, CommandXboxController controller) {
                         controller
-                            .x()
+                            .rightTrigger()
                             .whileTrue(
                                 new RunCommand(
                                     () -> {
@@ -247,7 +247,15 @@ public class DriveControls {
                                       SmartDashboard.putNumber("AAAAAA", coolestNumberEver);
                                       SmartDashboard.putString(
                                           "AAAAAA Reef Position", orderedReefPositions[coolestNumberEver]);
-                                    }));
+                                    }))
+                                    .onFalse(new InstantCommand(() -> {
+                                        myCoolPoseKeyIdx = coolestNumberEver + 7;
+                                        if (myCoolPoseKeyIdx > 14) {
+                                            myCoolPoseKeyIdx -= 12;
+                                        }
+                                        SmartDashboard.putNumber("Chosen Pose Index", myCoolPoseKeyIdx);
+                                    
+                      }));
                       }
                     
                       private static Entry<Integer, Command> coolDynamicPathScoringCommand(
