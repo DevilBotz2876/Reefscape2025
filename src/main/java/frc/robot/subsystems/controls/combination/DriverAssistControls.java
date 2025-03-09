@@ -115,7 +115,7 @@ public class DriverAssistControls {
         .rightBumper()
         .onTrue(
             new InstantCommand(
-                () -> climber.setTargetPosition(climber.getSettings().minPositionInRads),
+                () -> climber.setTargetPosition(5.0),
                 climberSubsystem));
   }
 }
