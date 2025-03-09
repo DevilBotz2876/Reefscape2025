@@ -1,0 +1,176 @@
+{
+  "version": "2025.0",
+  "command": {
+    "type": "sequential",
+    "data": {
+      "commands": [
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 0
+          }
+        },
+        {
+          "type": "parallel",
+          "data": {
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "Start to Near J"
+                }
+              },
+              {
+                "type": "sequential",
+                "data": {
+                  "commands": [
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "Move Elevator to 1.0 meter"
+                      }
+                    },
+                    {
+                      "type": "parallel",
+                      "data": {
+                        "commands": [
+                          {
+                            "type": "named",
+                            "data": {
+                              "name": "Move Arm 75 degrees"
+                            }
+                          },
+                          {
+                            "type": "named",
+                            "data": {
+                              "name": "Move Elevator to 1.553 meter"
+                            }
+                          }
+                        ]
+                      }
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Get to J"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Move Arm 0 degrees"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Back J"
+          }
+        },
+        {
+          "type": "parallel",
+          "data": {
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "I to Source Y"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "Move Elevator to 0.8 meter"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "Move Arm for Intake"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 3.0
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Move Elevator to 0.4 meter"
+          }
+        },
+        {
+          "type": "parallel",
+          "data": {
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "Source Y to L"
+                }
+              },
+              {
+                "type": "sequential",
+                "data": {
+                  "commands": [
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "Move Elevator to 1.0 meter"
+                      }
+                    },
+                    {
+                      "type": "parallel",
+                      "data": {
+                        "commands": [
+                          {
+                            "type": "named",
+                            "data": {
+                              "name": "Move Arm 75 degrees"
+                            }
+                          },
+                          {
+                            "type": "named",
+                            "data": {
+                              "name": "Move Elevator to 1.4 meter"
+                            }
+                          }
+                        ]
+                      }
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Move Arm 0 degrees"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Back L"
+          }
+        }
+      ]
+    }
+  },
+  "resetOdom": true,
+  "folder": null,
+  "choreoAuto": false
+}
