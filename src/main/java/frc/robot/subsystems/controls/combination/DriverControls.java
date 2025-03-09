@@ -129,10 +129,7 @@ public class DriverControls {
     // climb
     controller
         .rightBumper()
-        .onTrue(
-            new InstantCommand(
-                () -> climber.setTargetPosition(climber.getSettings().minPositionInRads),
-                climberSubsystem));
+        .onTrue(new InstantCommand(() -> climber.setTargetPosition(5.5), climberSubsystem));
 
     // multi controll not workking in each subsystem inde
     controller.povUp().whileTrue(new ElevatorCommand(elevator, () -> 0.2));
