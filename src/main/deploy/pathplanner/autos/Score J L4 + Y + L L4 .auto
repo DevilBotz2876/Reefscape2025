@@ -17,7 +17,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "Start to Near F"
+                  "pathName": "Start to Near J"
                 }
               },
               {
@@ -58,7 +58,7 @@
         {
           "type": "path",
           "data": {
-            "pathName": "Get to F"
+            "pathName": "Get to J"
           }
         },
         {
@@ -70,7 +70,7 @@
         {
           "type": "path",
           "data": {
-            "pathName": "Back F"
+            "pathName": "Back J"
           }
         },
         {
@@ -80,7 +80,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "F to Source X"
+                  "pathName": "I to Source Y"
                 }
               },
               {
@@ -117,7 +117,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "Source X to C"
+                  "pathName": "Source Y to L"
                 }
               },
               {
@@ -164,7 +164,7 @@
         {
           "type": "path",
           "data": {
-            "pathName": "Back C"
+            "pathName": "Back L"
           }
         }
       ]
