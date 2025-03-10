@@ -48,17 +48,19 @@ public class DriverControls {
         .b()
         .onTrue(
             prepareIntakeCoralCommand
-            .andThen(new MotorAutoResetEncoderCommand((Motor) coralArm, CoralArmControls.Constants.autoZeroSettings))
-            .andThen(
-                new InstantCommand(
-                    () -> {
-                      DriverControls.Constants.prepareScoreSelctedIndex = 1;
-                      SmartDashboard.putNumber(
-                          "Driver " + "/Misc/Prepare Selection",
-                          DriverControls.Constants.prepareScoreSelctedIndex);
-                    })));
+                .andThen(
+                    new MotorAutoResetEncoderCommand(
+                        (Motor) coralArm, CoralArmControls.Constants.autoZeroSettings))
+                .andThen(
+                    new InstantCommand(
+                        () -> {
+                          DriverControls.Constants.prepareScoreSelctedIndex = 1;
+                          SmartDashboard.putNumber(
+                              "Driver " + "/Misc/Prepare Selection",
+                              DriverControls.Constants.prepareScoreSelctedIndex);
+                        })));
 
-    Command intakeCoralCommand = new ElevatorToPosition(elevator, () -> 0.3);
+    Command intakeCoralCommand = new ElevatorToPosition(elevator, () -> 0.345);
     Trigger scoreMode = new Trigger(() -> Constants.prepareScoreSelctedIndex >= 2);
     controller.leftTrigger().and(scoreMode.negate()).and(ableToIntake).onTrue(intakeCoralCommand);
 
@@ -134,7 +136,7 @@ public class DriverControls {
     // climb
     controller
         .rightBumper()
-        .onTrue(new InstantCommand(() -> climber.setTargetPosition(5.0), climberSubsystem));
+        .onTrue(new InstantCommand(() -> climber.setTargetPosition(11.6), climberSubsystem));
 
     // multi controll not workking in each subsystem inde
     controller.povUp().whileTrue(new ElevatorCommand(elevator, () -> 0.2));
