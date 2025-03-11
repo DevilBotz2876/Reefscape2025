@@ -18,13 +18,39 @@ public enum TargetPose {
   REEF_D(6, "D", "Reef D", new Pose2d(4.10, 2.76, Rotation2d.fromDegrees(60)), 1),
   REEF_E(7, "E", "Reef E", new Pose2d(5.00, 2.83, Rotation2d.fromDegrees(120)), -1),
   REEF_F(8, "F", "Reef F", new Pose2d(5.36, 3.00, Rotation2d.fromDegrees(122)), 1),
-  REEF_G(9, "G", "Reef G", new Pose2d(5.80, 3.75, Rotation2d.fromDegrees(183)), -1),
-  REEF_H(10, "H", "Reef H", new Pose2d(5.80, 4.20, Rotation2d.fromDegrees(180)), 1),
+  REEF_G(9, "G", "Reef G", new Pose2d(5.81, 3.90, Rotation2d.fromDegrees(180)), -1),
+  REEF_H(10, "H", "Reef H", new Pose2d(5.87, 4.20, Rotation2d.fromDegrees(180)), 1),
   REEF_I(11, "I", "Reef I", new Pose2d(5.28, 5.06, Rotation2d.fromDegrees(-120)), -1),
   REEF_J(12, "J", "Reef J", new Pose2d(4.97, 5.28, Rotation2d.fromDegrees(-120)), 1),
   REEF_K(13, "K", "Reef K", new Pose2d(3.95, 5.18, Rotation2d.fromDegrees(-60)), -1),
   REEF_L(14, "L", "Reef L", new Pose2d(3.69, 5.04, Rotation2d.fromDegrees(-60)), 1),
   PROCESSOR(15, "P", "Processor", new Pose2d(6, 0.75, new Rotation2d(270)), 0);
+
+  /*
+   *  Home positions (blue)
+   * A:
+   * B:
+   * C: 3.72 3.03 60
+   * D:
+   * E:
+   * F:
+   * G:
+   * H:
+   * I:
+   * J:
+   * K:
+   * L:
+   *
+   *
+   * camera
+   * x -7
+   * y 2
+   * z 22.5in
+   * 23.75
+   * roll 0
+   * pitch 21
+   * yaw 10
+   */
 
   /*
    *  Practice field testing

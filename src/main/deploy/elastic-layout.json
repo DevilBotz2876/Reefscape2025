@@ -11,8 +11,8 @@
             "title": "Field",
             "x": 0.0,
             "y": 0.0,
-            "width": 768.0,
-            "height": 384.0,
+            "width": 1024.0,
+            "height": 640.0,
             "type": "Field",
             "properties": {
               "topic": "/SmartDashboard/Field",
@@ -29,8 +29,8 @@
           },
           {
             "title": "Pigeon 2 (v6) [50]",
-            "x": 768.0,
-            "y": 0.0,
+            "x": 1088.0,
+            "y": 128.0,
             "width": 256.0,
             "height": 256.0,
             "type": "Gyro",
@@ -42,8 +42,8 @@
           },
           {
             "title": "BatteryVoltage",
-            "x": 0.0,
-            "y": 384.0,
+            "x": 1024.0,
+            "y": 0.0,
             "width": 384.0,
             "height": 128.0,
             "type": "Voltage View",
@@ -97,6 +97,19 @@
               "field_rotation": 0.0,
               "robot_color": 4294198070,
               "trajectory_color": 4294967295
+            }
+          },
+          {
+            "title": "photonvision_Port_1186_Output_MJPEG_Server",
+            "x": 896.0,
+            "y": 64.0,
+            "width": 576.0,
+            "height": 448.0,
+            "type": "Camera Stream",
+            "properties": {
+              "topic": "/CameraPublisher/photonvision_Port_1186_Output_MJPEG_Server",
+              "period": 0.06,
+              "rotation_turns": 0
             }
           }
         ]
@@ -2062,7 +2075,7 @@
             }
           },
           {
-            "title": "Blue X (m)",
+            "title": "X (m)",
             "x": 640.0,
             "y": 576.0,
             "width": 128.0,
@@ -2076,7 +2089,7 @@
             }
           },
           {
-            "title": "Blue Y (m)",
+            "title": "Y (m)",
             "x": 768.0,
             "y": 576.0,
             "width": 128.0,
@@ -2090,7 +2103,7 @@
             }
           },
           {
-            "title": "Blue Rot (deg)",
+            "title": "Rot (deg)",
             "x": 896.0,
             "y": 576.0,
             "width": 128.0,
@@ -2104,7 +2117,7 @@
             }
           },
           {
-            "title": "Red X (m)",
+            "title": "Flip X (m)",
             "x": 1152.0,
             "y": 576.0,
             "width": 128.0,
@@ -2118,7 +2131,7 @@
             }
           },
           {
-            "title": "Red Y (m)",
+            "title": "Flip Y (m)",
             "x": 1280.0,
             "y": 576.0,
             "width": 128.0,
@@ -2132,7 +2145,7 @@
             }
           },
           {
-            "title": "Red Rot (deg)",
+            "title": "Flip Rot (deg)",
             "x": 1408.0,
             "y": 576.0,
             "width": 128.0,
@@ -2143,19 +2156,6 @@
               "period": 0.06,
               "data_type": "double",
               "show_submit_button": false
-            }
-          },
-          {
-            "title": "Reef Level Selected",
-            "x": 640.0,
-            "y": 256.0,
-            "width": 192.0,
-            "height": 128.0,
-            "type": "Large Text Display",
-            "properties": {
-              "topic": "/SmartDashboard/Driver /Misc/Prepare To Score Selection",
-              "period": 0.06,
-              "data_type": "double"
             }
           },
           {
@@ -2238,8 +2238,8 @@
             "title": "FRONT CAM",
             "x": 832.0,
             "y": 0.0,
-            "width": 448.0,
-            "height": 384.0,
+            "width": 256.0,
+            "height": 256.0,
             "type": "Camera Stream",
             "properties": {
               "topic": "/CameraPublisher/photonvision_Port_1184_Output_MJPEG_Server",
@@ -2254,13 +2254,57 @@
           },
           {
             "title": "Distance to Front Tag",
-            "x": 1280.0,
+            "x": 1088.0,
             "y": 0.0,
             "width": 192.0,
             "height": 128.0,
             "type": "Text Display",
             "properties": {
               "topic": "/AdvantageKit/RealOutputs/VisionSubsystem/Distances To Target/front_cam",
+              "period": 0.06,
+              "data_type": "double",
+              "show_submit_button": false
+            }
+          },
+          {
+            "title": "Reef Level Selection",
+            "x": 640.0,
+            "y": 256.0,
+            "width": 192.0,
+            "height": 128.0,
+            "type": "Large Text Display",
+            "properties": {
+              "topic": "/SmartDashboard/Driver /Misc/Prepare Selection",
+              "period": 0.06,
+              "data_type": "double"
+            }
+          },
+          {
+            "title": "NEW FRONT",
+            "x": 896.0,
+            "y": 256.0,
+            "width": 320.0,
+            "height": 320.0,
+            "type": "Camera Stream",
+            "properties": {
+              "topic": "/CameraPublisher/photonvision_Port_1186_Output_MJPEG_Server",
+              "period": 0.06,
+              "rotation_turns": 0,
+              "resolution": [
+                160.0,
+                120.0
+              ]
+            }
+          },
+          {
+            "title": "Distance to NEW front",
+            "x": 1088.0,
+            "y": 128.0,
+            "width": 192.0,
+            "height": 128.0,
+            "type": "Text Display",
+            "properties": {
+              "topic": "/AdvantageKit/RealOutputs/VisionSubsystem/Distances To Target/left_cam",
               "period": 0.06,
               "data_type": "double",
               "show_submit_button": false

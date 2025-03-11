@@ -63,25 +63,36 @@ public class RobotConfigComp extends RobotConfig {
     //                 Units.degreesToRadians(12),
     //                 Units.degreesToRadians(-33),
     //                 Units.degreesToRadians(170)))));
+    // vision.addCamera(
+    //     new Camera(
+    //         "left_cam", // left
+    //         new Transform3d(
+    //             new Translation3d(
+    //                 Units.inchesToMeters(3.250),
+    //                 Units.inchesToMeters(13.592),
+    //                 Units.inchesToMeters(7.201)),
+    //             new Rotation3d(0.0, Units.degreesToRadians(-5.0),
+    // Units.degreesToRadians(90.0)))));
     vision.addCamera(
         new Camera(
             "left_cam", // left
             new Transform3d(
                 new Translation3d(
-                    Units.inchesToMeters(3.250),
-                    Units.inchesToMeters(13.592),
-                    Units.inchesToMeters(7.201)),
-                new Rotation3d(0.0, Units.degreesToRadians(-5.0), Units.degreesToRadians(90.0)))));
+                    Units.inchesToMeters(-6.5),
+                    Units.inchesToMeters(0),
+                    Units.inchesToMeters(23.25)),
+                new Rotation3d(0.0, Units.degreesToRadians(15.0), Units.degreesToRadians(5.0)))));
 
-    vision.addCamera(
-        new Camera(
-            "right_cam", // right
-            new Transform3d(
-                new Translation3d(
-                    Units.inchesToMeters(3.250),
-                    Units.inchesToMeters(-13.592),
-                    Units.inchesToMeters(7.201)),
-                new Rotation3d(0.0, Units.degreesToRadians(-5.0), Units.degreesToRadians(270.0)))));
+    // vision.addCamera(
+    //     new Camera(
+    //         "right_cam", // right
+    //         new Transform3d(
+    //             new Translation3d(
+    //                 Units.inchesToMeters(3.250),
+    //                 Units.inchesToMeters(-13.592),
+    //                 Units.inchesToMeters(7.201)),
+    //             new Rotation3d(0.0, Units.degreesToRadians(-5.0),
+    // Units.degreesToRadians(270.0)))));
     vision.addCamera(
         new Camera(
             "front_cam", // front
