@@ -18,7 +18,7 @@ public enum TargetPose {
   REEF_D(6, "D", "Reef D", new Pose2d(4.10, 2.76, Rotation2d.fromDegrees(60)), 1),
   REEF_E(7, "E", "Reef E", new Pose2d(5.00, 2.83, Rotation2d.fromDegrees(120)), -1),
   REEF_F(8, "F", "Reef F", new Pose2d(5.36, 3.00, Rotation2d.fromDegrees(122)), 1),
-  REEF_G(9, "G", "Reef G", new Pose2d(5.71, 4.00, Rotation2d.fromDegrees(183)), -1),
+  REEF_G(9, "G", "Reef G", new Pose2d(5.80, 3.75, Rotation2d.fromDegrees(183)), -1),
   REEF_H(10, "H", "Reef H", new Pose2d(5.80, 4.20, Rotation2d.fromDegrees(180)), 1),
   REEF_I(11, "I", "Reef I", new Pose2d(5.28, 5.06, Rotation2d.fromDegrees(-120)), -1),
   REEF_J(12, "J", "Reef J", new Pose2d(4.97, 5.28, Rotation2d.fromDegrees(-120)), 1),

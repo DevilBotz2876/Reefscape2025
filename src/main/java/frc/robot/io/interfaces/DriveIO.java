@@ -25,9 +25,9 @@ public class DriveIO {
     inputs.poseY = inputs.pose.getTranslation().getY();
     inputs.poseRotInDegrees = inputs.pose.getRotation().getDegrees();
     inputs.flippedPose = FlippingUtil.flipFieldPose(inputs.pose);
-    inputs.flippedPoseX = inputs.pose.getTranslation().getX();
-    inputs.flippedPoseY = inputs.pose.getTranslation().getY();
-    inputs.flippedPoseRotInDegrees = inputs.pose.getRotation().getDegrees();
+    inputs.flippedPoseX = inputs.flippedPose.getTranslation().getX();
+    inputs.flippedPoseY = inputs.flippedPose.getTranslation().getY();
+    inputs.flippedPoseRotInDegrees = inputs.flippedPose.getRotation().getDegrees();
   }
   // Other methods for controlling the drive subsystem...
 }
