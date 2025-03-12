@@ -32,7 +32,8 @@ public enum TargetPose {
   // REMEMBER: actual distance between reef poles is 13 inches,
   // currently using 9 inches because robot currently overshoots target pose during traversal
 
-  private final Pose2d blueReefCenter = new Pose2d(new Translation2d(4.485, 4.00), new Rotation2d());
+  private final Pose2d blueReefCenter =
+      new Pose2d(new Translation2d(4.485, 4.00), new Rotation2d());
   private final Pose2d blueReefBPos = new Pose2d(new Translation2d(3.16, 3.82), new Rotation2d());
 
   /*
@@ -146,15 +147,19 @@ public enum TargetPose {
     }
   }
 
-  private TargetPose(int idx, String sName, String lName, double reefWallRotDegrees, boolean isLeftPosition) {
+  private TargetPose(
+      int idx, String sName, String lName, double reefWallRotDegrees, boolean isLeftPosition) {
     this.index = idx;
     this.shortName = sName;
     this.longName = lName;
-    
-    this.pose = blueReefBPos.rotateAround(blueReefCenter.getTranslation(), Rotation2d.fromDegrees(reefWallRotDegrees));
+
+    this.pose =
+        blueReefBPos.rotateAround(
+            blueReefCenter.getTranslation(), Rotation2d.fromDegrees(reefWallRotDegrees));
     double distance = 0.7;
     if (isLeftPosition) {
-      this.pose = this.pose.transformBy(new Transform2d(0, Units.inchesToMeters(9), new Rotation2d()));
+      this.pose =
+          this.pose.transformBy(new Transform2d(0, Units.inchesToMeters(9), new Rotation2d()));
       distance = -distance;
     }
     this.prepPose = this.pose.transformBy(new Transform2d(0, distance, new Rotation2d()));

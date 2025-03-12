@@ -78,10 +78,10 @@ public class RobotConfigComp extends RobotConfig {
             "left_cam", // left
             new Transform3d(
                 new Translation3d(
-                    Units.inchesToMeters(-7.5),
-                    Units.inchesToMeters(-1),
-                    Units.inchesToMeters(23.35)),
-                new Rotation3d(0.0, Units.degreesToRadians(15), Units.degreesToRadians(5)))));
+                    Units.inchesToMeters(9.343),
+                    Units.inchesToMeters(11.974),
+                    Units.inchesToMeters(11.110)),
+                new Rotation3d(0.0, Units.degreesToRadians(5.0), Units.degreesToRadians(-22)))));
 
     // vision.addCamera(
     //     new Camera(
@@ -98,10 +98,10 @@ public class RobotConfigComp extends RobotConfig {
             "front_cam", // front
             new Transform3d(
                 new Translation3d(
-                    Units.inchesToMeters(13.592),
-                    Units.inchesToMeters(2.75),
-                    Units.inchesToMeters(7.201)),
-                new Rotation3d(0.0, Units.degreesToRadians(-5.0), 0.0))));
+                    Units.inchesToMeters(9.343),
+                    Units.inchesToMeters(-11.974),
+                    Units.inchesToMeters(11.110)),
+                new Rotation3d(0.0, Units.degreesToRadians(5.0), Units.degreesToRadians(22)))));
 
     // Elevator
     {
