@@ -166,7 +166,7 @@ public class VisionSubsystem extends SubsystemBase implements Vision {
         distanceToTarget = camera.getDistanceToBestTarget();
 
         // Add vision measurement to the consumer.
-        if (visionMeasurementConsumer != null && distanceToTarget < 2) {
+        if (visionMeasurementConsumer != null && distanceToTarget < 0.8) {
           visionMeasurementConsumer.add(
               estimatedRobotPoseFromCamera,
               currentEstimatedRobotPose.get().timestampSeconds,
