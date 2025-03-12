@@ -34,7 +34,10 @@ public enum TargetPose {
 
   private final Pose2d blueReefCenter =
       new Pose2d(new Translation2d(4.485, 4.00), new Rotation2d());
-  private final Pose2d blueReefBPos = new Pose2d(new Translation2d(3.16, 3.82), new Rotation2d());
+
+  // NOTE: I pushed the target position closer to the reef to be more realistic to the actual game
+  // the original position was x: 3.16, y: 3.82
+  private final Pose2d blueReefBPos = new Pose2d(new Translation2d(3.19, 3.82), new Rotation2d());
 
   /*
    *  Home positions (blue)
@@ -156,13 +159,15 @@ public enum TargetPose {
     this.pose =
         blueReefBPos.rotateAround(
             blueReefCenter.getTranslation(), Rotation2d.fromDegrees(reefWallRotDegrees));
-    double distance = 0.7;
+    double distance = 0.6;
+    double rot = -Units.degreesToRadians(25.0);
     if (isLeftPosition) {
       this.pose =
-          this.pose.transformBy(new Transform2d(0, Units.inchesToMeters(9), new Rotation2d()));
+          this.pose.transformBy(new Transform2d(0, Units.inchesToMeters(13), new Rotation2d()));
       distance = -distance;
+      rot = -rot;
     }
-    this.prepPose = this.pose.transformBy(new Transform2d(0, distance, new Rotation2d()));
+    this.prepPose = this.pose.transformBy(new Transform2d(-0.2, distance, new Rotation2d(rot)));
     this.endPose = this.pose.transformBy(new Transform2d(-0.7, 0, new Rotation2d()));
   }
 }
