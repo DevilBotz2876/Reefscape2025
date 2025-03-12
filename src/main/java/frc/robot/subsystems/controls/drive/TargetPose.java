@@ -15,116 +15,25 @@ public enum TargetPose {
   ORIGIN(0, "O", "Origin", new Pose2d(0.0, 0.0, new Rotation2d(0)), 0),
   FEEDER_R(1, "FR", "Feeder Right", new Pose2d(1.05, 1, new Rotation2d(50)), 0),
   FEEDER_L(2, "FL", "Feeder Left", new Pose2d(1.05, 7, Rotation2d.fromDegrees(-50)), 0),
-  // REEF_A(3, "A", "Reef A", new Pose2d(3.14, 4.18, Rotation2d.fromDegrees(0)), -1),
-  // REEF_B(4, "B", "Reef B", new Pose2d(3.14, 3.79, Rotation2d.fromDegrees(0)), 1),
-  // REEF_C(5, "C", "Reef C", new Pose2d(3.71, 2.98, Rotation2d.fromDegrees(60)), -1),
-  // // REEF_D(6, "D", "Reef D", new Pose2d(4.10, 2.76, Rotation2d.fromDegrees(60)), 1),
-  // REEF_D(6, "D", "Reef D", rotatePoseAroundReef(new Pose2d(3.16, 3.82,
-  // Rotation2d.fromDegrees(0))), 1),
-  // REEF_E(7, "E", "Reef E", new Pose2d(5.00, 2.83, Rotation2d.fromDegrees(120)), -1),
-  // REEF_F(8, "F", "Reef F", new Pose2d(5.36, 3.00, Rotation2d.fromDegrees(122)), 1),
-  // REEF_G(9, "G", "Reef G", new Pose2d(5.81, 3.90, Rotation2d.fromDegrees(180)), -1),
-  // REEF_H(10, "H", "Reef H", new Pose2d(5.87, 4.20, Rotation2d.fromDegrees(180)), 1),
-  // REEF_I(11, "I", "Reef I", new Pose2d(5.28, 5.06, Rotation2d.fromDegrees(-120)), -1),
-  // REEF_J(12, "J", "Reef J", new Pose2d(4.97, 5.28, Rotation2d.fromDegrees(-120)), 1),
-  // REEF_K(13, "K", "Reef K", new Pose2d(3.95, 5.18, Rotation2d.fromDegrees(-60)), -1),
-  // REEF_L(14, "L", "Reef L", new Pose2d(3.69, 5.04, Rotation2d.fromDegrees(-60)), 1),
-  REEF_A(
-      3,
-      "A",
-      "Reef A",
-      rotatePoseAroundReef(
-          new Pose2d(3.16, 3.82, Rotation2d.fromDegrees(0))
-              .transformBy(
-                  new Transform2d(new Translation2d(0, Units.inchesToMeters(9)), new Rotation2d())),
-          0),
-      -1),
-  REEF_B(4, "B", "Reef B", new Pose2d(3.16, 3.82, Rotation2d.fromDegrees(0)), 1),
-  REEF_C(
-      5,
-      "C",
-      "Reef C",
-      rotatePoseAroundReef(
-          new Pose2d(3.16, 3.82, Rotation2d.fromDegrees(0))
-              .transformBy(
-                  new Transform2d(new Translation2d(0, Units.inchesToMeters(9)), new Rotation2d())),
-          60),
-      -1),
-  // REEF_D(6, "D", "Reef D", new Pose2d(4.10, 2.76, Rotation2d.fromDegrees(60)), 1),
-  REEF_D(
-      6,
-      "D",
-      "Reef D",
-      rotatePoseAroundReef(new Pose2d(3.16, 3.82, Rotation2d.fromDegrees(0)), 60),
-      1),
-  REEF_E(
-      7,
-      "E",
-      "Reef E",
-      rotatePoseAroundReef(
-          new Pose2d(3.16, 3.82, Rotation2d.fromDegrees(0))
-              .transformBy(
-                  new Transform2d(new Translation2d(0, Units.inchesToMeters(9)), new Rotation2d())),
-          120),
-      -1),
-  REEF_F(
-      8,
-      "F",
-      "Reef F",
-      rotatePoseAroundReef(new Pose2d(3.16, 3.82, Rotation2d.fromDegrees(0)), 120),
-      1),
-  REEF_G(
-      9,
-      "G",
-      "Reef G",
-      rotatePoseAroundReef(
-          new Pose2d(3.16, 3.82, Rotation2d.fromDegrees(0))
-              .transformBy(
-                  new Transform2d(new Translation2d(0, Units.inchesToMeters(9)), new Rotation2d())),
-          180),
-      -1),
-  REEF_H(
-      10,
-      "H",
-      "Reef H",
-      rotatePoseAroundReef(new Pose2d(3.16, 3.82, Rotation2d.fromDegrees(0)), 180),
-      1),
-  REEF_I(
-      11,
-      "I",
-      "Reef I",
-      rotatePoseAroundReef(
-          new Pose2d(3.16, 3.82, Rotation2d.fromDegrees(0))
-              .transformBy(
-                  new Transform2d(new Translation2d(0, Units.inchesToMeters(9)), new Rotation2d())),
-          -120),
-      -1),
-  REEF_J(
-      12,
-      "J",
-      "Reef J",
-      rotatePoseAroundReef(new Pose2d(3.16, 3.82, Rotation2d.fromDegrees(0)), -120),
-      1),
-  REEF_K(
-      13,
-      "K",
-      "Reef K",
-      rotatePoseAroundReef(
-          new Pose2d(3.16, 3.82, Rotation2d.fromDegrees(0))
-              .transformBy(
-                  new Transform2d(new Translation2d(0, Units.inchesToMeters(9)), new Rotation2d())),
-          -60),
-      -1),
-  REEF_L(
-      14,
-      "L",
-      "Reef L",
-      rotatePoseAroundReef(new Pose2d(3.16, 3.82, Rotation2d.fromDegrees(0)), -60),
-      1),
+  REEF_A(3, "A", "Reef A", 0.0, true),
+  REEF_B(4, "B", "Reef B", 0.0, false),
+  REEF_C(5, "C", "Reef C", 60.0, true),
+  REEF_D(6, "D", "Reef D", 60.0, false),
+  REEF_E(7, "E", "Reef E", 120.0, true),
+  REEF_F(8, "F", "Reef F", 120.0, false),
+  REEF_G(9, "G", "Reef G", 180.0, true),
+  REEF_H(10, "H", "Reef H", 180.0, false),
+  REEF_I(11, "I", "Reef I", 240.0, true),
+  REEF_J(12, "J", "Reef J", 240.0, false),
+  REEF_K(13, "K", "Reef K", 300.0, true),
+  REEF_L(14, "L", "Reef L", 300.0, false),
   PROCESSOR(15, "P", "Processor", new Pose2d(6, 0.75, new Rotation2d(270)), 0);
 
   // REMEMBER: actual distance between reef poles is 13 inches,
   // currently using 9 inches because robot currently overshoots target pose during traversal
+
+  private final Pose2d blueReefCenter = new Pose2d(new Translation2d(4.485, 4.00), new Rotation2d());
+  private final Pose2d blueReefBPos = new Pose2d(new Translation2d(3.16, 3.82), new Rotation2d());
 
   /*
    *  Home positions (blue)
@@ -237,8 +146,18 @@ public enum TargetPose {
     }
   }
 
-  private static Pose2d rotatePoseAroundReef(Pose2d pose, double rot) {
-    Pose2d reefCenter = new Pose2d(new Translation2d(4.485, 4.00), new Rotation2d(0));
-    return pose.rotateAround(reefCenter.getTranslation(), Rotation2d.fromDegrees(rot));
+  private TargetPose(int idx, String sName, String lName, double reefWallRotDegrees, boolean isLeftPosition) {
+    this.index = idx;
+    this.shortName = sName;
+    this.longName = lName;
+    
+    this.pose = blueReefBPos.rotateAround(blueReefCenter.getTranslation(), Rotation2d.fromDegrees(reefWallRotDegrees));
+    double distance = 0.7;
+    if (isLeftPosition) {
+      this.pose = this.pose.transformBy(new Transform2d(0, Units.inchesToMeters(9), new Rotation2d()));
+      distance = -distance;
+    }
+    this.prepPose = this.pose.transformBy(new Transform2d(0, distance, new Rotation2d()));
+    this.endPose = this.pose.transformBy(new Transform2d(-0.7, 0, new Rotation2d()));
   }
 }
