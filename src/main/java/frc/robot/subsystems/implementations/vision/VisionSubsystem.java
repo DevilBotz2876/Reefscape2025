@@ -82,7 +82,7 @@ public class VisionSubsystem extends SubsystemBase implements Vision {
       return PhotonUtils.calculateDistanceToTargetMeters(
               robotToCamera.getZ(),
               fieldLayout.getTagPose(bestTarget.getFiducialId()).get().getZ(),
-              -robotToCamera.getRotation().getY(),
+              robotToCamera.getRotation().getY(),
               Units.degreesToRadians(bestTarget.getPitch()))
           + Constants.visionDistanceOffsetInMeters;
     }

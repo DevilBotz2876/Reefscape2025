@@ -12,9 +12,9 @@ public enum TargetPose {
   // PATHPLANNER WILL DECIDE WHETHER THE DESTINATION POSE IS
   // ON THE RED OR BLUE SIDE OF THE FIELD
 
-  ORIGIN(0, "O", "Origin", new Pose2d(0.0, 0.0, new Rotation2d(0)), 0),
-  FEEDER_R(1, "FR", "Feeder Right", new Pose2d(1.05, 1, new Rotation2d(50)), 0),
-  FEEDER_L(2, "FL", "Feeder Left", new Pose2d(1.05, 7, Rotation2d.fromDegrees(-50)), 0),
+  ORIGIN(0, "O", "Origin", new Pose2d(0.0, 0.0, new Rotation2d(0))),
+  FEEDER_R(1, "FR", "Feeder Right", new Pose2d(1.05, 1, new Rotation2d(50))),
+  FEEDER_L(2, "FL", "Feeder Left", new Pose2d(1.05, 7, Rotation2d.fromDegrees(-50))),
   REEF_A(3, "A", "Reef A", 0.0, true),
   REEF_B(4, "B", "Reef B", 0.0, false),
   REEF_C(5, "C", "Reef C", 60.0, true),
@@ -27,7 +27,7 @@ public enum TargetPose {
   REEF_J(12, "J", "Reef J", 240.0, false),
   REEF_K(13, "K", "Reef K", 300.0, true),
   REEF_L(14, "L", "Reef L", 300.0, false),
-  PROCESSOR(15, "P", "Processor", new Pose2d(6, 0.75, new Rotation2d(270)), 0);
+  PROCESSOR(15, "P", "Processor", new Pose2d(6, 0.75, new Rotation2d(270)));
 
   // REMEMBER: actual distance between reef poles is 13 inches,
   // currently using 9 inches because robot currently overshoots target pose during traversal
@@ -38,6 +38,15 @@ public enum TargetPose {
   // NOTE: I pushed the target position closer to the reef to be more realistic to the actual game
   // the original position was x: 3.16, y: 3.82
   private final Pose2d blueReefBPos = new Pose2d(new Translation2d(3.175, 3.82), new Rotation2d());
+
+  public static TargetPose getReefTargetWithAngle(double angleDegrees) {
+    int reefPosIdx = (int) (angleDegrees / 30) + 7;
+    if (reefPosIdx > 14) reefPosIdx -= 12;
+    for (TargetPose x : values()) {
+      if (x.getIndex() == reefPosIdx) return x;
+    }
+    throw new IllegalArgumentException(reefPosIdx + " does not translate to valid reef position.");
+  }
 
   /*
    *  Home positions (blue)
@@ -144,7 +153,8 @@ public enum TargetPose {
   public Pose2d getLowerScoringPose() {
     return this.lowerLevelPose;
   }
-  private TargetPose(int idx, String sName, String lName, Pose2d targetPose, int reefPosition) {
+
+  private TargetPose(int idx, String sName, String lName, Pose2d targetPose) {
     this.index = idx;
     this.shortName = sName;
     this.longName = lName;
@@ -152,16 +162,9 @@ public enum TargetPose {
 
     // TODO handle error case of accessing prep and end poses on non-reef position
 
-    // If this pose is not on the reef, don't set extra poses
-    if (reefPosition == 0) {
-      this.prepPose = null;
-      this.endPose = null;
-    } else {
-      double distance = (reefPosition < 0) ? -0.7 : 0.7;
-      this.prepPose = targetPose.transformBy(new Transform2d(0, distance, new Rotation2d()));
-      this.lowerLevelPose = this.pose.transformBy(new Transform2d(0.04445, 0, new Rotation2d()));
-      this.endPose = targetPose.transformBy(new Transform2d(-0.7, 0, new Rotation2d()));
-    }
+    this.lowerLevelPose = null;
+    this.prepPose = null;
+    this.endPose = null;
   }
 
   private TargetPose(

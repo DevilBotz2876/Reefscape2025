@@ -55,9 +55,7 @@ public class DriverControls {
                     new InstantCommand(
                         () -> {
                           DriverControls.Constants.prepareScoreSelctedIndex = 1;
-                          SmartDashboard.putNumber(
-                              "Driver " + "/Misc/Prepare Selection",
-                              DriverControls.Constants.prepareScoreSelctedIndex);
+                          SmartDashboard.putString("Driver /Misc/Prepare Selection", "N/A");
                         })));
 
     Command intakeCoralCommand = new ElevatorToPosition(elevator, () -> 0.345);
@@ -81,9 +79,7 @@ public class DriverControls {
             new InstantCommand(
                 () -> {
                   DriverControls.Constants.prepareScoreSelctedIndex = 4;
-                  SmartDashboard.putNumber(
-                      "Driver " + "/Misc/Prepare Selection",
-                      DriverControls.Constants.prepareScoreSelctedIndex);
+                  SmartDashboard.putString("Driver /Misc/Prepare Selection", "L4");
                 }));
 
     controller
@@ -92,9 +88,7 @@ public class DriverControls {
             new InstantCommand(
                 () -> {
                   DriverControls.Constants.prepareScoreSelctedIndex = 3;
-                  SmartDashboard.putNumber(
-                      "Driver " + "/Misc/Prepare Selection",
-                      DriverControls.Constants.prepareScoreSelctedIndex);
+                  SmartDashboard.putString("Driver /Misc/Prepare Selection", "L3");
                 }));
 
     controller
@@ -103,25 +97,25 @@ public class DriverControls {
             new InstantCommand(
                 () -> {
                   DriverControls.Constants.prepareScoreSelctedIndex = 2;
-                  SmartDashboard.putNumber(
-                      "Driver " + "/Misc/Prepare Selection",
-                      DriverControls.Constants.prepareScoreSelctedIndex);
+                  SmartDashboard.putString("Driver /Misc/Prepare Selection", "L2");
                 }));
 
     DriverControls.Constants.prepareChooser.onChange(
         (index) -> {
           DriverControls.Constants.prepareScoreSelctedIndex = index;
-          SmartDashboard.putNumber("Driver " + "/Misc/Prepare To Score Selection", index);
+          String desc;
+          if (index == 2) desc = "L2";
+          else if (index == 3) desc = "L3";
+          else desc = "L4";
+          SmartDashboard.putString("Driver /Misc/Prepare Selection", desc);
         });
 
-    SmartDashboard.putNumber(
-        "Driver " + "/Misc/Prepare To Score Selection", Constants.prepareChooser.getSelected());
+    SmartDashboard.putData("Driver " + "/Misc/Prepare To Score Chooser", Constants.prepareChooser);
+    SmartDashboard.putString("Driver /Misc/Prepare Selection", "L2");
 
     SmartDashboard.putData(
         "Driver " + "/Commands/Prepare To Score Command",
         getPrepareToScoreCommand(elevator, coralArm));
-
-    SmartDashboard.putData("Driver " + "/Misc/Prepare To Score Chooser", Constants.prepareChooser);
 
     // climber
     SubsystemBase climberSubsystem = (SubsystemBase) climber;

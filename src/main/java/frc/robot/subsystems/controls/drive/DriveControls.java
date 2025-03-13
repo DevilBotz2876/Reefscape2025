@@ -5,11 +5,10 @@ import com.pathplanner.lib.path.PathConstraints;
 import com.pathplanner.lib.util.FlippingUtil;
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.geometry.Pose2d;
-import edu.wpi.first.math.geometry.Rotation2d;
-import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.ConditionalCommand;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.RunCommand;
@@ -24,19 +23,14 @@ import frc.robot.subsystems.controls.combination.DriverControls;
 import frc.robot.subsystems.interfaces.Arm;
 import frc.robot.subsystems.interfaces.Drive;
 import frc.robot.subsystems.interfaces.Elevator;
+import frc.robot.util.DevilBotState;
 import java.util.Map;
 import java.util.Map.Entry;
 import org.littletonrobotics.junction.Logger;
 
 public class DriveControls {
 
-  protected static int myCoolPoseKeyIdx = TargetPose.REEF_A.getIndex();
-
-  protected static int coolestNumberEver = 0;
-
-  protected static final String[] orderedReefPositions = {
-    "E", "F", "G", "H", "I", "J", "K", "L", "A", "B", "C", "D"
-  };
+  protected static TargetPose chosenTarget = TargetPose.REEF_A;
 
   public static void setupController(
       Drive drive, Elevator elevator, Arm arm, CommandXboxController controller) {
@@ -61,28 +55,6 @@ public class DriveControls {
                     drive.setFieldOrientedDrive(
                         !drive.isFieldOrientedDrive()))); // Toggle Drive Orientation
 
-    // BLUE
-    // // Define destinations for our "dynamic go-to-pose" functionality
-    // Pose2d poseOrigin = new Pose2d(0, 0, Rotation2d.fromDegrees(0)),
-    //     poseFeeder1 = new Pose2d(1.05, 7, Rotation2d.fromDegrees(130)),
-    //     poseFeeder2 = new Pose2d(1.05, 1, Rotation2d.fromDegrees(230)),
-    //     poseProcessor = new Pose2d(6, 0.75, Rotation2d.fromDegrees(270)),
-    //     poseReefA = new Pose2d(3.25, 4.05, Rotation2d.fromDegrees(0)),
-    //     poseReefG = new Pose2d(5.5, 3.95, Rotation2d.fromDegrees(180));
-
-    // Define destinations for our "dynamic go-to-pose" functionality
-    Pose2d poseOrigin = new Pose2d(0, 0, Rotation2d.fromDegrees(0)),
-        poseFeeder1 = new Pose2d(16.44, 7.25, Rotation2d.fromDegrees(230)),
-        poseFeeder2 = new Pose2d(16.02, 1, Rotation2d.fromDegrees(-230)),
-        poseProcessor = new Pose2d(11.5, 7.3, Rotation2d.fromDegrees(90)),
-        poseReefA = new Pose2d(15, 4.175, Rotation2d.fromDegrees(180)),
-        poseReefAClose = new Pose2d(14.425, 4.175, Rotation2d.fromDegrees(180)),
-        poseReefG = new Pose2d(11.57, 4.17, Rotation2d.fromDegrees(0)),
-        poseReefGClose = new Pose2d(11.5, 4.175, Rotation2d.fromDegrees(0));
-    //  PathConstraints constraints = new PathConstraints(4.9672, 9.3664784, 2 * Math.PI, 4 *
-    //  Math.PI);
-    // PathConstraints constraints = new PathConstraints(2, 1.5, 2 * Math.PI, 4 * Math.PI);
-    // PathConstraints constraints = new PathConstraints(0.5, 4.5, Math.PI / 4, 4 * Math.PI);
     PathConstraints constraints =
         new PathConstraints(
             drive.getMaxLinearSpeed(), 1.5, drive.getMaxAngularSpeed(), Math.PI / 4);
@@ -109,21 +81,14 @@ public class DriveControls {
     SmartDashboard.putData("Pose choices", chooser);
 
     // Define behavior for chosing destination of on-the-fly pose
-    SmartDashboard.putNumber("Chosen Pose Index", myCoolPoseKeyIdx);
+    SmartDashboard.putNumber("Chosen Pose Index", chosenTarget.getIndex());
+    SmartDashboard.putString("Chosen Reef Position", chosenTarget.getShortName());
     chooser.onChange(
-        (chosenPose) -> {
-          myCoolPoseKeyIdx = chosenPose.getIndex();
-          SmartDashboard.putNumber("Chosen Pose Index", myCoolPoseKeyIdx);
+        (chosenOption) -> {
+          chosenTarget = chosenOption;
+          SmartDashboard.putNumber("Chosen Pose Index", chosenTarget.getIndex());
+          SmartDashboard.putString("Reef Position", chosenTarget.getShortName());
         });
-    // controller
-    //     .x()
-    //     .onTrue(
-    //         new InstantCommand(
-    //             () -> {
-    //               if (++myCoolPoseKeyIdx == TargetPoseOption.values().length) myCoolPoseKeyIdx =
-    // 1;
-    //               SmartDashboard.putNumber("Chosen Pose Index", myCoolPoseKeyIdx);
-    //             }));
 
     // Define command to go to specific pose
     Command coolGoToPose =
@@ -190,29 +155,11 @@ public class DriveControls {
                     getPrepareToScoreCommand(elevator, arm),
                     new ArmToPosition(arm, () -> 0))),
             () -> {
-              return myCoolPoseKeyIdx;
+              return chosenTarget.getIndex();
             });
-
-    // TODO: new dynamic path planning command creation
-    // 1. SelectCommand ONE: go to initial location (based on user-chosen option X)
-    // 2. SelectCommand TWO: determine next action (based on option X and potentially pre-decided
-    // reef elevation value)
-    // 2a. if (1) was a reef position, assume we are scoring --> get reef elevation to score on -->
-    // set elevator/arm
-    // 2b. if not, choose an empty command and short-circuit (exit) the sequence
-    // 3. SelectCommand THREE: go to scoring position (which maps directly from initial chosen
-    // location)
-    // 4. Execute <arm down command>
 
     // dynamically go to destination
     controller.rightTrigger().whileTrue(coolGoToPose);
-
-    // TEMP FUNCTION TO TEST FIELD FLIPPING
-    // controller.b().whileTrue(new SequentialCommandGroup(
-    //     AutoBuilder.pathfindToPoseFlipped(TargetPose.REEF_A.getMyPrepPose(), constraints, 0.0),
-    //     // DriverControls.Constants.prepareScoreCommand,
-    //     AutoBuilder.pathfindToPoseFlipped(TargetPose.REEF_A.getMyPose(), constraints, 0.0),
-    //     new ArmToPosition(arm, () -> 0)));
 
     /*  Angles -> Reef positions
      * 0    30  : E
@@ -243,32 +190,20 @@ public class DriveControls {
                   double myNumber = Math.atan2(myY, myX) * (180 / Math.PI);
                   if (myNumber < 0) myNumber += 360; // obtain this angle as a positive number
 
-                  // This number can be used to index into the ordered reef positions array!
-                  coolestNumberEver = (int) myNumber / 30;
+                  // Convert the joystick angle to a reef position
+                  chosenTarget = TargetPose.getReefTargetWithAngle(myNumber);
+                  SmartDashboard.putNumber("Chosen Pose Index", chosenTarget.getIndex());
+                  SmartDashboard.putString("Chosen Reef Position", chosenTarget.getShortName());
 
-                  // TODO remove Smartdashboard number; only display reef position
-                  SmartDashboard.putNumber("AAAAAA", coolestNumberEver);
-                  SmartDashboard.putString(
-                      "AAAAAA Reef Position", orderedReefPositions[coolestNumberEver]);
-                }))
-        .onFalse(
-            new InstantCommand(
-                () -> {
-                  myCoolPoseKeyIdx = coolestNumberEver + 7;
-                  if (myCoolPoseKeyIdx > 14) {
-                    myCoolPoseKeyIdx -= 12;
-                  }
-                  SmartDashboard.putNumber("Chosen Pose Index", myCoolPoseKeyIdx);
-                  Pose2d ReefPose;
-                  if (DriverStation.Alliance.Red == DriverStation.getAlliance().get()) {
-                    ReefPose =
-                        FlippingUtil.flipFieldPose(TargetPose.getPosewWithIndex(myCoolPoseKeyIdx));
-                  } else {
-                    ReefPose = TargetPose.getPosewWithIndex(myCoolPoseKeyIdx);
-                  }
-                  Logger.recordOutput("Chosen Reef Pose", ReefPose);
-                  SmartDashboard.putNumber("Chosen Reef X", ReefPose.getX());
-                  SmartDashboard.putNumber("Chosen Reef Y", ReefPose.getY());
+                  // Log target pose (for debugging)
+                  Pose2d p =
+                      DevilBotState.isRedAlliance()
+                          ? chosenTarget.getPose()
+                          : FlippingUtil.flipFieldPose(chosenTarget.getPose());
+                  Logger.recordOutput("DriveSwerveYAGSL/Chosen Reef Pose", p);
+                  SmartDashboard.putNumber("Chosen Reef X", p.getX());
+                  SmartDashboard.putNumber("Chosen Reef Y", p.getY());
+                  SmartDashboard.putNumber("Chosen Reef Rot", p.getRotation().getDegrees());
                 }));
   }
 
@@ -277,25 +212,16 @@ public class DriveControls {
       PathConstraints constraints,
       Command prepareToScoreCommand,
       Command scoreCommand) {
-    // FIXME initialize a fresh instance of the prepareToScoreCommand each time!!
-    // OTHERWISE CODE WILL CRASH
-    Entry<Integer, Command> entry =
-        Map.entry(
-            target.getIndex(),
-            new SequentialCommandGroup(
-                AutoBuilder.pathfindToPoseFlipped(target.getPrepPose(), constraints, 0.0),
-                prepareToScoreCommand,
-                new SelectCommand<>(
-                    Map.ofEntries(
-                        Map.entry(0, AutoBuilder.pathfindToPoseFlipped(target.getPose(), constraints, 0.0)),
-                        Map.entry(1, AutoBuilder.pathfindToPoseFlipped(target.getLowerScoringPose(), constraints, 0.0))),
-                        () -> {
-                            return DriverControls.Constants.prepareScoreSelctedIndex < 4 ? 1 : 0;
-                          }
-                ),
-                scoreCommand));
-
-    return entry;
+    return Map.entry(
+        target.getIndex(),
+        new SequentialCommandGroup(
+            AutoBuilder.pathfindToPoseFlipped(target.getPrepPose(), constraints, 0.0),
+            prepareToScoreCommand,
+            new ConditionalCommand(
+                AutoBuilder.pathfindToPoseFlipped(target.getPose(), constraints, 0.0),
+                AutoBuilder.pathfindToPoseFlipped(target.getLowerScoringPose(), constraints, 0.0),
+                () -> DriverControls.Constants.prepareScoreSelctedIndex < 4),
+            scoreCommand));
   }
 
   private static Command getPrepareToScoreCommand(Elevator elevator, Arm coralArm) {

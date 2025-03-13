@@ -55,17 +55,16 @@ public class DriverAssistControls {
     controller
         .b()
         .onTrue(
-            prepareIntakeCoralCommand.andThen(
-                new InstantCommand(
-                    () -> {
-                      DriverControls.Constants.prepareScoreSelctedIndex = 1;
-                      SmartDashboard.putNumber(
-                          "Driver " + "/Misc/Prepare Selection",
-                          DriverControls.Constants.prepareScoreSelctedIndex);
-                    }))
-            .andThen(
-                new MotorAutoResetEncoderCommand(
-                    (Motor) coralArm, CoralArmControls.Constants.autoZeroSettings)));
+            prepareIntakeCoralCommand
+                .andThen(
+                    new InstantCommand(
+                        () -> {
+                          DriverControls.Constants.prepareScoreSelctedIndex = 1;
+                          SmartDashboard.putString("Driver /Misc/Prepare Selection", "N/A");
+                        }))
+                .andThen(
+                    new MotorAutoResetEncoderCommand(
+                        (Motor) coralArm, CoralArmControls.Constants.autoZeroSettings)));
 
     controller
         .y()
@@ -73,9 +72,7 @@ public class DriverAssistControls {
             new InstantCommand(
                 () -> {
                   DriverControls.Constants.prepareScoreSelctedIndex = 4;
-                  SmartDashboard.putNumber(
-                      "Driver " + "/Misc/Prepare Selection",
-                      DriverControls.Constants.prepareScoreSelctedIndex);
+                  SmartDashboard.putString("Driver /Misc/Prepare Selection", "L4");
                 }));
 
     controller
@@ -84,9 +81,7 @@ public class DriverAssistControls {
             new InstantCommand(
                 () -> {
                   DriverControls.Constants.prepareScoreSelctedIndex = 3;
-                  SmartDashboard.putNumber(
-                      "Driver " + "/Misc/Prepare Selection",
-                      DriverControls.Constants.prepareScoreSelctedIndex);
+                  SmartDashboard.putString("Driver /Misc/Prepare Selection", "L3");
                 }));
 
     controller
@@ -95,9 +90,7 @@ public class DriverAssistControls {
             new InstantCommand(
                 () -> {
                   DriverControls.Constants.prepareScoreSelctedIndex = 2;
-                  SmartDashboard.putNumber(
-                      "Driver " + "/Misc/Prepare Selection",
-                      DriverControls.Constants.prepareScoreSelctedIndex);
+                  SmartDashboard.putString("Driver /Misc/Prepare Selection", "L2");
                 }));
 
     // controller
