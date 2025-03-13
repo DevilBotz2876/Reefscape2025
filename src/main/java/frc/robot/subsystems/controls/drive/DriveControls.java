@@ -272,7 +272,14 @@ public class DriveControls {
             new SequentialCommandGroup(
                 AutoBuilder.pathfindToPoseFlipped(target.getPrepPose(), constraints, 0.0),
                 prepareToScoreCommand,
-                AutoBuilder.pathfindToPoseFlipped(target.getPose(), constraints, 0.0),
+                new SelectCommand<>(
+                    Map.ofEntries(
+                        Map.entry(0, AutoBuilder.pathfindToPoseFlipped(target.getPose(), constraints, 0.0)),
+                        Map.entry(1, AutoBuilder.pathfindToPoseFlipped(target.getLowerScoringPose(), constraints, 0.0))),
+                        () -> {
+                            return DriverControls.Constants.prepareScoreSelctedIndex < 4 ? 1 : 0;
+                          }
+                ),
                 scoreCommand));
     return entry;
   }

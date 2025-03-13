@@ -103,6 +103,7 @@ public enum TargetPose {
 
   private Pose2d pose;
   private Pose2d prepPose;
+  private Pose2d lowerLevelPose;
   private Pose2d endPose;
 
   // NOTE differential poses ~= 0.5m away from target
@@ -131,6 +132,9 @@ public enum TargetPose {
     return this.endPose;
   }
 
+  public Pose2d getLowerScoringPose() {
+    return this.lowerLevelPose;
+  }
   private TargetPose(int idx, String sName, String lName, Pose2d targetPose, int reefPosition) {
     this.index = idx;
     this.shortName = sName;
@@ -146,6 +150,7 @@ public enum TargetPose {
     } else {
       double distance = (reefPosition < 0) ? -0.7 : 0.7;
       this.prepPose = targetPose.transformBy(new Transform2d(0, distance, new Rotation2d()));
+      this.lowerLevelPose = this.pose.transformBy(new Transform2d(0.04445, 0, new Rotation2d()));
       this.endPose = targetPose.transformBy(new Transform2d(-0.7, 0, new Rotation2d()));
     }
   }
@@ -168,6 +173,7 @@ public enum TargetPose {
       rot = -rot;
     }
     this.prepPose = this.pose.transformBy(new Transform2d(-0.2, distance, new Rotation2d(rot)));
+    this.lowerLevelPose = this.pose.transformBy(new Transform2d(0.04445, 0, new Rotation2d()));
     this.endPose = this.pose.transformBy(new Transform2d(-0.7, 0, new Rotation2d()));
   }
 }
