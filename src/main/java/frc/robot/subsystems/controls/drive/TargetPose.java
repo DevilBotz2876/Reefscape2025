@@ -124,6 +124,15 @@ public enum TargetPose {
     return this.pose;
   }
 
+  public static Pose2d getPosewWithIndex(int index) {
+    for (TargetPose x : values()) {
+      if (x.getIndex() == index) {
+        return x.pose;
+      }
+    }
+    return new Pose2d();
+  }
+
   public Pose2d getPrepPose() {
     return this.prepPose;
   }

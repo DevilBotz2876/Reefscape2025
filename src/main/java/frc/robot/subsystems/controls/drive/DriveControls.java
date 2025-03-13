@@ -2,9 +2,11 @@ package frc.robot.subsystems.controls.drive;
 
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.path.PathConstraints;
+import com.pathplanner.lib.util.FlippingUtil;
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -24,6 +26,7 @@ import frc.robot.subsystems.interfaces.Drive;
 import frc.robot.subsystems.interfaces.Elevator;
 import java.util.Map;
 import java.util.Map.Entry;
+import org.littletonrobotics.junction.Logger;
 
 public class DriveControls {
 
@@ -256,6 +259,16 @@ public class DriveControls {
                     myCoolPoseKeyIdx -= 12;
                   }
                   SmartDashboard.putNumber("Chosen Pose Index", myCoolPoseKeyIdx);
+                  Pose2d ReefPose;
+                  if (DriverStation.Alliance.Red == DriverStation.getAlliance().get()) {
+                    ReefPose =
+                        FlippingUtil.flipFieldPose(TargetPose.getPosewWithIndex(myCoolPoseKeyIdx));
+                  } else {
+                    ReefPose = TargetPose.getPosewWithIndex(myCoolPoseKeyIdx);
+                  }
+                  Logger.recordOutput("Chosen Reef Pose", ReefPose);
+                  SmartDashboard.putNumber("Chosen Reef X", ReefPose.getX());
+                  SmartDashboard.putNumber("Chosen Reef Y", ReefPose.getY());
                 }));
   }
 
@@ -281,6 +294,7 @@ public class DriveControls {
                           }
                 ),
                 scoreCommand));
+
     return entry;
   }
 
