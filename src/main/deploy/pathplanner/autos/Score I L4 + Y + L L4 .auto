@@ -117,7 +117,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "Source Y to L"
+                  "pathName": "Source Y to Near L"
                 }
               },
               {
@@ -159,6 +159,12 @@
           "type": "named",
           "data": {
             "name": "Move Arm 0 degrees"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Get to L"
           }
         },
         {
