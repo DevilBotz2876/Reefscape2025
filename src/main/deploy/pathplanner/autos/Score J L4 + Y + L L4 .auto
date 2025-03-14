@@ -156,15 +156,15 @@
           }
         },
         {
-          "type": "named",
-          "data": {
-            "name": "Move Arm 0 degrees"
-          }
-        },
-        {
           "type": "path",
           "data": {
             "pathName": "Get to L"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Move Arm 0 degrees"
           }
         },
         {
