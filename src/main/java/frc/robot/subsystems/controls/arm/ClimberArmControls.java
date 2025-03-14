@@ -49,6 +49,6 @@ public class ClimberArmControls {
     SmartDashboard.putData(
         armSubsystem.getName() + "/Commands/Climb",
         new InstantCommand(
-            () -> arm.setTargetPosition(arm.getSettings().minPositionInRads), armSubsystem));
+            () -> arm.setTargetPosition(18.52), armSubsystem));
   }
 }

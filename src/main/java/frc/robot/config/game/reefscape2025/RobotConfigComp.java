@@ -119,7 +119,7 @@ public class RobotConfigComp extends RobotConfig {
       ElevatorSettings elevatorSettings = new ElevatorSettings();
       elevatorSettings.minHeightInMeters = 0.09 + 0.02;
       elevatorSettings.maxHeightInMeters = 0.02 + 0.85 + 0.76;
-      elevatorSettings.startingHeightInMeters = 0.3; // The elevator height when piece is in intake
+      elevatorSettings.startingHeightInMeters = 0.345; // The elevator height when piece is in intake
       elevatorSettings.color = new Color8Bit(Color.kSilver);
       elevatorSettings.feedforward =
           new ElevatorFeedforward(0.010472, 0.17328, 0.16928, 0.010615); // SysID 2025-02-28
@@ -198,7 +198,7 @@ public class RobotConfigComp extends RobotConfig {
 
       SimpleMotorSettings simpleMotorSettings = new SimpleMotorSettings();
       simpleMotorSettings.minPositionInRads = 0;
-      simpleMotorSettings.maxPositionInRads = 36.1;
+      simpleMotorSettings.maxPositionInRads = 38.06;
       simpleMotorSettings.startingPositionInRads = simpleMotorSettings.minPositionInRads;
       simpleMotorSettings.color = new Color8Bit(Color.kRed);
       simpleMotorSettings.feedforward = new SimpleMotorFeedforward(0, 0, 0);
@@ -238,6 +238,8 @@ public class RobotConfigComp extends RobotConfig {
     // Auto(s)
     NamedCommands.registerCommand(
         "Move Elevator to 0.5 meter", new ElevatorToPosition(elevator, () -> 0.5));
+    NamedCommands.registerCommand(
+        "Move Elevator to 1.0 meter", new ElevatorToPosition(elevator, () -> 1.0));
     NamedCommands.registerCommand(
         "Move Elevator to 1.553 meter", new ElevatorToPosition(elevator, () -> 1.553));
     NamedCommands.registerCommand(

@@ -116,6 +116,6 @@ public class DriverAssistControls {
     // climb
     controller
         .rightBumper()
-        .onTrue(new InstantCommand(() -> climber.setTargetPosition(11.6), climberSubsystem));
+        .onTrue(new InstantCommand(() -> climber.setTargetPosition(18.06), climberSubsystem));
   }
 }
