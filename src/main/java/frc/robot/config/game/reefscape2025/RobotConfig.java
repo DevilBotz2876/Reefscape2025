@@ -214,6 +214,8 @@ public class RobotConfig {
     // Send vision-based odometry measurements to drive's odometry calculations
     vision.setVisionMeasurementConsumer(drive::addVisionMeasurement);
 
+    CoralArmControls.setupController(
+        coralArm, assistController); // move up to get reset encoder command
     DriveControls.setupController(drive, elevator, coralArm, mainController);
     DriveControls.setupAssistantController(drive, assistController);
     DriverAssistControls.setupController(elevator, coralArm, climberArm, assistController);
@@ -221,7 +223,6 @@ public class RobotConfig {
     PitControls.setupPitControls(elevator, coralArm, climberArm);
     CoralArmControls.setupController(coralArm, mainController);
     ElevatorControls.setupController(elevator, mainController);
-    CoralArmControls.setupController(coralArm, assistController);
     ElevatorControls.setupController(elevator, assistController);
     ClimberArmControls.setupController(climberArm, mainController);
 

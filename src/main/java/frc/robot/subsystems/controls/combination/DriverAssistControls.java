@@ -49,13 +49,17 @@ public class DriverAssistControls {
             new ElevatorToPosition(elevator, () -> 1.3)));
 
     Command prepareIntakeCoralCommand =
-        new SequentialCommandGroup(
-            new ArmToPosition(coralArm, () -> -90).withTimeout(0),
-            new ElevatorToPosition(elevator, () -> 0.8));
+        new SequentialCommandGroup(new ElevatorToPosition(elevator, () -> 0.8));
+
+    SubsystemBase armSubsystem = (SubsystemBase) coralArm;
     controller
         .b()
         .onTrue(
             prepareIntakeCoralCommand
+                .andThen(
+                    (Command)
+                        SmartDashboard.getData(
+                            armSubsystem.getName() + "/Commands/Auto Calibrate Coral Arm Assist"))
                 .andThen(
                     new InstantCommand(
                         () -> {

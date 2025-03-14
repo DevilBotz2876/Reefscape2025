@@ -14,11 +14,8 @@ import frc.robot.commands.common.arm.ArmCommand;
 import frc.robot.commands.common.arm.ArmToPosition;
 import frc.robot.commands.common.elevator.ElevatorCommand;
 import frc.robot.commands.common.elevator.ElevatorToPosition;
-import frc.robot.commands.common.motor.MotorAutoResetEncoderCommand;
-import frc.robot.subsystems.controls.arm.CoralArmControls;
 import frc.robot.subsystems.interfaces.Arm;
 import frc.robot.subsystems.interfaces.Elevator;
-import frc.robot.subsystems.interfaces.Motor;
 import frc.robot.subsystems.interfaces.SimpleMotor;
 import java.util.Map;
 
@@ -41,16 +38,16 @@ public class DriverControls {
             });
 
     Command prepareIntakeCoralCommand =
-        new SequentialCommandGroup(
-            new ArmToPosition(coralArm, () -> -90).withTimeout(0),
-            new ElevatorToPosition(elevator, () -> 0.8));
+        new SequentialCommandGroup(new ElevatorToPosition(elevator, () -> 0.8));
+    SubsystemBase armSubsystem = (SubsystemBase) coralArm;
     controller
         .b()
         .onTrue(
             prepareIntakeCoralCommand
                 .andThen(
-                    new MotorAutoResetEncoderCommand(
-                        (Motor) coralArm, CoralArmControls.Constants.autoZeroSettings))
+                    (Command)
+                        SmartDashboard.getData(
+                            armSubsystem.getName() + "/Commands/Auto Calibrate Coral Arm Driver"))
                 .andThen(
                     new InstantCommand(
                         () -> {
@@ -60,7 +57,7 @@ public class DriverControls {
 
     Command intakeCoralCommand = new ElevatorToPosition(elevator, () -> 0.345);
     Trigger scoreMode = new Trigger(() -> Constants.prepareScoreSelctedIndex >= 2);
-    controller.leftTrigger().and(scoreMode.negate()).and(ableToIntake).onTrue(intakeCoralCommand);
+    // controller.leftTrigger().and(scoreMode.negate()).and(ableToIntake).onTrue(intakeCoralCommand);
 
     Command score = new ArmToPosition(coralArm, () -> -10);
     controller.rightBumper().onTrue(score);
@@ -117,21 +114,22 @@ public class DriverControls {
         "Driver " + "/Commands/Prepare To Score Command",
         getPrepareToScoreCommand(elevator, coralArm));
 
-    // climber
-    SubsystemBase climberSubsystem = (SubsystemBase) climber;
-    // prepare to climb
-    controller
-        .leftBumper()
-        .onTrue(
-            new InstantCommand(
-                () -> climber.setTargetPosition(climber.getSettings().maxPositionInRads),
-                climberSubsystem));
+    // // climber
+    // SubsystemBase climberSubsystem = (SubsystemBase) climber;
+    // // prepare to climb
+    // controller
+    //     .leftBumper()
+    //     .onTrue(
+    //         new InstantCommand(
+    //             () -> climber.setTargetPosition(climber.getSettings().maxPositionInRads),
+    //             climberSubsystem));
 
-    // climb
-    controller
-        .rightBumper()
-        .onTrue(new InstantCommand(() -> climber.setTargetPosition(11.6), climberSubsystem));
+    // // climb
+    // controller
+    //     .rightBumper()
+    //     .onTrue(new InstantCommand(() -> climber.setTargetPosition(11.6), climberSubsystem));
 
+    controller.leftBumper().and(ableToIntake).and(scoreMode.negate()).onTrue(intakeCoralCommand);
     // multi controll not workking in each subsystem inde
     controller.povUp().whileTrue(new ElevatorCommand(elevator, () -> 0.2));
 

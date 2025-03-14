@@ -17,6 +17,8 @@ public class CoralArmControls {
     public static MotorAutoResetEncoderSettings autoZeroSettings =
         new MotorAutoResetEncoderSettings();
     public static Command autoCalibrateCommand;
+    public static Command autoCalibrateCommand2;
+    public static Command autoCalibrateCommand3;
   }
 
   // RIGHT POV = up arm
@@ -40,9 +42,19 @@ public class CoralArmControls {
     /* Add Auto Zero */
     Constants.autoCalibrateCommand =
         new MotorAutoResetEncoderCommand((Motor) arm, Constants.autoZeroSettings);
+    Constants.autoCalibrateCommand2 =
+        new MotorAutoResetEncoderCommand((Motor) arm, Constants.autoZeroSettings);
+    Constants.autoCalibrateCommand3 =
+        new MotorAutoResetEncoderCommand((Motor) arm, Constants.autoZeroSettings);
     SmartDashboard.putData(
         motorSubsystem.getName() + "/Commands/Auto Calibrate Coral Arm",
         Constants.autoCalibrateCommand);
+    SmartDashboard.putData(
+        motorSubsystem.getName() + "/Commands/Auto Calibrate Coral Arm Driver",
+        Constants.autoCalibrateCommand2);
+    SmartDashboard.putData(
+        motorSubsystem.getName() + "/Commands/Auto Calibrate Coral Arm Assist",
+        Constants.autoCalibrateCommand3);
 
     SmartDashboard.putData(
         motorSubsystem.getName() + "/Commands/Arm To -90", new ArmToPosition(arm, () -> -90));
