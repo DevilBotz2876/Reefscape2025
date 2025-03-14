@@ -248,7 +248,7 @@ public class RobotConfigComp extends RobotConfig {
     NamedCommands.registerCommand(
         "Move Elevator to 0.8 meter", new ElevatorToPosition(elevator, () -> 0.8));
     NamedCommands.registerCommand(
-        "Move Elevator to 0.4 meter", new ElevatorToPosition(elevator, () -> 0.4));
+        "Move Elevator to 0.4 meter", new ElevatorToPosition(elevator, () -> 0.354));
     NamedCommands.registerCommand(
         "Move Arm for Intake", new ArmToPosition(coralArm, () -> -90).withTimeout(0));
     autoChooser = AutoBuilder.buildAutoChooser("Sit Still");
