@@ -101,7 +101,7 @@
         {
           "type": "wait",
           "data": {
-            "waitTime": 3.0
+            "waitTime": 2.0
           }
         },
         {
@@ -117,7 +117,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "Source X to C"
+                  "pathName": "Source X to Near C"
                 }
               },
               {
@@ -159,6 +159,12 @@
           "type": "named",
           "data": {
             "name": "Move Arm 0 degrees"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Get to C"
           }
         },
         {

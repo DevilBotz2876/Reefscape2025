@@ -3,16 +3,16 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 1.196590909090909,
-        "y": 0.8590198863636362
+        "x": 3.5631410256410248,
+        "y": 2.7658974358974366
       },
       "prevControl": null,
       "nextControl": {
-        "x": 1.4098000078565547,
-        "y": 0.989564438925362
+        "x": 3.8289600484680144,
+        "y": 3.2496381820489777
       },
       "isLocked": false,
-      "linkedName": "Source X"
+      "linkedName": "Near C"
     },
     {
       "anchor": {
@@ -20,8 +20,8 @@
         "y": 3.0627414772727275
       },
       "prevControl": {
-        "x": 3.389460921642796,
-        "y": 2.7811564813741643
+        "x": 3.6085933269601185,
+        "y": 2.8424690993271704
       },
       "nextControl": null,
       "isLocked": false,
@@ -48,7 +48,7 @@
   "folder": null,
   "idealStartingState": {
     "velocity": 0,
-    "rotation": 53.84
+    "rotation": 57.27
   },
   "useDefaultConstraints": true
 }
