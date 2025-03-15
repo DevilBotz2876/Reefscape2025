@@ -2,6 +2,7 @@ package frc.robot.config.game.reefscape2025;
 
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.auto.NamedCommands;
+import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.math.controller.ArmFeedforward;
 import edu.wpi.first.math.controller.ElevatorFeedforward;
 import edu.wpi.first.math.controller.PIDController;
@@ -119,7 +120,8 @@ public class RobotConfigComp extends RobotConfig {
       ElevatorSettings elevatorSettings = new ElevatorSettings();
       elevatorSettings.minHeightInMeters = 0.09 + 0.02;
       elevatorSettings.maxHeightInMeters = 0.02 + 0.85 + 0.76;
-      elevatorSettings.startingHeightInMeters = 0.345; // The elevator height when piece is in intake
+      elevatorSettings.startingHeightInMeters =
+          0.345; // The elevator height when piece is in intake
       elevatorSettings.color = new Color8Bit(Color.kSilver);
       elevatorSettings.feedforward =
           new ElevatorFeedforward(0.010472, 0.17328, 0.16928, 0.010615); // SysID 2025-02-28
@@ -245,7 +247,7 @@ public class RobotConfigComp extends RobotConfig {
     NamedCommands.registerCommand(
         "Move Arm 75 degrees", new ArmToPosition(coralArm, () -> 70).withTimeout(1.5));
     NamedCommands.registerCommand(
-        "Move Arm 0 degrees", new ArmToPosition(coralArm, () -> 0).withTimeout(1.5));
+        "Move Arm 0 degrees", new ArmToPosition(coralArm, () -> 0).withTimeout(1.0));
     NamedCommands.registerCommand(
         "Move Elevator to 0.8 meter", new ElevatorToPosition(elevator, () -> 0.8));
     NamedCommands.registerCommand(
@@ -255,6 +257,6 @@ public class RobotConfigComp extends RobotConfig {
     autoChooser = AutoBuilder.buildAutoChooser("Sit Still");
 
     // Start webcam
-    // CameraServer.startAutomaticCapture();
+    CameraServer.startAutomaticCapture();
   }
 }
