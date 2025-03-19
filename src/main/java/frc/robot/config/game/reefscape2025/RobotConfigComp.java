@@ -14,9 +14,12 @@ import edu.wpi.first.math.system.plant.DCMotor;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.AddressableLED;
 import edu.wpi.first.wpilibj.AddressableLEDBuffer;
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.LEDPattern;
 import edu.wpi.first.wpilibj.util.Color;
 import edu.wpi.first.wpilibj.util.Color8Bit;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.commands.common.arm.ArmToPosition;
 import frc.robot.commands.common.elevator.ElevatorToPosition;
 import frc.robot.io.implementations.motor.MotorIOBase.MotorIOBaseSettings;
@@ -39,6 +42,7 @@ import frc.robot.subsystems.interfaces.Vision.Camera;
 public class RobotConfigComp extends RobotConfig {
   private final AddressableLED led;
   private final AddressableLEDBuffer ledBuffer;
+  private final DigitalInput armLowerLimit = new DigitalInput(0); // Normally Open (False)
 
   public RobotConfigComp() {
     super(false, false, false, false, false, true, false);
@@ -236,6 +240,14 @@ public class RobotConfigComp extends RobotConfig {
       led.setData(ledBuffer);
       led.start();
     }
+
+    // Auto Zero Arm Using Limit Switch
+    Trigger armLowerLimitTrigger = new Trigger(() -> armLowerLimit.get());
+    armLowerLimitTrigger.onTrue(
+        new InstantCommand(
+            () ->
+                coralArm.resetEncoder(
+                    Units.degreesToRadians(coralArm.getSettings().minAngleInDegrees))));
 
     // Auto(s)
     NamedCommands.registerCommand(
