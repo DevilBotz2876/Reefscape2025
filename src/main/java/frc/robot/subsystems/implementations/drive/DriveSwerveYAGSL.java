@@ -25,6 +25,7 @@ import swervelib.SwerveDrive;
 import swervelib.SwerveDriveTest;
 import swervelib.parser.SwerveParser;
 import swervelib.telemetry.SwerveDriveTelemetry;
+import swervelib.telemetry.SwerveDriveTelemetry.TelemetryVerbosity;
 
 public class DriveSwerveYAGSL extends DriveBase {
   public static class Constants {
@@ -49,7 +50,7 @@ public class DriveSwerveYAGSL extends DriveBase {
     super("YAGSL");
     swerveJsonDirectory = new File(Filesystem.getDeployDirectory(), configPath);
 
-    // SwerveDriveTelemetry.verbosity = TelemetryVerbosity.HIGH;
+    SwerveDriveTelemetry.verbosity = TelemetryVerbosity.HIGH;
     try {
       swerveDrive =
           new SwerveParser(swerveJsonDirectory)
@@ -309,7 +310,6 @@ public class DriveSwerveYAGSL extends DriveBase {
   public void periodic() {
     io.updateInputs(inputs, swerveDrive);
     Logger.processInputs("Drive", inputs);
-
     // Because the asynchronous odometry updates have been disabled,
     // we invoke updates manually
     swerveDrive.updateOdometry();

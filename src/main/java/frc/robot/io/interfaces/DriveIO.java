@@ -2,6 +2,8 @@ package frc.robot.io.interfaces;
 
 import com.pathplanner.lib.util.FlippingUtil;
 import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Translation3d;
+
 import org.littletonrobotics.junction.AutoLog;
 import swervelib.SwerveDrive;
 
@@ -16,6 +18,7 @@ public class DriveIO {
     public double flippedPoseX = 0.0;
     public double flippedPoseY = 0.0;
     public double flippedPoseRotInDegrees = 0.0;
+    public Translation3d currentAcceleration = new Translation3d();
   }
 
   /** Updates the set of loggable inputs. */
@@ -28,6 +31,7 @@ public class DriveIO {
     inputs.flippedPoseX = inputs.flippedPose.getTranslation().getX();
     inputs.flippedPoseY = inputs.flippedPose.getTranslation().getY();
     inputs.flippedPoseRotInDegrees = inputs.flippedPose.getRotation().getDegrees();
+    inputs.currentAcceleration = swerveDrive.getAccel().get();
   }
   // Other methods for controlling the drive subsystem...
 }
