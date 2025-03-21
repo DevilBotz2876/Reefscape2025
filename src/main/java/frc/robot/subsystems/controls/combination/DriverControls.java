@@ -159,7 +159,8 @@ public class DriverControls {
             Map.entry(
                 4,
                 new SequentialCommandGroup(
-                        new ElevatorToPosition(elevator, () -> 0.6).unless(() -> elevator.getCurrentHeight() > 0.6),
+                        new ElevatorToPosition(elevator, () -> 0.6)
+                            .unless(() -> elevator.getCurrentHeight() > 0.6),
                         new ParallelCommandGroup(
                             new ArmToPosition(coralArm, () -> 48).withTimeout(1.0),
                             new ElevatorToPosition(elevator, () -> 1.553)))

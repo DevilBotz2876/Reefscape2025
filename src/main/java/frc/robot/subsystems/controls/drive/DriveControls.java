@@ -18,6 +18,8 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.commands.common.arm.ArmToPosition;
 import frc.robot.commands.common.drive.DriveCommand;
+import frc.robot.commands.common.drive.DriveToPositionX;
+import frc.robot.commands.common.drive.DriveToYaw;
 import frc.robot.commands.common.elevator.ElevatorToPosition;
 import frc.robot.subsystems.controls.combination.DriverControls;
 import frc.robot.subsystems.interfaces.Arm;
@@ -31,6 +33,7 @@ import org.littletonrobotics.junction.Logger;
 public class DriveControls {
 
   protected static TargetPose chosenTarget = TargetPose.REEF_A;
+  static int value = 0;
 
   public static void setupController(
       Drive drive, Elevator elevator, Arm arm, CommandXboxController controller) {
@@ -59,6 +62,12 @@ public class DriveControls {
         new PathConstraints(
             drive.getMaxLinearSpeed(), 1.5, drive.getMaxAngularSpeed(), Math.PI / 4);
 
+    SmartDashboard.putData("Go Forward 1 Meter", new DriveToPositionX(drive, () -> 1.0));
+
+    SmartDashboard.putData(
+        "Go Forward 1 Meter and Turn 180",
+        new SequentialCommandGroup(
+            new DriveToPositionX(drive, () -> 1.0), new DriveToYaw(drive, () -> 180.0)));
     // Temporary UI to allow user to modify destination on-the-fly
     SendableChooser<TargetPose> chooser = new SendableChooser<>();
     // chooser.setDefaultOption("Origin", TargetPose.ORIGIN);
@@ -248,7 +257,8 @@ public class DriveControls {
             Map.entry(
                 4,
                 new SequentialCommandGroup(
-                        new ElevatorToPosition(elevator, () -> 0.6).unless(() -> elevator.getCurrentHeight() > 0.6),
+                        new ElevatorToPosition(elevator, () -> 0.6)
+                            .unless(() -> elevator.getCurrentHeight() > 0.6),
                         new ParallelCommandGroup(
                             new ArmToPosition(coralArm, () -> 48).withTimeout(1.0),
                             new ElevatorToPosition(elevator, () -> 1.553)))

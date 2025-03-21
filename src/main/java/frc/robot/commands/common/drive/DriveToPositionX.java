@@ -29,12 +29,16 @@ public class DriveToPositionX extends Command {
 
   @Override
   public void execute() {
-    drive.runVelocity(new ChassisSpeeds(-drive.getMaxLinearSpeed(), 0, 0));
+    drive.runVelocity(
+        new ChassisSpeeds(
+            Math.signum(distanceMeters.getAsDouble()) * drive.getMaxLinearSpeed(), 0, 0));
   }
 
   @Override
   public boolean isFinished() {
-    return targetPose.relativeTo(drive.getPose()).getX() > 0;
+    double currentX = drive.getPose().getX();
+    double targetX = targetPose.getX();
+    return Math.abs(currentX - targetX) >= Math.abs(distanceMeters.getAsDouble());
   }
 
   @Override
