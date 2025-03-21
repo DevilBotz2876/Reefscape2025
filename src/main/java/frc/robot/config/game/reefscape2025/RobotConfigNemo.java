@@ -39,24 +39,24 @@ public class RobotConfigNemo extends RobotConfig {
     drive = new DriveSwerveYAGSL("yagsl/nemo");
 
     // Camera placement at WPI practice field (2/21/2025)
-    vision.addCamera(
-        new Camera(
-            "rear_cam", // back
-            new Transform3d(
-                new Translation3d(
-                    Units.inchesToMeters(-14.5),
-                    Units.inchesToMeters(-3.75),
-                    Units.inchesToMeters(7)),
-                new Rotation3d(0.0, Units.degreesToRadians(-5), Units.degreesToRadians(180)))));
-    vision.addCamera(
-        new Camera(
-            "left_cam",
-            new Transform3d(
-                new Translation3d(
-                    Units.inchesToMeters(-4.4),
-                    Units.inchesToMeters(14.5),
-                    Units.inchesToMeters(7)),
-                new Rotation3d(0.0, Units.degreesToRadians(-5), Units.degreesToRadians(90)))));
+    // vision.addCamera(
+    //     new Camera(
+    //         "rear_cam", // back
+    //         new Transform3d(
+    //             new Translation3d(
+    //                 Units.inchesToMeters(-14.5),
+    //                 Units.inchesToMeters(-3.75),
+    //                 Units.inchesToMeters(7)),
+    //             new Rotation3d(0.0, Units.degreesToRadians(-5), Units.degreesToRadians(180)))));
+    // vision.addCamera(
+    //     new Camera(
+    //         "left_cam",
+    //         new Transform3d(
+    //             new Translation3d(
+    //                 Units.inchesToMeters(-4.4),
+    //                 Units.inchesToMeters(14.5),
+    //                 Units.inchesToMeters(7)),
+    //             new Rotation3d(0.0, Units.degreesToRadians(-5), Units.degreesToRadians(90)))));
     vision.addCamera(
         new Camera(
             "right_cam",
@@ -66,15 +66,15 @@ public class RobotConfigNemo extends RobotConfig {
                     Units.inchesToMeters(-14.5),
                     Units.inchesToMeters(7)),
                 new Rotation3d(0.0, Units.degreesToRadians(-5), Units.degreesToRadians(270)))));
-    vision.addCamera(
-        new Camera(
-            "front_cam",
-            new Transform3d(
-                new Translation3d(
-                    Units.inchesToMeters(3),
-                    Units.inchesToMeters(-10.75),
-                    Units.inchesToMeters(36.75)),
-                new Rotation3d(0.0, Units.degreesToRadians(30), Units.degreesToRadians(10)))));
+    // vision.addCamera(
+    //     new Camera(
+    //         "front_cam",
+    //         new Transform3d(
+    //             new Translation3d(
+    //                 Units.inchesToMeters(3),
+    //                 Units.inchesToMeters(-10.75),
+    //                 Units.inchesToMeters(36.75)),
+    //             new Rotation3d(0.0, Units.degreesToRadians(30), Units.degreesToRadians(10)))));
 
     // Coral Arm
     {
@@ -117,7 +117,7 @@ public class RobotConfigNemo extends RobotConfig {
     // Elevator
     {
       MotorIOBaseSettings motorSettings = new MotorIOBaseSettings();
-      motorSettings.motor.gearing = 9; /* 2x 3:1 gear boxes */
+      motorSettings.motor.gearing = 5; /* 1x 5:1 gear boxes */
       motorSettings.motor.inverted = true;
       // motorSettings.forwardLimitChannel = 7;
       // motorSettings.forwardLimitNegate = true;
