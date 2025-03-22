@@ -81,6 +81,11 @@ public class MotorSubsystem extends SubsystemBase implements Motor {
   }
 
   @Override
+  public double getVoltage() {
+    return inputs.appliedVolts;
+  }
+
+  @Override
   public boolean getForwardLimit() {
     return inputs.forwardLimit;
   }

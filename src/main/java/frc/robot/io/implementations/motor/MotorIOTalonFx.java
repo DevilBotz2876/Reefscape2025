@@ -6,6 +6,7 @@ import com.ctre.phoenix6.hardware.TalonFX;
 import com.ctre.phoenix6.signals.InvertedValue;
 import com.ctre.phoenix6.signals.NeutralModeValue;
 import edu.wpi.first.units.Units;
+import edu.wpi.first.wpilibj.DigitalInput;
 
 public class MotorIOTalonFx extends MotorIOBase {
   public static class TalonFxSettings {
@@ -15,6 +16,9 @@ public class MotorIOTalonFx extends MotorIOBase {
   MotorIOBaseSettings motorSettings;
 
   private final TalonFX motorFx;
+  
+  DigitalInput reverseLimit = null;
+  DigitalInput forwardLimit = null;
 
   public MotorIOTalonFx(MotorIOBaseSettings motorSettings, TalonFxSettings talonFxSettings) {
     super(motorSettings);
@@ -53,6 +57,13 @@ public class MotorIOTalonFx extends MotorIOBase {
     toConfigure.MotorOutput.NeutralMode = NeutralModeValue.Brake;
 
     motorFx.getConfigurator().apply(toConfigure);
+
+    if (motorSettings.reverseLimitChannel > -1) {
+      reverseLimit = new DigitalInput(motorSettings.reverseLimitChannel);
+    }
+    if (motorSettings.forwardLimitChannel > -1) {
+      forwardLimit = new DigitalInput(motorSettings.forwardLimitChannel);
+    }
   }
 
   @Override

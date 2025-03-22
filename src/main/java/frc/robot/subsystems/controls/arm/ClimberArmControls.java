@@ -1,10 +1,13 @@
 package frc.robot.subsystems.controls.arm;
 
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
+import edu.wpi.first.wpilibj2.command.button.Trigger;
+import frc.robot.Robot;
 import frc.robot.commands.common.motor.MotorAutoResetEncoderCommand;
 import frc.robot.commands.common.motor.MotorAutoResetEncoderCommand.MotorAutoResetEncoderSettings;
 import frc.robot.subsystems.interfaces.Motor;
@@ -49,5 +52,10 @@ public class ClimberArmControls {
     SmartDashboard.putData(
         armSubsystem.getName() + "/Commands/Climb",
         new InstantCommand(() -> arm.setTargetPosition(18.06 - 0.0873), armSubsystem));
+     
+    Trigger failsafe = new Trigger(() -> ((Motor) arm).getReverseLimit() && ((Motor) arm).getVoltage() > 0); 
+    failsafe.onTrue(new InstantCommand(() -> {
+        ((Motor) arm).runVoltage(0);
+    }) );
   }
 }

@@ -35,4 +35,11 @@ public interface Motor {
    * @return returns true if limit switch is triggered, otherwise false.
    */
   public boolean getReverseLimit();
+
+  /**
+   * Returns the voltage to the motor
+   *
+   * @return returns the applied volts of the motor
+   */
+  public double getVoltage();
 }
