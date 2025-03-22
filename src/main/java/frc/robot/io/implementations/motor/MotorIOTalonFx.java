@@ -7,6 +7,7 @@ import com.ctre.phoenix6.signals.InvertedValue;
 import com.ctre.phoenix6.signals.NeutralModeValue;
 import edu.wpi.first.units.Units;
 import edu.wpi.first.wpilibj.DigitalInput;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class MotorIOTalonFx extends MotorIOBase {
   public static class TalonFxSettings {
@@ -85,6 +86,9 @@ public class MotorIOTalonFx extends MotorIOBase {
         edu.wpi.first.math.util.Units.rotationsToRadians(
             motorFx.getVelocity().getValueAsDouble() / motorSettings.motor.gearing);
 
+    inputs.forwardLimit = getForwardLimit();
+    inputs.reverseLimit = getReverseLimit();
+
     super.updateInputs(inputs);
   }
 
@@ -93,5 +97,31 @@ public class MotorIOTalonFx extends MotorIOBase {
     motorFx.setPosition(
         edu.wpi.first.math.util.Units.radiansToRotations(
             positionRad * motorSettings.motor.gearing));
+  }
+
+  private boolean getForwardLimit() {
+    if (forwardLimit == null) {
+      return false;
+    }
+    // TODO: check if fwd limit switch is configured/plugged directly into spark max
+    // motor.getForwardLimitSwitch()
+    boolean limit = forwardLimit.get();
+    if (motorSettings.forwardLimitNegate) {
+      return !limit;
+    }
+    return limit;
+  }
+
+  private boolean getReverseLimit() {
+    if (reverseLimit == null) {
+      return false;
+    }
+    // TODO: check if reverse limit switch is configured/plugged directly into spark max
+    // motor.getReverseLimitSwitch()
+    boolean limit = reverseLimit.get();
+    if (motorSettings.reverseLimitNegate) {
+      return !limit;
+    }
+    return limit;
   }
 }
