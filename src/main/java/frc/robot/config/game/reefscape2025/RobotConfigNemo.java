@@ -144,8 +144,8 @@ public class RobotConfigNemo extends RobotConfig {
 
       SparkMaxSettings sparkMaxSettings = new SparkMaxSettings();
       sparkMaxSettings.canId = 20;
-      elevatorSettings.maxVelocityInMetersPerSecond = 0.5;
-      elevatorSettings.maxAccelerationInMetersPerSecondSquared = 2.0;
+      elevatorSettings.maxVelocityInMetersPerSecond = 2.0;
+      elevatorSettings.maxAccelerationInMetersPerSecondSquared = 6.0;
       ElevatorControls.Constants.autoZeroSettings.voltage = 1.5;
       ElevatorControls.Constants.autoZeroSettings.minResetCurrent = 30;
       ElevatorControls.Constants.autoZeroSettings.resetPositionRad =
