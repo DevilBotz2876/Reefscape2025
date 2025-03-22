@@ -16,7 +16,7 @@ public class MotorIOTalonFx extends MotorIOBase {
   MotorIOBaseSettings motorSettings;
 
   private final TalonFX motorFx;
-  
+
   DigitalInput reverseLimit = null;
   DigitalInput forwardLimit = null;
 
