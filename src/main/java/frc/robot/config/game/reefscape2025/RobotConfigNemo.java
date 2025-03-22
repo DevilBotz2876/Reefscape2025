@@ -106,7 +106,7 @@ public class RobotConfigNemo extends RobotConfig {
           Units.degreesToRadians(
               armSettings.minAngleInDegrees); // We have an offest about 15 degrees
       CoralArmControls.Constants.autoZeroSettings.initialReverseDuration =
-          1.0; // Set the seconds of reverse before zero. Set to zero if there shound be no reverse
+          0.0; // Set the seconds of reverse before zero. Set to zero if there shound be no reverse
 
       coralArm =
           new ArmMotorSubsystem(
@@ -129,7 +129,7 @@ public class RobotConfigNemo extends RobotConfig {
                   / 2); // 3/4" inner diameter to 1 3/4" outer. Average diameter calculated For now,
       // use the diameter so that
       // we don't reach the limits
-      motorSettings.pid = new PIDController(0.0010965, 0, 0); // TODO: Tune PID controller
+      motorSettings.pid = new PIDController(0.0068281, 0, 0); // TODO: Tune PID controller
 
       ElevatorSettings elevatorSettings = new ElevatorSettings();
       elevatorSettings.minHeightInMeters = 0.09 + 0.02;
@@ -137,7 +137,7 @@ public class RobotConfigNemo extends RobotConfig {
       elevatorSettings.startingHeightInMeters = elevatorSettings.minHeightInMeters;
       elevatorSettings.color = new Color8Bit(Color.kSilver);
       elevatorSettings.feedforward =
-          new ElevatorFeedforward(0, 0.30794, 0.10685, 0); // TODO: Tune feedforward
+          new ElevatorFeedforward(0, 0.30411, 0.1039, 0.0066023); // TODO: Tune feedforward
       elevatorSettings.carriageMassKg = 5.0;
       elevatorSettings.motor = DCMotor.getKrakenX60(1);
       elevatorSettings.simulateGravity = true;
