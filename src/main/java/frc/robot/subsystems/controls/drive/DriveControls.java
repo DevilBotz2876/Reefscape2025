@@ -68,6 +68,18 @@ public class DriveControls {
         "Go Forward 1 Meter and Turn 180",
         new SequentialCommandGroup(
             new DriveToPositionX(drive, () -> 1.0), new DriveToYaw(drive, () -> 180.0)));
+
+    SmartDashboard.putData(
+        "Go in a Square Path",
+        new SequentialCommandGroup(
+            new DriveToPositionX(drive, () -> 1.0),
+            new DriveToYaw(drive, () -> 90),
+            new DriveToPositionX(drive, () -> 1.0),
+            new DriveToYaw(drive, () -> 180),
+            new DriveToPositionX(drive, () -> 1.0),
+            new DriveToYaw(drive, () -> 270),
+            new DriveToPositionX(drive, () -> 1.0),
+            new DriveToYaw(drive, () -> 360)));
     // Temporary UI to allow user to modify destination on-the-fly
     SendableChooser<TargetPose> chooser = new SendableChooser<>();
     // chooser.setDefaultOption("Origin", TargetPose.ORIGIN);

@@ -47,7 +47,7 @@ public class RobotConfigComp extends RobotConfig {
     Drive.Constants.rotatePidKp = 0.025;
     Drive.Constants.rotatePidKi = 0.0;
     Drive.Constants.rotatePidKd = 0.0;
-    DriveBase.Constants.rotatePidErrorInDegrees = 1;
+    DriveBase.Constants.rotatePidErrorInDegrees = 2;
     drive = new DriveSwerveYAGSL("yagsl/comp");
 
     // Cameras
@@ -56,8 +56,8 @@ public class RobotConfigComp extends RobotConfig {
             "rear_cam",
             new Transform3d(
                 new Translation3d(
+                    Units.inchesToMeters(0.295),
                     Units.inchesToMeters(0),
-                    Units.inchesToMeters(-11.443),
                     Units.inchesToMeters(39.663)),
                 new Rotation3d(
                     Units.degreesToRadians(0),
