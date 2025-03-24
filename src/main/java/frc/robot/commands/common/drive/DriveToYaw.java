@@ -30,19 +30,11 @@ public class DriveToYaw extends Command {
 
   @Override
   public void initialize() {
+    // System.out.println("  START: " + this.getClass().getSimpleName());
     targetYaw = this.yawDegrees.getAsDouble();
     turnPID.reset();
     turnPID.setSetpoint(targetYaw);
     timer.reset();
-    if (Constants.debugCommands) {
-      System.out.println(
-          "START: "
-              + this.getClass().getSimpleName()
-              + " yaw: "
-              + targetYaw
-              + " currentYaw: "
-              + drive.getAngle());
-    }
   }
 
   @Override
@@ -50,18 +42,18 @@ public class DriveToYaw extends Command {
     double rotate = turnPID.calculate(drive.getAngle());
     ChassisSpeeds speeds = new ChassisSpeeds(0, 0, rotate * drive.getMaxAngularSpeed());
     drive.runVelocity(speeds);
+    targetYaw = this.yawDegrees.getAsDouble();
+    double yawLeft = targetYaw - drive.getAngle();
+    System.out.println("Angle Away: " + yawLeft);
   }
 
   @Override
   public boolean isFinished() {
     if (turnPID.atSetpoint()) {
-      if (timer.get() >= DriveBase.Constants.pidSettlingTimeInSeconds) {
-        return true;
-      }
+      return true;
     } else {
-      timer.reset();
+      return false;
     }
-    return false;
   }
 
   @Override

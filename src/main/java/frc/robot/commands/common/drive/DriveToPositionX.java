@@ -23,12 +23,14 @@ public class DriveToPositionX extends Command {
 
   @Override
   public void initialize() {
+    System.out.println("  START: " + this.getClass().getSimpleName());
     double d = this.distanceMeters.getAsDouble();
     targetPose = drive.getPose().transformBy(new Transform2d(d, 0, new Rotation2d()));
   }
 
   @Override
   public void execute() {
+
     drive.runVelocity(
         new ChassisSpeeds(
             Math.signum(distanceMeters.getAsDouble()) * drive.getMaxLinearSpeed(), 0, 0));
@@ -38,7 +40,9 @@ public class DriveToPositionX extends Command {
   public boolean isFinished() {
     double currentX = drive.getPose().getX();
     double targetX = targetPose.getX();
-    return Math.abs(currentX - targetX) >= Math.abs(distanceMeters.getAsDouble());
+    double distanceLeft = currentX - targetX;
+    System.out.println("Distance Away: " + distanceLeft);
+    return Math.abs(distanceLeft) >= Math.abs(distanceMeters.getAsDouble());
   }
 
   @Override
