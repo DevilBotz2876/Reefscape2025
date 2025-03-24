@@ -56,13 +56,13 @@ public class RobotConfigComp extends RobotConfig {
             "rear_cam",
             new Transform3d(
                 new Translation3d(
-                    Units.inchesToMeters(0.295),
+                    Units.inchesToMeters(0),
                     Units.inchesToMeters(-11.443),
                     Units.inchesToMeters(39.663)),
                 new Rotation3d(
-                    Units.degreesToRadians(12),
+                    Units.degreesToRadians(0),
                     Units.degreesToRadians(-33),
-                    Units.degreesToRadians(170)))));
+                    Units.degreesToRadians(180)))));
     // vision.addCamera(
     //     new Camera(
     //         "left_cam", // left
