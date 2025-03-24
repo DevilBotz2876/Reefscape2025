@@ -106,7 +106,7 @@ public class RobotConfigComp extends RobotConfig {
     // Elevator
     {
       MotorIOBaseSettings motorSettings = new MotorIOBaseSettings();
-      motorSettings.motor.gearing = 9; /* 2x 3:1 gear boxes */
+      motorSettings.motor.gearing = 5; /* 2x 3:1 gear boxes */
       motorSettings.motor.inverted = true;
       // TODO: Get the DIO ports
       // motorSettings.forwardLimitChannel = 7;
