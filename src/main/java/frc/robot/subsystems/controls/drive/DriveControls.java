@@ -15,6 +15,7 @@ import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.SelectCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.commands.common.arm.ArmToPosition;
 import frc.robot.commands.common.drive.DriveCommand;
@@ -73,13 +74,20 @@ public class DriveControls {
         "Go in a Square Path",
         new SequentialCommandGroup(
             new DriveToPositionX(drive, () -> 1.0),
-            new DriveToYaw(drive, () -> 90),
+            new WaitCommand(0.5),
+            new DriveToYaw(drive, () -> 90).withTimeout(2),
+            new WaitCommand(0.5),
             new DriveToPositionX(drive, () -> 1.0),
-            new DriveToYaw(drive, () -> 180),
+            new WaitCommand(0.5),
+            new DriveToYaw(drive, () -> 180).withTimeout(2),
+            new WaitCommand(0.5),
             new DriveToPositionX(drive, () -> 1.0),
-            new DriveToYaw(drive, () -> 270),
+            new WaitCommand(0.5),
+            new DriveToYaw(drive, () -> -90).withTimeout(2),
+            new WaitCommand(0.5),
             new DriveToPositionX(drive, () -> 1.0),
-            new DriveToYaw(drive, () -> 360)));
+            new WaitCommand(0.5),
+            new DriveToYaw(drive, () -> 0).withTimeout(2)));
     // Temporary UI to allow user to modify destination on-the-fly
     SendableChooser<TargetPose> chooser = new SendableChooser<>();
     // chooser.setDefaultOption("Origin", TargetPose.ORIGIN);

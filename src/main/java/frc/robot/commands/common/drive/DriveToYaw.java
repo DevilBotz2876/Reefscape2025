@@ -40,7 +40,7 @@ public class DriveToYaw extends Command {
   @Override
   public void execute() {
     double rotate = turnPID.calculate(drive.getAngle());
-    ChassisSpeeds speeds = new ChassisSpeeds(0, 0, rotate * drive.getMaxAngularSpeed());
+    ChassisSpeeds speeds = new ChassisSpeeds(0, 0, rotate * (drive.getMaxAngularSpeed()/8));
     drive.runVelocity(speeds);
     targetYaw = this.yawDegrees.getAsDouble();
     double yawLeft = targetYaw - drive.getAngle();

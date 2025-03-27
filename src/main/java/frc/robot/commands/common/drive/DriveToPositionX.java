@@ -3,6 +3,7 @@ package frc.robot.commands.common.drive;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Transform2d;
+import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Subsystem;
@@ -33,16 +34,17 @@ public class DriveToPositionX extends Command {
 
     drive.runVelocity(
         new ChassisSpeeds(
-            Math.signum(distanceMeters.getAsDouble()) * drive.getMaxLinearSpeed(), 0, 0));
+            Math.signum(distanceMeters.getAsDouble()) * (drive.getMaxLinearSpeed()), 0, 0));
   }
 
   @Override
   public boolean isFinished() {
-    double currentX = drive.getPose().getX();
-    double targetX = targetPose.getX();
-    double distanceLeft = currentX - targetX;
+    // double currentX = drive.getPose().getX();
+    
+    // double targetX = targetPose.getX();
+    double distanceLeft = new Translation2d().getDistance(drive.getPose().relativeTo(targetPose).getTranslation());
     System.out.println("Distance Away: " + distanceLeft);
-    return Math.abs(distanceLeft) >= Math.abs(distanceMeters.getAsDouble());
+    return Math.abs(distanceLeft) <= 0.1;
   }
 
   @Override
