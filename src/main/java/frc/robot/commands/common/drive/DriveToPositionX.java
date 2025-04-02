@@ -40,11 +40,12 @@ public class DriveToPositionX extends Command {
   @Override
   public boolean isFinished() {
     // double currentX = drive.getPose().getX();
-    
+
     // double targetX = targetPose.getX();
-    double distanceLeft = new Translation2d().getDistance(drive.getPose().relativeTo(targetPose).getTranslation());
+    double distanceLeft =
+        new Translation2d().getDistance(drive.getPose().relativeTo(targetPose).getTranslation());
     System.out.println("Distance Away: " + distanceLeft);
-    return Math.abs(distanceLeft) <= 0.1;
+    return Math.abs(distanceLeft) <= 0.2;
   }
 
   @Override
