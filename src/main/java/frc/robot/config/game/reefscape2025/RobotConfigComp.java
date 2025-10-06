@@ -41,7 +41,7 @@ public class RobotConfigComp extends RobotConfig {
   private final AddressableLEDBuffer ledBuffer;
 
   public RobotConfigComp() {
-    super(false, false, false, false, false, true, false);
+    super(false, false, false, false, false, true, true);
 
     // Comp has a Swerve drive train
     Drive.Constants.rotatePidKp = 0.025;
@@ -189,38 +189,38 @@ public class RobotConfigComp extends RobotConfig {
     }
 
     // climber
-    {
-      MotorIOBaseSettings motorSettings = new MotorIOBaseSettings();
-      // 25:1 gear box ratio
-      motorSettings.motor.gearing = 25;
-      motorSettings.motor.inverted = false;
-      motorSettings.pid = new PIDController(1.0, 0, 0);
-      motorSettings.reverseLimitChannel = 1;
-      motorSettings.reverseLimitNegate = true;
+    // {
+    //   MotorIOBaseSettings motorSettings = new MotorIOBaseSettings();
+    //   // 25:1 gear box ratio
+    //   motorSettings.motor.gearing = 25;
+    //   motorSettings.motor.inverted = false;
+    //   motorSettings.pid = new PIDController(1.0, 0, 0);
+    //   motorSettings.reverseLimitChannel = 1;
+    //   motorSettings.reverseLimitNegate = true;
 
-      SimpleMotorSettings simpleMotorSettings = new SimpleMotorSettings();
-      simpleMotorSettings.minPositionInRads = 0;
-      simpleMotorSettings.maxPositionInRads = 38.06;
-      simpleMotorSettings.startingPositionInRads = simpleMotorSettings.minPositionInRads;
-      simpleMotorSettings.color = new Color8Bit(Color.kRed);
-      simpleMotorSettings.feedforward = new SimpleMotorFeedforward(0, 0, 0);
-      simpleMotorSettings.motor = DCMotor.getNEO(1);
+    //   SimpleMotorSettings simpleMotorSettings = new SimpleMotorSettings();
+    //   simpleMotorSettings.minPositionInRads = 0;
+    //   simpleMotorSettings.maxPositionInRads = 38.06;
+    //   simpleMotorSettings.startingPositionInRads = simpleMotorSettings.minPositionInRads;
+    //   simpleMotorSettings.color = new Color8Bit(Color.kRed);
+    //   simpleMotorSettings.feedforward = new SimpleMotorFeedforward(0, 0, 0);
+    //   simpleMotorSettings.motor = DCMotor.getNEO(1);
 
-      TalonFxSettings settings = new TalonFxSettings();
-      settings.canId = 50;
+    //   TalonFxSettings settings = new TalonFxSettings();
+    //   settings.canId = 50;
 
-      ClimberArmControls.Constants.autoZeroSettings.voltage = -1;
-      // Set this to something big, we are never going to use stall current to detect if climber has
-      // reached it's end of range of motion.
-      ClimberArmControls.Constants.autoZeroSettings.minResetCurrent = 0.5;
-      ClimberArmControls.Constants.autoZeroSettings.resetPositionRad =
-          simpleMotorSettings.minPositionInRads;
-      ClimberArmControls.Constants.autoZeroSettings.initialReverseDuration = 0;
+    //   ClimberArmControls.Constants.autoZeroSettings.voltage = -1;
+    //   // Set this to something big, we are never going to use stall current to detect if climber has
+    //   // reached it's end of range of motion.
+    //   ClimberArmControls.Constants.autoZeroSettings.minResetCurrent = 0.5;
+    //   ClimberArmControls.Constants.autoZeroSettings.resetPositionRad =
+    //       simpleMotorSettings.minPositionInRads;
+    //   ClimberArmControls.Constants.autoZeroSettings.initialReverseDuration = 0;
 
-      climberArm =
-          new SimpleMotorSubsystem(
-              new MotorIOTalonFx(motorSettings, settings), "Climber", simpleMotorSettings);
-    }
+    //   climberArm =
+    //       new SimpleMotorSubsystem(
+    //           new MotorIOTalonFx(motorSettings, settings), "Climber", simpleMotorSettings);
+    // }
 
     // LED
     {
