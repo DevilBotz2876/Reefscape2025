@@ -8,8 +8,11 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.commands.common.arm.ArmToPosition;
 import frc.robot.commands.common.elevator.ElevatorToPosition;
+import frc.robot.commands.common.motor.MotorAutoResetEncoderCommand;
+import frc.robot.subsystems.controls.arm.CoralArmControls;
 import frc.robot.subsystems.interfaces.Arm;
 import frc.robot.subsystems.interfaces.Elevator;
+import frc.robot.subsystems.interfaces.Motor;
 import frc.robot.subsystems.interfaces.SimpleMotor;
 
 public class DriverAssistControls {
@@ -46,20 +49,26 @@ public class DriverAssistControls {
             new ElevatorToPosition(elevator, () -> 1.3)));
 
     Command prepareIntakeCoralCommand =
-        new SequentialCommandGroup(
-            new ArmToPosition(coralArm, () -> -90).withTimeout(0),
-            new ElevatorToPosition(elevator, () -> 0.8));
+        new SequentialCommandGroup(new ElevatorToPosition(elevator, () -> 0.8));
+
+    SubsystemBase armSubsystem = (SubsystemBase) coralArm;
     controller
         .b()
         .onTrue(
-            prepareIntakeCoralCommand.andThen(
-                new InstantCommand(
-                    () -> {
-                      DriverControls.Constants.prepareScoreSelctedIndex = 1;
-                      SmartDashboard.putNumber(
-                          "Driver " + "/Misc/Prepare Selection",
-                          DriverControls.Constants.prepareScoreSelctedIndex);
-                    })));
+            prepareIntakeCoralCommand
+                .andThen(
+                    (Command)
+                        SmartDashboard.getData(
+                            armSubsystem.getName() + "/Commands/Auto Calibrate Coral Arm Assist"))
+                .andThen(
+                    new InstantCommand(
+                        () -> {
+                          DriverControls.Constants.prepareScoreSelctedIndex = 1;
+                          SmartDashboard.putString("Driver /Misc/Prepare Selection", "N/A");
+                        }))
+                .andThen(
+                    new MotorAutoResetEncoderCommand(
+                        (Motor) coralArm, CoralArmControls.Constants.autoZeroSettings)));
 
     controller
         .y()
@@ -67,9 +76,7 @@ public class DriverAssistControls {
             new InstantCommand(
                 () -> {
                   DriverControls.Constants.prepareScoreSelctedIndex = 4;
-                  SmartDashboard.putNumber(
-                      "Driver " + "/Misc/Prepare Selection",
-                      DriverControls.Constants.prepareScoreSelctedIndex);
+                  SmartDashboard.putString("Driver /Misc/Prepare Selection", "L4");
                 }));
 
     controller
@@ -78,9 +85,7 @@ public class DriverAssistControls {
             new InstantCommand(
                 () -> {
                   DriverControls.Constants.prepareScoreSelctedIndex = 3;
-                  SmartDashboard.putNumber(
-                      "Driver " + "/Misc/Prepare Selection",
-                      DriverControls.Constants.prepareScoreSelctedIndex);
+                  SmartDashboard.putString("Driver /Misc/Prepare Selection", "L3");
                 }));
 
     controller
@@ -89,9 +94,7 @@ public class DriverAssistControls {
             new InstantCommand(
                 () -> {
                   DriverControls.Constants.prepareScoreSelctedIndex = 2;
-                  SmartDashboard.putNumber(
-                      "Driver " + "/Misc/Prepare Selection",
-                      DriverControls.Constants.prepareScoreSelctedIndex);
+                  SmartDashboard.putString("Driver /Misc/Prepare Selection", "L2");
                 }));
 
     // controller
@@ -114,8 +117,6 @@ public class DriverAssistControls {
     controller
         .rightBumper()
         .onTrue(
-            new InstantCommand(
-                () -> climber.setTargetPosition(climber.getSettings().minPositionInRads),
-                climberSubsystem));
+            new InstantCommand(() -> climber.setTargetPosition(18.06 - 0.175), climberSubsystem));
   }
 }

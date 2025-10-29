@@ -38,26 +38,28 @@ public class DriverControls {
             });
 
     Command prepareIntakeCoralCommand =
-        new SequentialCommandGroup(
-            new ArmToPosition(coralArm, () -> -90).withTimeout(0),
-            new ElevatorToPosition(elevator, () -> 0.8));
+        new SequentialCommandGroup(new ElevatorToPosition(elevator, () -> 0.8));
+    SubsystemBase armSubsystem = (SubsystemBase) coralArm;
     controller
         .b()
         .onTrue(
-            prepareIntakeCoralCommand.andThen(
-                new InstantCommand(
-                    () -> {
-                      DriverControls.Constants.prepareScoreSelctedIndex = 1;
-                      SmartDashboard.putNumber(
-                          "Driver " + "/Misc/Prepare Selection",
-                          DriverControls.Constants.prepareScoreSelctedIndex);
-                    })));
+            prepareIntakeCoralCommand
+                .andThen(
+                    (Command)
+                        SmartDashboard.getData(
+                            armSubsystem.getName() + "/Commands/Auto Calibrate Coral Arm Driver"))
+                .andThen(
+                    new InstantCommand(
+                        () -> {
+                          DriverControls.Constants.prepareScoreSelctedIndex = 1;
+                          SmartDashboard.putString("Driver /Misc/Prepare Selection", "N/A");
+                        })));
 
-    Command intakeCoralCommand = new ElevatorToPosition(elevator, () -> 0.35);
+    Command intakeCoralCommand = new ElevatorToPosition(elevator, () -> 0.345);
     Trigger scoreMode = new Trigger(() -> Constants.prepareScoreSelctedIndex >= 2);
-    controller.leftTrigger().and(scoreMode.negate()).and(ableToIntake).onTrue(intakeCoralCommand);
+    // controller.leftTrigger().and(scoreMode.negate()).and(ableToIntake).onTrue(intakeCoralCommand);
 
-    Command score = new ArmToPosition(coralArm, () -> 0);
+    Command score = new ArmToPosition(coralArm, () -> -10);
     controller.rightBumper().onTrue(score);
 
     Constants.prepareChooser.setDefaultOption("L2", 2);
@@ -74,9 +76,7 @@ public class DriverControls {
             new InstantCommand(
                 () -> {
                   DriverControls.Constants.prepareScoreSelctedIndex = 4;
-                  SmartDashboard.putNumber(
-                      "Driver " + "/Misc/Prepare Selection",
-                      DriverControls.Constants.prepareScoreSelctedIndex);
+                  SmartDashboard.putString("Driver /Misc/Prepare Selection", "L4");
                 }));
 
     controller
@@ -85,9 +85,7 @@ public class DriverControls {
             new InstantCommand(
                 () -> {
                   DriverControls.Constants.prepareScoreSelctedIndex = 3;
-                  SmartDashboard.putNumber(
-                      "Driver " + "/Misc/Prepare Selection",
-                      DriverControls.Constants.prepareScoreSelctedIndex);
+                  SmartDashboard.putString("Driver /Misc/Prepare Selection", "L3");
                 }));
 
     controller
@@ -96,44 +94,42 @@ public class DriverControls {
             new InstantCommand(
                 () -> {
                   DriverControls.Constants.prepareScoreSelctedIndex = 2;
-                  SmartDashboard.putNumber(
-                      "Driver " + "/Misc/Prepare Selection",
-                      DriverControls.Constants.prepareScoreSelctedIndex);
+                  SmartDashboard.putString("Driver /Misc/Prepare Selection", "L2");
                 }));
 
     DriverControls.Constants.prepareChooser.onChange(
         (index) -> {
           DriverControls.Constants.prepareScoreSelctedIndex = index;
-          SmartDashboard.putNumber("Driver " + "/Misc/Prepare To Score Selection", index);
+          String desc;
+          if (index == 2) desc = "L2";
+          else if (index == 3) desc = "L3";
+          else desc = "L4";
+          SmartDashboard.putString("Driver /Misc/Prepare Selection", desc);
         });
 
-    SmartDashboard.putNumber(
-        "Driver " + "/Misc/Prepare To Score Selection", Constants.prepareChooser.getSelected());
+    SmartDashboard.putData("Driver " + "/Misc/Prepare To Score Chooser", Constants.prepareChooser);
+    SmartDashboard.putString("Driver /Misc/Prepare Selection", "L2");
 
     SmartDashboard.putData(
         "Driver " + "/Commands/Prepare To Score Command",
         getPrepareToScoreCommand(elevator, coralArm));
 
-    SmartDashboard.putData("Driver " + "/Misc/Prepare To Score Chooser", Constants.prepareChooser);
+    // // climber
+    // SubsystemBase climberSubsystem = (SubsystemBase) climber;
+    // // prepare to climb
+    // controller
+    //     .leftBumper()
+    //     .onTrue(
+    //         new InstantCommand(
+    //             () -> climber.setTargetPosition(climber.getSettings().maxPositionInRads),
+    //             climberSubsystem));
 
-    // climber
-    SubsystemBase climberSubsystem = (SubsystemBase) climber;
-    // prepare to climb
-    controller
-        .leftBumper()
-        .onTrue(
-            new InstantCommand(
-                () -> climber.setTargetPosition(climber.getSettings().maxPositionInRads),
-                climberSubsystem));
+    // // climb
+    // controller
+    //     .rightBumper()
+    //     .onTrue(new InstantCommand(() -> climber.setTargetPosition(11.6), climberSubsystem));
 
-    // climb
-    controller
-        .rightBumper()
-        .onTrue(
-            new InstantCommand(
-                () -> climber.setTargetPosition(climber.getSettings().minPositionInRads),
-                climberSubsystem));
-
+    controller.leftBumper().and(ableToIntake).and(scoreMode.negate()).onTrue(intakeCoralCommand);
     // multi controll not workking in each subsystem inde
     controller.povUp().whileTrue(new ElevatorCommand(elevator, () -> 0.2));
 
@@ -163,7 +159,8 @@ public class DriverControls {
             Map.entry(
                 4,
                 new SequentialCommandGroup(
-                        new ElevatorToPosition(elevator, () -> 0.6),
+                        new ElevatorToPosition(elevator, () -> 0.6)
+                            .unless(() -> elevator.getCurrentHeight() > 0.6),
                         new ParallelCommandGroup(
                             new ArmToPosition(coralArm, () -> 48).withTimeout(1.0),
                             new ElevatorToPosition(elevator, () -> 1.553)))

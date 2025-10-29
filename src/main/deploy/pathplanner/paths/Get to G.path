@@ -4,28 +4,28 @@
     {
       "anchor": {
         "x": 6.2,
-        "y": 3.873
+        "y": 3.85
       },
       "prevControl": null,
       "nextControl": {
-        "x": 5.95,
-        "y": 3.873
+        "x": 5.928238356816237,
+        "y": 3.839672387595645
       },
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "Near G"
     },
     {
       "anchor": {
-        "x": 5.713721590909091,
-        "y": 3.873
+        "x": 5.753607954545455,
+        "y": 3.85
       },
       "prevControl": {
-        "x": 6.331960227272727,
-        "y": 3.8903835227272725
+        "x": 6.002823135925256,
+        "y": 3.8697937709856585
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "G Reef"
     }
   ],
   "rotationTargets": [],
@@ -33,9 +33,9 @@
   "pointTowardsZones": [],
   "eventMarkers": [],
   "globalConstraints": {
-    "maxVelocity": 2.5,
-    "maxAcceleration": 2.5,
-    "maxAngularVelocity": 2.0,
+    "maxVelocity": 1.0,
+    "maxAcceleration": 1.0,
+    "maxAngularVelocity": 90.0,
     "maxAngularAcceleration": 720.0,
     "nominalVoltage": 12.0,
     "unlimited": false
@@ -50,5 +50,5 @@
     "velocity": 0,
     "rotation": 180.0
   },
-  "useDefaultConstraints": true
+  "useDefaultConstraints": false
 }

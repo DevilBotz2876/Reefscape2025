@@ -20,7 +20,6 @@ public class RobotContainer {
 
   public RobotContainer() {
     String robotName = "UNKNOWN";
-
     // Load robot name from configuration file
     // Check if the robot is running in simulation
     if (RobotBase.isSimulation()) {

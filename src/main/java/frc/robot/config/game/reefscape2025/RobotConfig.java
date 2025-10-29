@@ -1,5 +1,6 @@
 package frc.robot.config.game.reefscape2025;
 
+import com.pathplanner.lib.auto.AutoBuilder;
 import edu.wpi.first.apriltag.AprilTagFieldLayout;
 import edu.wpi.first.apriltag.AprilTagFields;
 import edu.wpi.first.math.controller.ArmFeedforward;
@@ -205,18 +206,23 @@ public class RobotConfig {
   public void configureBindings() {
     if (Robot.isSimulation()) {
       vision.enableSimulation(() -> RobotConfig.drive.getPose(), true);
+
+      // HACK just to verify autos are visible without connecting to robot
+      RobotConfig.autoChooser = AutoBuilder.buildAutoChooser("Sit Still");
     }
 
     // Send vision-based odometry measurements to drive's odometry calculations
     vision.setVisionMeasurementConsumer(drive::addVisionMeasurement);
 
-    DriveControls.setupController(drive, mainController);
+    CoralArmControls.setupController(
+        coralArm, assistController); // move up to get reset encoder command
+    DriveControls.setupController(drive, elevator, coralArm, mainController);
+    DriveControls.setupAssistantController(drive, assistController);
     DriverAssistControls.setupController(elevator, coralArm, climberArm, assistController);
     DriverControls.setupController(elevator, coralArm, climberArm, mainController);
     PitControls.setupPitControls(elevator, coralArm, climberArm);
     CoralArmControls.setupController(coralArm, mainController);
     ElevatorControls.setupController(elevator, mainController);
-    CoralArmControls.setupController(coralArm, assistController);
     ElevatorControls.setupController(elevator, assistController);
     ClimberArmControls.setupController(climberArm, mainController);
 

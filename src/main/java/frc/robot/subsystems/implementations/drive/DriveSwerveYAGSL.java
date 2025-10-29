@@ -11,13 +11,13 @@ import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.numbers.N1;
 import edu.wpi.first.math.numbers.N3;
 import edu.wpi.first.util.sendable.SendableBuilder;
-import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Filesystem;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine.Config;
 import frc.robot.io.interfaces.DriveIO;
 import frc.robot.io.interfaces.DriveIOInputsAutoLogged;
 import frc.robot.subsystems.interfaces.Drive;
+import frc.robot.util.DevilBotState;
 import java.io.File;
 import org.littletonrobotics.junction.AutoLogOutput;
 import org.littletonrobotics.junction.Logger;
@@ -25,6 +25,7 @@ import swervelib.SwerveDrive;
 import swervelib.SwerveDriveTest;
 import swervelib.parser.SwerveParser;
 import swervelib.telemetry.SwerveDriveTelemetry;
+import swervelib.telemetry.SwerveDriveTelemetry.TelemetryVerbosity;
 
 public class DriveSwerveYAGSL extends DriveBase {
   public static class Constants {
@@ -35,11 +36,11 @@ public class DriveSwerveYAGSL extends DriveBase {
 
   private final File swerveJsonDirectory;
   private SwerveDrive swerveDrive;
-  @AutoLogOutput private boolean fieldOrientedDrive = false;
+  @AutoLogOutput private boolean fieldOrientedDrive = true;
   private PIDConstants translationPIDConstants =
-      new PIDConstants(5.0, 0.0, 0.0); // Translation PID constants
+      new PIDConstants(7.5, 0.0, 0.0); // Translation PID constants
   private PIDConstants rotationPIDConstants =
-      new PIDConstants(5.0, 0.0, 0.0); // Rotation PID constants
+      new PIDConstants(6.0, 0.0, 0.0); // Rotation PID constants
 
   // @AutoLogOutput
   DriveIO io = new DriveIO();
@@ -49,7 +50,7 @@ public class DriveSwerveYAGSL extends DriveBase {
     super("YAGSL");
     swerveJsonDirectory = new File(Filesystem.getDeployDirectory(), configPath);
 
-    // \SwerveDriveTelemetry.verbosity = TelemetryVerbosity.HIGH;
+    SwerveDriveTelemetry.verbosity = TelemetryVerbosity.HIGH;
     try {
       swerveDrive =
           new SwerveParser(swerveJsonDirectory)
@@ -113,11 +114,7 @@ public class DriveSwerveYAGSL extends DriveBase {
             // Boolean supplier that controls when the path will be mirrored for the red alliance
             // This will flip the path being followed to the red side of the field.
             // THE ORIGIN WILL REMAIN ON THE BLUE SIDE
-            var alliance = DriverStation.getAlliance();
-            if (alliance.isPresent()) {
-              return alliance.get() == DriverStation.Alliance.Red;
-            }
-            return false;
+            return DevilBotState.isRedAlliance();
           },
           this // Reference to this subsystem to set requirements
           );
@@ -313,7 +310,6 @@ public class DriveSwerveYAGSL extends DriveBase {
   public void periodic() {
     io.updateInputs(inputs, swerveDrive);
     Logger.processInputs("Drive", inputs);
-
     // Because the asynchronous odometry updates have been disabled,
     // we invoke updates manually
     swerveDrive.updateOdometry();

@@ -7,7 +7,6 @@ import edu.wpi.first.math.numbers.N1;
 import edu.wpi.first.math.numbers.N3;
 import java.text.DecimalFormat;
 import java.util.List;
-import java.util.Optional;
 import java.util.function.Supplier;
 
 public interface Vision {
@@ -107,38 +106,6 @@ public interface Vision {
           + ")";
     }
   }
-
-  public default boolean setPrimaryCamera(String name) {
-    return true;
-  }
-
-  public Optional<Integer> getBestTargetId();
-
-  public Optional<Double> getDistanceToBestTarget();
-
-  /**
-   * Returns the yaw in degrees to the best target (relative to the primary camera)
-   *
-   * @return yaw to the best target (in degrees)
-   */
-  public Optional<Double> getYawToBestTarget();
-
-  /**
-   * Returns the distance to the specified april tag in meters (relative to the primary camera)
-   *
-   * @param id AprilTag ID
-   * @return distance to the specified april tag (in meters).
-   */
-  public Optional<Double> getDistanceToAprilTag(int id);
-
-  /**
-   * Returns the yaw in degrees to the specified april tag in meters (relative to the primary
-   * camera)
-   *
-   * @param id AprilTag ID
-   * @return yaw to the specified april tag (in degrees).
-   */
-  public Optional<Double> getYawToAprilTag(int id);
 
   public default void enableSimulation(Supplier<Pose2d> poseSupplier, boolean enableWireFrame) {}
 
