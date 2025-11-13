@@ -10,6 +10,40 @@ java {
     targetCompatibility = JavaVersion.VERSION_17
 }
 
+
+tasks.addRule("Pattern: DBBuild-<PROFILE>: builds the robot with the given profile. Requires a corresponding .properties file in \"profiles\".") { String taskName ->
+    if (taskName.startsWith("DBBuild-")){
+        def configFile = taskName - "DBBuild-"
+        task(taskName, type: Copy) {
+            // assert that the given config file exists
+            assert file("profiles/" + configFile + ".properties").exists() 
+
+            // proceed, delete old .properties files
+            println "Deleting previous properties files..."
+            delete fileTree('src/main/deploy'){
+                include '*.properties'
+            }
+
+            // copy properties file over and build
+            println "Building robot with profile \""  + configFile + "\"..."
+            from ('profiles'){
+                include configFile + ".properties"
+            }
+            into 'src/main/deploy'
+            dependsOn build
+        }
+    }
+}
+
+tasks.register("clean-profiles"){
+    group = "DevilBotz"
+    println "Deleting .properties files..."
+    delete fileTree('src/main/deploy'){
+        include '*.properties'
+    }
+}
+
+
 def ROBOT_MAIN_CLASS = "frc.robot.Main"
 
 // Define my targets (RoboRIO) and artifacts (deployable files)
